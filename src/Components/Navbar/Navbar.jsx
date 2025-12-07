@@ -25,8 +25,8 @@ const Navbar = () => {
   );
 
   return (
-    <div>
-      <div className="navbar shadow-sm sticky top-0 z-50 glass">
+    <div className=" sticky top-0 z-50 bg-base-100">
+      <div className="navbar shadow-sm ">
         {/* Navbar Start */}
         <div className="navbar-start">
           <div className="dropdown">
