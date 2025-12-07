@@ -50,7 +50,7 @@ const Banner = ({ slides = bannerData, interval = 4500 }) => {
   }, [goToNext, interval]);
 
   return (
-    <div className="py-4 sm:py-4">
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px]">
         
         {slides.map((slide, index) => (
