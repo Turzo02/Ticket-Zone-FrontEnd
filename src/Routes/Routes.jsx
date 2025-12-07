@@ -11,6 +11,7 @@ import MyBookedTickets from "../Pages/Dashboard/MyBookedTickets";
 import TransactionHistory from "../Pages/Dashboard/TransactionHistory";
 import DasboardLayout from "../Layouts/DasboardLayout";
 import UserProfile from "../Pages/Dashboard/UserProfile";
+import PrivateRoute from "./PrivateRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-tickets",
-        Component: AllTickets,
+        element:<PrivateRoute><AllTickets></AllTickets></PrivateRoute>
       },
       {
         path: "/all-tickets/details",

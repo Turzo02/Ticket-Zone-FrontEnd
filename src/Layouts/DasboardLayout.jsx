@@ -20,21 +20,21 @@ const DashboardLayout = () => {
           <nav className="flex flex-col space-y-2">
             <Link
               to="/dashboard/user-profile"
-              className="px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-200"
+              className="px-3 py-2 rounded-lg"
               onClick={() => setDrawerOpen(false)}
             >
               User Profile
             </Link>
             <Link
               to="/dashboard/my-booked-tickets"
-              className="px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-200"
+              className="px-3 py-2 rounded-lg"
               onClick={() => setDrawerOpen(false)}
             >
               My Booked Tickets
             </Link>
             <Link
               to="/dashboard/transaction-history"
-              className="px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-200"
+              className="px-3 py-2 rounded-lg"
               onClick={() => setDrawerOpen(false)}
             >
               Transaction History

@@ -1,14 +1,19 @@
 import { Link } from "react-router";
 import logo from "/favicon.png";
-import { useState } from "react";
 import { useTheme } from "../../Context/ThemeToggle/useTheme";
 import { Moon, Sun } from "lucide-react";
-
+import useAuth from "../../Hooks/useAuth";
 const Navbar = () => {
   const [theme, toggleTheme] = useTheme();
+  const { logOut, user } = useAuth();
 
-  // Demo user state
-  const [user, setUser] = useState(true); // true = logged in
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {console.log("logged out succesfully")})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const links = (
     <>
@@ -73,34 +78,36 @@ const Navbar = () => {
             <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
-                className="btn btn-ghost rounded-btn flex items-center gap-2"
+                className="btn btn-ghost rounded-btn flex justify-center items-center gap-2"
               >
+
                 <img
-                  src="https://i.ibb.co/7bQQYkX/avatar.png"
+               src={user.photoURL || "https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_006"} 
                   alt="User Avatar"
                   className="w-8 h-8 rounded-full"
                 />
-                <span>John Doe</span>
+                <span>{user.displayName || "user"}</span>
               </label>
               <ul
                 tabIndex={0}
                 className="menu menu-compact dropdown-content mt-2 p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <Link to="/profile">My Profile</Link>
+                  <Link to="/dashboard">My Profile</Link>
                 </li>
                 <li>
-                  <button onClick={() => setUser(!user)}>Logout</button>
+                  <button onClick={handleLogOut}>Logout</button>
                 </li>
-                <li>      <button
-                onClick={toggleTheme}
-                className={`p-2 rounded-field cursor-pointer `}
-                title="Toggle Theme"
-              >
-                {`Switch to ${theme === "light" ? "Dark" : "Light"} Theme`}
-                
-
-              </button></li>
+                <li>
+                  {" "}
+                  <button
+                    onClick={toggleTheme}
+                    className={`p-2 rounded-field cursor-pointer `}
+                    title="Toggle Theme"
+                  >
+                    {`Switch to ${theme === "light" ? "Dark" : "Light"} Theme`}
+                  </button>
+                </li>
               </ul>
             </div>
           ) : (
