@@ -4,6 +4,7 @@ import logo from "/favicon.png";
 import { Link } from "react-router";
 
 const Footer = () => {
+  //Footer Added
   return (
     <div>
       <footer className="glass mt-10">
