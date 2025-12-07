@@ -1,5 +1,6 @@
 import React from "react";
 import { MdOutlineCategory } from "react-icons/md";
+import { Link } from "react-router";
 // Sample ticket data
 const allTickets = [
   {
@@ -7,7 +8,7 @@ const allTickets = [
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80",
     title: "Sundarban Adventure Tour",
-    icon:"🚀",
+    icon: "🚀",
     from: "Khulna",
     to: "Sundarban",
     transport: "AC Tourist Boat",
@@ -21,7 +22,7 @@ const allTickets = [
     image:
       "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",
     title: "Cox’s Bazar Premium Bus",
-    icon:"🚌",
+    icon: "🚌",
     from: "Dhaka",
     to: "Cox’s Bazar",
     transport: "Volvo AC Bus",
@@ -35,7 +36,7 @@ const allTickets = [
     image:
       "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80",
     title: "Saint Martin Cruise",
-    icon:"🚀",
+    icon: "🚀",
     from: "Teknaf",
     to: "Saint Martin",
     transport: "Luxury Sea Cruise",
@@ -49,7 +50,7 @@ const allTickets = [
     image:
       "https://images.unsplash.com/photo-1521106581851-f48c707a43ef?w=600&q=80",
     title: "Dhaka City Helicopter Tour",
-    icon:"✈️",
+    icon: "✈️",
     from: "Dhaka",
     to: "Dhaka Skyline",
     transport: "Private Helicopter",
@@ -63,7 +64,7 @@ const allTickets = [
     image:
       "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&q=80",
     title: "Rangamati Boat Ride",
-    icon:"🚀",
+    icon: "🚀",
     from: "Rangamati",
     to: "Kaptai Lake",
     transport: "Traditional Boat",
@@ -77,7 +78,7 @@ const allTickets = [
     image:
       "https://images.unsplash.com/photo-1500043203572-9c37f3a808c3?w=600&q=80",
     title: "Sylhet Express Train",
-    icon:"🚆",
+    icon: "🚆",
     from: "Dhaka",
     to: "Sylhet",
     transport: "Intercity Train (AC)",
@@ -108,7 +109,10 @@ const AllTickets = () => {
           }).format(ticket.price);
 
           const departureDate = new Date(ticket.departure);
-          const formattedDeparture = `${departureDate.toLocaleDateString()} ${departureDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+          const formattedDeparture = `${departureDate.toLocaleDateString()} ${departureDate.toLocaleTimeString(
+            [],
+            { hour: "2-digit", minute: "2-digit" }
+          )}`;
 
           return (
             <div
@@ -134,56 +138,66 @@ const AllTickets = () => {
               {/* Body */}
               <div className="pt-4 space-y-3">
                 {/* Route */}
-              <div className="flex items-center text-sm font-semibold text-gray-700 space-x-2">
-  {/* From */}
-  <div className="flex items-center space-x-1">
-    <span className="inline-block w-3 h-3 rounded-full bg-green-500"></span>
-    <span className="text-gray-600 font-medium">{ticket.from}</span>
-  </div>
+                <div className="flex items-center text-sm font-semibold text-gray-700 space-x-2">
+                  {/* From */}
+                  <div className="flex items-center space-x-1">
+                    <span className="inline-block w-3 h-3 rounded-full bg-green-500"></span>
+                    <span className="text-gray-600 font-medium">
+                      {ticket.from}
+                    </span>
+                  </div>
 
-  {/* Arrow */}
-  <svg
-    className="w-5 h-5 text-purple-500 mx-2"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      d="M9 5l7 7-7 7"
-    />
-  </svg>
+                  {/* Arrow */}
+                  <svg
+                    className="w-5 h-5 text-purple-500 mx-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
 
-  {/* To */}
-  <div className="flex items-center space-x-1">
-    <span className="text-gray-600 font-medium">{ticket.to}</span>
-    <span className="inline-block w-3 h-3 rounded-full bg-red-500"></span>
-  </div>
-</div>
-
+                  {/* To */}
+                  <div className="flex items-center space-x-1">
+                    <span className="text-gray-600 font-medium">
+                      {ticket.to}
+                    </span>
+                    <span className="inline-block w-3 h-3 rounded-full bg-red-500"></span>
+                  </div>
+                </div>
 
                 {/* Transport */}
                 <div className="flex items-center text-sm font-semibold text-gray-700">
-         {ticket.icon}
-             
+                  {ticket.icon}
+
                   {ticket.transport}
                 </div>
 
                 {/* Price & Quantity */}
                 <div className="flex justify-between text-sm font-medium">
                   <span className="text-gray-600">Price:</span>
-                  <span className="text-purple-700 font-bold">{formattedPrice}</span>
+                  <span className="text-purple-700 font-bold">
+                    {formattedPrice}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm font-medium">
                   <span className="text-gray-600">Available:</span>
-                  <span className="text-purple-700 font-bold">{ticket.quantity}</span>
+                  <span className="text-purple-700 font-bold">
+                    {ticket.quantity}
+                  </span>
                 </div>
 
                 {/* Departure */}
                 <div className="text-sm text-gray-600 font-medium">
-                  <span className="font-semibold text-gray-700">Departure:</span> {formattedDeparture}
+                  <span className="font-semibold text-gray-700">
+                    Departure:
+                  </span>{" "}
+                  {formattedDeparture}
                 </div>
 
                 {/* Perks */}
@@ -200,18 +214,19 @@ const AllTickets = () => {
               </div>
 
               {/* Button */}
-              <button
-                onClick={() => alert(`Showing details for ${ticket.title}`)}
-                className="
+              <Link to="/all-tickets/details">
+                <button
+                  className="
                   w-full mt-4 py-3 text-lg font-bold text-white rounded-lg
                   bg-linear-to-r from-pink-600 to-red-700
                   hover:from-pink-700 hover:to-red-800
                   shadow-lg shadow-pink-500/40
                   transition duration-200
                 "
-              >
-                See Details
-              </button>
+                >
+                  See Details
+                </button>
+              </Link>
             </div>
           );
         })}

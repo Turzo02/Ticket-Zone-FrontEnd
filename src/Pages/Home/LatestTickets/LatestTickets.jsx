@@ -163,7 +163,6 @@ const AdvertisementTickets = () => {
 
               {/* Button */}
               <button
-                onClick={() => alert(`Showing details for ${ticket.title}`)}
                 className="
                   w-full mt-5 py-3 text-lg font-bold text-white rounded-lg
                   bg-linear-to-r from-pink-600 to-red-700

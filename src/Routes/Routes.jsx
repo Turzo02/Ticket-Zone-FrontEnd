@@ -7,6 +7,7 @@ import Register from "../Pages/Auth/Register/Register";
 import Login from "../Pages/Auth/Login/Login";
 import AuthLayout from "../Layouts/AuthLayout";
 import NotFound from "../Components/NotFound/NotFound";
+import TicketDetailsPage from "../Pages/TicketDetailsPage/TicketDetailsPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: "/all-tickets",
         Component: AllTickets,
+      },
+      {
+        path: "/all-tickets/details",
+        Component: TicketDetailsPage,
       },
       {
         path: "/dashboard",
