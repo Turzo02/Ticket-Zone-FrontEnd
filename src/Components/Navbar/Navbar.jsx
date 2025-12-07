@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import logo from "/favicon.png";
 const Navbar = () => {
+  // Navbar Added
   const links = (
     <>
       <li>
