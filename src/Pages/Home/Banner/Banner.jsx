@@ -66,15 +66,15 @@ const Banner = ({ slides = bannerData, interval = 4500 }) => {
             />
 
             {/* Gradient */}
-            <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent"></div>
 
             {/* Text */}
-            <div className="absolute inset-0 flex justify-center items-end p-6 md:p-12 lg:p-20">
+            <div className="absolute inset-0 flex justify-center items-end p-6 md:p-12 lg:p-10">
               <div
-                className={`max-w-xl transition-all duration-700 delay-300
+                className={`max-w-2xl transition-all duration-700 delay-300
                 ${index === currentIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
               >
-                <h2 className="text-2xl text-center sm:text-3xl lg:text-4xl font-extrabold mb-2 text-white">
+                <h2 className="text-2xl text-center sm:text-3xl lg:text-5xl font-extrabold text-white">
                   {slide.title}
                 </h2>
               </div>
