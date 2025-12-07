@@ -12,6 +12,7 @@ import TransactionHistory from "../Pages/Dashboard/TransactionHistory";
 import DasboardLayout from "../Layouts/DasboardLayout";
 import UserProfile from "../Pages/Dashboard/UserProfile";
 import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -63,11 +64,13 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/register",
-        Component: Register,
+        // Component: Register,
+        element:<PublicRoute><Register></Register></PublicRoute>
       },
       {
         path: "/login",
-        Component: Login,
+        // Component: Login,
+        element:<PublicRoute><Login></Login></PublicRoute>
       },
       {
         path: "*",
