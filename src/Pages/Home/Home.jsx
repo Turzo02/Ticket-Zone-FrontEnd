@@ -4,6 +4,7 @@ import Banner from "./Banner/Banner";
 import LatestTickets from "./LatestTickets/LatestTickets";
 import PopularRoutes from "./PopularRoutes/PopularRoutes";
 import StartJourney from "./StartJourney/StartJourney";
+import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
 const Home = () => {
   return (
     <div>
