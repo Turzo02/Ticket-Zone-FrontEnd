@@ -1,9 +1,17 @@
 import React from "react";
-import { Moon, Sun } from "lucide-react";
+import Advertisement from "./Advertisement/Advertisement";
+import Banner from "./Banner/Banner";
+import LatestTickets from "./LatestTickets/LatestTickets";
+import PopularRoutes from "./PopularRoutes/PopularRoutes";
+import StartJourney from "./StartJourney/StartJourney";
 const Home = () => {
   return (
     <div>
-      Home
+      <Banner></Banner>
+      <Advertisement></Advertisement>
+      <LatestTickets></LatestTickets>
+      <PopularRoutes></PopularRoutes>
+      <StartJourney></StartJourney> 
 
     </div>
   );
