@@ -2,17 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
-
+import TicketCountdown from "../../Components/TicketCountdown/TicketCountdown";
 const TicketDetailsPage = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
+  
 
   const {
     data: ticket,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["ticket", id], 
+    queryKey: ["ticket", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/ticket/${id}`);
       return res.data;
@@ -61,13 +62,23 @@ const TicketDetailsPage = () => {
         </div>
 
         <div className="text-gray-600 font-medium">
-          <span className="text-gray-700 font-semibold">Departure:</span>{" "}
-          <span className="text-red-600 font-bold">Dec 15, 2025 08:00 AM</span>
+          <div className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg font-semibold flex gap-4 whitespace-nowrap">
+            📅 <span className="text-gray-700 font-semibold">Departure:</span>{" "}
+            {new Date(ticket.departure).toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
         </div>
 
         <div className="text-gray-600 font-medium">
-          <span className="text-gray-700 font-semibold">Countdown:</span>{" "}
-          <span className="text-red-600 font-bold">10 days</span>
+          <span className="text-red-600 font-bold">
+            {" "}
+            <TicketCountdown departure={ticket.departure} />
+          </span>
         </div>
 
         <div>
