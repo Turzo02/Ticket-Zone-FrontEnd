@@ -12,7 +12,6 @@ import TransactionHistory from "../Pages/Dashboard/User/TransactionHistory";
 import DasboardLayout from "../Layouts/DasboardLayout";
 import UserProfile from "../Pages/Dashboard/UserProfile";
 import PrivateRoute from "./PrivateRoute";
-import PublicRoute from "./PublicRoute";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import ManageTickets from "../Pages/Dashboard/Admin/ManageTickets";
 import AdvertiseTickets from "../Pages/Dashboard/Admin/AdvertiseTickets";
@@ -107,17 +106,13 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: (
-          <PublicRoute>
             <Register></Register>
-          </PublicRoute>
         ),
       },
       {
         path: "/login",
         element: (
-          <PublicRoute>
             <Login></Login>
-          </PublicRoute>
         ),
       },
       {

@@ -9,24 +9,28 @@
 @plugin "daisyui/theme" {
   name: "dark";
   default: true; 
-  --bg: #ffffff;
-  --text: #1e293b;
-  --primary: #2563eb;
-  --secondary: #64748b;
-  --accent: #0ea5e9;
-  --card-bg: #f8fafc;
-  --border: #e2e8f0;
+    --p: 59 130 246;  
+    --pf: 37 99 235;     
+    --b1: 31 41 55;   
+    --b3: 17 24 39;  
+    --bc: 249 250 251; 
+    --nc: 156 163 175; 
+    --s: 156 163 175;  
+    --a: 37 99 235; 
 }
 
 @plugin "daisyui/theme" {
   name: "light";
-  --bg: #0f172a;
-  --text: #f1f5f9;
-  --primary: #2563eb;
-  --secondary: #94a3b8;
-  --accent: #38bdf8;
-  --card-bg: #1e293b;
-  --border: #334155;  
+    --p: 59 130 246;
+    --pf: 37 99 235;       
+    --b1: 255 255 255; 
+    --b3: 243 244 246;  
+
+    --bc: 17 24 39;    
+    --nc: 107 114 128; 
+
+    --s: 107 114 128; 
+    --a: 37 99 235;  
 }
 
 /* 4️⃣ Global styles */
@@ -36,12 +40,3 @@ body {
   font-style: normal;
 }
 
-/* 5️⃣ Custom utilities */
-@layer utilities {
-  .glass {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-  }
-}
