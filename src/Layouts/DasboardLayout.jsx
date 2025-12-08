@@ -2,20 +2,29 @@ import { SlidersHorizontal } from "lucide-react";
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router";
 const menuItems = [
-  { label: "User Profile", path: "/dashboard/user-profile" },
-  { label: "My Booked Tickets", path: "/dashboard/my-booked-tickets" },
-  { label: "Transaction History", path: "/dashboard/transaction-history" },
-  { label: "Add Tickets", path: "/dashboard/add-tickets" },
-  { label: "My Added Tickets", path: "/dashboard/my-added-tickets" },
-  { label: "Requested Tickets", path: "/dashboard/requested-tickets" },
-  { label: "Revenue Overview", path: "/dashboard/revenue-overview" },
-  { label: "Manage Users", path: "/dashboard/manage-users" },
-  { label: "Manage Tickets", path: "/dashboard/manage-tickets" },
-  { label: "Advertisement", path: "/dashboard/advertisement-tickets" },
+  // all
+  { label: "User Profile", path: "/dashboard/user-profile", roles: ["user","vendor","admin"] },
+
+  // user
+  { label: "My Booked Tickets", path: "/dashboard/my-booked-tickets", roles: ["user"] },
+  { label: "Transaction History", path: "/dashboard/transaction-history", roles: ["user"] },
+
+  // vendor
+  { label: "Add Tickets", path: "/dashboard/add-tickets", roles: ["vendor"] },
+  { label: "My Added Tickets", path: "/dashboard/my-added-tickets", roles: ["vendor"] },
+  { label: "Requested Tickets", path: "/dashboard/requested-tickets", roles: ["vendor"] },
+  { label: "Revenue Overview", path: "/dashboard/revenue-overview", roles: ["vendor"] },
+
+  // admin
+  { label: "Manage Users", path: "/dashboard/manage-users", roles: ["admin"] },
+  { label: "Manage Tickets", path: "/dashboard/manage-tickets", roles: ["admin"] },
+  { label: "Advertisement", path: "/dashboard/advertisement-tickets", roles: ["admin"] },
 ];
+
 
 const DashboardLayout = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const allowedMenuItems = menuItems.filter((item) => item.roles.includes("admin"));
 
   return (
     <div className="flex min-h-screen ">

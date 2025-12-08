@@ -7,7 +7,7 @@ import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [loginError,setLoginError] = useState('')
+  const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
   const { signInUser } = useAuth();
   const location = useLocation();
@@ -16,19 +16,17 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-    const handleLogin = (data) => {
+  const handleLogin = (data) => {
     console.log(data);
     signInUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
-         navigate(location?.state|| "/");
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         console.log(error.message);
-        setLoginError(error.message)
-      });   
-   
-
+        setLoginError(error.message);
+      });
   };
 
   return (
@@ -96,14 +94,23 @@ const Login = () => {
                   <div>
                     <a className="link link-hover">Forgot password?</a>
                   </div>
-                  {
-                    loginError && <span className="text-red-600">{loginError}</span>
-                  }
+                  {loginError && (
+                    <span className="text-red-600">{loginError}</span>
+                  )}
                   <button className="btn btn-neutral mt-4">Login</button>
                 </fieldset>
               </form>
               <SocialLogin></SocialLogin>
-              <p>Don"t have an account? Please <Link state={location.state} to="/register" className="font-semibold text-blue-500">Sign Up</Link></p>
+              <p>
+                Don"t have an account? Please{" "}
+                <Link
+                  state={location.state}
+                  to="/register"
+                  className="font-semibold text-blue-500"
+                >
+                  Sign Up
+                </Link>
+              </p>
             </div>
           </div>
         </div>

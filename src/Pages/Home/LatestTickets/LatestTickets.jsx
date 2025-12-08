@@ -1,82 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 
-const tickets = [
-  {
-    imageSrc:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80",
-    title: "Sundarban Adventure Tour",
-    price: 129.5,
-    quantity: 22,
-    transport: "AC Tourist Boat",
-    perks: ["Lunch Included", "Wildlife Guide", "River Cruise"],
-  },
-  {
-    imageSrc:
-      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",
-    title: "Cox’s Bazar Premium Bus",
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * LatestTickets
- * 
- * A component that renders a list of latest tickets,
- * each with its own card and details.
- * 
- * @returns {React.ReactElement} The JSX element representing the LatestTickets component.
- * 
- * @example
- * <LatestTickets />
- */
-/*******  1b3cfa0a-a5fc-4774-be81-6b22d03b10c1  *******/    price: 18.99,
-    quantity: 9,
-    transport: "Volvo AC Bus",
-    perks: ["WiFi", "Snacks", "Extra Legroom"],
-  },
-  {
-    imageSrc:
-      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80",
-    title: "Saint Martin Cruise",
-    price: 49.99,
-    quantity: 16,
-    transport: "Luxury Sea Cruise",
-    perks: ["Buffet Lunch", "Deck Access", "Live Music"],
-  },
-  {
-    imageSrc:
-      "https://images.unsplash.com/photo-1521106581851-f48c707a43ef?w=600&q=80",
-    title: "Dhaka City Helicopter Tour",
-    price: 199.0,
-    quantity: 4,
-    transport: "Private Helicopter",
-    perks: ["Aerial View", "Photo Session", "VIP Lounge Access"],
-  },
-  {
-    imageSrc:
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&q=80",
-    title: "Rangamati Boat Ride",
-    price: 15.0,
-    quantity: 30,
-    transport: "Traditional Boat",
-    perks: ["Life Jacket", "Hill View", "Free Water Bottle"],
-  },
-  {
-    imageSrc:
-      "https://images.unsplash.com/photo-1500043203572-9c37f3a808c3?w=600&q=80",
-    title: "Sylhet Express Train",
-    price: 12.75,
-    quantity: 40,
-    transport: "Intercity Train (AC)",
-    perks: ["Comfort Seat", "Clean Cabin", "Fast Route"],
-  },
-];
+const LatestTickets = () => {
+  const [tickets, setTickets] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
-const AdvertisementTickets = () => {
+  useEffect(() => {
+    axiosSecure
+      .get("/ticket")
+      .then((res) => {
+        // sort by departure date descending (latest first)
+        const sortedTickets = res.data.sort(
+          (a, b) => new Date(b.departure) - new Date(a.departure)
+        );
+        const latestTickets = sortedTickets.slice(0, 8);
+        setTickets(latestTickets);
+      })
+      .catch((error) => {
+        console.error("Error fetching tickets:", error);
+      });
+  }, [axiosSecure]);
+
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       <h1 className="text-4xl font-extrabold text-center mb-10">
-        Advertisement Tickets
+        Latest Tickets
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {tickets.map((ticket, index) => {
           const formattedPrice = new Intl.NumberFormat("en-US", {
             style: "currency",
@@ -87,6 +38,7 @@ const AdvertisementTickets = () => {
             <div
               key={index}
               className="
+              
                 bg-white
                 rounded-xl
                 shadow-xl
@@ -100,7 +52,7 @@ const AdvertisementTickets = () => {
               {/* Header */}
               <div className="relative h-40 rounded-lg overflow-hidden">
                 <img
-                  src={ticket.imageSrc}
+                  src="https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_006"
                   alt={ticket.title}
                   className="w-full h-full object-cover"
                 />
@@ -145,17 +97,22 @@ const AdvertisementTickets = () => {
                       d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                     ></path>
                   </svg>
-                  {ticket.transport}
+                  {ticket.transportType}
                 </div>
 
                 {/* Perks */}
-                <div>
+                <div className="flex flex-col">
                   <h3 className="text-xs font-semibold uppercase text-purple-600 mb-1">
                     ✨ Perks
                   </h3>
-                  <ul className="text-sm space-y-1 list-disc pl-5 text-gray-600">
+                  <ul className="flex flex-wrap gap-2 text-sm text-gray-600 overflow-x-auto whitespace-nowrap">
                     {ticket.perks.map((perk, i) => (
-                      <li key={i}>{perk}</li>
+                      <li
+                        key={i}
+                        className="bg-gray-100 px-2 py-1 rounded-full shrink-0"
+                      >
+                        {perk}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -181,4 +138,4 @@ const AdvertisementTickets = () => {
   );
 };
 
-export default AdvertisementTickets;
+export default LatestTickets;
