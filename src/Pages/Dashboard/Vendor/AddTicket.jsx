@@ -114,7 +114,7 @@ const AddTicket = () => {
               <option>Bus</option>
               <option>Train</option>
               <option>Flight</option>
-              <option>Ferry</option>
+              <option>Ship</option>
             </select>
             {errors.transportType && (
               <p className="text-red-500 text-sm mt-1">

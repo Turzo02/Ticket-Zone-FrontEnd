@@ -1,25 +1,36 @@
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
+import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 
 const LatestTickets = () => {
-  const [tickets, setTickets] = useState([]);
   const axiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-    axiosSecure
-      .get("/ticket")
-      .then((res) => {
-        // sort by departure date descending (latest first)
-        const sortedTickets = res.data.sort(
-          (a, b) => new Date(b.departure) - new Date(a.departure)
-        );
-        const latestTickets = sortedTickets.slice(0, 8);
-        setTickets(latestTickets);
-      })
-      .catch((error) => {
-        console.error("Error fetching tickets:", error);
-      });
-  }, [axiosSecure]);
+  const {
+    data: tickets = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["latestTickets"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/ticket");
+      return data
+        .sort((a, b) => new Date(b.departure) - new Date(a.departure))
+        .slice(0, 7);
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <SwappingDotLoader></SwappingDotLoader>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <p className="text-red-500">Failed to load tickets</p>;
+  }
+
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
@@ -83,21 +94,32 @@ const LatestTickets = () => {
                 </div>
 
                 {/* Transport */}
-                <div className="flex items-center text-sm font-semibold text-gray-700">
-                  <svg
-                    className="w-5 h-5 mr-2 text-indigo-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                    ></path>
-                  </svg>
-                  {ticket.transportType}
+                <div className="flex justify-between items-center text-sm font-medium text-gray-700 p-2 sm:p-3  rounded-lg ">
+                  {/* Left: Emoji + Transport Type */}
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xl">
+                      {ticket.transportType === "Train" && "🚆"}
+                      {ticket.transportType === "Bus" && "🚌"}
+                      {ticket.transportType === "Flight" && "✈️"}
+                      {ticket.transportType === "Ship" && "🚢"}
+                      {!["Train", "Bus", "Flight", "Ship"].includes(
+                        ticket.transportType
+                      ) && "🛺"}
+                    </span>
+                    <span>{ticket.transportType}</span>
+                  </div>
+
+                  {/* Right: Departure Date */}
+                  <div className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg font-semibold text-right whitespace-nowrap">
+                    📅{" "}
+                    {new Date(ticket.departure).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </div>
                 </div>
 
                 {/* Perks */}

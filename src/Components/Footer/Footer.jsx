@@ -14,7 +14,7 @@ const Footer = () => {
             <Link to="/" className="text-2xl font-semibold flex items-center justify-start gap-2">   <span> <img className="w-9" src={logo} alt="" /></span>
             Ticket Zone</Link>
             <p className="mt-3">
-              Book bus, train, launch & flight tickets easily.
+              Book bus, train, ship & flight tickets easily.
             </p>
           </div>
 

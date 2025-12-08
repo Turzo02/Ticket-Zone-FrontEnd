@@ -1,95 +1,39 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { MdOutlineCategory } from "react-icons/md";
 import { Link } from "react-router";
-// Sample ticket data
-const allTickets = [
-  {
-    id: 1,
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80",
-    title: "Sundarban Adventure Tour",
-    icon: "🚀",
-    from: "Khulna",
-    to: "Sundarban",
-    transport: "AC Tourist Boat",
-    price: 129.5,
-    quantity: 22,
-    perks: ["Lunch Included", "Wildlife Guide", "River Cruise"],
-    departure: "2025-12-12T08:30",
-  },
-  {
-    id: 2,
-    image:
-      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",
-    title: "Cox’s Bazar Premium Bus",
-    icon: "🚌",
-    from: "Dhaka",
-    to: "Cox’s Bazar",
-    transport: "Volvo AC Bus",
-    price: 18.99,
-    quantity: 9,
-    perks: ["WiFi", "Snacks", "Extra Legroom"],
-    departure: "2025-12-10T06:45",
-  },
-  {
-    id: 3,
-    image:
-      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80",
-    title: "Saint Martin Cruise",
-    icon: "🚀",
-    from: "Teknaf",
-    to: "Saint Martin",
-    transport: "Luxury Sea Cruise",
-    price: 49.99,
-    quantity: 16,
-    perks: ["Buffet Lunch", "Deck Access", "Live Music"],
-    departure: "2025-12-15T09:00",
-  },
-  {
-    id: 4,
-    image:
-      "https://images.unsplash.com/photo-1521106581851-f48c707a43ef?w=600&q=80",
-    title: "Dhaka City Helicopter Tour",
-    icon: "✈️",
-    from: "Dhaka",
-    to: "Dhaka Skyline",
-    transport: "Private Helicopter",
-    price: 199.0,
-    quantity: 4,
-    perks: ["Aerial View", "Photo Session", "VIP Lounge Access"],
-    departure: "2025-12-18T12:00",
-  },
-  {
-    id: 5,
-    image:
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&q=80",
-    title: "Rangamati Boat Ride",
-    icon: "🚀",
-    from: "Rangamati",
-    to: "Kaptai Lake",
-    transport: "Traditional Boat",
-    price: 15.0,
-    quantity: 30,
-    perks: ["Life Jacket", "Hill View", "Free Water Bottle"],
-    departure: "2025-12-11T07:30",
-  },
-  {
-    id: 6,
-    image:
-      "https://images.unsplash.com/photo-1500043203572-9c37f3a808c3?w=600&q=80",
-    title: "Sylhet Express Train",
-    icon: "🚆",
-    from: "Dhaka",
-    to: "Sylhet",
-    transport: "Intercity Train (AC)",
-    price: 12.75,
-    quantity: 40,
-    perks: ["Comfort Seat", "Clean Cabin", "Fast Route"],
-    departure: "2025-12-13T10:15",
-  },
-];
+import useAxiosSecure from "../../Hooks/useAxiousSecure";
+import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
+import { MoveRight } from "lucide-react";
 
 const AllTickets = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const {
+    data: allTickets = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["latestTickets"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/ticket");
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <SwappingDotLoader></SwappingDotLoader>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <p className="text-red-500">Failed to load tickets</p>;
+  }
+  console.log(allTickets);
+
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       <h1 className="text-4xl font-extrabold text-center mb-10">
@@ -108,15 +52,9 @@ const AllTickets = () => {
             currency: "USD",
           }).format(ticket.price);
 
-          const departureDate = new Date(ticket.departure);
-          const formattedDeparture = `${departureDate.toLocaleDateString()} ${departureDate.toLocaleTimeString(
-            [],
-            { hour: "2-digit", minute: "2-digit" }
-          )}`;
-
           return (
             <div
-              key={ticket.id}
+              key={ticket._id}
               className="
                 bg-white rounded-xl shadow-xl overflow-hidden
                 hover:scale-[1.03] transition duration-300 p-4
@@ -125,7 +63,7 @@ const AllTickets = () => {
               {/* Header Image */}
               <div className="relative h-40 rounded-lg overflow-hidden">
                 <img
-                  src={ticket.image}
+                  src="https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_009"
                   alt={ticket.title}
                   className="w-full h-full object-cover"
                 />
@@ -136,38 +74,29 @@ const AllTickets = () => {
               </div>
 
               {/* Body */}
-              <div className="pt-4 space-y-3">
+              <div className="pt-4 space-y-3 ">
                 {/* Route */}
                 <div className="flex items-center text-sm font-semibold text-gray-700 space-x-2">
-                  {/* From */}
-                  <div className="flex items-center space-x-1">
-                    <span className="inline-block w-3 h-3 rounded-full bg-green-500"></span>
-                    <span className="text-gray-600 font-medium">
-                      {ticket.from}
-                    </span>
-                  </div>
+                  <div className="flex w-full justify-between items-center">
+                    {/* From */}
+                    <div className="flex items-center space-x-1">
+                      <span className="inline-block w-3 h-3 rounded-full bg-green-500"></span>
+                      <span className="text-gray-600 font-bold text-xl">
+                        {ticket.from}
+                      </span>
+                    </div>
 
-                  {/* Arrow */}
-                  <svg
-                    className="w-5 h-5 text-purple-500 mx-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
+                    {/* Arrow */}
 
-                  {/* To */}
-                  <div className="flex items-center space-x-1">
-                    <span className="text-gray-600 font-medium">
-                      {ticket.to}
-                    </span>
-                    <span className="inline-block w-3 h-3 rounded-full bg-red-500"></span>
+                    <MoveRight />
+
+                    {/* To */}
+                    <div className="flex items-center space-x-1">
+                      <span className="text-gray-600 font-bold text-xl">
+                        {ticket.to}
+                      </span>
+                      <span className="inline-block w-3 h-3 rounded-full bg-red-500"></span>
+                    </div>
                   </div>
                 </div>
 
@@ -192,32 +121,58 @@ const AllTickets = () => {
                   </span>
                 </div>
 
-                {/* Departure */}
-                <div className="text-sm text-gray-600 font-medium">
-                  <span className="font-semibold text-gray-700">
-                    Departure:
-                  </span>{" "}
-                  {formattedDeparture}
+                {/* Transport */}
+                <div className="flex justify-between items-center text-sm font-medium text-gray-700 py-2 sm:py-3  rounded-lg ">
+                  {/* Left: Emoji + Transport Type */}
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xl">
+                      {ticket.transportType === "Train" && "🚆"}
+                      {ticket.transportType === "Bus" && "🚌"}
+                      {ticket.transportType === "Flight" && "✈️"}
+                      {ticket.transportType === "Ship" && "🚢"}
+                      {!["Train", "Bus", "Flight", "Ship"].includes(
+                        ticket.transportType
+                      ) && "🛺"}
+                    </span>
+                    <span>{ticket.transportType}</span>
+                  </div>
+
+                  {/* Right: Departure Date */}
+                  <div className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg font-semibold text-right whitespace-nowrap">
+                    📅{" "}
+                    {new Date(ticket.departure).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </div>
                 </div>
 
                 {/* Perks */}
-                <div>
-                  <h3 className="text-xs font-semibold uppercase text-purple-600 mb-1">
+                <div className="flex flex-col">
+                  <h3 className="text-xs font-semibold uppercase text-purple-600 mb-4">
                     ✨ Perks
                   </h3>
-                  <ul className="text-sm space-y-1 list-disc pl-5 text-gray-600">
-                    {ticket.perks.map((perk, idx) => (
-                      <li key={idx}>{perk}</li>
+                  <ul className="flex flex-wrap gap-2 text-sm text-gray-600 overflow-x-auto whitespace-nowrap">
+                    {ticket.perks.map((perk, i) => (
+                      <li
+                        key={i}
+                        className="bg-gray-100 px-2 py-1 rounded-full shrink-0"
+                      >
+                        {perk}
+                      </li>
                     ))}
                   </ul>
                 </div>
               </div>
 
               {/* Button */}
-              <Link to="/all-tickets/details">
+              <Link to={`/all-tickets/${ticket._id}`}>
                 <button
                   className="
-                  w-full mt-4 py-3 text-lg font-bold text-white rounded-lg
+                  w-full mt-4 cursor-pointer py-3 text-lg font-bold text-white rounded-lg
                   bg-linear-to-r from-pink-600 to-red-700
                   hover:from-pink-700 hover:to-red-800
                   shadow-lg shadow-pink-500/40
