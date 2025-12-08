@@ -6,13 +6,20 @@ import Register from "../Pages/Auth/Register/Register";
 import Login from "../Pages/Auth/Login/Login";
 import AuthLayout from "../Layouts/AuthLayout";
 import NotFound from "../Components/NotFound/NotFound";
-import TicketDetailsPage from "../Pages/TicketDetailsPage/TicketDetailsPage";;
-import MyBookedTickets from "../Pages/Dashboard/MyBookedTickets";
-import TransactionHistory from "../Pages/Dashboard/TransactionHistory";
+import TicketDetailsPage from "../Pages/TicketDetailsPage/TicketDetailsPage";
+import MyBookedTickets from "../Pages/Dashboard/User/MyBookedTickets";
+import TransactionHistory from "../Pages/Dashboard/User/TransactionHistory";
 import DasboardLayout from "../Layouts/DasboardLayout";
 import UserProfile from "../Pages/Dashboard/UserProfile";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import ManageTickets from "../Pages/Dashboard/Admin/ManageTickets";
+import AdvertiseTickets from "../Pages/Dashboard/Admin/AdvertiseTickets";
+import AddTicket from "../Pages/Dashboard/Vendor/AddTicket";
+import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddedTickets";
+import RequestedTickets from "../Pages/Dashboard/Vendor/RequestedTickets";
+import Revenue from "../Pages/Dashboard/Vendor/Revenue";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -24,7 +31,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-tickets",
-        element:<PrivateRoute><AllTickets></AllTickets></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <AllTickets></AllTickets>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/all-tickets/details",
@@ -38,6 +49,7 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         Component: DasboardLayout,
         children: [
+          // for user routes
           {
             index: true,
             Component: UserProfile,
@@ -50,10 +62,40 @@ export const router = createBrowserRouter([
             path: "transaction-history",
             Component: TransactionHistory,
           },
-        {
-          path: "user-profile",
-          Component: UserProfile,
-        }
+          {
+            path: "user-profile",
+            Component: UserProfile,
+          },
+          // for admin routes
+          {
+            path: "manage-users",
+            element: <ManageUsers></ManageUsers>
+          },
+          {
+            path: "manage-tickets",
+            element: <ManageTickets></ManageTickets>
+          },
+          {
+           path: "advertisement-tickets",
+           element: <AdvertiseTickets></AdvertiseTickets>
+          },
+          //for vendor routes
+          {
+            path: "add-tickets",
+            element: <AddTicket></AddTicket>
+          },
+          {
+            path: "my-added-tickets",
+            element: <MyAddedTickets></MyAddedTickets>
+          },
+          {
+            path: "requested-tickets",
+            element: <RequestedTickets></RequestedTickets>
+          },
+          {
+            path: "revenue-overview",
+            element: <Revenue></Revenue>
+          }
         ],
       },
     ],
@@ -64,13 +106,19 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/register",
-        // Component: Register,
-        element:<PublicRoute><Register></Register></PublicRoute>
+        element: (
+          <PublicRoute>
+            <Register></Register>
+          </PublicRoute>
+        ),
       },
       {
         path: "/login",
-        // Component: Login,
-        element:<PublicRoute><Login></Login></PublicRoute>
+        element: (
+          <PublicRoute>
+            <Login></Login>
+          </PublicRoute>
+        ),
       },
       {
         path: "*",

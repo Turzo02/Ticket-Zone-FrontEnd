@@ -1,6 +1,18 @@
 import { SlidersHorizontal } from "lucide-react";
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router";
+const menuItems = [
+  { label: "User Profile", path: "/dashboard/user-profile" },
+  { label: "My Booked Tickets", path: "/dashboard/my-booked-tickets" },
+  { label: "Transaction History", path: "/dashboard/transaction-history" },
+  { label: "Add Tickets", path: "/dashboard/add-tickets" },
+  { label: "My Added Tickets", path: "/dashboard/my-added-tickets" },
+  { label: "Requested Tickets", path: "/dashboard/requested-tickets" },
+  { label: "Revenue Overview", path: "/dashboard/revenue-overview" },
+  { label: "Manage Users", path: "/dashboard/manage-users" },
+  { label: "Manage Tickets", path: "/dashboard/manage-tickets" },
+  { label: "Advertisement", path: "/dashboard/advertisement-tickets" },
+];
 
 const DashboardLayout = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -17,28 +29,18 @@ const DashboardLayout = () => {
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
             Dashboard
           </h2>
+
           <nav className="flex flex-col space-y-2">
-            <Link
-              to="/dashboard/user-profile"
-              className="px-3 py-2 rounded-lg"
-              onClick={() => setDrawerOpen(false)}
-            >
-              User Profile
-            </Link>
-            <Link
-              to="/dashboard/my-booked-tickets"
-              className="px-3 py-2 rounded-lg"
-              onClick={() => setDrawerOpen(false)}
-            >
-              My Booked Tickets
-            </Link>
-            <Link
-              to="/dashboard/transaction-history"
-              className="px-3 py-2 rounded-lg"
-              onClick={() => setDrawerOpen(false)}
-            >
-              Transaction History
-            </Link>
+            {menuItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="px-3 py-2 rounded-lg"
+                onClick={() => setDrawerOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
         </div>
       </aside>
