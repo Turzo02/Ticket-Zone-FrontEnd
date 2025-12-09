@@ -1,6 +1,40 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
-
+import useAxiosSecure from "../../Hooks/useAxiousSecure";
+import  useAuth  from "../../Hooks/useAuth";
+import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
 const UserProfile = () => {
+  //name, email, role,etc
+
+  // const url = "http://localhost:3000/users/naim198650@gmail.com";
+
+  const axiosSecure = useAxiosSecure();
+  const {user} = useAuth();
+
+  const {
+    data: Users = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["LatestUsers"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/users/${user.email}`);
+      return data
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <SwappingDotLoader></SwappingDotLoader>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <p className="text-red-500">Failed to load tickets</p>;
+  }
+  console.log(Users)
   return (
     <div className="rounded-2xl border border-gray-200  p-6 shadow-sm dark:border-gray-800 dark:bg-card-dark sm:p-8">
       <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 font-display">
@@ -12,20 +46,22 @@ const UserProfile = () => {
             className="h-24 w-24 rounded-full bg-slate-100 bg-cover bg-center ring-4 ring-white dark:ring-card-dark"
             style={{
               backgroundImage:
-                "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRHBywqFiHMlYvcZZcA20QiiTpuY9xK2Hw_TMw6js9Q6vcRjQy-A-pTxPiTpjKEQjKtB78jSflR8fJ8BH0PdiOaJYidGXAYNN18mErT-sWctvGUKo5RTPgiJstJizAwa625AfenszKmwdYsFtxW8LxFMFHMkVMIu9PKs_kFP25jX89CGGAXYwpb2j7kvJvdBKEizQCsSm14-pLChNbl8R1Gfl9gBeMM1Q4ZMiz2W27SkutNtGLbYBlmrLvBqP-VhLXaIum9Ic1WEo')",
+                `url('${Users.photoURL}')`,
             }}
           ></div>
         </div>
         <div className="flex-1 space-y-1">
           <div className="flex items-center gap-3">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white font-display">
-              Alex Johnson
+              {Users.name}
             </h2>
             <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary dark:bg-primary/20">
-              Admin
+              {Users.role}
             </span>
           </div>
-          <p className="text-slate-500 dark:text-slate-400">alex.johnson@example.com</p>
+          <p className="text-slate-500 dark:text-slate-400">
+           {Users.email}
+          </p>
         </div>
       </div>
     </div>
