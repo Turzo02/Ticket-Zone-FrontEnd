@@ -5,8 +5,11 @@ import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
 import TicketCountdown from "../../Components/TicketCountdown/TicketCountdown";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
 const TicketDetailsPage = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const { id } = useParams();
   const [modalOpen, setModalOpen] = useState(false);
   const {
@@ -26,8 +29,43 @@ const TicketDetailsPage = () => {
     formState: { errors },
   } = useForm();
 
+
   const handleBookingSubmit = (data) => {
-    console.log("Booking Data:", data);
+    const quantity = Number(data.quantity);
+    const price = Number(ticket.price);
+    const bookingQuantity = Number(ticket.quantity);
+    const bookingData = {
+      ticketId: id,
+      userEmail: user?.email,
+      title: ticket.title,
+      bookingQuantity: bookingQuantity,
+      totalPrice: quantity * price,
+      status: "pending",
+    };
+
+
+    // post the data to database
+    axiosSecure
+      .post("/bookings", bookingData)
+      .then((res) => {
+        console.log("after post data", res.data);
+        // Show success alert
+        Swal.fire({
+          icon: "success",
+          title: "Ticket Added!",
+          text: "Your ticket purchase has been successfully posted",
+          confirmButtonText: "OK",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong while booking your ticket!",
+          confirmButtonText: "OK",
+        });
+      });
     setModalOpen(false);
   };
 
