@@ -3,11 +3,12 @@ import { useParams } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
 import TicketCountdown from "../../Components/TicketCountdown/TicketCountdown";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 const TicketDetailsPage = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
-  
-
+  const [modalOpen, setModalOpen] = useState(false);
   const {
     data: ticket,
     isLoading,
@@ -19,11 +20,19 @@ const TicketDetailsPage = () => {
       return res.data;
     },
   });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleBookingSubmit = (data) => {
+    console.log("Booking Data:", data);
+    setModalOpen(false);
+  };
 
   if (isLoading) return <SwappingDotLoader></SwappingDotLoader>;
   if (isError) return <p className="text-red-600">Error loading ticket</p>;
-
-  console.log(ticket);
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
@@ -36,7 +45,7 @@ const TicketDetailsPage = () => {
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
         <h1 className="absolute bottom-4 left-6 text-white text-3xl sm:text-4xl font-extrabold drop-shadow-lg">
-          Amazing Concert Ticket
+          {ticket.title}
         </h1>
       </div>
 
@@ -44,26 +53,29 @@ const TicketDetailsPage = () => {
       <div className="bg-white rounded-xl shadow-lg p-6 space-y-4">
         <div className="flex flex-wrap justify-between items-center">
           <div className="text-gray-700 font-semibold">
-            <span className="text-gray-500">From:</span> New York{" "}
+            <span className="text-gray-500">From:</span> {ticket.from}
             <span className="mx-2">→</span>
-            <span className="text-gray-500">To:</span> Los Angeles
+            <span className="text-gray-500">To:</span> {ticket.to}
           </div>
-          <div className="text-gray-700 font-semibold">Flight</div>
+          <div className="text-gray-700 font-semibold">
+            {ticket.transportType}
+          </div>
         </div>
 
         <div className="flex justify-between items-center">
           <span className="text-gray-600 font-medium">Price:</span>
-          <span className="text-purple-700 font-bold">$299</span>
+          <span className="text-purple-700 font-bold">${ticket.price}</span>
         </div>
 
         <div className="flex justify-between items-center">
           <span className="text-gray-600 font-medium">Available:</span>
-          <span className="text-purple-700 font-bold">42</span>
+          <span className="text-purple-700 font-bold">{ticket.quantity}</span>
         </div>
 
+        {/* Departure */}
         <div className="text-gray-600 font-medium">
           <div className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg font-semibold flex gap-4 whitespace-nowrap">
-            📅 <span className="text-gray-700 font-semibold">Departure:</span>{" "}
+            📅 <span className="text-gray-700">Departure:</span>{" "}
             {new Date(ticket.departure).toLocaleDateString("en-GB", {
               day: "2-digit",
               month: "short",
@@ -74,37 +86,43 @@ const TicketDetailsPage = () => {
           </div>
         </div>
 
+        {/* Countdown */}
         <div className="text-gray-600 font-medium">
-          <span className="text-red-600 font-bold">
-            {" "}
-            <TicketCountdown departure={ticket.departure} />
-          </span>
+          <TicketCountdown departure={ticket.departure} />
         </div>
 
-        <div>
-          <h3 className="text-purple-600 font-semibold uppercase mb-2">
+        {/* Perks */}
+        <div className="flex flex-col">
+          <h3 className="text-xs font-semibold uppercase text-purple-600 mb-4">
             ✨ Perks
           </h3>
-          <ul className="list-disc list-inside text-gray-600 space-y-1">
-            <li>Free Wi-Fi</li>
-            <li>Complimentary Snacks</li>
-            <li>Priority Boarding</li>
+          <ul className="flex flex-wrap gap-2 text-sm text-gray-600 overflow-x-auto whitespace-nowrap">
+            {ticket.perks.map((perk, i) => (
+              <li
+                key={i}
+                className="bg-gray-100 px-2 py-1 rounded-full shrink-0"
+              >
+                {perk}
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Book Now Button */}
         <button
+          onClick={() => setModalOpen(true)}
           className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg
-        bg-linear-to-r from-pink-600 to-red-700
-        hover:from-pink-700 hover:to-red-800
-        shadow-lg shadow-pink-500/40 transition duration-200 cursor-pointer"
+          bg-linear-to-r from-pink-600 to-red-700
+          hover:from-pink-700 hover:to-red-800
+          shadow-lg shadow-pink-500/40 transition duration-200 cursor-pointer"
         >
           Book Now
         </button>
       </div>
+
       {/* Booking Modal */}
-      {/* {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
           <div className="glass rounded-xl shadow-lg w-11/12 max-w-md p-6 relative">
             <button
               onClick={() => setModalOpen(false)}
@@ -112,35 +130,53 @@ const TicketDetailsPage = () => {
             >
               &times;
             </button>
+
             <h2 className="text-2xl font-extrabold mb-4">Book Tickets</h2>
-            <form onSubmit={handleBookingSubmit} className="space-y-4">
+
+            <form
+              onSubmit={handleSubmit(handleBookingSubmit)}
+              className="space-y-4"
+            >
               <div>
-                <label className="block  font-medium mb-1">
-                  Quantity
-                </label>
+                <label className="block font-medium mb-1">Quantity</label>
+
                 <input
                   type="number"
-                  min="1"
-                  max={ticketData.quantity}
-                  value={selectedQuantity}
-                  onChange={(e) => setSelectedQuantity(e.target.value)}
+                  defaultValue={1}
                   className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                  required
+                  {...register("quantity", {
+                    required: "Quantity is required",
+                    min: {
+                      value: 1,
+                      message: "Minimum 1 ticket required",
+                    },
+                    max: {
+                      value: ticket.quantity,
+                      message: `Maximum ${ticket.quantity} tickets available`,
+                    },
+                  })}
                 />
+
+                {errors.quantity && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.quantity.message}
+                  </p>
+                )}
               </div>
+
               <button
                 type="submit"
-                className="w-full py-3 text-lg font-bold  rounded-lg
-                  bg-linear-to-r from-green-500 to-teal-600
-                  hover:from-green-600 hover:to-teal-700
-                  shadow-lg shadow-green-400/40 transition duration-200"
+                className="w-full py-3 text-lg font-bold rounded-lg
+                bg-linear-to-r from-green-500 to-teal-600
+                hover:from-green-600 hover:to-teal-700
+                shadow-lg shadow-green-400/40 transition duration-200"
               >
                 Confirm Booking
               </button>
             </form>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
