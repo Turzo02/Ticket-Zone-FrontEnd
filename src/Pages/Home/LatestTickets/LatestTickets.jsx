@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
+import { Link } from "react-router";
 
 const LatestTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -30,7 +31,6 @@ const LatestTickets = () => {
   if (isError) {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
-
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
@@ -93,8 +93,8 @@ const LatestTickets = () => {
                   </span>
                 </div>
 
-                {/* Transport */}
-                <div className="flex justify-between items-center text-sm font-medium text-gray-700 p-2 sm:p-3  rounded-lg ">
+                  {/* Transport */}
+                <div className="flex justify-between items-center text-sm font-medium text-gray-700 py-2 sm:py-3  rounded-lg ">
                   {/* Left: Emoji + Transport Type */}
                   <div className="flex items-center space-x-2">
                     <span className="text-xl">
@@ -121,7 +121,6 @@ const LatestTickets = () => {
                     })}
                   </div>
                 </div>
-
                 {/* Perks */}
                 <div className="flex flex-col">
                   <h3 className="text-xs font-semibold uppercase text-purple-600 mb-1">
@@ -141,17 +140,19 @@ const LatestTickets = () => {
               </div>
 
               {/* Button */}
-              <button
-                className="
-                  w-full mt-5 py-3 text-lg font-bold text-white rounded-lg
-                  bg-linear-to-r from-pink-600 to-red-700
-                  hover:from-pink-700 hover:to-red-800
-                  shadow-lg shadow-pink-500/40
-                  transition
-                "
-              >
-                See Details
-              </button>
+              <Link to={`/all-tickets/${ticket._id}`}>
+                <button
+                  className="
+                   w-full mt-4 cursor-pointer py-3 text-lg font-bold text-white rounded-lg
+                   bg-linear-to-r from-pink-600 to-red-700
+                   hover:from-pink-700 hover:to-red-800
+                   shadow-lg shadow-pink-500/40
+                   transition duration-200
+                 "
+                >
+                  See Details
+                </button>
+              </Link>
             </div>
           );
         })}

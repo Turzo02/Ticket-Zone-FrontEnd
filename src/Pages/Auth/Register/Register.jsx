@@ -4,16 +4,16 @@ import { useForm } from "react-hook-form";
 import { Eye, EyeOff } from "lucide-react";
 import useAuth from "../../../Hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
+import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
-  const { registerUser,updateUserProfile } = useAuth();
+  const { registerUser, updateUserProfile } = useAuth();
 
   const location = useLocation();
-  console.log(location.state)
-
+  const  axiosSecure  = useAxiosSecure();
 
   const {
     register,
@@ -26,11 +26,27 @@ const Register = () => {
     registerUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        //save user to database
+        const userInfo = {
+          name: data.name,
+          email: data.email,
+          photoURL: data.photoURL,
+          role: "user",
+        };
+        axiosSecure
+          .post("/users", userInfo)
+          .then((res) => {
+            console.log(res.data, "user saved to database");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
         updateUserProfile({
           displayName: data.name,
-          photoURL: data.photoURL
-        })
-        navigate(location?.state|| "/");
+          photoURL: data.photoURL,
+        });
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         console.log(error.message);
@@ -50,7 +66,6 @@ const Register = () => {
               {/* Form  */}
               <form onSubmit={handleSubmit(handleRegister)}>
                 <fieldset className="fieldset">
-
                   {/* name */}
                   <label className="label">Name</label>
                   <input
@@ -133,7 +148,11 @@ const Register = () => {
               <SocialLogin></SocialLogin>
               <p>
                 Already have an account? Please{" "}
-                <Link to="/login" state={location.state} className="text-blue-500 font-semibold">
+                <Link
+                  to="/login"
+                  state={location.state}
+                  className="text-blue-500 font-semibold"
+                >
                   Login
                 </Link>
               </p>
