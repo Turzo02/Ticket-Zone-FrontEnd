@@ -4,36 +4,36 @@ import React from "react";
 import { Link } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
-import { MoveRight, Filter } from "lucide-react";
+import { MoveRight, Filter, ArrowUpDown } from "lucide-react"; 
 
 const AllTickets = () => {
   const axiosSecure = useAxiosSecure();
 
-  // State for Pagination and Filtering
   const [page, setPage] = useState(1);
-  const [filterType, setFilterType] = useState(""); // Empty string = All
+  const [filterType, setFilterType] = useState(""); 
+  const [sortOrder, setSortOrder] = useState("");
   const limit = 7;
 
-  // Handle Filter Change (Reset page to 1 when filter changes)
   const handleFilterChange = (e) => {
     setFilterType(e.target.value);
     setPage(1);
   };
 
-  // Fetch paginated and filtered tickets
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
+    setPage(1); 
+  };
+
   const {
     data,
     isLoading,
     isError,
   } = useQuery({
-    // Adding filterType to queryKey ensures refetch on change
-    queryKey: ["latestTickets", page, filterType],
+    queryKey: ["latestTickets", page, filterType, sortOrder],
     queryFn: async () => {
-      // Build the query string dynamically
       let url = `/ticket?page=${page}&limit=${limit}`;
-      if (filterType) {
-        url += `&transport=${filterType}`;
-      }
+      if (filterType) url += `&transport=${filterType}`;
+      if (sortOrder) url += `&sort=${sortOrder}`; 
       
       const { data } = await axiosSecure.get(url);
       return data;
@@ -56,50 +56,66 @@ const AllTickets = () => {
     return <p className="text-red-500 text-center mt-10">Failed to load tickets</p>;
   }
 
+
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-        {/* Title */}
         <h1 className="text-4xl font-extrabold text-center md:text-left">
           All Available Tickets
         </h1>
 
-        {/* Filter Dropdown */}
-        <div className="relative group">
-          <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
-            <Filter className="w-5 h-5 text-purple-600" />
-            <select
-              value={filterType}
-              onChange={handleFilterChange}
-              className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-40 appearance-none"
-            >
-              <option value="">All Transports</option>
-              <option value="Bus">Bus</option>
-              <option value="Train">Train</option>
-              <option value="Flight">Flight</option>
-              <option value="Ship">Ship</option>
-            </select>
-             {/* Custom Arrow for styling (optional visual helper) */}
-             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+        {/* Controls Container */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          
+          {/* Transport Filter */}
+          <div className="relative group">
+            <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
+              <Filter className="w-5 h-5 text-purple-600" />
+              <select
+                value={filterType}
+                onChange={handleFilterChange}
+                className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-36 appearance-none"
+              >
+                <option value="">All Transports</option>
+                <option value="Bus">Bus</option>
+                <option value="Train">Train</option>
+                <option value="Flight">Flight</option>
+                <option value="Ship">Ship</option>
+              </select>
             </div>
           </div>
+
+          {/* Price Sort Dropdown (New) */}
+          <div className="relative group">
+            <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
+              <ArrowUpDown className="w-5 h-5 text-purple-600" />
+              <select
+                value={sortOrder}
+                onChange={handleSortChange}
+                className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-36 appearance-none"
+              >
+                <option value="">Default Sort</option>
+                <option value="asc">Price: Low to High</option>
+                <option value="desc">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+
         </div>
       </div>
 
       {/* Ticket Grid */}
       {allTickets.length === 0 ? (
         <div className="text-center py-20 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-          <h3 className="text-2xl font-bold text-gray-400">No tickets found for this category</h3>
+          <h3 className="text-2xl font-bold text-gray-400">No tickets found</h3>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {allTickets.map((ticket) => {
-            const formattedPrice = new Intl.NumberFormat("en-US", {
+             const formattedPrice = new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
             }).format(ticket.price);
-            console.log(ticket.transportType)
 
             return (
               <div
@@ -214,7 +230,6 @@ const AllTickets = () => {
       )}
 
       {/* PAGINATION BAR */}
-      {/* Hide pagination if there are no tickets or only 1 page */}
       {totalPages > 1 && (
         <div className="flex justify-center mt-10 gap-3">
           <button
