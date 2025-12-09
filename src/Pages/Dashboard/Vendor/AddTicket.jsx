@@ -148,7 +148,7 @@ const AddTicket = () => {
               Price (per unit)
             </label>
             <input
-              {...register("price", { required: "Price is required" })}
+              {...register("price", { required: "Price is required" ,valueAsNumber: true})}
               type="number"
               placeholder="0.00"
               className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:ring-primary focus:border-primary"
@@ -166,7 +166,7 @@ const AddTicket = () => {
               Ticket Quantity
             </label>
             <input
-              {...register("quantity", { required: "Quantity is required" })}
+              {...register("quantity", { required: "Quantity is required",valueAsNumber: true})}
               type="number"
               placeholder="100"
               className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:ring-primary focus:border-primary"

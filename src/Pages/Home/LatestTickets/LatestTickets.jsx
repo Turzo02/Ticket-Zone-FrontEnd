@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
-import { Link } from "react-router";
+import {  Link } from "react-router";
 
 const LatestTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -13,13 +13,13 @@ const LatestTickets = () => {
   } = useQuery({
     queryKey: ["latestTickets"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/ticket");
-      return data
-        .sort((a, b) => new Date(b.departure) - new Date(a.departure))
-        .slice(0, 7);
+      const { data } = await axiosSecure.get("/ticket?limit=500");
+      return data.tickets
+      .sort((a, b) => new Date(b.departure) - new Date(a.departure)).slice(0,8);
     },
   });
 
+ 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-32">
@@ -38,7 +38,7 @@ const LatestTickets = () => {
         Latest Tickets
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {tickets.map((ticket, index) => {
           const formattedPrice = new Intl.NumberFormat("en-US", {
             style: "currency",
@@ -157,6 +157,8 @@ const LatestTickets = () => {
           );
         })}
       </div>
+  
+
     </div>
   );
 };
