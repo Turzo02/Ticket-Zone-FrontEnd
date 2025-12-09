@@ -4,28 +4,41 @@ import React from "react";
 import { Link } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
-import { MoveRight } from "lucide-react";
+import { MoveRight, Filter } from "lucide-react";
 
 const AllTickets = () => {
   const axiosSecure = useAxiosSecure();
 
+  // State for Pagination and Filtering
   const [page, setPage] = useState(1);
+  const [filterType, setFilterType] = useState(""); // Empty string = All
   const limit = 7;
 
-  // Fetch paginated tickets
+  // Handle Filter Change (Reset page to 1 when filter changes)
+  const handleFilterChange = (e) => {
+    setFilterType(e.target.value);
+    setPage(1);
+  };
+
+  // Fetch paginated and filtered tickets
   const {
     data,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["latestTickets", page],
+    // Adding filterType to queryKey ensures refetch on change
+    queryKey: ["latestTickets", page, filterType],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(
-        `/ticket?page=${page}&limit=${limit}`
-      );
-      return data; 
+      // Build the query string dynamically
+      let url = `/ticket?page=${page}&limit=${limit}`;
+      if (filterType) {
+        url += `&transport=${filterType}`;
+      }
+      
+      const { data } = await axiosSecure.get(url);
+      return data;
     },
-    keepPreviousData: true, 
+    keepPreviousData: true,
   });
 
   const allTickets = data?.tickets || [];
@@ -40,166 +53,201 @@ const AllTickets = () => {
   }
 
   if (isError) {
-    return <p className="text-red-500">Failed to load tickets</p>;
+    return <p className="text-red-500 text-center mt-10">Failed to load tickets</p>;
   }
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
-      <h1 className="text-4xl font-extrabold text-center mb-10">
-        All Available Tickets
-      </h1>
+      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+        {/* Title */}
+        <h1 className="text-4xl font-extrabold text-center md:text-left">
+          All Available Tickets
+        </h1>
+
+        {/* Filter Dropdown */}
+        <div className="relative group">
+          <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
+            <Filter className="w-5 h-5 text-purple-600" />
+            <select
+              value={filterType}
+              onChange={handleFilterChange}
+              className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-40 appearance-none"
+            >
+              <option value="">All Transports</option>
+              <option value="Bus">Bus</option>
+              <option value="Train">Train</option>
+              <option value="Flight">Flight</option>
+              <option value="Ship">Ship</option>
+            </select>
+             {/* Custom Arrow for styling (optional visual helper) */}
+             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Ticket Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {allTickets.map((ticket) => {
-          const formattedPrice = new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-          }).format(ticket.price);
+      {allTickets.length === 0 ? (
+        <div className="text-center py-20 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+          <h3 className="text-2xl font-bold text-gray-400">No tickets found for this category</h3>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {allTickets.map((ticket) => {
+            const formattedPrice = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(ticket.price);
+            console.log(ticket.transportType)
 
-          return (
-            <div
-              key={ticket._id}
-              className="bg-white rounded-xl shadow-xl overflow-hidden hover:scale-[1.03] transition duration-300 p-4"
-            >
-              {/* Header */}
-              <div className="relative h-40 rounded-lg overflow-hidden">
-                <img
-                  src="https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_009"
-                  alt={ticket.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
-                <h2 className="absolute bottom-2 left-3 right-3 text-white text-xl font-extrabold">
-                  {ticket.title}
-                </h2>
-              </div>
+            return (
+              <div
+                key={ticket._id}
+                className="bg-white rounded-xl shadow-xl overflow-hidden hover:scale-[1.03] transition duration-300 p-4"
+              >
+                {/* Header */}
+                <div className="relative h-40 rounded-lg overflow-hidden">
+                  <img
+                    src="https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_009"
+                    alt={ticket.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
+                  <h2 className="absolute bottom-2 left-3 right-3 text-white text-xl font-extrabold">
+                    {ticket.title}
+                  </h2>
+                </div>
 
-              {/* Body */}
-              <div className="pt-4 space-y-3 ">
-                <div className="flex items-center text-sm font-semibold text-gray-700 space-x-2">
-                  <div className="flex w-full justify-between items-center">
-                    <div className="flex items-center space-x-1">
-                      <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                      <span className="text-gray-600 font-bold text-xl">
-                        {ticket.from}
-                      </span>
-                    </div>
+                {/* Body */}
+                <div className="pt-4 space-y-3 ">
+                  <div className="flex items-center text-sm font-semibold text-gray-700 space-x-2">
+                    <div className="flex w-full justify-between items-center">
+                      <div className="flex items-center space-x-1">
+                        <span className="w-3 h-3 rounded-full bg-green-500"></span>
+                        <span className="text-gray-600 font-bold text-xl">
+                          {ticket.from}
+                        </span>
+                      </div>
 
-                    <MoveRight />
+                      <MoveRight />
 
-                    <div className="flex items-center space-x-1">
-                      <span className="text-gray-600 font-bold text-xl">
-                        {ticket.to}
-                      </span>
-                      <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                      <div className="flex items-center space-x-1">
+                        <span className="text-gray-600 font-bold text-xl">
+                          {ticket.to}
+                        </span>
+                        <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center text-sm font-semibold text-gray-700">
-                  {ticket.icon}
-                  {ticket.transport}
-                </div>
+                  <div className="flex items-center text-sm font-semibold text-gray-700">
+                    {ticket.icon}
+                    {ticket.transport}
+                  </div>
 
-                <div className="flex justify-between text-sm font-medium">
-                  <span className="text-gray-600">Price:</span>
-                  <span className="text-purple-700 font-bold">
-                    {formattedPrice}
-                  </span>
-                </div>
-
-                <div className="flex justify-between text-sm font-medium">
-                  <span className="text-gray-600">Available:</span>
-                  <span className="text-purple-700 font-bold">
-                    {ticket.quantity}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center text-sm font-medium text-gray-700 py-2 sm:py-3 rounded-lg">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xl">
-                      {ticket.transportType === "Train" && "🚆"}
-                      {ticket.transportType === "Bus" && "🚌"}
-                      {ticket.transportType === "Flight" && "✈️"}
-                      {ticket.transportType === "Ship" && "🚢"}
-                      {!["Train", "Bus", "Flight", "Ship"].includes(
-                        ticket.transportType
-                      ) && "🛺"}
+                  <div className="flex justify-between text-sm font-medium">
+                    <span className="text-gray-600">Price:</span>
+                    <span className="text-purple-700 font-bold">
+                      {formattedPrice}
                     </span>
-                    <span>{ticket.transportType}</span>
                   </div>
 
-                  <div className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg font-semibold">
-                    📅{" "}
-                    {new Date(ticket.departure).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                  <div className="flex justify-between text-sm font-medium">
+                    <span className="text-gray-600">Available:</span>
+                    <span className="text-purple-700 font-bold">
+                      {ticket.quantity}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center text-sm font-medium text-gray-700 py-2 sm:py-3 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xl">
+                        {ticket.transportType === "Train" && "🚆"}
+                        {ticket.transportType === "Bus" && "🚌"}
+                        {ticket.transportType === "Flight" && "✈️"}
+                        {ticket.transportType === "Ship" && "🚢"}
+                        {!["Train", "Bus", "Flight", "Ship"].includes(
+                          ticket.transportType
+                        ) && "🛺"}
+                      </span>
+                      <span>{ticket.transportType}</span>
+                    </div>
+
+                    <div className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg font-semibold">
+                      📅{" "}
+                      {new Date(ticket.departure).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <h3 className="text-xs font-semibold uppercase text-purple-600 mb-4">
+                      ✨ Perks
+                    </h3>
+                    <ul className="flex flex-wrap gap-2 text-sm text-gray-600">
+                      {ticket.perks.map((perk, i) => (
+                        <li key={i} className="bg-gray-100 px-2 py-1 rounded-full">
+                          {perk}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
-                <div className="flex flex-col">
-                  <h3 className="text-xs font-semibold uppercase text-purple-600 mb-4">
-                    ✨ Perks
-                  </h3>
-                  <ul className="flex flex-wrap gap-2 text-sm text-gray-600">
-                    {ticket.perks.map((perk, i) => (
-                      <li key={i} className="bg-gray-100 px-2 py-1 rounded-full">
-                        {perk}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <Link to={`/all-tickets/${ticket._id}`}>
+                  <button
+                    className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-lg shadow-pink-500/40"
+                  >
+                    See Details
+                  </button>
+                </Link>
               </div>
-
-              <Link to={`/all-tickets/${ticket._id}`}>
-                <button
-                  className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-lg shadow-pink-500/40"
-                >
-                  See Details
-                </button>
-              </Link>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* PAGINATION BAR */}
-      <div className="flex justify-center mt-10 gap-3">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-          className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
-        >
-          Prev
-        </button>
-
-        {[...Array(totalPages)].map((_, i) => (
+      {/* Hide pagination if there are no tickets or only 1 page */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-10 gap-3">
           <button
-            key={i}
-            onClick={() => setPage(i + 1)}
-            className={`px-4 py-2 rounded-lg ${
-              page === i + 1
-                ? "bg-purple-600"
-                : "bg-green-500 "
-            }`}
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
           >
-            {i + 1}
+            Prev
           </button>
-        ))}
 
-        <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={page === totalPages}
-          className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`px-4 py-2 rounded-lg ${
+                page === i + 1
+                  ? "bg-purple-600 text-white"
+                  : "bg-green-500 "
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={page === totalPages}
+            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };
