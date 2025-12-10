@@ -13,10 +13,10 @@ const AddTicket = () => {
   } = useForm();
 
   const handleAddTicket = (data) => {
-    console.log(data);
-    // post the data to database
+    // post the data to database with status pending  "status": "pending"
+    const finalData = { ...data, status: "pending" };
     axiosSecure
-      .post("/ticket", data)
+      .post("/ticket", finalData)
       .then((res) => {
         console.log("after post data", res.data);
         // Show success alert
@@ -242,7 +242,7 @@ const AddTicket = () => {
               readOnly
               type="text"
               value={user?.displayName || ""}
-              {...register("vendorName", { required: true })}
+              {...register("vendorName")}
               className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-muted-foreground cursor-not-allowed"
             />
           </div>
@@ -255,7 +255,7 @@ const AddTicket = () => {
               readOnly
               type="email"
               value={user?.email || ""}
-              {...register("vendorEmail", { required: true })}
+              {...register("vendorEmail")}
               className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-muted-foreground cursor-not-allowed"
             />
           </div>
@@ -264,7 +264,7 @@ const AddTicket = () => {
           <div className="md:col-span-2 text-right">
             <button
               type="submit"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary/80 transition cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-lg  px-5 py-2.5 text-sm font-semibold text-white bg-red-500 shadow-sm hover:bg-primary/80 transition cursor-pointer"
             >
               Add Ticket
             </button>
