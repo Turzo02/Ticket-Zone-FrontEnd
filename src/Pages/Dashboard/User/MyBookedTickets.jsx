@@ -7,14 +7,15 @@ import TicketCountdown from "../../../Components/TicketCountdown/TicketCountdown
 
 const MyBookedTickets = () => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   const {
     data: userBokings = [],
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["UserBookings"],
+    queryKey: ["UserBookings", user?.email],
+    enabled: !!user?.email && !loading,
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/bookings/${user?.email}`);
       return data;
@@ -22,14 +23,13 @@ const MyBookedTickets = () => {
   });
   console.log(userBokings);
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-32">
-        <SwappingDotLoader></SwappingDotLoader>
-      </div>
-    );
-  }
-
+if (isLoading || loading) {
+  return (
+    <div className="flex justify-center items-center h-32">
+      <SwappingDotLoader />
+    </div>
+  );
+}
   if (isError) {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
