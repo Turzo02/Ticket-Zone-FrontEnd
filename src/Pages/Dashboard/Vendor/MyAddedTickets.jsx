@@ -181,7 +181,7 @@ const MyAddedTickets = () => {
                       {ticket.status === "pending" ? (
                         <span className="text-yellow-600">Pending</span>
                       ) : ticket.status === "accepted" ? (
-                        <span className="text-green-600">Accepted</span>
+                        <span className="text-green-600">Approved</span>
                       ) : (
                         <span className="text-red-600">Rejected</span>
                       )}
@@ -189,18 +189,40 @@ const MyAddedTickets = () => {
                   </div>
                 </div>
 
-                <Link to={`/dashboard/update-ticket-details/${ticket._id}`}>
-                  <button
-                    // disabled
-                    className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-lg shadow-pink-500/40"
+
+
+                {ticket.status === "rejected" ? (
+                  <span
+                    className="w-full mt-4 py-3 text-lg font-bold text-gray-500 rounded-lg bg-gray-200 text-center block cursor-not-allowed"
+                    title="Cannot update a rejected ticket"
+                  >
+                    Update (Rejected)
+                  </span>
+                ) : (
+                  <Link
+                    to={`/dashboard/update-ticket-details/${ticket._id}`}
+                    className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg 
+                   bg-linear-to-r from-green-600 to-emerald-700 
+                   hover:from-green-700 hover:to-emerald-800 
+                   shadow-lg shadow-green-500/40 text-center block"
                   >
                     Update
-                  </button>
-                </Link>
+                  </Link>
+                )}
+
+                {/* Delete Button */}
                 <button
-                // disabled
                   onClick={() => handleDelete(ticket._id)}
-                  className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-lg shadow-pink-500/40 cursor-pointer "
+                  disabled={ticket.status === "rejected"}
+                  className={`
+        w-full mt-4 py-3 text-lg font-bold text-white rounded-lg 
+        shadow-lg cursor-pointer transition duration-300 
+        ${
+          ticket.status === "rejected"
+            ? "bg-gray-400 cursor-not-allowed shadow-none" 
+            : "bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-pink-500/40" 
+        }
+    `}
                 >
                   Delete
                 </button>
