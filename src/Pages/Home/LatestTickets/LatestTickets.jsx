@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
-import {  Link } from "react-router";
+import { Link } from "react-router";
 
 const LatestTickets = () => {
   const axiosSecure = useAxiosSecure();
-
+  const displayLimit = 5;
   const {
     data: tickets = [],
     isLoading,
@@ -13,13 +13,17 @@ const LatestTickets = () => {
   } = useQuery({
     queryKey: ["latestTickets"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/ticket?limit=500");
-      return data.tickets
-      .sort((a, b) => new Date(b.departure) - new Date(a.departure)).slice(0,8);
+      const { data } = await axiosSecure.get("/ticket?limit=10000");
+      const ticketArray = data.tickets;
+      const sortedTickets = ticketArray.sort((a, b) => {
+        const dateA = new Date(a.departure);
+        const dateB = new Date(b.departure);
+        return dateA - dateB;
+      });
+      return sortedTickets.slice(0, displayLimit);
     },
   });
 
- 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-32">
@@ -31,6 +35,7 @@ const LatestTickets = () => {
   if (isError) {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
+  console.log(tickets);
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
@@ -38,7 +43,7 @@ const LatestTickets = () => {
         Latest Tickets
       </h1>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {tickets.map((ticket, index) => {
           const formattedPrice = new Intl.NumberFormat("en-US", {
             style: "currency",
@@ -93,7 +98,7 @@ const LatestTickets = () => {
                   </span>
                 </div>
 
-                  {/* Transport */}
+                {/* Transport */}
                 <div className="flex justify-between items-center text-sm font-medium text-gray-700 py-2 sm:py-3  rounded-lg ">
                   {/* Left: Emoji + Transport Type */}
                   <div className="flex items-center space-x-2">
@@ -157,8 +162,6 @@ const LatestTickets = () => {
           );
         })}
       </div>
-  
-
     </div>
   );
 };

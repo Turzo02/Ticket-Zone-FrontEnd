@@ -14,9 +14,8 @@ const ManageUsers = () => {
           User Management (Demo View)
         </h1>
 
-        {/* ---------------------------------------------------------------------- */}
         {/* --- Desktop/Tablet View (Table) - Visible on 'sm' screens and up --- */}
-        {/* ---------------------------------------------------------------------- */}
+
         <div className="hidden sm:block">
           <div className="shadow-xl rounded-xl border border-gray-300 bg-white overflow-hidden">
             <table className="w-full table-auto text-left">
@@ -76,9 +75,7 @@ const ManageUsers = () => {
           </div>
         </div>
 
-        {/* ---------------------------------------------------------------- */}
         {/* --- Mobile View (Cards) - Hidden on 'sm' screens and up --- */}
-        {/* ---------------------------------------------------------------- */}
         <div className="sm:hidden">
           {/* User Card Demo */}
           <div className="bg-white p-4 shadow-md rounded-xl border border-gray-200 mb-4 transition-all">

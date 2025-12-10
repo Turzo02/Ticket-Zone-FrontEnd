@@ -31,10 +31,10 @@ const AllTickets = () => {
   } = useQuery({
     queryKey: ["latestTickets", page, filterType, sortOrder],
     queryFn: async () => {
-      let url = `/ticket?page=${page}&limit=${limit}`;
+      let url = `/ticket?page=${page}&limit=${limit}&status=accepted`;
       if (filterType) url += `&transport=${filterType}`;
       if (sortOrder) url += `&sort=${sortOrder}`; 
-      
+
       const { data } = await axiosSecure.get(url);
       return data;
     },
@@ -171,7 +171,7 @@ const AllTickets = () => {
 
                   <div className="flex justify-between text-sm font-medium">
                     <span className="text-gray-600">Available:</span>
-                    <span className="text-purple-700 font-bold">
+                    <span className="text-blue-700 font-bold">
                       {ticket.quantity}
                     </span>
                   </div>
@@ -263,6 +263,8 @@ const AllTickets = () => {
           </button>
         </div>
       )}
+
+
     </div>
   );
 };
