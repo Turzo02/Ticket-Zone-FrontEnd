@@ -5,24 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 
 const RequestedTickets = () => {
-
-  const handleAccept = (id) => {
-  console.log(id)
-};
-
-  const handleReject = (id) => {
-console.log(id)  
-};
-
-
-  //accurate data
-
     const axiosSecure = useAxiosSecure();
-
-  const {
+      const {
     data: allBookingsData = [],
     isLoading,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ["All BOokings"],
     queryFn: async () => {
@@ -30,6 +18,26 @@ console.log(id)
       return data;
     },
   });
+
+
+// Accept Booking
+const handleAccept = async (id) => {
+    await axiosSecure.patch(`/bookings/${id}`, {
+      status: "accepted",
+    });
+    refetch(); 
+};
+
+// Reject Booking
+const handleReject = async (id) => {
+
+    await axiosSecure.patch(`/bookings/${id}`, {
+      status: "rejected",
+    });
+    refetch();
+
+};
+
 
   if (isLoading) {
     return (
@@ -42,7 +50,6 @@ console.log(id)
   if (isError) {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
-  console.log(allBookingsData);
 
 
 
@@ -52,7 +59,7 @@ console.log(id)
         Requested Bookings
       </h1>
 
-      <div className="overflow-x-auto shadow-lg rounded-2xl border border-purple-200 bg-white">
+      <div className="overflow-x-auto shadow-lg rounded-2xl border border-purple-200 ">
         <table className="w-full table-auto">
           <thead className="bg-linear-to-r from-purple-600 to-pink-500 text-white">
             <tr>
@@ -61,6 +68,7 @@ console.log(id)
               <th className="p-4 text-center">Quantity</th>
               <th className="p-4 text-center">Total Price</th>
               <th className="p-4 text-center">Actions</th>
+              <th className="p-4 text-center">Status</th>
             </tr>
           </thead>
 
@@ -70,29 +78,30 @@ console.log(id)
               return (
                 <tr
                   key={req._id}
-                  className="border-b hover:bg-purple-50 transition"
+                  className="border-b  transition"
                 >
 
-                  <td className="p-4 text-gray-600">{req.userEmail}</td>
+                  <td className="p-4 ">{req.userEmail}</td>
 
-                  <td className="p-4 font-semibold text-gray-700">
+                  <td className="py-4 font-semibold ">
                     {req.title}
                   </td>
 
-                  <td className="p-4 text-center text-lg text-purple-700 font-bold">
+                  <td className="py-4 text-center text-lg text-purple-700 font-bold">
                     {req.bookingQuantity}
                   </td>
 
-                  <td className="p-4 text-center text-lg font-bold text-green-600">
+                  <td className="py-4 text-center text-lg font-bold text-green-600">
                     ${req.totalPrice}
                   </td>
 
-                  <td className="p-4 flex justify-center gap-3">
+                  <td className="py-4 flex justify-center gap-3">
                     <button
                       onClick={() => handleAccept(req._id)}
                       className="flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg shadow-md transition"
                     >
-                      <CheckCircle size={18} /> Accept
+                      <CheckCircle size={18} /> Accept 
+                      
                     </button>
 
                     <button
@@ -102,6 +111,10 @@ console.log(id)
                       <XCircle size={18} /> Reject
                     </button>
                   </td>
+                    <td className="p-4 text-center text-lg font-bold ">
+                    {req.status.toUpperCase()}
+                  </td>
+                  
                 </tr>
               );
             })}
