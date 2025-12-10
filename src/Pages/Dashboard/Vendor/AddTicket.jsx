@@ -14,7 +14,7 @@ const AddTicket = () => {
 
   const handleAddTicket = (data) => {
     console.log(data);
-    //post the data to database
+    // post the data to database
     axiosSecure
       .post("/ticket", data)
       .then((res) => {

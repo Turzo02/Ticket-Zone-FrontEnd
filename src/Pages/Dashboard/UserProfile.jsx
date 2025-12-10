@@ -4,9 +4,6 @@ import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import  useAuth  from "../../Hooks/useAuth";
 import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
 const UserProfile = () => {
-  //name, email, role,etc
-
-  // const url = "http://localhost:3000/users/naim198650@gmail.com";
 
   const axiosSecure = useAxiosSecure();
   const {user} = useAuth();
@@ -34,7 +31,6 @@ const UserProfile = () => {
   if (isError) {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
-  console.log(Users)
   return (
     <div className="rounded-2xl border border-gray-200  p-6 shadow-sm dark:border-gray-800 dark:bg-card-dark sm:p-8">
       <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 font-display">

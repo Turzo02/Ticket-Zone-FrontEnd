@@ -6,7 +6,7 @@ const TicketCountdown = ({ departure }) => {
   // Custom renderer
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
-      return <span className="text-green-600 font-bold">Departed</span>;
+      return <span className="text-green-600 font-bold">Already Departed</span>;
     } else {
       return (
         <span className="text-red-600 font-bold">

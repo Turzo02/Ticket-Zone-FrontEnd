@@ -41,6 +41,7 @@ const TicketDetailsPage = () => {
       bookingQuantity: bookingQuantity,
       totalPrice: quantity * price,
       status: "pending",
+      departure: ticket.departure,
     };
 
 
