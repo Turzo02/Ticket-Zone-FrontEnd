@@ -35,7 +35,6 @@ const Advertisement = () => {
   if (isError) {
     return <p className="text-red-500 text-center mt-10">Failed to load tickets</p>;
   }
-  console.log(allTickets)
 
 
   return (

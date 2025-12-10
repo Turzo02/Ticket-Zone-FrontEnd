@@ -1,106 +1,247 @@
-import React from "react";
+import React, { useState } from "react";
+import useAxiosSecure from "../../../Hooks/useAxiousSecure";
+import { useQuery } from "@tanstack/react-query";
+import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
+import { ArrowUpDown, Filter, MoveRight } from "lucide-react";
+import { Link } from "react-router";
 
 const MyAddedTickets = () => {
-  const arr = [1, 2, 3, 4, 5];
+  const axiosSecure = useAxiosSecure();
+
+  const [page, setPage] = useState(1);
+  const [filterType, setFilterType] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
+  const limit = 7;
+
+  const handleFilterChange = (e) => {
+    setFilterType(e.target.value);
+    setPage(1);
+  };
+
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
+    setPage(1);
+  };
+
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["latestTickets", page, filterType, sortOrder],
+    queryFn: async () => {
+      let url = `/ticket?page=${page}&limit=${limit}`;
+      if (filterType) url += `&transport=${filterType}`;
+      if (sortOrder) url += `&sort=${sortOrder}`;
+
+      const { data } = await axiosSecure.get(url);
+      return data;
+    },
+    keepPreviousData: true,
+  });
+
+  const allTickets = data?.tickets || [];
+  const totalPages = Math.ceil((data?.total || 0) / limit);
+
+  const handleDelete = async (id) => {
+    await axiosSecure.delete(`/ticket/${id}`);
+    refetch();
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <SwappingDotLoader />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <p className="text-red-500 text-center mt-10">Failed to load tickets</p>
+    );
+  }
+
   return (
-    <div className="bg-b3">
-      <h1 className="text-3xl text-center font-semibold"> My added tickets</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {arr.map((item) => {
-          return (
-            <div>
-              <div
-                className="
-    bg-b1 rounded-xl shadow-xl 
-    p-4 overflow-hidden
-    transform hover:scale-[1.02]
-    transition duration-300 ease-in-out
-  "
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+        <h1 className="text-4xl font-extrabold text-center md:text-left">
+          My Added Tickets
+        </h1>
+
+        {/* Controls Container */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          {/* Transport Filter */}
+          <div className="relative group">
+            <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
+              <Filter className="w-5 h-5 text-purple-600" />
+              <select
+                value={filterType}
+                onChange={handleFilterChange}
+                className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-36 appearance-none"
               >
-                {/* Top section */}
+                <option value="">All Transports</option>
+                <option value="Bus">Bus</option>
+                <option value="Train">Train</option>
+                <option value="Flight">Flight</option>
+                <option value="Ship">Ship</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Price Sort Dropdown (New) */}
+          <div className="relative group">
+            <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
+              <ArrowUpDown className="w-5 h-5 text-purple-600" />
+              <select
+                value={sortOrder}
+                onChange={handleSortChange}
+                className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-36 appearance-none"
+              >
+                <option value="">Default Sort</option>
+                <option value="asc">Price: Low to High</option>
+                <option value="desc">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Ticket Grid */}
+      {allTickets.length === 0 ? (
+        <div className="text-center py-20 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+          <h3 className="text-2xl font-bold text-gray-400">No tickets found</h3>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {allTickets.map((ticket) => {
+            const formattedPrice = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(ticket.price);
+
+            return (
+              <div
+                key={ticket._id}
+                className="bg-white rounded-xl shadow-xl overflow-hidden hover:scale-[1.03] transition duration-300 p-4"
+              >
+                {/* Header */}
                 <div className="relative h-40 rounded-lg overflow-hidden">
                   <img
-                    src="https://picsum.photos/600/400"
-                    alt="Sample Ticket"
+                    src="https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_009"
+                    alt={ticket.title}
                     className="w-full h-full object-cover"
-                    loading="lazy"
                   />
-
                   <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
-
-                  <h2 className="absolute bottom-0 w-full p-3 text-xl font-bold text-white drop-shadow-md">
-                    Sample Event Ticket
+                  <h2 className="absolute bottom-2 left-3 right-3 text-white text-xl font-extrabold">
+                    {ticket.title}
                   </h2>
                 </div>
 
                 {/* Body */}
-                <div className="pt-4 space-y-4">
-                  {/* Price */}
-                  <div className="flex justify-between items-center pb-2 border-b border-gray-200">
-                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                      Price (Per Unit)
-                    </p>
-                    <span className="text-2xl font-bold bg-linear-to-r from-pink-500 to-red-600 bg-clip-text text-transparent">
-                      ৳1500
+                <div className="pt-4 space-y-3 ">
+                  <div className="flex items-center text-sm font-semibold text-gray-700 space-x-2">
+                    <div className="flex w-full justify-between items-center">
+                      <div className="flex items-center space-x-1">
+                        <span className="w-3 h-3 rounded-full bg-green-500"></span>
+                        <span className="text-gray-600 font-bold text-xl">
+                          {ticket.from}
+                        </span>
+                      </div>
+
+                      <MoveRight />
+
+                      <div className="flex items-center space-x-1">
+                        <span className="text-gray-600 font-bold text-xl">
+                          {ticket.to}
+                        </span>
+                        <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center text-sm font-semibold text-gray-700">
+                    {ticket.icon}
+                    {ticket.transport}
+                  </div>
+
+                  <div className="flex justify-between text-sm font-medium">
+                    <span className="text-gray-600">Price:</span>
+                    <span className="text-purple-700 font-bold">
+                      {formattedPrice}
                     </span>
                   </div>
 
-                  {/* Quantity */}
                   <div className="flex justify-between text-sm font-medium">
                     <span className="text-gray-600">Available:</span>
-                    <span className="text-purple-700 font-bold">42</span>
+                    <span className="text-blue-700 font-bold">
+                      {ticket.quantity}
+                    </span>
                   </div>
 
-                  {/* Transport */}
-                  <div className="flex items-center text-sm font-semibold text-gray-700">
-                    <svg
-                      className="w-5 h-5 mr-2 text-indigo-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                      ></path>
-                    </svg>
-                    AC Bus
-                  </div>
-
-                  {/* Perks */}
-                  <div>
-                    <h3 className="text-xs font-semibold uppercase text-purple-600 mb-1">
-                      ✨ Perks
+                  <div className="flex flex-col">
+                    <h3 className="text-xs font-semibold uppercase text-black mb-4">
+                      Status :{" "}
+                      {ticket.status === "pending" ? (
+                        <span className="text-yellow-600">Pending</span>
+                      ) : ticket.status === "accepted" ? (
+                        <span className="text-green-600">Accepted</span>
+                      ) : (
+                        <span className="text-red-600">Rejected</span>
+                      )}
                     </h3>
-                    <ul className="text-sm space-y-1 list-disc pl-5 text-gray-600">
-                      <li>Free Water Bottle</li>
-                      <li>Premium Seat</li>
-                      <li>Priority Boarding</li>
-                    </ul>
                   </div>
                 </div>
 
-                {/* Button */}
+                <Link to={`/dashboard/update-ticket-details/${ticket._id}`}>
+                  <button
+                    // disabled
+                    className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-lg shadow-pink-500/40"
+                  >
+                    Update
+                  </button>
+                </Link>
                 <button
-                  className="
-      mt-5 w-full py-3 text-lg font-bold uppercase
-      rounded-lg 
-      bg-linear-to-r from-pink-600 to-red-700
-      text-white shadow-lg shadow-pink-500/40
-      transition duration-200
-      hover:from-pink-700 hover:to-red-800
-      focus:outline-none focus:ring-4 focus:ring-pink-300
-    "
+                // disabled
+                  onClick={() => handleDelete(ticket._id)}
+                  className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-lg shadow-pink-500/40 cursor-pointer "
                 >
-                  See Details
+                  Delete
                 </button>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* PAGINATION BAR */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-10 gap-3">
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`px-4 py-2 rounded-lg ${
+                page === i + 1 ? "bg-purple-600 text-white" : "bg-green-500 "
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={page === totalPages}
+            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

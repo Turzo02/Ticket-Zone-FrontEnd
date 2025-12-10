@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const LatestTickets = () => {
   const axiosSecure = useAxiosSecure();
-  const displayLimit = 5;
+  const displayLimit = 6;
   const {
     data: tickets = [],
     isLoading,

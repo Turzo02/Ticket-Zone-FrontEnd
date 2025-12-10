@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import logo from "/favicon.png";
 import { useTheme } from "../../Context/ThemeToggle/useTheme";
 import { Moon, Sun } from "lucide-react";
@@ -18,13 +18,13 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <Link to="/">Home</Link>
+        <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <Link to="/all-tickets">All Tickets</Link>
+        <NavLink to="/all-tickets">All Tickets</NavLink>
       </li>
       <li>
-        <Link to="/dashboard">Dashboard</Link>
+        <NavLink to="/dashboard">Dashboard</NavLink>
       </li>
     </>
   );

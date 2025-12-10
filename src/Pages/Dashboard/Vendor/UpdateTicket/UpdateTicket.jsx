@@ -1,9 +1,12 @@
 import React from "react";
+import { useParams } from "react-router";
+import useAxiosSecure from "../../../../Hooks/useAxiousSecure";
+import useAuth from "../../../../Hooks/useAuth";
 import { useForm } from "react-hook-form";
-import useAxiosSecure from "../../../Hooks/useAxiousSecure";
-import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
-const AddTicket = () => {
+
+const UpdateTicket = () => {
+  const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const {
@@ -12,18 +15,17 @@ const AddTicket = () => {
     formState: { errors },
   } = useForm();
 
-  const handleAddTicket = (data) => {
-
+  const handleUpdateTicket = (data) => {
     const finalData = { ...data, status: "pending" };
     axiosSecure
-      .post("/ticket", finalData)
+      .patch(`/ticket/${id}`, finalData)
       .then((res) => {
         console.log("after post data", res.data);
         // Show success alert
         Swal.fire({
           icon: "success",
-          title: "Ticket Added!",
-          text: "Your ticket has been successfully posted.",
+          title: "Ticket Updated!",
+          text: "Your ticket has been successfully Updated.",
           confirmButtonText: "OK",
         });
       })
@@ -32,7 +34,7 @@ const AddTicket = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Something went wrong while posting your ticket!",
+          text: "Something went wrong while Updating your ticket!",
           confirmButtonText: "OK",
         });
       });
@@ -40,14 +42,18 @@ const AddTicket = () => {
 
   return (
     <div>
-      <h1>Add Ticket Page</h1>
+      <h1 className="text-4xl font-extrabold text-center md:text-left ">
+        Update your Tickets
+      </h1>
+      <p className="text-sm font-semi text-center md:text-left my-4">
+        Fill up the form below with new data to update your ticket
+      </p>
 
-      <div className="rounded-xl border bg-card p-6 lg:p-8 shadow-sm">
-        <h3 className="text-xl font-semibold mb-6">Add a New Ticket</h3>
-
+      <div>
+        {/* form */}
         <form
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          onSubmit={handleSubmit(handleAddTicket)}
+          onSubmit={handleSubmit(handleUpdateTicket)}
         >
           {/* Ticket Title */}
           <div className="md:col-span-2">
@@ -148,7 +154,10 @@ const AddTicket = () => {
               Price (per unit)
             </label>
             <input
-              {...register("price", { required: "Price is required" ,valueAsNumber: true})}
+              {...register("price", {
+                required: "Price is required",
+                valueAsNumber: true,
+              })}
               type="number"
               placeholder="0.00"
               className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:ring-primary focus:border-primary"
@@ -166,7 +175,10 @@ const AddTicket = () => {
               Ticket Quantity
             </label>
             <input
-              {...register("quantity", { required: "Quantity is required",valueAsNumber: true})}
+              {...register("quantity", {
+                required: "Quantity is required",
+                valueAsNumber: true,
+              })}
               type="number"
               placeholder="100"
               className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:ring-primary focus:border-primary"
@@ -266,7 +278,7 @@ const AddTicket = () => {
               type="submit"
               className="inline-flex items-center gap-2 rounded-lg  px-5 py-2.5 text-sm font-semibold text-white bg-red-500 shadow-sm hover:bg-primary/80 transition cursor-pointer"
             >
-              Add Ticket
+              Update Ticket
             </button>
           </div>
         </form>
@@ -275,4 +287,4 @@ const AddTicket = () => {
   );
 };
 
-export default AddTicket;
+export default UpdateTicket;

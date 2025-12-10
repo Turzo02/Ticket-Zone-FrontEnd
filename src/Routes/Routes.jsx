@@ -19,6 +19,7 @@ import AddTicket from "../Pages/Dashboard/Vendor/AddTicket";
 import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddedTickets";
 import RequestedTickets from "../Pages/Dashboard/Vendor/RequestedTickets";
 import Revenue from "../Pages/Dashboard/Vendor/Revenue";
+import UpdateTicket from "../Pages/Dashboard/Vendor/UpdateTicket/UpdateTicket";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -94,6 +95,10 @@ export const router = createBrowserRouter([
           {
             path: "revenue-overview",
             element: <Revenue></Revenue>
+          },
+          {
+            path: "update-ticket-details/:id",
+            element: <UpdateTicket></UpdateTicket>
           }
         ],
       },

@@ -12,7 +12,7 @@ const AllTickets = () => {
   const [page, setPage] = useState(1);
   const [filterType, setFilterType] = useState(""); 
   const [sortOrder, setSortOrder] = useState("");
-  const limit = 7;
+  const limit = 6;
 
   const handleFilterChange = (e) => {
     setFilterType(e.target.value);
