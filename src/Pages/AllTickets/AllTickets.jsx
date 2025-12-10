@@ -61,7 +61,7 @@ const AllTickets = () => {
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
         <h1 className="text-4xl font-extrabold text-center md:text-left">
-          All Available Tickets
+          All Available Tickets {allTickets.length}
         </h1>
 
         {/* Controls Container */}

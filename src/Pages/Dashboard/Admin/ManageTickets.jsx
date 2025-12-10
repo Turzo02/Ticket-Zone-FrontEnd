@@ -5,17 +5,11 @@ import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 
 const ManageTickets = () => {
   const axiosSecure = useAxiosSecure();
-    const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const limit = 7;
-  
 
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ["latestTickets",page],
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["latestTickets", page],
     queryFn: async () => {
       let url = `/ticket?page=${page}&limit=${limit}`;
       const { data } = await axiosSecure.get(url);
@@ -24,9 +18,8 @@ const ManageTickets = () => {
     keepPreviousData: true,
   });
 
-   const allTickets = data?.tickets || [];
+  const allTickets = data?.tickets || [];
   const totalPages = Math.ceil((data?.total || 0) / limit);
-
 
   // Accept Booking
   const handleAccept = async (id) => {
@@ -55,7 +48,6 @@ const ManageTickets = () => {
   if (isError) {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
-
 
   return (
     <div>
@@ -132,7 +124,7 @@ const ManageTickets = () => {
                         </span>
                       )}
 
-                        {/* <div className="flex gap-4 justify-center items-center ">
+                      {/* <div className="flex gap-4 justify-center items-center ">
                           <button
                             onClick={() => handleAccept(ticket._id)}
                             title="Approve"
@@ -149,6 +141,7 @@ const ManageTickets = () => {
                           </button>
                         </div> */}
 
+                        
                     </div>
                   </td>
                 </tr>
@@ -158,40 +151,42 @@ const ManageTickets = () => {
         </div>
 
         <div>
-             {/* PAGINATION BAR */}
-      {totalPages > 1 && (
-        <div className="flex justify-center mt-10 gap-3">
-          <button
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-            disabled={page === 1}
-            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
-          >
-            Prev
-          </button>
+          {/* PAGINATION BAR */}
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-10 gap-3">
+              <button
+                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                disabled={page === 1}
+                className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+              >
+                Prev
+              </button>
 
-          {[...Array(totalPages)].map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setPage(i + 1)}
-              className={`px-4 py-2 rounded-lg ${
-                page === i + 1
-                  ? "bg-purple-600 text-white"
-                  : "bg-green-500 "
-              }`}
-            >
-              {i + 1}
-            </button>
-          ))}
+              {[...Array(totalPages)].map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPage(i + 1)}
+                  className={`px-4 py-2 rounded-lg ${
+                    page === i + 1
+                      ? "bg-purple-600 text-white"
+                      : "bg-green-500 "
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
 
-          <button
-            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={page === totalPages}
-            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-      )}
+              <button
+                onClick={() =>
+                  setPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={page === totalPages}
+                className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
