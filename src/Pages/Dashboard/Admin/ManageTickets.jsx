@@ -1,158 +1,155 @@
 import React from "react";
+import useAxiosSecure from "../../../Hooks/useAxiousSecure";
+import { useQuery } from "@tanstack/react-query";
+import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 
 const ManageTickets = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const {
+    data: tickets = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ["latestTickets"],
+    queryFn: async () => {
+      // not recomended
+      const { data } = await axiosSecure.get("/ticket?limit=500");
+      return data.tickets;
+    },
+  });
+
+  // Accept Booking
+  const handleAccept = async (id) => {
+    await axiosSecure.patch(`/ticket/${id}`, {
+      status: "accepted",
+    });
+    refetch();
+  };
+
+  // Reject Booking
+  const handleReject = async (id) => {
+    await axiosSecure.patch(`/ticket/${id}`, {
+      status: "rejected",
+    });
+    refetch();
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <SwappingDotLoader></SwappingDotLoader>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <p className="text-red-500">Failed to load tickets</p>;
+  }
+
+  console.log(tickets);
+
   return (
     <div>
-      <h1>ManageTickets</h1>
-      {/* <!-- Tickets Management --> */}
-      <section className="space-y-4" id="tickets">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-text-main-light dark:text-text-main-dark">
-            Ticket Approvals
-          </h2>
-          <button className="text-sm font-medium text-primary hover:text-primary-dark">
-            View All
-          </button>
-        </div>
-        <div className="overflow-hidden rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-sm whitespace-nowrap">
-              <thead className="uppercase tracking-wider border-b border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50">
-                <tr>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark">
-                    Ticket ID
-                  </th>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark">
-                    Vendor
-                  </th>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark">
-                    Route
-                  </th>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark">
-                    Price
-                  </th>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark">
-                    Status
-                  </th>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark text-right">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border-light dark:divide-border-dark">
-                <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                  <td className="px-6 py-4 text-text-sec-light dark:text-text-sec-dark font-mono">
-                    #TK-9921
+      <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-gray-50">
+        <h2 className="text-2xl font-bold text-purple-700 mb-6">
+          Manage Tickets (Static Demo)
+        </h2>
+
+        <div className="shadow-lg rounded-xl border border-purple-300 bg-white overflow-hidden">
+          <table className="w-full table-auto text-left">
+            {/* Table Header */}
+            <thead className="bg-purple-500 text-white uppercase text-sm">
+              <tr>
+                <th className="p-4">Ticket Title</th>
+                <th className="p-4">Vendor Info</th>
+                <th className="p-4">Status</th>
+                <th className="p-4">Actions</th>
+              </tr>
+            </thead>
+
+            {/* Table Body */}
+            {tickets.map((ticket) => (
+              <tbody key={ticket._id}>
+                {/* Static Data Row 1: Pending Ticket */}
+                <tr className="border-b border-gray-100 hover:bg-purple-50 transition">
+                  <td className="p-4 font-semibold text-gray-800">
+                    {ticket.title}
                   </td>
-                  <td className="px-6 py-4 font-medium">Global Travels Inc.</td>
-                  <td className="px-6 py-4 text-text-sec-light dark:text-text-sec-dark">
-                    NYC{" "}
-                    <span className="material-symbols-outlined align-middle text-[16px] mx-1">
-                      arrow_forward
-                    </span>{" "}
-                    LON
-                  </td>
-                  <td className="px-6 py-4 font-bold">$450</td>
-                  <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
-                      <span className="size-1.5 rounded-full bg-amber-500"></span>{" "}
-                      Pending
+                  <td className="p-4 text-gray-600">
+                    {ticket.vendorName} <br />{" "}
+                    <span className="text-xs text-gray-400">
+                      {ticket.vendorEmail}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        className="p-1.5 rounded-lg text-green-600 hover:bg-green-100 dark:text-green-400 dark:hover:bg-green-900/30 transition-colors"
-                        title="Approve"
-                      >
-                        <span className="material-symbols-outlined">check</span>
-                      </button>
-                      <button
-                        className="p-1.5 rounded-lg text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/30 transition-colors"
-                        title="Reject"
-                      >
-                        <span className="material-symbols-outlined">close</span>
-                      </button>
-                    </div>
+
+                  <td className="p-4">
+                    {ticket.status === "pending" ? (
+                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-700 border border-yellow-300">
+                        Pending
+                      </span>
+                    ) : ticket.status === "accepted" ? (
+                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-700 border border-green-300">
+                        Accepted
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700 border border-red-300">
+                        Rejected
+                      </span>
+                    )}
                   </td>
-                </tr>
-                <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                  <td className="px-6 py-4 text-text-sec-light dark:text-text-sec-dark font-mono">
-                    #TK-9922
-                  </td>
-                  <td className="px-6 py-4 font-medium">SkyHigh Voyages</td>
-                  <td className="px-6 py-4 text-text-sec-light dark:text-text-sec-dark">
-                    TOK{" "}
-                    <span className="material-symbols-outlined align-middle text-[16px] mx-1">
-                      arrow_forward
-                    </span>{" "}
-                    SFO
-                  </td>
-                  <td className="px-6 py-4 font-bold">$820</td>
-                  <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
-                      <span className="size-1.5 rounded-full bg-amber-500"></span>{" "}
-                      Pending
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        className="p-1.5 rounded-lg text-green-600 hover:bg-green-100 dark:text-green-400 dark:hover:bg-green-900/30 transition-colors"
-                        title="Approve"
-                      >
-                        <span className="material-symbols-outlined">check</span>
-                      </button>
-                      <button
-                        className="p-1.5 rounded-lg text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/30 transition-colors"
-                        title="Reject"
-                      >
-                        <span className="material-symbols-outlined">close</span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                  <td className="px-6 py-4 text-text-sec-light dark:text-text-sec-dark font-mono">
-                    #TK-9924
-                  </td>
-                  <td className="px-6 py-4 font-medium">EuroRail Ways</td>
-                  <td className="px-6 py-4 text-text-sec-light dark:text-text-sec-dark">
-                    LON{" "}
-                    <span className="material-symbols-outlined align-middle text-[16px] mx-1">
-                      arrow_forward
-                    </span>{" "}
-                    DUB
-                  </td>
-                  <td className="px-6 py-4 font-bold">$85</td>
-                  <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">
-                      <span className="size-1.5 rounded-full bg-red-500"></span>{" "}
-                      Flagged
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        className="p-1.5 rounded-lg text-green-600 hover:bg-green-100 dark:text-green-400 dark:hover:bg-green-900/30 transition-colors"
-                        title="Approve"
-                      >
-                        <span className="material-symbols-outlined">check</span>
-                      </button>
-                      <button
-                        className="p-1.5 rounded-lg text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/30 transition-colors"
-                        title="Reject"
-                      >
-                        <span className="material-symbols-outlined">close</span>
-                      </button>
+                  <td className="p-4">
+                    <div className="flex justify-center gap-4">
+                      {/*  Action Buttons */}
+                      {ticket.status === "pending" ? (
+                        <div className="flex gap-4 justify-center items-center ">
+                          <button
+                            onClick={() => handleAccept(ticket._id)}
+                            title="Approve"
+                            className="btn  text-white bg-green-500 hover:bg-green-600  transition shadow-md"
+                          >
+                            ✓
+                          </button>
+                          <button
+                            onClick={() => handleReject(ticket._id)}
+                            title="Reject"
+                            className="btn text-white bg-red-500 hover:bg-red-600  transition shadow-md"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ) : (
+                        <span className="text-sm font-medium text-green-600">
+                          Action ✅
+                        </span>
+                      )}
+{/* 
+                        <div className="flex gap-4 justify-center items-center ">
+                          <button
+                            onClick={() => handleAccept(ticket._id)}
+                            title="Approve"
+                            className="btn  text-white bg-green-500 hover:bg-green-600  transition shadow-md"
+                          >
+                            ✓
+                          </button>
+                          <button
+                            onClick={() => handleReject(ticket._id)}
+                            title="Reject"
+                            className="btn text-white bg-red-500 hover:bg-red-600  transition shadow-md"
+                          >
+                            ✕
+                          </button>
+                        </div> */}
+
                     </div>
                   </td>
                 </tr>
               </tbody>
-            </table>
-          </div>
+            ))}
+          </table>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

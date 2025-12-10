@@ -1,6 +1,6 @@
 import { SlidersHorizontal } from "lucide-react";
 import React, { useState } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 const menuItems = [
   // all
   { label: "User Profile", path: "/dashboard/user-profile", roles: ["user","vendor","admin"] },
@@ -41,14 +41,14 @@ const DashboardLayout = () => {
 
           <nav className="flex flex-col space-y-2">
             {menuItems.map((item) => (
-              <Link
+              <NavLink
                 key={item.path}
                 to={item.path}
                 className="px-3 py-2 rounded-lg"
                 onClick={() => setDrawerOpen(false)}
               >
                 {item.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
         </div>

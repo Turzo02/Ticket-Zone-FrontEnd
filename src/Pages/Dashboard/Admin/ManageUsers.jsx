@@ -1,100 +1,128 @@
 import React from "react";
-
+const user = {
+  id: 2,
+  name: "Bob Smith",
+  email: "bob.s@example.com",
+  role: "Vendor",
+  status: "Active",
+};
 const ManageUsers = () => {
   return (
     <div>
-      <h1>Manage Users</h1>
-      <section className="space-y-4" id="users">
-        <h2 className="text-xl font-bold text-text-main-light dark:text-text-main-dark">
-          User Management
-        </h2>
-        <div className="overflow-hidden rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-sm whitespace-nowrap">
-              <thead className="uppercase tracking-wider border-b border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50">
+      <div className="p-4 sm:p-8 max-w-7xl mx-auto min-h-screen bg-gray-50">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8 sm:text-4xl">
+          User Management (Demo View)
+        </h1>
+
+        {/* ---------------------------------------------------------------------- */}
+        {/* --- Desktop/Tablet View (Table) - Visible on 'sm' screens and up --- */}
+        {/* ---------------------------------------------------------------------- */}
+        <div className="hidden sm:block">
+          <div className="shadow-xl rounded-xl border border-gray-300 bg-white overflow-hidden">
+            <table className="w-full table-auto text-left">
+              <thead className="bg-gray-100 text-gray-700 uppercase text-sm">
                 <tr>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark">
-                    User
-                  </th>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark">
-                    Email
-                  </th>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark">
-                    Role
-                  </th>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark">
-                    Risk Level
-                  </th>
-                  <th className="px-6 py-4 font-medium text-text-sec-light dark:text-text-sec-dark text-right">
-                    Actions
-                  </th>
+                  <th className="p-4">Name</th>
+                  <th className="p-4">Email</th>
+                  <th className="p-4">Role</th>
+                  <th className="p-4">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border-light dark:divide-border-dark">
-                <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                  <td className="px-6 py-4 flex items-center gap-3">
-                    <div className="size-8 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 flex items-center justify-center font-bold text-xs">
-                      JS
-                    </div>
-                    <span className="font-medium">John Smith</span>
-                  </td>
-                  <td className="px-6 py-4 text-text-sec-light dark:text-text-sec-dark">
-                    john.smith@example.com
-                  </td>
-                  <td className="px-6 py-4">
-                    <select className="form-select text-sm py-1 px-2 rounded border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary">
-                      <option>User</option>
-                      <option>Vendor</option>
-                      <option>Admin</option>
-                    </select>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-green-600 dark:text-green-400 font-medium">
-                      Low
+              {/* Table Body */}
+              <tbody>
+                <tr className="border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition">
+                  <td className="p-4 font-medium text-gray-700">{user.name}</td>
+                  <td className="p-4 text-gray-600">{user.email}</td>
+                  <td className="p-4">
+                    {/* Role Badge Demo */}
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-teal-100 text-teal-700 border border-teal-300">
+                      {user.role.toUpperCase()}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="text-red-500 hover:text-red-700 text-xs font-bold uppercase tracking-wide">
-                      Mark Fraud
-                    </button>
-                  </td>
-                </tr>
-                <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                  <td className="px-6 py-4 flex items-center gap-3">
-                    <div className="size-8 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 flex items-center justify-center font-bold text-xs">
-                      AT
+
+                  <td className="p-4">
+                    <div className="flex gap-3">
+                      {/* Make Admin */}
+                      <button
+                        disabled={user.role === "Admin"}
+                        className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition bg-purple-500 text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Admin
+                      </button>
+
+                      {/* Make Vendor */}
+                      <button
+                        disabled={user.role === "Admin"}
+                        className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition bg-teal-500 text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Vendor
+                      </button>
+
+                      {/* Mark as Fraud (Visible for Vendor) */}
+                      {user.role === "Vendor" && (
+                        <button
+                          disabled={user.status === "Fraud"}
+                          className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition bg-red-500 text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          Mark Fraud
+                        </button>
+                      )}
                     </div>
-                    <span className="font-medium">Air Travel Ltd.</span>
-                  </td>
-                  <td className="px-6 py-4 text-text-sec-light dark:text-text-sec-dark">
-                    contact@airtravel.com
-                  </td>
-                  <td className="px-6 py-4">
-                    <select
-                      className="form-select text-sm py-1 px-2 rounded border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary"
-                      selected="Vendor"
-                    >
-                      <option>User</option>
-                      <option>Vendor</option>
-                      <option>Admin</option>
-                    </select>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-amber-500 dark:text-amber-400 font-medium">
-                      Medium
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="text-red-500 hover:text-red-700 text-xs font-bold uppercase tracking-wide">
-                      Mark Fraud
-                    </button>
                   </td>
                 </tr>
+                {/* You would map over the full data array here */}
               </tbody>
             </table>
           </div>
         </div>
-      </section>
+
+        {/* ---------------------------------------------------------------- */}
+        {/* --- Mobile View (Cards) - Hidden on 'sm' screens and up --- */}
+        {/* ---------------------------------------------------------------- */}
+        <div className="sm:hidden">
+          {/* User Card Demo */}
+          <div className="bg-white p-4 shadow-md rounded-xl border border-gray-200 mb-4 transition-all">
+            <div className="flex justify-between items-start mb-3 border-b pb-2">
+              <div>
+                <p className="text-lg font-bold text-gray-800">{user.name}</p>
+                <p className="text-sm text-gray-500">{user.email}</p>
+              </div>
+              {/* Role Badge Demo */}
+              <span className="px-3 py-1 text-xs font-semibold rounded-full bg-teal-100 text-teal-700 border border-teal-300">
+                {user.role.toUpperCase()}
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {/* Role Change Actions */}
+              <div className="flex gap-2">
+                {/* Make Admin */}
+                <button
+                  disabled={user.role === "Admin"}
+                  className="flex items-center justify-center w-full gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition bg-purple-500 text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Make Admin
+                </button>
+                {/* Make Vendor */}
+                <button
+                  disabled={user.role === "Admin"}
+                  className="flex items-center justify-center w-full gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition bg-teal-500 text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Make Vendor
+                </button>
+              </div>
+
+              {/* Mark as Fraud Action */}
+              {user.role === "Vendor" && user.status !== "Fraud" && (
+                <button className="bg-red-500 text-white w-full flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition hover:opacity-90">
+                  Mark as Fraud
+                </button>
+              )}
+            </div>
+          </div>
+          {/* You would map over the full data array here */}
+        </div>
+      </div>
     </div>
   );
 };
