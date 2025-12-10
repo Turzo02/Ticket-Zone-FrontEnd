@@ -35,7 +35,6 @@ const LatestTickets = () => {
   if (isError) {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
-  console.log(tickets);
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">

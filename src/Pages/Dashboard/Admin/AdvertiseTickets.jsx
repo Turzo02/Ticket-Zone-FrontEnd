@@ -8,7 +8,27 @@ const AdvertiseTicketsStatic = () => {
   const axiosSecure = useAxiosSecure();
   const [page, setPage] = useState(1);
   const limit = 7;
-  const { data, isLoading, isError, refetch } = useQuery({
+  const maxAdvertisedLimit = 6;
+
+  const { data: countData, refetch: refetchCount } = useQuery({
+    queryKey: ["advertisedCount"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(
+        "/ticket/dashboard/advertised-count"
+      );
+      return data.count;
+    },
+    staleTime: 5000,
+  });
+
+  const currentlyAdvertisedCount = countData ?? 0;
+
+  const {
+    data,
+    isLoading,
+    isError,
+    refetch: refetchTickets,
+  } = useQuery({
     queryKey: ["latestTickets", page],
     queryFn: async () => {
       let url = `/ticket?page=${page}&limit=${limit}&status=accepted`;
@@ -20,22 +40,32 @@ const AdvertiseTicketsStatic = () => {
 
   const allTickets = data?.tickets || [];
   const totalPages = Math.ceil((data?.total || 0) / limit);
-  const MAX_ADVERTISED_LIMIT = 6;
-
 
   const handleAdvertise = async (ticket) => {
     const newAdvertiseState = !ticket.isAdvertised;
-    const currentlyAdvertisedCount = allTickets.filter(t => t.isAdvertised).length;
 
-    if (newAdvertiseState === true && currentlyAdvertisedCount >= MAX_ADVERTISED_LIMIT) {
-     
-        alert(`You can only advertise a maximum of ${MAX_ADVERTISED_LIMIT} tickets at a time. Please remove an existing advertised ticket first.`);
-        return; 
+    if (
+      newAdvertiseState === true &&
+      currentlyAdvertisedCount >= maxAdvertisedLimit
+    ) {
+      alert(
+        `You can only advertise a maximum of ${maxAdvertisedLimit} tickets globally. Please remove an existing advertised ticket first.`
+      );
+
+      return;
     }
-    await axiosSecure.patch(`/ticket/${ticket._id}`, {
-      isAdvertised: newAdvertiseState,
-    });
-    refetch();
+
+    try {
+      await axiosSecure.patch(`/ticket/${ticket._id}`, {
+        isAdvertised: newAdvertiseState,
+      });
+
+      refetchTickets();
+      refetchCount();
+    } catch (error) {
+      alert("Failed to update advertisement status. Please try again.");
+      console.error(error);
+    }
   };
 
   if (isLoading) {
@@ -54,9 +84,10 @@ const AdvertiseTicketsStatic = () => {
 
   return (
     <div className="p-4 sm:p-8 max-w-4xl mx-auto min-h-screen bg-gray-50">
-      <h1 className="text-3xl font-bold text-center text-indigo-700 mb-8 sm:text-4xl">
-        📢 Advertise Ticket Status (Static Demo)
+      <h1 className="text-3xl font-bold text-center text-indigo-700 sm:text-4xl">
+        📢 Advertise Ticket Status 
       </h1>
+      <p className="text-md font-bold text-center text-black-700 my-4 ">    You can only advertise a maximum of ${maxAdvertisedLimit} tickets globally</p>
 
       <div className="shadow-xl rounded-xl border border-indigo-300 bg-white overflow-hidden">
         <table className="w-full table-auto text-left">
@@ -88,11 +119,9 @@ const AdvertiseTicketsStatic = () => {
                       ticket.isAdvertised ? "btn-success" : "btn-secondary"
                     }`}
                   >
-                 {ticket.isAdvertised ? "Remove Ad" : "Advertise Now"}
+                    {ticket.isAdvertised ? "Remove Ad" : "Advertise Now"}
                   </button>
-        
                 </td>
-           
               </tr>
             ))}
           </tbody>

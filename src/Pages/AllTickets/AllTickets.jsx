@@ -214,6 +214,7 @@ const AllTickets = () => {
                       ))}
                     </ul>
                   </div>
+                  
                 </div>
 
                 <Link to={`/all-tickets/${ticket._id}`}>
