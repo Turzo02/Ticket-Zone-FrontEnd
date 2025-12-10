@@ -4,16 +4,17 @@ import React from "react";
 import { Link } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
-import { MoveRight, Filter, ArrowUpDown } from "lucide-react"; 
+import { MoveRight, Filter, ArrowUpDown } from "lucide-react";
 
 const AllTickets = () => {
   const axiosSecure = useAxiosSecure();
 
   const [page, setPage] = useState(1);
-  const [filterType, setFilterType] = useState(""); 
+  const [filterType, setFilterType] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const limit = 6;
-
+  const [fromLocation, setFromLocation] = useState("");
+  const [toLocation, setToLocation] = useState("");
   const handleFilterChange = (e) => {
     setFilterType(e.target.value);
     setPage(1);
@@ -21,19 +22,24 @@ const AllTickets = () => {
 
   const handleSortChange = (e) => {
     setSortOrder(e.target.value);
-    setPage(1); 
+    setPage(1);
   };
 
-  const {
-    data,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["latestTickets", page, filterType, sortOrder],
+  const { data, isLoading, isError, isFetching } = useQuery({
+    queryKey: [
+      "latestTickets",
+      page,
+      filterType,
+      sortOrder,
+      fromLocation,
+      toLocation,
+    ],
     queryFn: async () => {
       let url = `/ticket?page=${page}&limit=${limit}&status=accepted`;
       if (filterType) url += `&transport=${filterType}`;
-      if (sortOrder) url += `&sort=${sortOrder}`; 
+      if (sortOrder) url += `&sort=${sortOrder}`;
+      if (fromLocation) url += `&from=${fromLocation}`;
+      if (toLocation) url += `&to=${toLocation}`;
 
       const { data } = await axiosSecure.get(url);
       return data;
@@ -44,7 +50,17 @@ const AllTickets = () => {
   const allTickets = data?.tickets || [];
   const totalPages = Math.ceil((data?.total || 0) / limit);
 
-  if (isLoading) {
+  const handleFromChange = (e) => {
+    setFromLocation(e.target.value);
+    setPage(1); 
+  };
+
+  const handleToChange = (e) => {
+    setToLocation(e.target.value);
+    setPage(1);
+  };
+
+  if (isLoading && !isFetching) {
     return (
       <div className="flex justify-center items-center h-32">
         <SwappingDotLoader />
@@ -53,9 +69,10 @@ const AllTickets = () => {
   }
 
   if (isError) {
-    return <p className="text-red-500 text-center mt-10">Failed to load tickets</p>;
+    return (
+      <p className="text-red-500 text-center mt-10">Failed to load tickets</p>
+    );
   }
-
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
@@ -66,7 +83,6 @@ const AllTickets = () => {
 
         {/* Controls Container */}
         <div className="flex flex-col sm:flex-row gap-4">
-          
           {/* Transport Filter */}
           <div className="relative group">
             <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
@@ -101,6 +117,30 @@ const AllTickets = () => {
             </div>
           </div>
 
+          {/* search by location */}
+          <div className="flex gap-2">
+            {/* From Location Input */}
+            <div className="relative group">
+              <input
+                type="text"
+                placeholder="From (City/Station)"
+                value={fromLocation}
+                onChange={handleFromChange}
+                className="bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors outline-none text-gray-700 w-full sm:w-40"
+              />
+            </div>
+
+            {/* To Location Input */}
+            <div className="relative group">
+              <input
+                type="text"
+                placeholder="To (City/Station)"
+                value={toLocation}
+                onChange={handleToChange}
+                className="bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors outline-none text-gray-700 w-full sm:w-40"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -112,7 +152,7 @@ const AllTickets = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {allTickets.map((ticket) => {
-             const formattedPrice = new Intl.NumberFormat("en-US", {
+            const formattedPrice = new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
             }).format(ticket.price);
@@ -208,19 +248,19 @@ const AllTickets = () => {
                     </h3>
                     <ul className="flex flex-wrap gap-2 text-sm text-gray-600">
                       {ticket.perks.map((perk, i) => (
-                        <li key={i} className="bg-gray-100 px-2 py-1 rounded-full">
+                        <li
+                          key={i}
+                          className="bg-gray-100 px-2 py-1 rounded-full"
+                        >
                           {perk}
                         </li>
                       ))}
                     </ul>
                   </div>
-                  
                 </div>
 
                 <Link to={`/all-tickets/${ticket._id}`}>
-                  <button
-                    className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-lg shadow-pink-500/40"
-                  >
+                  <button className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-lg shadow-pink-500/40">
                     See Details
                   </button>
                 </Link>
@@ -246,9 +286,7 @@ const AllTickets = () => {
               key={i}
               onClick={() => setPage(i + 1)}
               className={`px-4 py-2 rounded-lg ${
-                page === i + 1
-                  ? "bg-purple-600 text-white"
-                  : "bg-green-500 "
+                page === i + 1 ? "bg-purple-600 text-white" : "bg-green-500 "
               }`}
             >
               {i + 1}
@@ -264,8 +302,6 @@ const AllTickets = () => {
           </button>
         </div>
       )}
-
-
     </div>
   );
 };
