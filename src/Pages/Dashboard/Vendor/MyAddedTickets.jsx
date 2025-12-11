@@ -189,8 +189,6 @@ const MyAddedTickets = () => {
                   </div>
                 </div>
 
-
-
                 {ticket.status === "rejected" ? (
                   <span
                     className="w-full mt-4 py-3 text-lg font-bold text-gray-500 rounded-lg bg-gray-200 text-center block cursor-not-allowed"
@@ -219,8 +217,8 @@ const MyAddedTickets = () => {
         shadow-lg cursor-pointer transition duration-300 
         ${
           ticket.status === "rejected"
-            ? "bg-gray-400 cursor-not-allowed shadow-none" 
-            : "bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-pink-500/40" 
+            ? "bg-gray-400 cursor-not-allowed shadow-none"
+            : "bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-pink-500/40"
         }
     `}
                 >

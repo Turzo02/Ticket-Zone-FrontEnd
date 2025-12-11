@@ -55,7 +55,7 @@ const ManageUsers = () => {
           User Management
         </h1>
 
-        {/* --- Desktop/Tablet View (Table)  --- */}
+        {/* --- Desktop/Tablet View --- */}
 
         <div className="sm:block">
           <div className="shadow-xl rounded-xl border border-gray-300 bg-white overflow-hidden">

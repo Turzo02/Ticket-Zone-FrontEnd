@@ -3,12 +3,10 @@ import Countdown from "react-countdown";
 import PropTypes from 'prop-types';
 
 const TicketCountdown = ({ departure, onCountdownComplete }) => {
-    // Safety check for departure date
     if (!departure) return <span className="text-gray-400">No date provided</span>;
 
     const departureDate = new Date(departure);
 
-    // Renderer callback: ONLY returns JSX, does NOT trigger side effects
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
             return <span className="text-green-600 font-bold">Already Departed</span>;
@@ -27,7 +25,6 @@ const TicketCountdown = ({ departure, onCountdownComplete }) => {
             <Countdown
                 date={departureDate}
                 renderer={renderer}
-                // Use onComplete prop to safely update parent state
                 onComplete={() => {
                     if (onCountdownComplete) {
                         onCountdownComplete(true);

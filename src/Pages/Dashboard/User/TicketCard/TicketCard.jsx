@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types'; // Recommended for prop validation
+import PropTypes from 'prop-types';
 import TicketCountdown from '../../../../Components/TicketCountdown/TicketCountdown';
 import { Link } from 'react-router';
 
 const TicketCard = ({ ticket }) => {
     const [isDeparted, setIsDeparted] = useState(false);
     
-    // Logic: Assuming you can buy if accepted and not yet departed
     const isTicketAccepted = ticket.status === "accepted";
     const isPurchasable = isTicketAccepted && !isDeparted;
 
@@ -81,7 +80,7 @@ const TicketCard = ({ ticket }) => {
                         </span>
                     </div>
 
-                    {/* Payment Status (Fixed duplication logic) */}
+                    {/* Payment Status */}
                     <div className="flex justify-between items-center">
                         <span className="text-slate-500 dark:text-slate-400">Payment Status:</span>
                         <span

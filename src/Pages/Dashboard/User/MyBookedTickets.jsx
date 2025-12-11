@@ -11,7 +11,7 @@ const MyBookedTickets = () => {
 
     // FETCH DATA
     const {
-        data: userBookings = [], // Fixed typo: userBokings -> userBookings
+        data: userBookings = [], 
         isLoading,
         isError,
     } = useQuery({
