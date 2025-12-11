@@ -35,18 +35,17 @@ const TicketCard = ({ ticket }) => {
       })
     : "Date N/A";
 
-  const handlePayment = async () => {
+  const handlePayment = async (id) => {
     const ticketInfo = {
       totalPrice: ticket.totalPrice,
       title: ticket.title,
       userEmail: ticket.userEmail,
-      ticketId: ticket.ticketId,
+      id: id,
     };
 
     const res = await axiosSecure.post("/payment-checkout-session", ticketInfo);
     window.location.href = res.data.url;
   };
-
   return (
     <div className="flex flex-col rounded-xl border border-gray-200 shadow-sm dark:border-gray-800 dark:bg-card-dark overflow-hidden bg-white dark:bg-gray-900">
       <img
@@ -124,7 +123,7 @@ const TicketCard = ({ ticket }) => {
           {ticket.paymentStatus === "paid" ? (
             <button className={paidButtonClasses}>Ticket Purchased</button>
           ) : isPurchasable ? (
-            <button onClick={handlePayment} className={buttonClasses}>
+            <button onClick={() => handlePayment(ticket._id)} className={buttonClasses}>
               Buy Ticket
             </button>
           ) : (

@@ -124,7 +124,7 @@ const ManageTickets = () => {
                         </span>
                       )}
 
-                      {/* <div className="flex gap-4 justify-center items-center ">
+                      <div className="flex gap-4 justify-center items-center ">
                           <button
                             onClick={() => handleAccept(ticket._id)}
                             title="Approve"
@@ -139,7 +139,7 @@ const ManageTickets = () => {
                           >
                             ✕
                           </button>
-                        </div> */}
+                        </div>
 
                         
                     </div>

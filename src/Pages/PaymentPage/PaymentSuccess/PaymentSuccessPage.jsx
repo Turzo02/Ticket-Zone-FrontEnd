@@ -38,7 +38,7 @@ const PaymentSuccessPage = () => {
         
     }
   }, [sessionId, axiosSecure]);
-
+ console.log(sessionId)
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <motion.div
