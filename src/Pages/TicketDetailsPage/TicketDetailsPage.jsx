@@ -127,7 +127,7 @@ const TicketDetailsPage = () => {
 
         {/* Countdown */}
         <div className="text-gray-600 font-medium">
-          <TicketCountdown departure={ticket.departure} />
+         Countdown : <TicketCountdown departure={ticket.departure} />
         </div>
 
         {/* Perks */}
