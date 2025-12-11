@@ -1,12 +1,39 @@
 import React from "react";
+import useAuth from "../../../Hooks/useAuth";
+import useAxiosSecure from "../../../Hooks/useAxiousSecure";
+import { useQuery } from "@tanstack/react-query";
+import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 
-const transactions = [
-  { id: "pi_3PabcdeFgHiJklmnO12p", title: "Tokyo Shinkansen", amount: "$480.00", date: "Oct 19, 2024" },
-  { id: "pi_1OxyzWAbCdEfGhIjK2L3", title: "Venice Gondola Tour", amount: "$85.50", date: "Sep 05, 2024" },
-  { id: "pi_9MabCDeFgHiJkLmNoP4q", title: "Rome Colosseum Entry", amount: "$150.00", date: "Aug 21, 2024" },
-];
 
 const TransactionHistory = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const {
+    data: bookings = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["User Bookings"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/bookings/${user.email}`);
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <SwappingDotLoader></SwappingDotLoader>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <p className="text-red-500">Failed to load tickets</p>;
+  }
+  console.log(bookings);
+
   return (
     <section className="pt-8">
       <h3 className="text-xl font-bold font-display">Transaction History</h3>
@@ -15,19 +42,54 @@ const TransactionHistory = () => {
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
             <thead className="">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider  ">Transaction ID</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider  ">Ticket Title</th>
-                <th className="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider ">Amount</th>
-                <th className="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider ">Payment Date</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider  ">
+                  Transaction ID
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider  ">
+                  Ticket Title
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider ">
+                  Amount
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider ">
+                 Status
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider ">
+                  Payment Date
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200  dark:divide-gray-800 dark:bg-card-dark">
-              {transactions.map(tx => (
-                <tr key={tx.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono">{tx.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold  ">{tx.title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">{tx.amount}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm ">{tx.date}</td>
+              {bookings.map((tx) => (
+                <tr key={tx._id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono">
+                   { 
+                      tx.transactionId ? 
+                      tx.transactionId:"No Transaction id avaible" 
+
+                   }
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold  ">
+                    {tx.title}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    ${tx.totalPrice} 
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    {tx.paymentStatus ? "Paid" : "Not paid"}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm ">
+                    {tx.paidAt
+                      ? new Date(tx.paidAt).toLocaleTimeString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        })
+                      : "Not Avaiable"}
+                  </td>
                 </tr>
               ))}
             </tbody>
