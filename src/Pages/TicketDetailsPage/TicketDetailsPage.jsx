@@ -29,21 +29,19 @@ const TicketDetailsPage = () => {
     formState: { errors },
   } = useForm();
 
-
   const handleBookingSubmit = (data) => {
     const quantity = Number(data.quantity);
     const price = Number(ticket.price);
-    const bookingQuantity = Number(ticket.quantity);
     const bookingData = {
       ticketId: id,
       userEmail: user?.email,
       title: ticket.title,
-      bookingQuantity: bookingQuantity,
+      bookingQuantity: quantity,
+      quantity: ticket.quantity,
       totalPrice: quantity * price,
       status: "pending",
       departure: ticket.departure,
     };
-
 
     // post the data to database
     axiosSecure
@@ -72,7 +70,7 @@ const TicketDetailsPage = () => {
 
   if (isLoading) return <SwappingDotLoader></SwappingDotLoader>;
   if (isError) return <p className="text-red-600">Error loading ticket</p>;
-
+console.log(ticket.quantity)
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       {/* Header Image */}
@@ -127,7 +125,7 @@ const TicketDetailsPage = () => {
 
         {/* Countdown */}
         <div className="text-gray-600 font-medium">
-         Countdown : <TicketCountdown departure={ticket.departure} />
+          Countdown : <TicketCountdown departure={ticket.departure} />
         </div>
 
         {/* Perks */}
@@ -149,13 +147,14 @@ const TicketDetailsPage = () => {
 
         {/* Book Now Button */}
         <button
+          disabled={ticket.quantity === 0}
           onClick={() => setModalOpen(true)}
-          className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg
-          bg-linear-to-r from-pink-600 to-red-700
+          className={` w-full mt-4 py-3 text-lg font-bold text-white rounded-lg
+          
           hover:from-pink-700 hover:to-red-800
-          shadow-lg shadow-pink-500/40 transition duration-200 cursor-pointer"
+           transition duration-200 cursor-pointer ${ticket.quantity === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-linear-to-r from-pink-600 to-red-700"}`}
         >
-          Book Now
+         { ticket.quantity === 0 ? "Sold Out" : "Book Now"}
         </button>
       </div>
 
@@ -195,12 +194,6 @@ const TicketDetailsPage = () => {
                     },
                   })}
                 />
-
-                {errors.quantity && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.quantity.message}
-                  </p>
-                )}
               </div>
 
               <button

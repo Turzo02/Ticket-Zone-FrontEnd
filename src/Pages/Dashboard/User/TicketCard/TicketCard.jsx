@@ -41,7 +41,11 @@ const TicketCard = ({ ticket }) => {
       title: ticket.title,
       userEmail: ticket.userEmail,
       id: id,
+      ticketId: ticket.ticketId,
+      bookingQuantity: ticket.bookingQuantity,
+      quantity : ticket.quantity
     };
+
 
     const res = await axiosSecure.post("/payment-checkout-session", ticketInfo);
     window.location.href = res.data.url;

@@ -32,8 +32,10 @@ const PaymentSuccessPage = () => {
     if (sessionId) {
       axiosSecure
         .patch(`/payment-success?session_id=${sessionId}`)
-        .then(() =>{
-            // console.log(res.data);
+        .then((res) =>{
+            if(res.data.modifiedCount > 0){
+                console.log("payment success");
+            }
         })
         
     }
