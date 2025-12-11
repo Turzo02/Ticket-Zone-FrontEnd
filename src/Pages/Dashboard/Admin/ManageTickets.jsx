@@ -9,7 +9,7 @@ const ManageTickets = () => {
   const limit = 7;
 
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["latestTickets", page],
+    queryKey: ["ManageTickets", page],
     queryFn: async () => {
       let url = `/ticket?page=${page}&limit=${limit}`;
       const { data } = await axiosSecure.get(url);

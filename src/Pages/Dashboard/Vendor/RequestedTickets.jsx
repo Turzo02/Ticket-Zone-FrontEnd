@@ -12,7 +12,7 @@ const RequestedTickets = () => {
     isError,
     refetch,
   } = useQuery({
-    queryKey: ["All BOokings"],
+    queryKey: ["AllBookings"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/bookings`);
       return data;

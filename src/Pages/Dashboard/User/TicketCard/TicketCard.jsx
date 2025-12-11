@@ -98,7 +98,8 @@ const TicketCard = ({ ticket }) => {
                 {/* Buy Ticket Button/Link Logic */}
                 <div className="mt-auto">
                     {isPurchasable ? (
-                        <Link to={`/payment/${ticket._id}`} className={buttonClasses}>
+                        // <Link to={`/payment/${ticket._id}`} className={buttonClasses}>
+                        <Link to={`/payment`} className={buttonClasses}>
                             Buy Ticket
                         </Link>
                     ) : (

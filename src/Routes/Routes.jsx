@@ -20,6 +20,7 @@ import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddedTickets";
 import RequestedTickets from "../Pages/Dashboard/Vendor/RequestedTickets";
 import Revenue from "../Pages/Dashboard/Vendor/Revenue";
 import UpdateTicket from "../Pages/Dashboard/Vendor/UpdateTicket/UpdateTicket";
+import PaymentPage from "../Pages/PaymentPage/PaymentPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/payment",
+        element: <PaymentPage></PaymentPage>,
+      },
+      {
         path: "/all-tickets/:id",
         Component: TicketDetailsPage,
       },
@@ -45,6 +50,7 @@ export const router = createBrowserRouter([
         path: "*",
         Component: NotFound,
       },
+
       {
         path: "/dashboard",
         Component: DasboardLayout,
@@ -69,37 +75,37 @@ export const router = createBrowserRouter([
           // for admin routes
           {
             path: "manage-users",
-            element: <ManageUsers></ManageUsers>
+            element: <ManageUsers></ManageUsers>,
           },
           {
             path: "manage-tickets",
-            element: <ManageTickets></ManageTickets>
+            element: <ManageTickets></ManageTickets>,
           },
           {
-           path: "advertisement-tickets",
-           element: <AdvertiseTickets></AdvertiseTickets>
+            path: "advertisement-tickets",
+            element: <AdvertiseTickets></AdvertiseTickets>,
           },
           //for vendor routes
           {
             path: "add-tickets",
-            element: <AddTicket></AddTicket>
+            element: <AddTicket></AddTicket>,
           },
           {
             path: "my-added-tickets",
-            element: <MyAddedTickets></MyAddedTickets>
+            element: <MyAddedTickets></MyAddedTickets>,
           },
           {
             path: "requested-tickets",
-            element: <RequestedTickets></RequestedTickets>
+            element: <RequestedTickets></RequestedTickets>,
           },
           {
             path: "revenue-overview",
-            element: <Revenue></Revenue>
+            element: <Revenue></Revenue>,
           },
           {
             path: "update-ticket-details/:id",
-            element: <UpdateTicket></UpdateTicket>
-          }
+            element: <UpdateTicket></UpdateTicket>,
+          },
         ],
       },
     ],
@@ -110,15 +116,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/register",
-        element: (
-            <Register></Register>
-        ),
+        element: <Register></Register>,
       },
       {
         path: "/login",
-        element: (
-            <Login></Login>
-        ),
+        element: <Login></Login>,
       },
       {
         path: "*",

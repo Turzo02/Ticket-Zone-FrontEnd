@@ -24,7 +24,7 @@ const MyAddedTickets = () => {
   };
 
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["latestTickets", page, filterType, sortOrder],
+    queryKey: ["MyAddedTickets", page, filterType, sortOrder],
     queryFn: async () => {
       let url = `/ticket?page=${page}&limit=${limit}`;
       if (filterType) url += `&transport=${filterType}`;

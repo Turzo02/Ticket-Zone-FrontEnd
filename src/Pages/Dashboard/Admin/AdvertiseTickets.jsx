@@ -4,7 +4,7 @@ import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 
-const AdvertiseTicketsStatic = () => {
+const AdvertiseTickets = () => {
   const axiosSecure = useAxiosSecure();
   const [page, setPage] = useState(1);
   const limit = 7;
@@ -29,7 +29,7 @@ const AdvertiseTicketsStatic = () => {
     isError,
     refetch: refetchTickets,
   } = useQuery({
-    queryKey: ["latestTickets", page],
+    queryKey: ["AdvertisedTickets", page],
     queryFn: async () => {
       let url = `/ticket?page=${page}&limit=${limit}&status=accepted`;
       const { data } = await axiosSecure.get(url);
@@ -165,4 +165,4 @@ const AdvertiseTicketsStatic = () => {
   );
 };
 
-export default AdvertiseTicketsStatic;
+export default AdvertiseTickets;

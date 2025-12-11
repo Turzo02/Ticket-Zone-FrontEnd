@@ -27,7 +27,7 @@ const AllTickets = () => {
 
   const { data, isLoading, isError, isFetching } = useQuery({
     queryKey: [
-      "latestTickets",
+      "All Tickets",
       page,
       filterType,
       sortOrder,
