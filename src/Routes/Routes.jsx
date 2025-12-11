@@ -20,7 +20,8 @@ import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddedTickets";
 import RequestedTickets from "../Pages/Dashboard/Vendor/RequestedTickets";
 import Revenue from "../Pages/Dashboard/Vendor/Revenue";
 import UpdateTicket from "../Pages/Dashboard/Vendor/UpdateTicket/UpdateTicket";
-import PaymentPage from "../Pages/PaymentPage/PaymentPage";
+import PaymentSuccessPage from "../Pages/PaymentPage/PaymentSuccess/PaymentSuccessPage";
+import PaymentFailedPage from "../Pages/PaymentPage/PaymentFailed/PaymentFailedPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -39,12 +40,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/payment",
-        element: <PaymentPage></PaymentPage>,
-      },
-      {
         path: "/all-tickets/:id",
         Component: TicketDetailsPage,
+      },
+      {
+        path:"/payment-success",
+        Component:PaymentSuccessPage
+      },
+      {
+        path:"/payment-failed",
+        Component:PaymentFailedPage
       },
       {
         path: "*",
