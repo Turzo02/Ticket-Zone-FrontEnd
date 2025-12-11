@@ -9,7 +9,7 @@ const UserProfile = () => {
   const {user} = useAuth();
 
   const {
-    data: Users = [],
+    data: loggedInUser = [],
     isLoading,
     isError,
   } = useQuery({
@@ -42,21 +42,21 @@ const UserProfile = () => {
             className="h-24 w-24 rounded-full bg-slate-100 bg-cover bg-center ring-4 ring-white dark:ring-card-dark"
             style={{
               backgroundImage:
-                `url('${Users.photoURL}')`,
+                `url('${loggedInUser.photoURL}')`,
             }}
           ></div>
         </div>
         <div className="flex-1 space-y-1">
           <div className="flex items-center gap-3">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white font-display">
-              {Users.name}
+              {loggedInUser.name}
             </h2>
             <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary dark:bg-primary/20">
-              {Users.role}
+              {loggedInUser.role}
             </span>
           </div>
           <p className="text-slate-500 dark:text-slate-400">
-           {Users.email}
+           {loggedInUser.email}
           </p>
         </div>
       </div>
