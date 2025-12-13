@@ -7,57 +7,74 @@ const Footer = () => {
   //Footer Added
   return (
     <div>
-      <footer className=" mt-10 ">
-        <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+      <footer className="mt-16 bg-base-200 text-base-content">
+        <div
+          className="
+      max-w-7xl mx-auto
+      px-6 py-12
+      grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4
+      gap-10
+    "
+        >
           {/* Column 1 - Logo + Description */}
-          <div>
-            <Link to="/" className="text-2xl font-semibold flex items-center justify-start gap-2">   <span> <img className="w-9" src={logo} alt="" /></span>
-            Ticket Zone</Link>
-            <p className="mt-3">
-              Book bus, train, ship & flight tickets easily.
+          <div className="space-y-3">
+            <Link
+              to="/"
+              className="
+          text-2xl font-bold
+          flex items-center gap-2
+          hover:text-primary
+          transition-colors
+        "
+            >
+              <img className="w-9" src={logo} alt="Ticket Zone Logo" />
+              Ticket Zone
+            </Link>
+
+            <p className="text-sm text-base-content/70 leading-relaxed">
+              Book bus, train, ship & flight tickets easily with secure payments
+              and real-time availability.
             </p>
           </div>
 
           {/* Column 2 - Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">
-              Quick Links
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="/" className="">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="/" className="">
-                  All Tickets
-                </a>
-              </li>
-              <li>
-                <a href="/" className="">
-                  Contact Us
-                </a>
-              </li>
-              <li>
-                <a href="/" className="">
-                  About
-                </a>
-              </li>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+
+            <ul className="space-y-2 text-sm">
+              {["Home", "All Tickets", "Contact Us", "About"].map((item) => (
+                <li key={item}>
+                  <a
+                    href="/"
+                    className="
+                text-base-content/70
+                hover:text-primary
+                transition-colors
+              "
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Column 3 - Contact Info */}
           <div>
-            <h3 className=" text-lg font-semibold mb-3">
-              Contact Info
-            </h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
+
+            <ul className="space-y-2 text-sm text-base-content/70">
               <li>Email: support@ticketzone.com</li>
               <li>Phone: +880 1234-567890</li>
               <li>
                 Facebook:{" "}
-                <a href="#" className="">
+                <a
+                  href="#"
+                  className="
+              hover:text-primary
+              transition-colors
+            "
+                >
                   TicketZone/BD
                 </a>
               </li>
@@ -66,19 +83,37 @@ const Footer = () => {
 
           {/* Column 4 - Payment Methods */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">
-              Payment Methods
-            </h3>
-            <img
-              src={stripeImg}
-              alt="Stripe Payment"
-              className="w-32"
-            />
+            <h3 className="text-lg font-semibold mb-4">Payment Methods</h3>
+
+            <div
+              className="
+          bg-base-100
+          rounded-lg
+          p-4
+          inline-flex
+          items-center
+          shadow-sm
+        "
+            >
+              <img
+                src={stripeImg}
+                alt="Stripe Payment"
+                className="w-32 object-contain"
+              />
+            </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="py-4 text-center text-sm">
+        <div
+          className="
+      border-t border-base-300
+      py-4
+      text-center
+      text-xs
+      text-base-content/60
+    "
+        >
           © 2025 TicketBari. All rights reserved.
         </div>
       </footer>

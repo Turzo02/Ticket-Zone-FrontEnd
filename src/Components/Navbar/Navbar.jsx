@@ -9,7 +9,9 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {console.log("logged out succesfully")})
+      .then(() => {
+        console.log("logged out succesfully");
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -30,13 +32,27 @@ const Navbar = () => {
   );
 
   return (
-    <div className=" sticky top-0 z-50 bg-base-100">
-      <div className="navbar shadow-sm ">
+    <div
+      className="
+    sticky top-0 z-50
+    bg-base-100/80
+    dark:bg-base-100/60
+    backdrop-blur-md
+    border-b border-base-300
+  "
+    >
+      <div className="navbar max-w-7xl mx-auto px-4 sm:px-6">
         {/* Navbar Start */}
         <div className="navbar-start">
           <div className="dropdown">
             {/* Mobile Hamburger */}
-            <div tabIndex={0} className="btn btn-ghost lg:hidden">
+            <div
+              tabIndex={0}
+              className="
+            btn btn-ghost lg:hidden
+            hover:bg-base-200
+          "
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -52,17 +68,32 @@ const Navbar = () => {
                 />
               </svg>
             </div>
+
             <ul
-              tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
+              tabIndex={-1}
+              className="
+            menu menu-sm dropdown-content
+            mt-3 w-52 p-2
+            rounded-box
+            bg-base-200/90
+            backdrop-blur-md
+            border border-base-300
+            shadow
+          "
             >
               {links}
             </ul>
           </div>
 
           {/* Logo */}
-          <Link to="/" className="btn btn-ghost text-xl">
-            <img className="w-9" src={logo} alt="Logo" />
+          <Link
+            to="/"
+            className="
+          btn btn-ghost text-xl gap-2
+          font-bold
+        "
+          >
+            <img className="w-9 h-9" src={logo} alt="Logo" />
             Ticket Zone
           </Link>
         </div>
@@ -78,19 +109,37 @@ const Navbar = () => {
             <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
-                className="btn btn-ghost rounded-btn flex justify-center items-center gap-2"
+                className="
+              btn btn-ghost
+              rounded-full
+              flex items-center gap-2
+              hover:bg-base-200
+            "
               >
-
                 <img
-               src={user.photoURL || "https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_006"} 
+                  src={
+                    user.photoURL ||
+                    "https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_006"
+                  }
                   alt="User Avatar"
-                  className="w-8 h-8 rounded-full"
+                  className="w-8 h-8 rounded-full ring-2 ring-base-300"
                 />
-                <span>{user.displayName || "user"}</span>
+                <span className="hidden sm:block font-medium">
+                  {user.displayName || "user"}
+                </span>
               </label>
+
               <ul
                 tabIndex={0}
-                className="menu menu-compact dropdown-content mt-2 p-2 shadow bg-base-100 rounded-box w-52"
+                className="
+              menu dropdown-content
+              mt-3 w-52 p-2
+              rounded-box
+              bg-base-200/90
+              backdrop-blur-md
+              border border-base-300
+              shadow
+            "
               >
                 <li>
                   <Link to="/dashboard">My Profile</Link>
@@ -99,28 +148,25 @@ const Navbar = () => {
                   <button onClick={handleLogOut}>Logout</button>
                 </li>
                 <li>
-                  {" "}
-                  <button
-                    onClick={toggleTheme}
-                    className={`p-2 rounded-field cursor-pointer `}
-                    title="Toggle Theme"
-                  >
-                    {`Switch to ${theme === "light" ? "Dark" : "Light"} Theme`}
+                  <button onClick={toggleTheme} className="justify-between">
+                    Switch to {theme === "light" ? "Dark" : "Light"}
                   </button>
                 </li>
               </ul>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <button
                 onClick={toggleTheme}
-                className={`p-2 rounded-field cursor-pointer  border
-        ${theme === "light" ? "border-black " : "border"}
-      `}
+                className="
+              btn btn-ghost btn-circle
+              hover:bg-base-200
+            "
                 title="Toggle Theme"
               >
                 {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
               </button>
+
               <Link to="/login" className="btn btn-primary">
                 Login
               </Link>

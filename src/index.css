@@ -6,32 +6,54 @@
 @plugin "daisyui";
 
 /* 3️⃣ DaisyUI themes */
+
 @plugin "daisyui/theme" {
   name: "dark";
-  default: true; 
-    --p: 59 130 246;  
-    --pf: 37 99 235;     
-    --b1: 31 41 55;   
-    --b3: 17 24 39;  
-    --bc: 249 250 251; 
-    --nc: 156 163 175; 
-    --s: 156 163 175;  
-    --a: 37 99 235; 
+
+  --color-base-100: #111621;
+  --color-base-200: rgba(30,41,59,0.75); /* glass card */
+  --color-base-300: #1f2937;
+  --color-base-content: #ffffff;
+
+  --color-primary: #2463eb;
+  --color-primary-content: #ffffff;
+
+  --color-neutral: rgba(17,22,33,0.8);
+  --color-neutral-content: #ffffff;
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  --radius-box: 0.75rem;
+  --radius-btn: 0.5rem;
+  --radius-badge: 9999px;
 }
+
 
 @plugin "daisyui/theme" {
   name: "light";
-    --p: 59 130 246;
-    --pf: 37 99 235;       
-    --b1: 255 255 255; 
-    --b3: 243 244 246;  
 
-    --bc: 17 24 39;    
-    --nc: 107 114 128; 
+  --color-base-100: #f6f6f8;
+  --color-base-200: #ffffff;
+  --color-base-300: #e5e7eb;
+  --color-base-content: #0f172a;
 
-    --s: 107 114 128; 
-    --a: 37 99 235;  
+  --color-primary: #2463eb;
+  --color-primary-content: #ffffff;
+
+  --color-neutral: #f8fafc;
+  --color-neutral-content: #0f172a;
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  --radius-box: 0.75rem;
+  --radius-btn: 0.5rem;
+  --radius-badge: 9999px;
 }
+
 
 /* 4️⃣ Global styles */
 body {
@@ -40,8 +62,13 @@ body {
   font-style: normal;
 }
 
-.active{
-  background: red;
+.active {
+  @apply
+    bg-primary/10
+    text-primary
+    font-semibold
+    rounded-lg
+    px-3 py-1.5
+    transition-all
+    dark:bg-primary/20;
 }
-
-
