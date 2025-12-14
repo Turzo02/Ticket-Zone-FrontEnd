@@ -3,16 +3,17 @@ import Countdown from "react-countdown";
 import PropTypes from 'prop-types';
 
 const TicketCountdown = ({ departure, onCountdownComplete }) => {
-    if (!departure) return <span className="text-gray-400">No date provided</span>;
+    // text-gray-400 -> text-base-content/50
+    if (!departure) return <span className="text-base-content/50">No date provided</span>;
 
     const departureDate = new Date(departure);
 
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            return <span className="text-green-600 font-bold">Already Departed</span>;
+            return <span className="text-success font-bold">Already Departed</span>;
         } else {
             return (
-                <span className="text-red-600 font-bold">
+                <span className="text-warning font-bold">
                     {days}d {hours}h {minutes}m {seconds}s
                 </span>
             );
@@ -20,8 +21,8 @@ const TicketCountdown = ({ departure, onCountdownComplete }) => {
     };
 
     return (
-        <div className="text-gray-600 font-medium flex items-center gap-1">
-            <span className="text-gray-700 font-semibold">Countdown:</span>
+        <div className="text-base-content/80 font-medium flex items-center gap-1">
+            <span className="text-base-content font-semibold">Countdown:</span>
             <Countdown
                 date={departureDate}
                 renderer={renderer}

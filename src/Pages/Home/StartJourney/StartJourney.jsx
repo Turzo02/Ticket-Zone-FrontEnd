@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router";
 const StartJourney = () => {
   return (
-<div className="max-w-7xl mx-auto px-4 sm:px-8 py-12">
-  <div
-    className="
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12">
+      <div
+        className="
       relative overflow-hidden
       rounded-2xl
       bg-primary
@@ -12,23 +12,23 @@ const StartJourney = () => {
       dark:backdrop-blur-md
       border border-transparent dark:border-base-300
     "
-  >
-    {/* Content */}
-    <div className="relative z-10 text-center px-6 sm:px-12 py-12">
-      <h1 className="font-extrabold tracking-tight text-2xl sm:text-4xl lg:text-5xl text-white dark:text-base-content">
-        Ready To Start Your Journey?
-      </h1>
+      >
+        {/* Content */}
+        <div className="relative z-10 text-center px-6 sm:px-12 py-12">
+          <h1 className="font-extrabold tracking-tight text-2xl sm:text-4xl lg:text-5xl text-white dark:text-base-content">
+            Ready To Start Your Journey?
+          </h1>
 
-      <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-white/90 dark:text-base-content/70">
-        Join thousands of travelers who use TravelBooker to find the best
-        prices and routes for their next adventure. Start planning your next
-        trip today.
-      </p>
+          <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-white/90 dark:text-base-content/70">
+            Join thousands of travelers who use TravelBooker to find the best
+            prices and routes for their next adventure. Start planning your next
+            trip today.
+          </p>
 
-      <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-        <Link
-          to="/register"
-          className="
+          <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+            <Link
+              to="/all-tickets"
+              className="
             btn
             w-[200px]
             bg-base-100
@@ -37,29 +37,28 @@ const StartJourney = () => {
             border-none
             font-semibold
           "
-        >
-          Create Account
-        </Link>
+            >
+              Create Account
+            </Link>
 
-        <button
-          className="
-            btn
-            w-[200px]
-            bg-primary/90
-            hover:bg-primary
-            border border-white/20
-            text-white
-            font-semibold
-          "
-        >
-          Contact Support
-        </button>
+            <Link to="/">
+              <button
+                className="
+  btn
+  w-[200px]
+  bg-linear-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700
+  border-none
+  text-white
+  font-semibold
+"
+              >
+                Contact Support
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
-
-  </div>
-</div>
-
   );
 };
 

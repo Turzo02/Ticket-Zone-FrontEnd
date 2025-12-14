@@ -52,7 +52,7 @@ const AllTickets = () => {
 
   const handleFromChange = (e) => {
     setFromLocation(e.target.value);
-    setPage(1); 
+    setPage(1);
   };
 
   const handleToChange = (e) => {
@@ -75,8 +75,9 @@ const AllTickets = () => {
   }
 
   return (
+    // DaisyUI-styled All Tickets Page
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 text-base-content">
         <h1 className="text-4xl font-extrabold text-center md:text-left">
           All Available Tickets {allTickets.length}
         </h1>
@@ -85,34 +86,56 @@ const AllTickets = () => {
         <div className="flex flex-col sm:flex-row gap-4">
           {/* Transport Filter */}
           <div className="relative group">
-            <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
-              <Filter className="w-5 h-5 text-purple-600" />
+            <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-4 py-2 shadow-md hover:border-primary transition-colors">
+              <Filter className="w-5 h-5 text-primary" />
               <select
                 value={filterType}
                 onChange={handleFilterChange}
-                className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-36 appearance-none"
+                // Use DaisyUI select component for full theme support
+                className="select select-ghost bg-transparent outline-none text-base-content font-semibold cursor-pointer w-36 appearance-none h-auto min-h-0 p-0"
               >
-                <option value="">All Transports</option>
-                <option value="Bus">Bus</option>
-                <option value="Train">Train</option>
-                <option value="Flight">Flight</option>
-                <option value="Ship">Ship</option>
+                {/* Options inherit color, but forcing background color ensures options list works */}
+                <option value="" className="bg-base-100 text-base-content">
+                  All Transports
+                </option>
+                <option value="Bus" className="bg-base-100 text-base-content">
+                  Bus
+                </option>
+                <option value="Train" className="bg-base-100 text-base-content">
+                  Train
+                </option>
+                <option
+                  value="Flight"
+                  className="bg-base-100 text-base-content"
+                >
+                  Flight
+                </option>
+                <option value="Ship" className="bg-base-100 text-base-content">
+                  Ship
+                </option>
               </select>
             </div>
           </div>
 
           {/* Price Sort Dropdown (New) */}
           <div className="relative group">
-            <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
-              <ArrowUpDown className="w-5 h-5 text-purple-600" />
+            <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-4 py-2 shadow-md hover:border-primary transition-colors">
+              <ArrowUpDown className="w-5 h-5 text-primary" />
               <select
                 value={sortOrder}
                 onChange={handleSortChange}
-                className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-36 appearance-none"
+                className="select select-ghost bg-transparent outline-none text-base-content font-semibold cursor-pointer w-36 appearance-none h-auto min-h-0 p-0"
               >
-                <option value="">Default Sort</option>
-                <option value="asc">Price: Low to High</option>
-                <option value="desc">Price: High to Low</option>
+
+                <option value="" className="bg-base-100 text-base-content">
+                  Default Sort
+                </option>
+                <option value="asc" className="bg-base-100 text-base-content">
+                  Price: Low to High
+                </option>
+                <option value="desc" className="bg-base-100 text-base-content">
+                  Price: High to Low
+                </option>
               </select>
             </div>
           </div>
@@ -126,7 +149,8 @@ const AllTickets = () => {
                 placeholder="From (City/Station)"
                 value={fromLocation}
                 onChange={handleFromChange}
-                className="bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors outline-none text-gray-700 w-full sm:w-40"
+                // Using input-bordered for styling and focus:input-primary
+                className="input input-bordered bg-base-100 focus:input-primary shadow-md outline-none text-base-content w-full sm:w-40 h-auto min-h-0 py-2 px-4"
               />
             </div>
 
@@ -137,7 +161,7 @@ const AllTickets = () => {
                 placeholder="To (City/Station)"
                 value={toLocation}
                 onChange={handleToChange}
-                className="bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors outline-none text-gray-700 w-full sm:w-40"
+                className="input input-bordered bg-base-100 focus:input-primary shadow-md outline-none text-base-content w-full sm:w-40 h-auto min-h-0 py-2 px-4"
               />
             </div>
           </div>
@@ -146,12 +170,14 @@ const AllTickets = () => {
 
       {/* Ticket Grid */}
       {allTickets.length === 0 ? (
-        <div className="text-center py-20 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-          <h3 className="text-2xl font-bold text-gray-400">No tickets found</h3>
+        <div className="text-center py-20 bg-base-100  border border-dashed border-base-300">
+          <h3 className="text-2xl font-bold text-base-content/50">
+            No tickets found
+          </h3>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allTickets.map((ticket) => {
+          {allTickets.map((ticket, index) => {
             const formattedPrice = new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
@@ -159,64 +185,73 @@ const AllTickets = () => {
 
             return (
               <div
-                key={ticket._id}
-                className="bg-white rounded-xl shadow-xl overflow-hidden hover:scale-[1.03] transition duration-300 p-4"
+                key={index}
+                className={`
+                bg-base-200 
+                shadow-xl 
+                overflow-hidden 
+                hover:scale-[1.02] 
+                transition 
+                duration-300 
+                p-4 
+                rounded-lg
+              `}
               >
                 {/* Header */}
                 <div className="relative h-40 rounded-lg overflow-hidden">
                   <img
-                    src="https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_009"
+                    src="https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_006"
                     alt={ticket.title}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
-                  <h2 className="absolute bottom-2 left-3 right-3 text-white text-xl font-extrabold">
+                  <h2 className="absolute bottom-2 left-3 right-3 text-white  text-2xl font-extrabold drop-shadow-xl">
                     {ticket.title}
                   </h2>
                 </div>
 
                 {/* Body */}
-                <div className="pt-4 space-y-3 ">
-                  <div className="flex items-center text-sm font-semibold text-gray-700 space-x-2">
+                <div className="pt-4 space-y-4">
+                  {/* From -> To */}
+                  <div className="flex items-center text-sm font-semibold space-x-2">
                     <div className="flex w-full justify-between items-center">
                       <div className="flex items-center space-x-1">
-                        <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                        <span className="text-gray-600 font-bold text-xl">
+                        <span className="w-3 h-3 rounded-full bg-success"></span>
+                        <span className="text-base-content/80 font-bold text-xl">
                           {ticket.from}
                         </span>
                       </div>
 
-                      <MoveRight />
+                      <MoveRight className="text-primary" />
 
                       <div className="flex items-center space-x-1">
-                        <span className="text-gray-600 font-bold text-xl">
+                        <span className="text-base-content/80 font-bold text-xl">
                           {ticket.to}
                         </span>
-                        <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                        <span className="w-3 h-3 rounded-full bg-error"></span>
                       </div>
                     </div>
                   </div>
-
-                  <div className="flex items-center text-sm font-semibold text-gray-700">
-                    {ticket.icon}
-                    {ticket.transport}
-                  </div>
-
-                  <div className="flex justify-between text-sm font-medium">
-                    <span className="text-gray-600">Price:</span>
-                    <span className="text-purple-700 font-bold">
+                  {/* Price */}
+                  <div className="flex justify-between border-b border-base-300 pb-2">
+                    <p className="text-xs font-semibold text-base-content/60 uppercase">
+                      Price (Per Unit)
+                    </p>
+                    <span className="text-3xl font-bold text-info">
                       {formattedPrice}
                     </span>
                   </div>
 
-                  <div className="flex justify-between text-sm font-medium">
-                    <span className="text-gray-600">Available:</span>
-                    <span className="text-blue-700 font-bold">
+                  {/* Quantity */}
+                  <div className="flex justify-between text-sm font-medium text-base-content">
+                    <span className="text-base-content/80">Available:</span>
+                    <span className="text-info font-bold">
                       {ticket.quantity}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center text-sm font-medium text-gray-700 py-2 sm:py-3 rounded-lg">
+                  {/* Transport */}
+                  <div className="flex justify-between items-center text-sm font-medium text-base-content py-2 rounded-lg ">
                     <div className="flex items-center space-x-2">
                       <span className="text-xl">
                         {ticket.transportType === "Train" && "🚆"}
@@ -230,7 +265,7 @@ const AllTickets = () => {
                       <span>{ticket.transportType}</span>
                     </div>
 
-                    <div className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg font-semibold">
+                    <div className="px-2 py-1 bg-primary/10  rounded-lg font-semibold text-right whitespace-nowrap">
                       📅{" "}
                       {new Date(ticket.departure).toLocaleDateString("en-GB", {
                         day: "2-digit",
@@ -241,16 +276,16 @@ const AllTickets = () => {
                       })}
                     </div>
                   </div>
-
+                  {/* Perks */}
                   <div className="flex flex-col">
-                    <h3 className="text-xs font-semibold uppercase text-purple-600 mb-4">
+                    <h3 className="text-xs font-semibold uppercase text-info mb-1">
                       ✨ Perks
                     </h3>
-                    <ul className="flex flex-wrap gap-2 text-sm text-gray-600">
+                    <ul className="flex flex-wrap gap-2 text-sm text-base-content overflow-x-auto whitespace-nowrap">
                       {ticket.perks.map((perk, i) => (
                         <li
                           key={i}
-                          className="bg-gray-100 px-2 py-1 rounded-full"
+                          className="bg-base-300 px-2 py-1 rounded-lg shrink-0"
                         >
                           {perk}
                         </li>
@@ -259,8 +294,16 @@ const AllTickets = () => {
                   </div>
                 </div>
 
+                {/* Button */}
                 <Link to={`/all-tickets/${ticket._id}`}>
-                  <button className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-lg shadow-pink-500/40">
+                  <button
+                    className={`
+  w-full mt-4 py-3 text-lg font-bold btn rounded lg shadow-lg
+  cursor-pointer text-white
+  bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 border-none
+  shadow-blue-500/40
+`}
+                  >
                     See Details
                   </button>
                 </Link>
@@ -276,7 +319,7 @@ const AllTickets = () => {
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}
-            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+            className="btn btn-sm btn-ghost bg-base-300 disabled:opacity-50"
           >
             Prev
           </button>
@@ -285,8 +328,8 @@ const AllTickets = () => {
             <button
               key={i}
               onClick={() => setPage(i + 1)}
-              className={`px-4 py-2 rounded-lg ${
-                page === i + 1 ? "bg-purple-600 text-white" : "bg-green-500 "
+              className={`btn btn-sm ${
+                page === i + 1 ? "btn-primary" : "btn-success"
               }`}
             >
               {i + 1}
@@ -296,7 +339,7 @@ const AllTickets = () => {
           <button
             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={page === totalPages}
-            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+            className="btn btn-sm btn-ghost bg-base-300 disabled:opacity-50"
           >
             Next
           </button>

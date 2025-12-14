@@ -11,23 +11,27 @@
   name: "dark";
 
   --color-base-100: #111621;
-  --color-base-200: rgba(30,41,59,0.75); /* glass card */
+  --color-base-200: rgba(30, 41, 59, 0.75);
+  /* glass card */
   --color-base-300: #1f2937;
   --color-base-content: #ffffff;
 
   --color-primary: #2463eb;
   --color-primary-content: #ffffff;
 
-  --color-neutral: rgba(17,22,33,0.8);
+  --color-neutral: rgba(17, 22, 33, 0.8);
   --color-neutral-content: #ffffff;
 
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
 
-  --radius-box: 0.75rem;
-  --radius-btn: 0.5rem;
-  --radius-badge: 9999px;
+  --text-success: #a7f3d0;
+  --text-warning: #fcd34d;
+  --text-error: #fca5a5;
+  --text-info: #93c5fd;
+  --text-muted: #d1d5db;
+
 }
 
 
@@ -49,9 +53,12 @@
   --color-warning: #f59e0b;
   --color-error: #ef4444;
 
-  --radius-box: 0.75rem;
-  --radius-btn: 0.5rem;
-  --radius-badge: 9999px;
+  --text-success: #166534;
+  --text-warning: #78350f;
+  --text-error: #991b1b;
+  --text-info: #0c4a6e;
+  --text-muted: #6b7280;
+
 }
 
 
@@ -63,12 +70,5 @@ body {
 }
 
 .active {
-  @apply
-    bg-primary/10
-    text-primary
-    font-semibold
-    rounded-lg
-    px-3 py-1.5
-    transition-all
-    dark:bg-primary/20;
+  @apply bg-primary/10 text-primary font-semibold rounded-lg px-3 py-1.5 transition-all dark:bg-primary/20;
 }

@@ -70,74 +70,77 @@ const TicketDetailsPage = () => {
 
   if (isLoading) return <SwappingDotLoader></SwappingDotLoader>;
   if (isError) return <p className="text-red-600">Error loading ticket</p>;
-console.log(ticket.quantity)
+  console.log(ticket.quantity);
   return (
+    // DaisyUI-styled Ticket Details Page
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       {/* Header Image */}
-      <div className="relative h-64 sm:h-80 rounded-xl overflow-hidden mb-6 shadow-lg">
+      <div className="relative h-64 sm:h-80 rounded-lg overflow-hidden mb-6 shadow-xl shadow-base-300/50">
         <img
           src="https://api.dicebear.com/7.x/notionists/svg?seed=Static_User_001"
           alt="Ticket Header"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
-        <h1 className="absolute bottom-4 left-6 text-white text-3xl sm:text-4xl font-extrabold drop-shadow-lg">
+        <h1 className="absolute bottom-4 left-6 text-base-content text-3xl sm:text-4xl font-extrabold drop-shadow-lg">
           {ticket.title}
         </h1>
       </div>
 
-      {/* Ticket Details */}
-      <div className="bg-white rounded-xl shadow-lg p-6 space-y-4">
+      {/* Ticket Details Card */}
+      <div className="bg-base-200 rounded-lg shadow-lg p-6 space-y-4 text-base-content">
         <div className="flex flex-wrap justify-between items-center">
-          <div className="text-gray-700 font-semibold">
-            <span className="text-gray-500">From:</span> {ticket.from}
-            <span className="mx-2">→</span>
-            <span className="text-gray-500">To:</span> {ticket.to}
+          <div className="font-semibold">
+            <span className="text-base-content/60">From:</span> {ticket.from}
+            <span className="mx-2 text-primary">→</span>
+            <span className="text-base-content/60">To:</span> {ticket.to}
           </div>
-          <div className="text-gray-700 font-semibold">
+          <div className="font-semibold badge badge-outline badge-primary">
             {ticket.transportType}
           </div>
         </div>
 
-        <div className="flex justify-between items-center">
-          <span className="text-gray-600 font-medium">Price:</span>
-          <span className="text-purple-700 font-bold">${ticket.price}</span>
+        {/* Price */}
+        <div className="flex justify-between items-center border-t border-base-300 pt-4">
+          <span className="font-medium">Price:</span>
+          <span className="text-info text-2xl font-bold">${ticket.price}</span>
         </div>
 
+        {/* Available Quantity */}
         <div className="flex justify-between items-center">
-          <span className="text-gray-600 font-medium">Available:</span>
-          <span className="text-purple-700 font-bold">{ticket.quantity}</span>
+          <span className=" font-medium">Available:</span>
+          <span className="text-info text-2xl font-bold">
+            {ticket.quantity}
+          </span>
         </div>
 
-        {/* Departure */}
-        <div className="text-gray-600 font-medium">
-          <div className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg font-semibold flex gap-4 whitespace-nowrap">
-            📅 <span className="text-gray-700">Departure:</span>{" "}
-            {new Date(ticket.departure).toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </div>
+        <div className="px-2 py-1 flex items-center gap-6 bg-primary/10  rounded-lg font-semibold text-right whitespace-nowrap">
+          📅 <span className="text-base-content/80">Departure:</span>{" "}
+          {new Date(ticket.departure).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </div>
 
         {/* Countdown */}
-        <div className="text-gray-600 font-medium">
-          Countdown : <TicketCountdown departure={ticket.departure} />
+        <div className="font-medium pt-2">
+          <span className="text-base-content/80"></span>{" "}
+          <TicketCountdown departure={ticket.departure} />
         </div>
 
         {/* Perks */}
-        <div className="flex flex-col">
-          <h3 className="text-xs font-semibold uppercase text-purple-600 mb-4">
+        <div className="flex flex-col pt-4">
+          <h3 className="text-xs font-semibold uppercase text-info mb-2">
             ✨ Perks
           </h3>
-          <ul className="flex flex-wrap gap-2 text-sm text-gray-600 overflow-x-auto whitespace-nowrap">
+          <ul className="flex flex-wrap gap-2 text-sm text-base-content/90 overflow-x-auto whitespace-nowrap">
             {ticket.perks.map((perk, i) => (
               <li
                 key={i}
-                className="bg-gray-100 px-2 py-1 rounded-full shrink-0"
+                className="badge badge-lg bg-base-300 px-3 py-1 rounded-lg shrink-0"
               >
                 {perk}
               </li>
@@ -149,39 +152,49 @@ console.log(ticket.quantity)
         <button
           disabled={ticket.quantity === 0}
           onClick={() => setModalOpen(true)}
-          className={` w-full mt-4 py-3 text-lg font-bold text-white rounded-lg
-          
-          hover:from-pink-700 hover:to-red-800
-           transition duration-200 cursor-pointer ${ticket.quantity === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-linear-to-r from-pink-600 to-red-700"}`}
+          className={`
+  w-full mt-4 py-3 text-lg font-bold
+  btn rounded lg
+  shadow-lg
+  ${
+    ticket.quantity === 0
+      ? "btn-disabled bg-base-300 text-base-content/50 cursor-not-allowed"
+      : "bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 border-none text-white shadow-lg shadow-purple-500/40" 
+  }
+`}
         >
-         { ticket.quantity === 0 ? "Sold Out" : "Book Now"}
+          {ticket.quantity === 0 ? "Sold Out" : "Book Now"}
         </button>
       </div>
 
       {/* Booking Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-          <div className="glass rounded-xl shadow-lg w-11/12 max-w-md p-6 relative">
+          <div className="card bg-base-100 rounded-lg shadow-2xl w-11/12 max-w-md p-6 relative">
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-lg font-bold"
+              className="absolute top-3 right-3 btn btn-ghost btn-sm text-base-content/60"
             >
               &times;
             </button>
 
-            <h2 className="text-2xl font-extrabold mb-4">Book Tickets</h2>
+            <h2 className="text-2xl font-extrabold mb-4 text-base-content">
+              Book Tickets
+            </h2>
 
             <form
               onSubmit={handleSubmit(handleBookingSubmit)}
               className="space-y-4"
             >
               <div>
-                <label className="block font-medium mb-1">Quantity</label>
+                <label className="block font-medium mb-1 text-base-content">
+                  Quantity
+                </label>
 
                 <input
                   type="number"
                   defaultValue={1}
-                  className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  className="input input-bordered w-full focus:input-primary"
                   {...register("quantity", {
                     required: "Quantity is required",
                     min: {
@@ -198,10 +211,8 @@ console.log(ticket.quantity)
 
               <button
                 type="submit"
-                className="w-full py-3 text-lg font-bold rounded-lg
-                bg-linear-to-r from-green-500 to-teal-600
-                hover:from-green-600 hover:to-teal-700
-                shadow-lg shadow-green-400/40 transition duration-200"
+                // Using Success for a confirmation button
+                className="btn w-full py-3 text-lg font-bold border-none text-white bg-linear-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 shadow-lg shadow-green-500/40"
               >
                 Confirm Booking
               </button>

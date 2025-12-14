@@ -37,7 +37,7 @@ const LatestTickets = () => {
   }
 
   return (
-// New DaisyUI-styled component
+    // New DaisyUI-styled component
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       <h1 className="text-4xl font-extrabold text-center mb-10 text-base-content">
         Latest Tickets
@@ -84,7 +84,7 @@ const LatestTickets = () => {
                   <p className="text-xs font-semibold text-base-content/60 uppercase">
                     Price (Per Unit)
                   </p>
-                  <span className="text-3xl font-bold text-error">
+                  <span className="text-3xl font-bold text-info">
                     {formattedPrice}
                   </span>
                 </div>
@@ -92,9 +92,7 @@ const LatestTickets = () => {
                 {/* Quantity */}
                 <div className="flex justify-between text-sm font-medium text-base-content">
                   <span className="text-base-content/80">Available:</span>
-                  <span className="text-primary font-bold">
-                    {ticket.quantity}
-                  </span>
+                  <span className="text-info font-bold">{ticket.quantity}</span>
                 </div>
 
                 {/* Transport */}
@@ -125,7 +123,7 @@ const LatestTickets = () => {
                 </div>
                 {/* Perks */}
                 <div className="flex flex-col">
-                  <h3 className="text-xs font-semibold uppercase text-primary mb-1">
+                  <h3 className="text-xs font-semibold uppercase text-info mb-1">
                     ✨ Perks
                   </h3>
                   <ul className="flex flex-wrap gap-2 text-sm text-base-content overflow-x-auto whitespace-nowrap">
@@ -144,13 +142,12 @@ const LatestTickets = () => {
               {/* Button */}
               <Link to={`/all-tickets/${ticket._id}`}>
                 <button
-                  // Primary button from DaisyUI
                   className={`
-                    w-full mt-4 cursor-pointer py-3 text-lg font-bold 
-                    btn btn-primary 
-                    hover:bg-primary-focus
-                    shadow-lg
-                  `}
+  w-full mt-4 py-3 text-lg font-bold btn rounded lg shadow-lg
+  cursor-pointer text-white
+  bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 border-none
+  shadow-blue-500/40
+`}
                 >
                   See Details
                 </button>
