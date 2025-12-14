@@ -222,7 +222,7 @@ const AddTicket = () => {
           </div>
 
           {/* Image Upload I will handle it later */}
-          <div className="md:col-span-2">
+          {/* <div className="md:col-span-2">
             <label className="block text-sm font-medium mb-1">Image Upload (via imgbb)</label>
             <div className="flex items-center justify-center rounded-lg border-2 border-dashed bg-muted p-6 cursor-pointer hover:bg-muted/70 transition text-center">
               <span className="material-symbols-outlined text-4xl text-muted-foreground">upload_file</span>
@@ -231,7 +231,7 @@ const AddTicket = () => {
                 <p className="text-xs">PNG, JPG, GIF up to 10MB</p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/*  Vendor */}
           <div>

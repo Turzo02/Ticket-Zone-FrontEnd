@@ -89,7 +89,7 @@ const AdvertiseTickets = () => {
       </h1>
 
       <p className="text-md font-bold text-center text-base-content/80 my-4 ">
-        You can only advertise a maximum of ${maxAdvertisedLimit} tickets
+        You can only advertise a maximum of {maxAdvertisedLimit} tickets
         globally
       </p>
 
