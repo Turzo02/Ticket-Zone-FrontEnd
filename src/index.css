@@ -70,5 +70,5 @@ body {
 }
 
 .active {
-  @apply bg-primary/10 text-primary font-semibold rounded-lg px-3 py-1.5 transition-all dark:bg-primary/20;
+    @apply bg-primary/10 text-info font-semibold rounded-lg px-3 py-1.5 transition-all;
 }

@@ -27,15 +27,17 @@ const DashboardLayout = () => {
   const allowedMenuItems = menuItems.filter((item) => item.roles.includes("admin"));
 
   return (
-    <div className="flex min-h-screen ">
+    <div className="flex min-h-screen bg-base-100">
       {/* Sidebar */}
       <aside
-        className={`fixed lg:relative bg-base-100 top-0 left-0 z-30 h-full w-64 transform dark:bg-card-dark border-r border-gray-200 dark:border-gray-800 transition-transform duration-300 ease-in-out ${
+        className={`fixed lg:relative bg-base-100 top-0 left-0 z-30 h-full w-64 transform 
+        border-r border-base-300 transition-transform duration-300 ease-in-out 
+        ${
           drawerOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
         <div className="flex flex-col h-full p-4">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+          <h2 className="text-2xl font-bold text-base-content mb-6">
             Dashboard
           </h2>
 
@@ -44,8 +46,15 @@ const DashboardLayout = () => {
               <NavLink
                 key={item.path}
                 to={item.path}
-                className="px-3 py-2 rounded-lg"
                 onClick={() => setDrawerOpen(false)}
+                className={({ isActive }) => 
+                  `px-3 py-2 rounded-lg font-medium transition duration-150 ease-in-out
+                  ${
+                    isActive
+                      ? "bg-primary text-primary-content shadow-md shadow-primary/30" // Active state
+                      : "text-base-content hover:bg-base-300" // Inactive state
+                  }`
+                }
               >
                 {item.label}
               </NavLink>
@@ -57,27 +66,27 @@ const DashboardLayout = () => {
       {/* Overlay for mobile */}
       {drawerOpen && (
         <div
-          className="fixed inset-0 bg-black/30 z-20 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-20 lg:hidden"
           onClick={() => setDrawerOpen(false)}
         ></div>
       )}
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col min-h-screen">
-        {/* Mobile menu button */}
-        <header className="flex items-center justify-between p-4 dark:bg-card-dark border-b border-gray-200 dark:border-gray-800 lg:hidden">
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+      <div className="flex-1 flex flex-col min-h-screen bg-base-100">
+        {/* Mobile menu button & Header */}
+        <header className="flex items-center justify-between p-4 bg-base-100 border-b border-base-300 lg:hidden">
+          <h1 className="text-xl font-bold text-base-content">
             Dashboard
           </h1>
           <button
-            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-700 dark:text-slate-200"
+            className="btn btn-sm btn-ghost bg-base-200 text-base-content"
             onClick={() => setDrawerOpen(!drawerOpen)}
           >
             <SlidersHorizontal />
           </button>
         </header>
 
-        <main className="flex-1 p-4">
+        <main className="flex-1 p-4 bg-base-100">
           <Outlet />
         </main>
       </div>
