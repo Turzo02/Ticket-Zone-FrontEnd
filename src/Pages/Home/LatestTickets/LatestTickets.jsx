@@ -39,9 +39,25 @@ const LatestTickets = () => {
   return (
     // New DaisyUI-styled component
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
-      <h1 className="text-4xl font-extrabold text-center mb-10 text-base-content">
-        Latest Tickets
-      </h1>
+      <section className="p-4 md:p-8">
+        {/* The Gradient Heading from the previous step */}
+        <h1
+          className="
+  text-3xl sm:text-4xl lg:text-5xl 
+  font-extrabold text-center mb-10 
+  bg-clip-text text-transparent 
+  bg-linear-to-r from-blue-600 to-cyan-500 
+  tracking-tight
+"
+        >
+          Latest Tickets
+        </h1>
+
+        {/* Container for the Cards */}
+        <div className="space-y-4 max-w-5xl mx-auto">
+          {/* Card Items will go here (see example below) */}
+        </div>
+      </section>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {tickets.map((ticket, index) => {

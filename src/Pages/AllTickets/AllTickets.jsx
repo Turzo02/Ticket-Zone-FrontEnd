@@ -75,11 +75,19 @@ const AllTickets = () => {
   }
 
   return (
-    // DaisyUI-styled All Tickets Page
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
+      <div className="text-center py-8 mb-12 md:py-16 px-4 space-y-4 bg-base-200 rounded-xl shadow-lg">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
+          All Tickets
+        </h1>
+        <p className="text-lg md:text-xl text-base-content/80 max-w-3xl mx-auto">
+          Easily manage and view all your travel bookings and reservations in
+          one place.
+        </p>
+      </div>
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 text-base-content">
         <h1 className="text-4xl font-extrabold text-center md:text-left">
-          All Available Tickets {allTickets.length}
+          Total Tickets {allTickets.length}
         </h1>
 
         {/* Controls Container */}
@@ -126,7 +134,6 @@ const AllTickets = () => {
                 onChange={handleSortChange}
                 className="select select-ghost bg-transparent outline-none text-base-content font-semibold cursor-pointer w-36 appearance-none h-auto min-h-0 p-0"
               >
-
                 <option value="" className="bg-base-100 text-base-content">
                   Default Sort
                 </option>

@@ -114,7 +114,7 @@ const Footer = () => {
       text-base-content/60
     "
         >
-          © 2025 TicketBari. All rights reserved.
+          © 2025 TicketZone. All rights reserved.
         </div>
       </footer>
     </div>

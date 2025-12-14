@@ -26,7 +26,6 @@ const TicketDetailsPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
 
   const handleBookingSubmit = (data) => {
@@ -74,6 +73,20 @@ const TicketDetailsPage = () => {
   return (
     // DaisyUI-styled Ticket Details Page
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
+<div className="text-left py-6 px-4 border-b border-base-300 space-y-2">
+  <h1 className="
+    text-3xl md:text-4xl 
+    font-extrabold 
+    bg-clip-text text-transparent 
+    bg-linear-to-r from-violet-600 to-fuchsia-500
+    tracking-tight
+  ">
+    Ticket Details
+  </h1>
+  <p className="text-base text-base-content/70">
+    View all specific information regarding your selected ticket.
+  </p>
+</div>
       {/* Header Image */}
       <div className="relative h-64 sm:h-80 rounded-lg overflow-hidden mb-6 shadow-xl shadow-base-300/50">
         <img
@@ -159,7 +172,7 @@ const TicketDetailsPage = () => {
   ${
     ticket.quantity === 0
       ? "btn-disabled bg-base-300 text-base-content/50 cursor-not-allowed"
-      : "bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 border-none text-white shadow-lg shadow-purple-500/40" 
+      : "bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 border-none text-white shadow-lg shadow-purple-500/30"
   }
 `}
         >

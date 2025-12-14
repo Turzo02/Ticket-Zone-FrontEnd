@@ -37,10 +37,15 @@ const Advertisement = () => {
   return (
     // New DaisyUI-styled component
     <div className="p-6 sm:p-10 max-w-7xl mx-auto">
-      <h1 className="text-3xl sm:text-4xl font-extrabold text-center mb-12 text-base-content">
-        Advertisement Tickets
-      </h1>
-
+<h1 className="
+  text-3xl sm:text-4xl lg:text-5xl 
+  font-extrabold text-center mb-12 
+  bg-clip-text text-transparent 
+  bg-linear-to-r from-amber-400 to-orange-500 
+  tracking-tight
+">
+  Advertisement Tickets
+</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
         {allTickets.map((ticket) => {
           const formattedPrice = new Intl.NumberFormat("en-US", {
