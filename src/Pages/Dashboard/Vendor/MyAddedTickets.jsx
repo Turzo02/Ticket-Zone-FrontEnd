@@ -59,22 +59,23 @@ const MyAddedTickets = () => {
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-        <h1 className="text-4xl font-extrabold text-center md:text-left">
+        <h1 className="text-4xl font-extrabold text-center md:text-left text-primary">
           My Added Tickets
         </h1>
 
         {/* Controls Container */}
         <div className="flex flex-col sm:flex-row gap-4">
           {/* Transport Filter */}
-          <div className="relative group">
-            <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
-              <Filter className="w-5 h-5 text-purple-600" />
+          <div className="form-control relative">
+            <div className="flex items-center space-x-2 bg-base-200 border border-base-300 rounded-lg px-4 py-2 shadow-sm hover:border-primary transition-colors">
+              <Filter className="w-5 h-5 text-primary" />
               <select
                 value={filterType}
                 onChange={handleFilterChange}
-                className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-36 appearance-none"
+                // Use DaisyUI select class structure
+                className="select select-ghost bg-transparent outline-none text-base-content font-semibold cursor-pointer w-36 p-0 h-auto min-h-0"
               >
                 <option value="">All Transports</option>
                 <option value="Bus">Bus</option>
@@ -85,14 +86,15 @@ const MyAddedTickets = () => {
             </div>
           </div>
 
-          {/* Price Sort Dropdown (New) */}
-          <div className="relative group">
-            <div className="flex items-center space-x-2 bg-white border-2 border-purple-100 rounded-lg px-4 py-2 shadow-sm hover:border-purple-300 transition-colors">
-              <ArrowUpDown className="w-5 h-5 text-purple-600" />
+          {/* Price Sort Dropdown */}
+          <div className="form-control relative">
+            <div className="flex items-center space-x-2 bg-base-200 border border-base-300 rounded-lg px-4 py-2 shadow-sm hover:border-primary transition-colors">
+              <ArrowUpDown className="w-5 h-5 text-primary" />
               <select
                 value={sortOrder}
                 onChange={handleSortChange}
-                className="bg-transparent outline-none text-gray-700 font-semibold cursor-pointer w-36 appearance-none"
+                // Use DaisyUI select class structure
+                className="select select-ghost bg-transparent outline-none text-base-content font-semibold cursor-pointer w-36 p-0 h-auto min-h-0"
               >
                 <option value="">Default Sort</option>
                 <option value="asc">Price: Low to High</option>
@@ -105,8 +107,10 @@ const MyAddedTickets = () => {
 
       {/* Ticket Grid */}
       {allTickets.length === 0 ? (
-        <div className="text-center py-20 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-          <h3 className="text-2xl font-bold text-gray-400">No tickets found</h3>
+        <div className="text-center py-20 bg-base-200 rounded-lg border border-dashed border-base-300">
+          <h3 className="text-2xl font-bold text-base-content/50">
+            No tickets found
+          </h3>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -119,7 +123,7 @@ const MyAddedTickets = () => {
             return (
               <div
                 key={ticket._id}
-                className="bg-white rounded-xl shadow-xl overflow-hidden hover:scale-[1.03] transition duration-300 p-4"
+                className="bg-base-200 rounded-lg shadow-xl overflow-hidden hover:scale-[1.03] transition duration-300 p-4"
               >
                 {/* Header */}
                 <div className="relative h-40 rounded-lg overflow-hidden">
@@ -128,6 +132,7 @@ const MyAddedTickets = () => {
                     alt={ticket.title}
                     className="w-full h-full object-cover"
                   />
+                  {/* Using gradient utility for overlay */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
                   <h2 className="absolute bottom-2 left-3 right-3 text-white text-xl font-extrabold">
                     {ticket.title}
@@ -136,73 +141,93 @@ const MyAddedTickets = () => {
 
                 {/* Body */}
                 <div className="pt-4 space-y-3 ">
-                  <div className="flex items-center text-sm font-semibold text-gray-700 space-x-2">
+                  <div className="flex items-center text-sm font-semibold space-x-2">
                     <div className="flex w-full justify-between items-center">
                       <div className="flex items-center space-x-1">
-                        <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                        <span className="text-gray-600 font-bold text-xl">
+                        {/* Start Point */}
+                        <span className="w-3 h-3 rounded-full bg-success"></span>
+                        <span className="text-base-content font-bold text-xl">
                           {ticket.from}
                         </span>
                       </div>
 
-                      <MoveRight />
+                      <MoveRight className="text-base-content/80" />
 
                       <div className="flex items-center space-x-1">
-                        <span className="text-gray-600 font-bold text-xl">
+                        {/* Destination Point */}
+                        <span className="text-base-content font-bold text-xl">
                           {ticket.to}
                         </span>
-                        <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                        <span className="w-3 h-3 rounded-full bg-error"></span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center text-sm font-semibold text-gray-700">
+                  <div className="flex items-center text-sm font-semibold text-base-content/80">
+                    {/* Assuming ticket.icon is an SVG component */}
                     {ticket.icon}
                     {ticket.transport}
                   </div>
 
                   <div className="flex justify-between text-sm font-medium">
-                    <span className="text-gray-600">Price:</span>
-                    <span className="text-purple-700 font-bold">
+                    <span className="text-base-content/80">Price:</span>
+                    <span className="text-accent font-bold">
                       {formattedPrice}
                     </span>
                   </div>
 
                   <div className="flex justify-between text-sm font-medium">
-                    <span className="text-gray-600">Available:</span>
-                    <span className="text-blue-700 font-bold">
+                    <span className="text-base-content/80">Available:</span>
+                    <span className="text-info font-bold">
                       {ticket.quantity}
                     </span>
                   </div>
 
                   <div className="flex flex-col">
-                    <h3 className="text-xs font-semibold uppercase text-black mb-4">
+                    <h3 className="text-xs font-semibold uppercase text-base-content mb-4">
                       Status :{" "}
                       {ticket.status === "pending" ? (
-                        <span className="text-yellow-600">Pending</span>
+                        <span className="text-warning badge badge-outline badge-warning ml-2">
+                          Pending
+                        </span>
                       ) : ticket.status === "accepted" ? (
-                        <span className="text-green-600">Approved</span>
+                        <span className="text-success badge badge-outline badge-success ml-2">
+                          Approved
+                        </span>
                       ) : (
-                        <span className="text-red-600">Rejected</span>
+                        <span className="text-error badge badge-outline badge-error ml-2">
+                          Rejected
+                        </span>
                       )}
                     </h3>
                   </div>
                 </div>
 
+                {/* Action Buttons */}
                 {ticket.status === "rejected" ? (
-                  <span
-                    className="w-full mt-4 py-3 text-lg font-bold text-gray-500 rounded-lg bg-gray-200 text-center block cursor-not-allowed"
-                    title="Cannot update a rejected ticket"
+                  <button
+                    className="
+    btn btn-block btn-lg text-white border-none transition
+    bg-linear-to-r from-red-700 via-red-600 to-rose-600
+    shadow-lg shadow-red-700/50
+    flex items-center gap-2
+    
+    cursor-not opacity-50!
+  "
+                    disabled
                   >
-                    Update (Rejected)
-                  </span>
+                    Rejected
+                  </button>
                 ) : (
                   <Link
                     to={`/dashboard/update-ticket-details/${ticket._id}`}
-                    className="w-full mt-4 py-3 text-lg font-bold text-white rounded-lg 
-                   bg-linear-to-r from-green-600 to-emerald-700 
-                   hover:from-green-700 hover:to-emerald-800 
-                   shadow-lg shadow-green-500/40 text-center block"
+                    className="
+                btn btn-block btn-lg text-white border-none transition
+                    bg-linear-to-r from-emerald-400 via-green-500 to-green-700
+                    hover:from-emerald-500 hover:to-green-800
+                    shadow-lg shadow-green-600/40
+                    flex items-center gap-2
+    "
                   >
                     Update
                   </Link>
@@ -213,14 +238,13 @@ const MyAddedTickets = () => {
                   onClick={() => handleDelete(ticket._id)}
                   disabled={ticket.status === "rejected"}
                   className={`
-        w-full mt-4 py-3 text-lg font-bold text-white rounded-lg 
-        shadow-lg cursor-pointer transition duration-300 
-        ${
-          ticket.status === "rejected"
-            ? "bg-gray-400 cursor-not-allowed shadow-none"
-            : "bg-linear-to-r from-pink-600 to-red-700 hover:from-pink-700 hover:to-red-800 shadow-pink-500/40"
-        }
-    `}
+    w-full mt-4 text-lg font-bold block transition duration-300 border-none
+    ${
+      ticket.status === "rejected"
+        ? "btn btn-disabled bg-base-300 text-base-content/70 shadow-none cursor-not-allowed"
+        : "btn btn-block btn-lg text-white border-none transition  bg-linear-to-r from-red-700 via-red-600 to-rose-600 hover:from-red-800 hover:to-rose-700 shadow-lg shadow-red-700/50 flex items-center gap-2"
+    }
+  `}
                 >
                   Delete
                 </button>
@@ -236,7 +260,7 @@ const MyAddedTickets = () => {
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}
-            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+            className="btn btn-ghost disabled:opacity-50"
           >
             Prev
           </button>
@@ -245,8 +269,8 @@ const MyAddedTickets = () => {
             <button
               key={i}
               onClick={() => setPage(i + 1)}
-              className={`px-4 py-2 rounded-lg ${
-                page === i + 1 ? "bg-purple-600 text-white" : "bg-green-500 "
+              className={`btn ${
+                page === i + 1 ? "btn-primary" : "btn-info" // Using primary for active, info for inactive page
               }`}
             >
               {i + 1}
@@ -256,7 +280,7 @@ const MyAddedTickets = () => {
           <button
             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={page === totalPages}
-            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+            className="btn btn-ghost disabled:opacity-50"
           >
             Next
           </button>

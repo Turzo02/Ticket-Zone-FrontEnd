@@ -90,85 +90,103 @@ const AllTickets = () => {
           Total Tickets {allTickets.length}
         </h1>
 
-        {/* Controls Container */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          {/* Transport Filter */}
-          <div className="relative group">
-            <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-4 py-2 shadow-md hover:border-primary transition-colors">
-              <Filter className="w-5 h-5 text-primary" />
-              <select
-                value={filterType}
-                onChange={handleFilterChange}
-                // Use DaisyUI select component for full theme support
-                className="select select-ghost bg-transparent outline-none text-base-content font-semibold cursor-pointer w-36 appearance-none h-auto min-h-0 p-0"
-              >
-                {/* Options inherit color, but forcing background color ensures options list works */}
-                <option value="" className="bg-base-100 text-base-content">
-                  All Transports
-                </option>
-                <option value="Bus" className="bg-base-100 text-base-content">
-                  Bus
-                </option>
-                <option value="Train" className="bg-base-100 text-base-content">
-                  Train
-                </option>
-                <option
-                  value="Flight"
-                  className="bg-base-100 text-base-content"
+        {/* Controls Container - Responsive Wrapper */}
+        <div className="flex flex-col lg:flex-row gap-4 w-full p-2">
+          {/* Left Side: Filters & Sort (Stacks on mobile, row on tablet+) */}
+          <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+            {/* Transport Filter */}
+            <div className="relative group w-full sm:w-auto">
+              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-2 shadow-sm hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all w-full">
+                <Filter className="w-5 h-5 text-primary shrink-0" />
+                <select
+                  value={filterType}
+                  onChange={handleFilterChange}
+                  className="select select-ghost select-sm bg-transparent outline-none text-base-content font-semibold cursor-pointer w-full sm:w-36 focus:bg-transparent px-2"
                 >
-                  Flight
-                </option>
-                <option value="Ship" className="bg-base-100 text-base-content">
-                  Ship
-                </option>
-              </select>
+                  <option
+                    value=""
+                    className="bg-base-100 text-base-content font-medium py-2"
+                  >
+                    All Transports
+                  </option>
+                  <option
+                    value="Bus"
+                    className="bg-base-100 text-base-content py-2"
+                  >
+                    Bus
+                  </option>
+                  <option
+                    value="Train"
+                    className="bg-base-100 text-base-content py-2"
+                  >
+                    Train
+                  </option>
+                  <option
+                    value="Flight"
+                    className="bg-base-100 text-base-content py-2"
+                  >
+                    Flight
+                  </option>
+                  <option
+                    value="Ship"
+                    className="bg-base-100 text-base-content py-2"
+                  >
+                    Ship
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            {/* Price Sort Dropdown */}
+            <div className="relative group w-full sm:w-auto">
+              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-2 shadow-sm hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all w-full">
+                <ArrowUpDown className="w-5 h-5 text-primary shrink-0" />
+                <select
+                  value={sortOrder}
+                  onChange={handleSortChange}
+                  className="select select-ghost select-sm bg-transparent outline-none text-base-content font-semibold cursor-pointer w-full sm:w-40 focus:bg-transparent px-2"
+                >
+                  <option
+                    value=""
+                    className="bg-base-100 text-base-content font-medium"
+                  >
+                    Default Sort
+                  </option>
+                  <option value="asc" className="bg-base-100 text-base-content">
+                    Price: Low to High
+                  </option>
+                  <option
+                    value="desc"
+                    className="bg-base-100 text-base-content"
+                  >
+                    Price: High to Low
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
 
-          {/* Price Sort Dropdown (New) */}
-          <div className="relative group">
-            <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-4 py-2 shadow-md hover:border-primary transition-colors">
-              <ArrowUpDown className="w-5 h-5 text-primary" />
-              <select
-                value={sortOrder}
-                onChange={handleSortChange}
-                className="select select-ghost bg-transparent outline-none text-base-content font-semibold cursor-pointer w-36 appearance-none h-auto min-h-0 p-0"
-              >
-                <option value="" className="bg-base-100 text-base-content">
-                  Default Sort
-                </option>
-                <option value="asc" className="bg-base-100 text-base-content">
-                  Price: Low to High
-                </option>
-                <option value="desc" className="bg-base-100 text-base-content">
-                  Price: High to Low
-                </option>
-              </select>
-            </div>
-          </div>
-
-          {/* search by location */}
-          <div className="flex gap-2">
+          {/* Right Side: Location Search (Grid on mobile for even sizing) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto flex-grow">
             {/* From Location Input */}
-            <div className="relative group">
+            <div className="relative w-full">
               <input
                 type="text"
                 placeholder="From (City/Station)"
                 value={fromLocation}
                 onChange={handleFromChange}
-                // Using input-bordered for styling and focus:input-primary
-                className="input input-bordered bg-base-100 focus:input-primary shadow-md outline-none text-base-content w-full sm:w-40 h-auto min-h-0 py-2 px-4"
+                className="input input-bordered border-2 border-base-300 bg-base-100 focus:input-primary focus:border-primary shadow-sm w-full transition-all"
               />
             </div>
 
             {/* To Location Input */}
-            <div className="relative group">
+            <div className="relative w-full">
               <input
                 type="text"
                 placeholder="To (City/Station)"
                 value={toLocation}
                 onChange={handleToChange}
-                className="input input-bordered bg-base-100 focus:input-primary shadow-md outline-none text-base-content w-full sm:w-40 h-auto min-h-0 py-2 px-4"
+                className="input input-bordered border-2 border-base-300 bg-base-100 focus:input-primary focus:border-primary shadow-sm w-full transition-all"
               />
             </div>
           </div>
