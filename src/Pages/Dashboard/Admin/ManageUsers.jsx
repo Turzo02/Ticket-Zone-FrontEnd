@@ -52,9 +52,13 @@ const ManageUsers = () => {
   return (
     <div>
       <div className="p-4 sm:p-8 max-w-7xl mx-auto min-h-screen bg-base-100 text-base-content">
-        <h1 className="text-3xl font-bold text-center text-primary mb-8 sm:text-4xl">
-          User Management
-        </h1>
+
+
+        <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
+          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
+            Manage User Panel
+          </h1>
+        </div>
 
         {/* --- Desktop/Tablet View --- */}
         <div className="sm:block">
@@ -157,31 +161,30 @@ const ManageUsers = () => {
                         <span className="text-sm text-base-content/50">
                           <X />
                         </span>
-                      ) :     <div className="flex justify-center">
-                        {user.role === "vendor" ? (
-                          <button
-                            onClick={() => handleMakeFraud(user._id)}
-                            className="
+                      ) : (
+                        <div className="flex justify-center">
+                          {user.role === "vendor" ? (
+                            <button
+                              onClick={() => handleMakeFraud(user._id)}
+                              className="
     btn btn-sm text-white border-none transition 
     bg-linear-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 
     shadow-md shadow-red-500/50
     flex items-center gap-1
   "
-                          >
-                            {/* Replaced 'fraud' text with icon */}
-                            <AlertCircle size={16} />
-                            Mark As Fraud
-                          </button>
-                        ) : (
-                          // Non-vendor roles show a simple indicator icon
-                          <span className="text-sm text-base-content/50 hover:text-success">
-                            <BadgeCheck /> marked as fraud
-                          </span>
-                        )}
-                      </div>
-
-                      }
-                 
+                            >
+                              {/* Replaced 'fraud' text with icon */}
+                              <AlertCircle size={16} />
+                              Mark As Fraud
+                            </button>
+                          ) : (
+                            // Non-vendor roles show a simple indicator icon
+                            <span className="text-sm text-base-content/50 hover:text-success">
+                              <BadgeCheck /> marked as fraud
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}

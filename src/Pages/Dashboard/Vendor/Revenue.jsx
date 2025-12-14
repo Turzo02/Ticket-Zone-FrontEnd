@@ -83,9 +83,11 @@ const Revenue = () => {
 
   return (
     <div className="p-6 bg-base-100 min-h-screen text-base-content">
-      <h2 className="text-3xl font-extrabold text-primary mb-8 border-b-2 border-base-300 pb-2">
+      <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
          Revenue Overview
-      </h2>
+        </h1>
+      </div>
 
       {/* Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">

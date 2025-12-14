@@ -49,14 +49,16 @@ const RequestedTickets = () => {
 
   return (
 <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
-  <h1 className="text-4xl font-extrabold text-center text-primary mb-10">
-    Requested Bookings
-  </h1>
+      <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
+          Requested Tickets
+        </h1>
+      </div>
 
   {/* The table is visible from medium screens and up (md:block) */}
   <div className="hidden md:block overflow-x-auto shadow-xl rounded-lg border border-base-300 bg-base-200">
     <table className="table w-full">
-      <thead className="bg-primary text-primary-content">
+      <thead className="bg-base-300 text-base-content">
         <tr>
           <th className="p-4 text-left">Email</th>
           <th className="p-4 text-left">Ticket Title</th>
@@ -72,12 +74,12 @@ const RequestedTickets = () => {
           const statusColor =
             req.status === "accepted"
               ? 
-                "bg-green-500 text-white "
+                "badge badge-success badge-outline text-xs px-3 py-1.5 "
               : req.status === "rejected"
               ? 
-                "bg-red-500 text-white"
+                "badge badge-error badge-outline text-xs px-3 py-1.5"
               : 
-                "bg-yellow-500 text-black ";
+                "badge badge-warning badge-outline text-xs px-3 py-1.5";
 
           return (
             <tr

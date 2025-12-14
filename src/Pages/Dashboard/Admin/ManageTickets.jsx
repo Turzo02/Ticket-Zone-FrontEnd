@@ -53,12 +53,11 @@ const ManageTickets = () => {
   return (
     <div>
       <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
-        <h2 className="text-2xl font-bold text-primary mb-6 flex  items-center justify-start gap-4">
-          Manage Tickets{" "}
-          <span className="inline-flex items-center rounded-full  px-2.5 py-0.5 text-xs font-semibold text-primary bg-primary/20">
-            Admin
-          </span>
-        </h2>
+        <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
+          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
+            Manage Tickets
+          </h1>
+        </div>
 
         {/* Table/List Container */}
         <div className="shadow-lg rounded-2xl border border-base-300 bg-base-200 overflow-hidden">

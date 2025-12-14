@@ -59,48 +59,46 @@ const MyAddedTickets = () => {
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-        <h1 className="text-4xl font-extrabold text-center md:text-left text-primary">
+    <div className="sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
+      <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
           My Added Tickets
         </h1>
-
-        {/* Controls Container */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          {/* Transport Filter */}
-          <div className="form-control relative">
-            <div className="flex items-center space-x-2 bg-base-200 border border-base-300 rounded-lg px-4 py-2 shadow-sm hover:border-primary transition-colors">
-              <Filter className="w-5 h-5 text-primary" />
-              <select
-                value={filterType}
-                onChange={handleFilterChange}
-                // Use DaisyUI select class structure
-                className="select select-ghost bg-transparent outline-none text-base-content font-semibold cursor-pointer w-36 p-0 h-auto min-h-0"
-              >
-                <option value="">All Transports</option>
-                <option value="Bus">Bus</option>
-                <option value="Train">Train</option>
-                <option value="Flight">Flight</option>
-                <option value="Ship">Ship</option>
-              </select>
-            </div>
+      </div>
+      {/* Controls Container */}
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-10 w-full">
+        {/* Transport Filter */}
+        <div className="relative w-full sm:w-auto">
+          <div className="flex items-center space-x-2 bg-base-100 border border-base-300 rounded-lg px-4 py-2 shadow-sm hover:border-primary transition-colors focus-within:border-primary w-full">
+            <Filter className="w-5 h-5 text-primary shrink-0" />
+            <select
+              value={filterType}
+              onChange={handleFilterChange}
+              // w-full on mobile, p-0 h-auto min-h-0 makes it fill the container div
+              className="select select-ghost outline-none text-base-content font-semibold cursor-pointer w-full sm:w-36 p-0 h-auto min-h-0 bg-transparent"
+            >
+              <option value="">All Transports</option>
+              <option value="Bus">Bus</option>
+              <option value="Train">Train</option>
+              <option value="Flight">Flight</option>
+              <option value="Ship">Ship</option>
+            </select>
           </div>
+        </div>
 
-          {/* Price Sort Dropdown */}
-          <div className="form-control relative">
-            <div className="flex items-center space-x-2 bg-base-200 border border-base-300 rounded-lg px-4 py-2 shadow-sm hover:border-primary transition-colors">
-              <ArrowUpDown className="w-5 h-5 text-primary" />
-              <select
-                value={sortOrder}
-                onChange={handleSortChange}
-                // Use DaisyUI select class structure
-                className="select select-ghost bg-transparent outline-none text-base-content font-semibold cursor-pointer w-36 p-0 h-auto min-h-0"
-              >
-                <option value="">Default Sort</option>
-                <option value="asc">Price: Low to High</option>
-                <option value="desc">Price: High to Low</option>
-              </select>
-            </div>
+        {/* Price Sort Dropdown */}
+        <div className="relative w-full sm:w-auto">
+          <div className="flex items-center space-x-2 bg-base-100 border border-base-300 rounded-lg px-4 py-2 shadow-sm hover:border-primary transition-colors focus-within:border-primary w-full">
+            <ArrowUpDown className="w-5 h-5 text-primary shrink-0" />
+            <select
+              value={sortOrder}
+              onChange={handleSortChange}
+              className="select select-ghost outline-none text-base-content font-semibold cursor-pointer w-full sm:w-36 p-0 h-auto min-h-0 bg-transparent"
+            >
+              <option value="">Default Sort</option>
+              <option value="asc">Price: Low to High</option>
+              <option value="desc">Price: High to Low</option>
+            </select>
           </div>
         </div>
       </div>
