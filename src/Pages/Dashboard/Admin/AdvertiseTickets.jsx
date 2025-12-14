@@ -97,7 +97,7 @@ const AdvertiseTickets = () => {
 
       <div className="shadow-xl rounded-2xl border border-base-300 bg-base-200 overflow-hidden">
 
-        <div className="hidden md:grid grid-cols-4 gap-4 p-4 bg-primary text-primary-content uppercase text-sm font-bold">
+        <div className="hidden md:grid grid-cols-4 gap-4 p-4 bg-base-300 text-base-content uppercase text-sm font-bold">
           <div className="col-span-1">Ticket Title</div>
 
           <div className="col-span-1">From - To</div>

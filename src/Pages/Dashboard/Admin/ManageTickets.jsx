@@ -67,7 +67,7 @@ const ManageTickets = () => {
             {/* Table starts */}
             <table className="table w-full text-left">
               {/* Table Header (Visible on sm and up) */}
-              <thead className="bg-primary text-primary-content uppercase text-sm">
+              <thead className=" uppercase text-sm bg-base-300 text-base-content">
                 <tr>
                   <th className="p-4">Ticket Title</th>
                   <th className="p-4">Vendor Info</th>
