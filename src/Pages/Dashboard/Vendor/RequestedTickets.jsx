@@ -1,12 +1,12 @@
 import React from "react";
-import { CheckCircle, XCircle } from "lucide-react";
+import { Ban, CheckCircle, XCircle } from "lucide-react";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 
 const RequestedTickets = () => {
-    const axiosSecure = useAxiosSecure();
-      const {
+  const axiosSecure = useAxiosSecure();
+  const {
     data: allBookingsData = [],
     isLoading,
     isError,
@@ -19,25 +19,21 @@ const RequestedTickets = () => {
     },
   });
 
-
-// Accept Booking
-const handleAccept = async (id) => {
+  // Accept Booking
+  const handleAccept = async (id) => {
     await axiosSecure.patch(`/bookings/${id}`, {
       status: "accepted",
     });
-    refetch(); 
-};
+    refetch();
+  };
 
-// Reject Booking
-const handleReject = async (id) => {
-
+  // Reject Booking
+  const handleReject = async (id) => {
     await axiosSecure.patch(`/bookings/${id}`, {
       status: "rejected",
     });
     refetch();
-
-};
-
+  };
 
   if (isLoading) {
     return (
@@ -51,88 +47,199 @@ const handleReject = async (id) => {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
 
-
-
   return (
-    <div className="p-4 sm:p-8 max-w-6xl mx-auto">
-      <h1 className="text-4xl font-extrabold text-center text-purple-600 mb-10">
-        Requested Bookings
-      </h1>
+<div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
+  <h1 className="text-4xl font-extrabold text-center text-primary mb-10">
+    Requested Bookings
+  </h1>
 
-      <div className="overflow-x-auto shadow-lg rounded-2xl border border-purple-200 ">
-        <table className="w-full table-auto">
-          <thead className="bg-linear-to-r from-purple-600 to-pink-500 text-white">
-            <tr>
-              <th className="p-4 text-left">Email</th>
-              <th className="p-4 text-left">Ticket Title</th>
-              <th className="p-4 text-center">Quantity</th>
-              <th className="p-4 text-center">Total Price</th>
-              <th className="p-4 text-center">Actions</th>
-              <th className="p-4 text-center">Status</th>
+  {/* The table is visible from medium screens and up (md:block) */}
+  <div className="hidden md:block overflow-x-auto shadow-xl rounded-lg border border-base-300 bg-base-200">
+    <table className="table w-full">
+      <thead className="bg-primary text-primary-content">
+        <tr>
+          <th className="p-4 text-left">Email</th>
+          <th className="p-4 text-left">Ticket Title</th>
+          <th className="p-4 text-center">Quantity</th>
+          <th className="p-4 text-center">Total Price</th>
+          <th className="p-4 text-center">Actions</th>
+          <th className="p-4 text-center">Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {allBookingsData.map((req) => {
+          const statusColor =
+            req.status === "accepted"
+              ? 
+                "bg-green-500 text-white "
+              : req.status === "rejected"
+              ? 
+                "bg-red-500 text-white"
+              : 
+                "bg-yellow-500 text-black ";
+
+          return (
+            <tr
+              key={req._id}
+              className="border-b border-base-300 hover:bg-base-300/50 transition"
+            >
+              <td className="p-4 ">{req.userEmail}</td>
+
+              <td className="py-4 font-semibold text-base-content">
+                {req.title}
+              </td>
+
+              {/* Quantity - Using accent for emphasis */}
+              <td className="py-4 text-center text-lg font-bold text-accent">
+                {req.bookingQuantity}
+              </td>
+
+              {/* Total Price - Using success for monetary value */}
+              <td className="py-4 text-center text-lg font-bold text-success">
+                ${req.totalPrice}
+              </td>
+
+              {/* Action Buttons */}
+              <td className="py-4 flex justify-center gap-3">
+                <button
+                  onClick={() => handleAccept(req._id)}
+                  className="
+                    btn btn-sm text-white border-none transition
+                    bg-linear-to-r from-emerald-400 via-green-500 to-green-700
+                    hover:from-emerald-500 hover:to-green-800
+                    shadow-lg shadow-green-600/40
+                    flex items-center gap-2
+                  "
+                >
+                  <CheckCircle size={18} /> Accept
+                </button>
+
+                <button
+                  onClick={() => handleReject(req._id)}
+                  className="
+                    btn btn-sm text-white border-none transition
+                    bg-linear-to-r from-red-700 via-red-600 to-rose-600
+                    hover:from-red-800 hover:to-rose-700
+                    shadow-lg shadow-red-700/50
+                    flex items-center gap-2
+                  "
+                >
+                  <Ban size={18} /> Reject
+                </button>
+              </td>
+
+              <td className="p-4 text-center">
+                <span className={`badge ${statusColor} badge-lg font-bold`}>
+                  {req.status.toUpperCase()}
+                </span>
+              </td>
             </tr>
-          </thead>
+          );
+        })}
 
-          <tbody>
-            {allBookingsData.map((req) => {
+        {allBookingsData.length === 0 && (
+          <tr>
+            <td
+              colSpan="6"
+              className="p-6 text-center text-lg text-base-content/60 font-medium"
+            >
+              No pending booking requests 🎉
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
 
-              return (
-                <tr
-                  key={req._id}
-                  className="border-b  transition"
+  {/* --- 2. Mobile (Below md) Card/List Layout --- */}
+  <div className="lg:hidden space-y-4">
+    {allBookingsData.length > 0 ? (
+      allBookingsData.map((req) => {
+        const statusColor =
+          req.status === "accepted"
+            ? "bg-green-500 text-white "
+            : req.status === "rejected"
+            ? "bg-red-500 text-white"
+            : "bg-yellow-500 text-black ";
+
+        return (
+          <div
+            key={req._id}
+            className="card bg-base-200 shadow-xl border border-base-300 transition hover:shadow-2xl"
+          >
+            <div className="card-body p-4">
+              {/* Header/Status */}
+              <div className="flex justify-between items-start mb-2">
+                <h2 className="card-title text-base-content text-xl font-bold">
+                  {req.title}
+                </h2>
+                <span className={`badge ${statusColor} badge-lg font-bold`}>
+                  {req.status.toUpperCase()}
+                </span>
+              </div>
+
+              {/* Details Grid */}
+              <div className="grid grid-cols-2 gap-2 text-sm mb-4 border-t pt-2 border-base-300">
+                <div className="font-semibold text-base-content/70">Email:</div>
+                <div className="truncate text-base-content font-medium text-right">
+                  {req.userEmail}
+                </div>
+
+                <div className="font-semibold text-base-content/70">
+                  Quantity:
+                </div>
+                <div className="text-right text-lg font-bold text-accent">
+                  {req.bookingQuantity}
+                </div>
+
+                <div className="font-semibold text-base-content/70">
+                  Total Price:
+                </div>
+                <div className="text-right text-lg font-bold text-success">
+                  ${req.totalPrice}
+                </div>
+              </div>
+
+              {/* Action Buttons (Full width on mobile) */}
+              <div className="card-actions flex-col gap-2">
+                <button
+                  onClick={() => handleAccept(req._id)}
+                  className="
+                    btn btn-block btn-sm text-white border-none transition
+                    bg-linear-to-r from-emerald-400 via-green-500 to-green-700
+                    hover:from-emerald-500 hover:to-green-800
+                    shadow-lg shadow-green-600/40
+                    flex items-center gap-2
+                  "
                 >
+                  <CheckCircle size={18} /> Accept
+                </button>
 
-                  <td className="p-4 ">{req.userEmail}</td>
-
-                  <td className="py-4 font-semibold ">
-                    {req.title}
-                  </td>
-
-                  <td className="py-4 text-center text-lg text-purple-700 font-bold">
-                    {req.bookingQuantity}
-                  </td>
-
-                  <td className="py-4 text-center text-lg font-bold text-green-600">
-                    ${req.totalPrice}
-                  </td>
-
-                  <td className="py-4 flex justify-center gap-3">
-                    <button
-                      onClick={() => handleAccept(req._id)}
-                      className="flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg shadow-md transition"
-                    >
-                      <CheckCircle size={18} /> Accept 
-                      
-                    </button>
-
-                    <button
-                      onClick={() => handleReject(req._id)}
-                      className="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg shadow-md transition"
-                    >
-                      <XCircle size={18} /> Reject
-                    </button>
-                  </td>
-                    <td className="p-4 text-center text-lg font-bold ">
-                    {req.status.toUpperCase()}
-                  </td>
-                  
-                </tr>
-              );
-            })}
-
-            {allBookingsData.length === 0 && (
-              <tr>
-                <td
-                  colSpan="6"
-                  className="p-6 text-center text-lg text-gray-500 font-medium"
+                <button
+                  onClick={() => handleReject(req._id)}
+                  className="
+                    btn btn-block btn-sm text-white border-none transition
+                    bg-linear-to-r from-red-700 via-red-600 to-rose-600
+                    hover:from-red-800 hover:to-rose-700
+                    shadow-lg shadow-red-700/50
+                    flex items-center gap-2
+                  "
                 >
-                  No pending booking requests 🎉
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                  <Ban size={18} /> Reject
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    ) : (
+      <div className="p-6 text-center text-lg text-base-content/60 font-medium bg-base-200 rounded-lg shadow-xl">
+        No pending booking requests 🎉
       </div>
-    </div>
+    )}
+  </div>
+</div>
   );
 };
 
