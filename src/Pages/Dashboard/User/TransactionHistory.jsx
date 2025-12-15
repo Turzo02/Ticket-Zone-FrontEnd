@@ -57,7 +57,7 @@ const TransactionHistory = () => {
                 <th className="p-4 text-right text-xs font-semibold uppercase tracking-wider text-base-content/80">
                   Amount
                 </th>
-                <th className="p-4 text-right text-xs font-semibold uppercase tracking-wider text-base-content/80">
+                <th className="p-4 text-center text-xs font-semibold uppercase tracking-wider text-base-content/80">
                   Status
                 </th>
                 <th className="p-4 text-right text-xs font-semibold uppercase tracking-wider text-base-content/80">
@@ -87,7 +87,7 @@ const TransactionHistory = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-success">
                     ${tx.totalPrice}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                  <td className="px-6 py-4 whitespace-nowrap text-center text-sm">
                     {/* Status - Using gradient badge classes */}
                     <span
                       className={`
@@ -99,7 +99,7 @@ const TransactionHistory = () => {
       }
     `}
                     >
-                      {tx.paymentStatus ? "Paid" : "Pending"}
+                      {tx.paymentStatus ? "Paid" : "Unpaid"}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-base-content/60">
