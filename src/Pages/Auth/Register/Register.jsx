@@ -46,7 +46,7 @@ const Register = () => {
           displayName: data.name,
           photoURL: data.photoURL,
         });
-        navigate(location?.state || "/");
+        navigate( "/");
       })
       .catch((error) => {
         console.log(error.message);

@@ -31,7 +31,6 @@ const TransactionHistory = () => {
   if (isError) {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
-  console.log(bookings);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-base-100 text-base-content">

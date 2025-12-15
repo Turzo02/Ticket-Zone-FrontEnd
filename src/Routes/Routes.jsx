@@ -75,7 +75,7 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
-              <DasboardLayout></DasboardLayout>
+            <DasboardLayout></DasboardLayout>
           </PrivateRoute>
         ),
         children: [
@@ -87,7 +87,6 @@ export const router = createBrowserRouter([
           {
             path: "my-booked-tickets",
             element: <UserRoute><MyBookedTickets></MyBookedTickets></UserRoute>
-
           },
           {
             path: "transaction-history",
@@ -100,44 +99,73 @@ export const router = createBrowserRouter([
           // for admin routes
           {
             path: "manage-users",
-            element: <AdminRoute>
-              <ManageUsers></ManageUsers>,
-            </AdminRoute>
+            element: (
+              <AdminRoute>
+                <ManageUsers></ManageUsers>,
+              </AdminRoute>
+            ),
           },
           {
             path: "manage-tickets",
-            element: 
-            <AdminRoute>
-              <ManageTickets></ManageTickets>,
-            </AdminRoute>
+            element: (
+              <AdminRoute>
+                <ManageTickets></ManageTickets>,
+              </AdminRoute>
+            ),
           },
           {
             path: "advertisement-tickets",
-            element:
-            <AdminRoute>
-              <AdvertiseTickets></AdvertiseTickets>,
-            </AdminRoute>
+              element: (
+                <AdminRoute>
+                  <AdvertiseTickets></AdvertiseTickets>,
+                </AdminRoute>
+              ),
           },
           //for vendor routes
           {
             path: "add-tickets",
-            element: <VendorRoute> <AddTicket></AddTicket> </VendorRoute>,
+            element: (
+              <VendorRoute>
+                {" "}
+                <AddTicket></AddTicket>{" "}
+              </VendorRoute>
+            ), 
           },
           {
             path: "my-added-tickets",
-            element: <VendorRoute> <MyAddedTickets></MyAddedTickets> </VendorRoute>,
+            element: (
+              <VendorRoute>
+                {" "}
+                <MyAddedTickets></MyAddedTickets>{" "}
+              </VendorRoute>
+            ),
           },
           {
             path: "requested-tickets",
-            element: <VendorRoute> <RequestedTickets></RequestedTickets> </VendorRoute>,
+            element: (
+              <VendorRoute>
+                {" "}
+                <RequestedTickets></RequestedTickets>{" "}
+              </VendorRoute>
+            ),
           },
           {
             path: "revenue-overview",
-            element: <VendorRoute> <Revenue></Revenue> </VendorRoute>,
+                element: (
+                  <VendorRoute>
+                    {" "}
+                    <Revenue></Revenue>{" "}
+                  </VendorRoute>
+                ),
           },
           {
             path: "update-ticket-details/:id",
-            element: <VendorRoute> <UpdateTicket></UpdateTicket> </VendorRoute>,
+              element: (
+                <VendorRoute>
+                  {" "}
+                  <UpdateTicket></UpdateTicket>{" "}
+                </VendorRoute>
+              ),
           },
         ],
       },

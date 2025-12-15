@@ -4,9 +4,11 @@ import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import axios from "axios";
+import useRole from "../../../Hooks/useRole";
 const AddTicket = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const { role } = useRole();
   const {
     register,
     handleSubmit,
@@ -14,7 +16,17 @@ const AddTicket = () => {
   } = useForm();
 
   const handleAddTicket = async (data) => {
-    console.log(data);
+    // console.log(data);
+        if (role !== "vendor") {
+            console.error("Authorization failed on client side: User is not a Vendor.");
+            Swal.fire({
+                icon: "error",
+                title: "Access Denied!",
+                text: "Only Vendors are allowed to perform this action.",
+                confirmButtonText: "OK",
+            });
+            return; 
+        }
 
     try {
       const ticketImg = data.photo[0];

@@ -167,7 +167,7 @@ const AllTickets = () => {
           </div>
 
           {/* Right Side: Location Search (Grid on mobile for even sizing) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto flex-grow">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto grow">
             {/* From Location Input */}
             <div className="relative w-full">
               <input

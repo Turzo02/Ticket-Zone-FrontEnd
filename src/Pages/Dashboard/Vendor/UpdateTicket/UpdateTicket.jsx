@@ -1,15 +1,16 @@
 import React from "react";
-import { useParams } from "react-router";
 import useAxiosSecure from "../../../../Hooks/useAxiousSecure";
 import useAuth from "../../../../Hooks/useAuth";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
+import useRole from "../../../../Hooks/useRole";
 
 const UpdateTicket = () => {
-  const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const {role} = useRole();
+
   const {
     register,
     handleSubmit,
@@ -18,6 +19,16 @@ const UpdateTicket = () => {
 
     const handleUpdateTicket = async (data) => {
     console.log(data);
+    if (role !== "vendor") {
+        console.error("Authorization failed on client side: User is not a Vendor.");
+        Swal.fire({
+            icon: "error",
+            title: "Access Denied!",
+            text: "Only Vendors are allowed to perform this action.",
+            confirmButtonText: "OK",
+        });
+        return; 
+    }
 
     try {
       const ticketImg = data.photo[0];
@@ -41,7 +52,7 @@ const UpdateTicket = () => {
         photo: hostedImg,
       };
 
-      const ticketRes = await axiosSecure.patch(`/ticket/${id}`, finalData);
+      const ticketRes = await axiosSecure.patch(`/ticket/vendor/${user.email}`, finalData);
       console.log("after Update data", ticketRes.data);
       Swal.fire({
         icon: "success",
