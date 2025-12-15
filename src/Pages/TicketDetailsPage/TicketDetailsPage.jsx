@@ -41,6 +41,9 @@ const TicketDetailsPage = () => {
       totalPrice: quantity * price,
       status: "pending",
       departure: ticket.departure,
+      from: ticket.from,
+      to: ticket.to,
+      photo: ticket.photo
     };
 
     // post the data to database
@@ -70,6 +73,7 @@ const TicketDetailsPage = () => {
 
   if (isLoading) return <SwappingDotLoader></SwappingDotLoader>;
   if (isError) return <p className="text-red-600">Error loading ticket</p>;
+  console.log(ticket)
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
 <div className="text-left py-6 px-4 border-b border-base-300 space-y-2">

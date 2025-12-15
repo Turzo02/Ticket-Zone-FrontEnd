@@ -5,7 +5,7 @@ import SwappingDotLoader from "../Components/Loading/SwappingDotLoader";
 import useRole from "../Hooks/useRole";
 const menuItems = [
   // all
-  { label: "User Profile", path: "/dashboard/user-profile", roles: ["user","vendor","admin"] },
+  { label: "Profile", path: "/dashboard/user-profile", roles: ["user","vendor","admin"] },
 
   // user
   { label: "My Booked Tickets", path: "/dashboard/my-booked-tickets", roles: ["user"] },

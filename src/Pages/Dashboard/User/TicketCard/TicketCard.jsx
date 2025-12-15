@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import TicketCountdown from "../../../../Components/TicketCountdown/TicketCountdown";
 import useAxiosSecure from "../../../../Hooks/useAxiousSecure";
+import { MoveRight } from "lucide-react";
 
 const TicketCard = ({ ticket }) => {
   const [isDeparted, setIsDeparted] = useState(false);
@@ -14,13 +15,12 @@ const TicketCard = ({ ticket }) => {
     setIsDeparted(completedStatus);
   }, []);
 
-
   const buttonClasses = `btn w-full mt-2 text-lg font-bold transition-all ${
     isPurchasable
       ? "btn-primary text-primary-content shadow-lg shadow-primary/40 hover:shadow-xl"
       : "btn-disabled bg-base-300 text-base-content/60 shadow-none cursor-not-allowed"
   }`;
-  
+
   // Paid Button: Success color, disabled state
   const paidButtonClasses =
     "btn w-full mt-2 text-lg font-bold btn-success btn-outline cursor-default shadow-md";
@@ -51,30 +51,29 @@ const TicketCard = ({ ticket }) => {
     const res = await axiosSecure.post("/payment-checkout-session", ticketInfo);
     window.location.href = res.data.url;
   };
-  
+
   // Status Badge Logic
-const getTicketStatusBadge = (status) => {
-  switch (status) {
-    case "accepted":
-      return "bg-gradient-to-r from-green-400 to-green-700 text-white ";
-    case "pending":
-      return "bg-gradient-to-r from-orange-400  to-orange-700 text-white ";
-    case "rejected":
-      return "bg-gradient-to-r from-red-700  to-rose-600 text-white ";
-    default:
-      return "bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-none";
-  }
-};
+  const getTicketStatusBadge = (status) => {
+    switch (status) {
+      case "accepted":
+        return "bg-gradient-to-r from-green-400 to-green-700 text-white ";
+      case "pending":
+        return "bg-gradient-to-r from-orange-400  to-orange-700 text-white ";
+      case "rejected":
+        return "bg-gradient-to-r from-red-700  to-rose-600 text-white ";
+      default:
+        return "bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-none";
+    }
+  };
 
+  const getPaymentStatusBadge = (status) => {
+    if (status === "paid") {
+      return "bg-gradient-to-r from-green-400  to-green-700 text-white ";
+    }
+    return "bg-gradient-to-r from-amber-500 to-orange-500 text-white ";
+  };
 
-const getPaymentStatusBadge = (status) => {
-  if (status === "paid") {
-    return "bg-gradient-to-r from-green-400  to-green-700 text-white ";
-  }
-  return "bg-gradient-to-r from-amber-500 to-orange-500 text-white ";
-};
-
-
+  console.log(ticket);
   return (
     <div className="flex flex-col rounded-2xl border border-base-300 shadow-xl overflow-hidden bg-base-200 text-base-content">
       <img
@@ -87,6 +86,17 @@ const getPaymentStatusBadge = (status) => {
           {ticket.title}
         </h4>
         <div className=" space-y-4 text-sm">
+          {/* From to location */}
+          {/* From -> To */}
+          <div className="flex justify-between items-center flex-wrap">
+            <div>
+              <h1>From: {ticket.from}</h1>
+            </div>
+            <MoveRight  />
+            <div>
+              <h1>To: {ticket.to}</h1>
+            </div>
+          </div>
           {/* Total Price */}
           <div className="flex justify-between items-center border-b border-base-300">
             <span className="text-base-content/80 font-medium">
@@ -94,6 +104,13 @@ const getPaymentStatusBadge = (status) => {
             </span>
             <span className="text-xl font-extrabold text-success">
               ${ticket.totalPrice}
+            </span>
+          </div>
+          {/* Booking Quantity */}
+          <div className="flex justify-between items-center border-b border-base-300">
+            <span className="text-base-content/80 font-medium">Quantity:</span>
+            <span className="text-lg font-semibold text-orange-500">
+              {ticket.bookingQuantity}
             </span>
           </div>
 
@@ -104,9 +121,8 @@ const getPaymentStatusBadge = (status) => {
               <span className="text-sm">{formattedDeparture}</span>
             </div>
           </div>
-
           {/* Countdown Timer */}
-          <div className="font-medium">
+          <div className={`font-medium ${ticket.status === "rejected" ? "hidden" : ""}`}>
             <TicketCountdown
               departure={ticket.departure}
               onCountdownComplete={handleDepartureComplete}
@@ -115,11 +131,11 @@ const getPaymentStatusBadge = (status) => {
 
           {/* Ticket Status */}
           <div className="flex justify-between items-center border-t border-base-300">
-            <span className="text-base-content/80">
-              Ticket Status:
-            </span>
+            <span className="text-base-content/80">Ticket Status:</span>
             <span
-              className={`badge badge-lg font-semibold ${getTicketStatusBadge(ticket.status)}`}
+              className={`badge badge-lg font-semibold ${getTicketStatusBadge(
+                ticket.status
+              )}`}
             >
               {ticket.status}
             </span>
@@ -127,11 +143,11 @@ const getPaymentStatusBadge = (status) => {
 
           {/* Payment Status */}
           <div className="flex justify-between items-center">
-            <span className="text-base-content/80">
-              Payment Status:
-            </span>
+            <span className="text-base-content/80">Payment Status:</span>
             <span
-              className={`badge badge-lg font-semibold ${getPaymentStatusBadge(ticket.paymentStatus)}`}
+              className={`badge badge-lg font-semibold ${getPaymentStatusBadge(
+                ticket.paymentStatus
+              )}`}
             >
               {ticket.paymentStatus || "unpaid"}
             </span>
@@ -141,21 +157,21 @@ const getPaymentStatusBadge = (status) => {
         {/* Action Button Area */}
         <div>
           {ticket.paymentStatus === "paid" ? (
-            <button className={paidButtonClasses}>
-              Ticket Purchased !
-            </button>
+            <button className={paidButtonClasses}>Ticket Purchased !</button>
           ) : isPurchasable ? (
-            <button 
-              onClick={() => handlePayment(ticket._id)} 
+            <button
+              onClick={() => handlePayment(ticket._id)}
               className={buttonClasses}
             >
               Buy Ticket Now
             </button>
           ) : (
             <button disabled className={buttonClasses}>
-              {ticket.status === "pending" ? "Waiting for Approval" :
-               isDeparted ? "Already Departed" : 
-               "Not Available"}
+              {ticket.status === "pending"
+                ? "Waiting for Approval"
+                : isDeparted
+                ? "Already Departed"
+                : "Not Available"}
             </button>
           )}
         </div>
