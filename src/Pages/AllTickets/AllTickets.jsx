@@ -225,7 +225,7 @@ const AllTickets = () => {
                 {/* Header */}
                 <div className="relative h-40 rounded-lg overflow-hidden">
                   <img
-                    src="https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_006"
+                    src={ticket.photo}
                     alt={ticket.title}
                     className="w-full h-full object-cover"
                   />

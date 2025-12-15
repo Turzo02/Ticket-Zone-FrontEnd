@@ -70,9 +70,7 @@ const TicketDetailsPage = () => {
 
   if (isLoading) return <SwappingDotLoader></SwappingDotLoader>;
   if (isError) return <p className="text-red-600">Error loading ticket</p>;
-  console.log(ticket.quantity);
   return (
-    // DaisyUI-styled Ticket Details Page
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
 <div className="text-left py-6 px-4 border-b border-base-300 space-y-2">
   <h1 className="
@@ -91,7 +89,7 @@ const TicketDetailsPage = () => {
       {/* Header Image */}
       <div className="relative h-64 sm:h-80 rounded-lg overflow-hidden mb-6 shadow-xl shadow-base-300/50">
         <img
-          src="https://api.dicebear.com/7.x/notionists/svg?seed=Static_User_001"
+          src={ticket.photo}
           alt="Ticket Header"
           className="w-full h-full object-cover"
         />

@@ -70,7 +70,7 @@ const Advertisement = () => {
               {/* Top section */}
               <div className="relative h-40 rounded-lg overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1501706362039-c06b2d715385?w=700&h=500&auto=format"
+                  src={ticket.photo}
                   alt={ticket.title}
                   className="w-full h-full object-cover"
                   loading="lazy"
