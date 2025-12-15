@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../../Hooks/useAxiousSecure";
 import useAuth from "../../../../Hooks/useAuth";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const UpdateTicket = () => {
   const { id } = useParams();
@@ -15,143 +16,168 @@ const UpdateTicket = () => {
     formState: { errors },
   } = useForm();
 
-  const handleUpdateTicket = (data) => {
-    const finalData = { ...data, status: "pending" };
-    axiosSecure
-      .patch(`/ticket/${id}`, finalData)
-      .then((res) => {
-        console.log("after post data", res.data);
-        // Show success alert
-        Swal.fire({
-          icon: "success",
-          title: "Ticket Updated!",
-          text: "Your ticket has been successfully Updated.",
-          confirmButtonText: "OK",
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong while Updating your ticket!",
-          confirmButtonText: "OK",
-        });
+    const handleUpdateTicket = async (data) => {
+    console.log(data);
+
+    try {
+      const ticketImg = data.photo[0];
+      const formData = new FormData();
+      formData.append("image", ticketImg);
+
+      // Image Upload
+      const img_Api_Url = `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_IMG_UPLOAD_API
+      }`;
+
+      const imgRes = await axios.post(img_Api_Url, formData);
+      const hostedImg = imgRes.data.data.url;
+
+      console.log("Hosted Image URL:", hostedImg);
+
+      // Ticket Data Submission
+      const finalData = {
+        ...data,
+        status: "pending",
+        photo: hostedImg,
+      };
+
+      const ticketRes = await axiosSecure.patch(`/ticket/${id}`, finalData);
+      console.log("after Update data", ticketRes.data);
+      Swal.fire({
+        icon: "success",
+        title: "Ticket Updated!",
+        text: "Your ticket Info has been successfully Added.",
+        confirmButtonText: "OK",
       });
+    } catch (error) {
+      console.error("Error during ticket process:", error);
+      // Show error alert
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong while Updating your ticket! Please check the console for details.",
+        confirmButtonText: "OK",
+      });
+    }
   };
 
   return (
     <div>
-      <h1 className="text-4xl font-extrabold text-center md:text-left ">
-        Update your Tickets
-      </h1>
-      <p className="text-sm font-semi text-center md:text-left my-4">
-        Fill up the form below with new data to update your ticket
-      </p>
 
-      <div>
-        {/* form */}
+    <div className="p-4 sm:p-8 bg-base-100 text-base-content max-w-7xl mx-auto">
+      <div className="text-center py-8 mb-6 md:py-8  bg-base-200 rounded-xl shadow-lg">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
+          Update Your Ticket Info
+        </h1>
+      </div>
+
+      <div className="rounded-2xl border border-base-300 bg-base-200 p-6 lg:p-8 shadow-2xl">
         <form
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
           onSubmit={handleSubmit(handleUpdateTicket)}
         >
           {/* Ticket Title */}
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-1">
-              Ticket Title
+          <div className="form-control md:col-span-2">
+            <label className="label">
+              <span className="label-text font-semibold">Ticket Title</span>
             </label>
             <input
               {...register("title", { required: "Ticket Title is required" })}
               type="text"
               placeholder="e.g., Express Bus from London to Paris"
-              className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:ring-primary focus:border-primary"
+              // Use DaisyUI input classes
+              className="input input-bordered w-full"
             />
             {errors.title && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.title.message}
-              </p>
+              <p className="text-error text-sm mt-1">{errors.title.message}</p>
             )}
           </div>
 
           {/* From */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              From (Location)
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">From (Location)</span>
             </label>
             <input
               {...register("from", { required: "From location is required" })}
               type="text"
               placeholder="e.g., London"
-              className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:ring-primary focus:border-primary"
+              className="input input-bordered w-full"
             />
             {errors.from && (
-              <p className="text-red-500 text-sm mt-1">{errors.from.message}</p>
+              <p className="text-error text-sm mt-1">{errors.from.message}</p>
             )}
           </div>
 
           {/* To */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              To (Location)
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">To (Location)</span>
             </label>
             <input
               {...register("to", { required: "To location is required" })}
               type="text"
               placeholder="e.g., Paris"
-              className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:ring-primary focus:border-primary"
+              className="input input-bordered w-full"
             />
             {errors.to && (
-              <p className="text-red-500 text-sm mt-1">{errors.to.message}</p>
+              <p className="text-error text-sm mt-1">{errors.to.message}</p>
             )}
           </div>
 
           {/* Transport Type */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Transport Type
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">Transport Type</span>
             </label>
             <select
               {...register("transportType", {
                 required: "Transport type is required",
               })}
-              className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground focus:ring-primary focus:border-primary"
+              // Use DaisyUI select classes
+              className="select select-bordered w-full"
+              defaultValue=""
             >
-              <option value="">Select transport</option>
+              <option value="" disabled>
+                Select transport
+              </option>
               <option>Bus</option>
               <option>Train</option>
               <option>Flight</option>
               <option>Ship</option>
             </select>
             {errors.transportType && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="text-error text-sm mt-1">
                 {errors.transportType.message}
               </p>
             )}
           </div>
 
           {/* Departure Date */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Departure Date & Time
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">
+                Departure Date & Time
+              </span>
             </label>
             <input
               {...register("departure", {
                 required: "Departure date & time is required",
               })}
               type="datetime-local"
-              className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground focus:ring-primary focus:border-primary"
+              className="input input-bordered w-full"
             />
             {errors.departure && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="text-error text-sm mt-1">
                 {errors.departure.message}
               </p>
             )}
           </div>
 
           {/* Price */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Price (per unit)
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">Price (per unit)</span>
             </label>
             <input
               {...register("price", {
@@ -160,19 +186,17 @@ const UpdateTicket = () => {
               })}
               type="number"
               placeholder="0.00"
-              className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:ring-primary focus:border-primary"
+              className="input input-bordered w-full"
             />
             {errors.price && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.price.message}
-              </p>
+              <p className="text-error text-sm mt-1">{errors.price.message}</p>
             )}
           </div>
 
           {/* Quantity */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Ticket Quantity
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">Ticket Quantity</span>
             </label>
             <input
               {...register("quantity", {
@@ -181,108 +205,126 @@ const UpdateTicket = () => {
               })}
               type="number"
               placeholder="100"
-              className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:ring-primary focus:border-primary"
+              className="input input-bordered w-full"
             />
             {errors.quantity && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="text-error text-sm mt-1">
                 {errors.quantity.message}
               </p>
             )}
           </div>
 
           {/* Perks */}
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-2">Perks</label>
-            <div className="flex flex-wrap gap-4 text-sm">
-              <label className="flex items-center gap-2">
+          <div className="form-control md:col-span-2">
+            <label className="label">
+              <span className="label-text font-semibold">Perks</span>
+            </label>
+            <div className="flex flex-wrap gap-6 text-sm">
+              <label className="label cursor-pointer gap-2">
                 <input
-                  {...register("perks")}
+                  {...register("perks", { required: "Perks are required" })}
                   type="checkbox"
                   value="AC"
-                  className="rounded border text-primary focus:ring-primary"
-                />{" "}
-                AC
+                  className="checkbox checkbox-primary"
+                />
+                <span className="label-text">AC</span>
               </label>
-              <label className="flex items-center gap-2">
+              <label className="label cursor-pointer gap-2">
                 <input
                   {...register("perks")}
                   type="checkbox"
                   value="Breakfast"
-                  className="rounded border text-primary focus:ring-primary"
-                />{" "}
-                Breakfast
+                  className="checkbox checkbox-primary"
+                />
+                <span className="label-text">Breakfast</span>
               </label>
-              <label className="flex items-center gap-2">
+              <label className="label cursor-pointer gap-2">
                 <input
                   {...register("perks")}
                   type="checkbox"
                   value="Wi-Fi"
-                  className="rounded border text-primary focus:ring-primary"
-                />{" "}
-                Wi-Fi
+                  className="checkbox checkbox-primary"
+                />
+                <span className="label-text">Wi-Fi</span>
               </label>
-              <label className="flex items-center gap-2">
+              <label className="label cursor-pointer gap-2">
                 <input
                   {...register("perks")}
                   type="checkbox"
                   value="Power Outlet"
-                  className="rounded border text-primary focus:ring-primary"
-                />{" "}
-                Power Outlet
+                  className="checkbox checkbox-primary"
+                />
+                <span className="label-text">Power Outlet</span>
               </label>
             </div>
+            {errors.perks && (
+              <p className="text-error text-sm mt-1">{errors.perks.message}</p>
+            )}
           </div>
 
-          {/* Image Upload I will handle it later */}
-          {/* <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-1">Image Upload (via imgbb)</label>
-            <div className="flex items-center justify-center rounded-lg border-2 border-dashed bg-muted p-6 cursor-pointer hover:bg-muted/70 transition text-center">
-              <span className="material-symbols-outlined text-4xl text-muted-foreground">upload_file</span>
-              <div className="mt-2 text-muted-foreground">
-                <p className="text-sm">Click to browse or drag and drop</p>
-                <p className="text-xs">PNG, JPG, GIF up to 10MB</p>
-              </div>
-            </div>
-          </div> */}
+          {/* Image Upload */}
+          <div className="form-control md:col-span-2">
+            <label className="label">
+              <span className="label-text font-semibold">
+                Ticket Image (Required)
+              </span>
+            </label>
 
-          {/* Vendor */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Vendor Name
+            <input
+              type="file"
+              {...register("photo", { required: true })}
+              className="file-input file-input-bordered file-input-primary w-full"
+              placeholder="Your Photo"
+            />
+
+            {errors.photo && errors.photo.type === "required" && (
+              <p className="text-error text-sm mt-1">Photo is required.</p>
+            )}
+          </div>
+
+          {/* Vendor Name (Read-Only) */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">Vendor Name</span>
             </label>
             <input
               readOnly
               type="text"
               value={user?.displayName || ""}
               {...register("vendorName")}
-              className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-muted-foreground cursor-not-allowed"
+              // Use input-disabled for read-only fields
+              className="input input-bordered w-full input-disabled"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Vendor Email
+          {/* Vendor Email (Read-Only) */}
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">Vendor Email</span>
             </label>
             <input
               readOnly
               type="email"
               value={user?.email || ""}
               {...register("vendorEmail")}
-              className="w-full rounded-lg border bg-muted px-3 py-2 text-sm text-muted-foreground cursor-not-allowed"
+              className="input input-bordered w-full input-disabled"
             />
           </div>
 
           {/* Submit Button */}
-          <div className="md:col-span-2 text-right">
+          <div className="md:col-span-2 text-right pt-4">
             <button
               type="submit"
-              className="inline-flex items-center gap-2 rounded-lg  px-5 py-2.5 text-sm font-semibold text-white bg-red-500 shadow-sm hover:bg-primary/80 transition cursor-pointer"
+              // Use DaisyUI btn-primary
+              className="btn btn-lg btn-primary shadow-xl shadow-primary/40 transition"
             >
-              Update Ticket
+              Add Ticket
             </button>
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };
