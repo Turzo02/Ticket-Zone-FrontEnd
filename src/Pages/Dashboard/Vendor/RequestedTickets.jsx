@@ -3,6 +3,7 @@ import { Ban, CheckCircle, XCircle } from "lucide-react";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
+import Swal from "sweetalert2";
 
 const RequestedTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -20,20 +21,77 @@ const RequestedTickets = () => {
   });
 
   // Accept Booking
-  const handleAccept = async (id) => {
-    await axiosSecure.patch(`/bookings/${id}`, {
-      status: "accepted",
-    });
-    refetch();
-  };
 
-  // Reject Booking
-  const handleReject = async (id) => {
-    await axiosSecure.patch(`/bookings/${id}`, {
-      status: "rejected",
+const handleAccept = async (id) => {
+    const result = await Swal.fire({
+        title: "Confirm Acceptance?",
+        text: "Are you sure you want to ACCEPT this booking request?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#38a169",
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Yes, Accept",
+        cancelButtonText: "Cancel"
     });
-    refetch();
-  };
+
+    if (result.isConfirmed) {
+        try {
+            await axiosSecure.patch(`/bookings/${id}`, {
+                status: "accepted",
+            });
+            refetch();
+
+            Swal.fire({
+                title: "Accepted!",
+                text: "The booking has been successfully accepted.",
+                icon: "success"
+            });
+        } catch (error) {
+            Swal.fire({
+                title: "Failed!",
+                text: "Could not accept the booking. Please try again.",
+                icon: "error"
+            });
+            console.error("Accept error:", error);
+        }
+    }
+};
+
+// Reject Booking
+const handleReject = async (id) => {
+    const result = await Swal.fire({
+        title: "Confirm Rejection?",
+        text: "Are you sure you want to REJECT this booking request? This action is final.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#e53e3e", // Red for Reject
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Yes, Reject",
+        cancelButtonText: "Cancel"
+    });
+
+    if (result.isConfirmed) {
+        try {
+            await axiosSecure.patch(`/bookings/${id}`, {
+                status: "rejected",
+            });
+            refetch();
+
+            Swal.fire({
+                title: "Rejected!",
+                text: "The booking has been successfully rejected.",
+                icon: "success"
+            });
+        } catch (error) {
+            Swal.fire({
+                title: "Failed!",
+                text: "Could not reject the booking. Please try again.",
+                icon: "error"
+            });
+            console.error("Reject error:", error);
+        }
+    }
+};
 
   if (isLoading) {
     return (
@@ -65,7 +123,6 @@ const RequestedTickets = () => {
           <th className="p-4 text-center">Quantity</th>
           <th className="p-4 text-center">Total Price</th>
           <th className="p-4 text-center">Actions</th>
-          <th className="p-4 text-center">Status</th>
         </tr>
       </thead>
 
@@ -103,7 +160,7 @@ const RequestedTickets = () => {
               </td>
 
               {/* Action Buttons */}
-              <td className="py-4 flex justify-center gap-3">
+             {req.status === "pending" ? ( <td className="py-4 flex justify-center gap-3">
                 <button
                   onClick={() => handleAccept(req._id)}
                   className="
@@ -129,13 +186,13 @@ const RequestedTickets = () => {
                 >
                   <Ban size={18} /> Reject
                 </button>
-              </td>
-
+              </td>) : (
               <td className="p-4 text-center">
                 <span className={`badge ${statusColor} badge-lg font-bold`}>
                   {req.status.toUpperCase()}
                 </span>
-              </td>
+              </td>)}
+
             </tr>
           );
         })}

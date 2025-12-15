@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 import { ArrowUpDown, Filter, MoveRight } from "lucide-react";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 const MyAddedTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -40,8 +41,36 @@ const MyAddedTickets = () => {
   const totalPages = Math.ceil((data?.total || 0) / limit);
 
   const handleDelete = async (id) => {
-    await axiosSecure.delete(`/ticket/${id}`);
-    refetch();
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to delete this ticket. Once deleted, it cannot be recovered!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axiosSecure.delete(`/ticket/${id}`);
+        refetch();
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your ticket has been successfully deleted, along with all associated bookings.",
+          icon: "success",
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "Failed!",
+          text: "An error occurred while deleting the ticket.",
+          icon: "error",
+        });
+        console.error("Delete error:", error);
+      }
+    }
   };
 
   if (isLoading) {

@@ -1,32 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import axios from "axios";
 import useRole from "../../../Hooks/useRole";
+import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 const AddTicket = () => {
   const axiosSecure = useAxiosSecure();
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
   const { role } = useRole();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const handleAddTicket = async (data) => {
     // console.log(data);
-        if (role !== "vendor") {
-            console.error("Authorization failed on client side: User is not a Vendor.");
-            Swal.fire({
-                icon: "error",
-                title: "Access Denied!",
-                text: "Only Vendors are allowed to perform this action.",
-                confirmButtonText: "OK",
-            });
-            return; 
-        }
+    if (role !== "vendor") {
+      console.error(
+        "Authorization failed on client side: User is not a Vendor."
+      );
+      Swal.fire({
+        icon: "error",
+        title: "Access Denied!",
+        text: "Only Vendors are allowed to perform this action.",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
+    const confirmationResult = await Swal.fire({
+      title: "Confirm Ticket Submission?",
+      text: "Are you sure all ticket details are correct and ready to be submitted?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Submit Ticket",
+      cancelButtonText: "Cancel",
+    });
+
+    // Stop execution if the user cancels
+    if (!confirmationResult.isConfirmed) {
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
       const ticketImg = data.photo[0];
@@ -58,6 +81,8 @@ const AddTicket = () => {
         text: "Your ticket has been successfully posted.",
         confirmButtonText: "OK",
       });
+      // Reset the form
+      reset();
     } catch (error) {
       console.error("Error during ticket process:", error);
       // Show error alert
@@ -67,8 +92,14 @@ const AddTicket = () => {
         text: "Something went wrong while posting your ticket! Please check the console for details.",
         confirmButtonText: "OK",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <SwappingDotLoader></SwappingDotLoader>;
+  }
 
   return (
     <div className="p-4 sm:p-8 bg-base-100 text-base-content max-w-7xl mx-auto">
@@ -323,8 +354,7 @@ const AddTicket = () => {
           <div className="md:col-span-2 text-right pt-4">
             <button
               type="submit"
-              // Use DaisyUI btn-primary
-              className="btn btn-lg btn-primary shadow-xl shadow-primary/40 transition"
+              className="btn btn-lg btn-primary shadow-xl shadow-primary/40 transition cursor-pointer"
             >
               Add Ticket
             </button>

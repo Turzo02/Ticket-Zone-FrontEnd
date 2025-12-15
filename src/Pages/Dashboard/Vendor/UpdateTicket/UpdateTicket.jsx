@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../../../Hooks/useAxiousSecure";
 import useAuth from "../../../../Hooks/useAuth";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
 import useRole from "../../../../Hooks/useRole";
+import SwappingDotLoader from "../../../../Components/Loading/SwappingDotLoader";
 
 const UpdateTicket = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const {role} = useRole();
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -29,7 +33,22 @@ const UpdateTicket = () => {
         });
         return; 
     }
+    const confirmationResult = await Swal.fire({
+        title: "Confirm Ticket Submission?",
+        text: "Are you sure all ticket details are correct and ready to be submitted?",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Submit Ticket",
+        cancelButtonText: "Cancel"
+    });
 
+    // Stop execution if the user cancels
+    if (!confirmationResult.isConfirmed) {
+        return;
+    }
+          setIsLoading(true);
     try {
       const ticketImg = data.photo[0];
       const formData = new FormData();
@@ -60,6 +79,7 @@ const UpdateTicket = () => {
         text: "Your ticket Info has been successfully Added.",
         confirmButtonText: "OK",
       });
+      reset()
     } catch (error) {
       console.error("Error during ticket process:", error);
       // Show error alert
@@ -69,8 +89,14 @@ const UpdateTicket = () => {
         text: "Something went wrong while Updating your ticket! Please check the console for details.",
         confirmButtonText: "OK",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if(isLoading){
+    return <SwappingDotLoader></SwappingDotLoader>
+  }
 
   return (
     <div>
@@ -330,7 +356,7 @@ const UpdateTicket = () => {
               // Use DaisyUI btn-primary
               className="btn btn-lg btn-primary shadow-xl shadow-primary/40 transition"
             >
-              Add Ticket
+              Update Ticket
             </button>
           </div>
         </form>
