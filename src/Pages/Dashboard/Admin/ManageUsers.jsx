@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 import { Check, X, AlertCircle, BadgeCheck } from "lucide-react";
+import Swal from "sweetalert2";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -19,24 +20,75 @@ const ManageUsers = () => {
     },
   });
 
-  const handleMakeAdmin = async (id) => {
-    await axiosSecure.patch(`/users/${id}`, {
-      role: "admin",
-    });
-    refetch();
-  };
-  const handleMakeVendor = async (id) => {
-    await axiosSecure.patch(`/users/${id}`, {
-      role: "vendor",
-    });
-    refetch();
-  };
-  const handleMakeFraud = async (id) => {
-    await axiosSecure.patch(`/users/${id}`, {
-      role: "fraud",
-    });
-    refetch();
-  };
+  // const handleMakeAdmin = async (id) => {
+  //   await axiosSecure.patch(`/users/${id}`, {
+  //     role: "admin",
+  //   });
+  //   refetch();
+  // };
+  // const handleMakeVendor = async (id) => {
+  //   await axiosSecure.patch(`/users/${id}`, {
+  //     role: "vendor",
+  //   });
+  //   refetch();
+  // };
+  // const handleMakeFraud = async (id) => {
+  //   await axiosSecure.patch(`/users/${id}`, {
+  //     role: "fraud",
+  //   });
+  //   refetch();
+  // };
+
+
+
+const handleRoleUpdate = async (id, newRole, actionName) => {
+  const result = await Swal.fire({
+    title: `Are you sure?`,
+    text: `You are about to change this user's role to ${newRole.toUpperCase()} (${actionName}).`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: newRole === 'fraud' ? '#d33' : '#3085d6',
+    cancelButtonColor: '#aaa',
+    confirmButtonText: `Yes, ${actionName.toLowerCase()}!`,
+  });
+
+  if (result.isConfirmed) {
+    try {
+      await axiosSecure.patch(`/users/${id}`, {
+        role: newRole,
+      });
+
+      // Refetch data after a successful update
+      refetch();
+
+      Swal.fire(
+        'Success!',
+        `User role has been updated to ${newRole}.`,
+        'success'
+      );
+    } catch (error) {
+      console.error('Role update failed:', error);
+      Swal.fire(
+        'Error!',
+        'Failed to update user role. Please try again.',
+        'error'
+      );
+    }
+  }
+};
+
+
+const handleMakeAdmin = (id) => {
+  handleRoleUpdate(id, 'admin', 'Make Admin');
+};
+
+const handleMakeVendor = (id) => {
+  handleRoleUpdate(id, 'vendor', 'Make Vendor');
+};
+
+const handleMakeFraud = (id) => {
+  handleRoleUpdate(id, 'fraud', 'Mark as Fraud');
+};
 
   if (isLoading) {
     return (

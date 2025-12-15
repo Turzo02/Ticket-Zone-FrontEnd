@@ -4,7 +4,6 @@ import SwappingDotLoader from '../Components/Loading/SwappingDotLoader';
 import Forbidden from '../Pages/forbidden/Forbidden';
 const AdminRoute = ({children}) => {
     const {role,roleLoading} = useRole();
-    console.log(role,"checking role")
     if(roleLoading){
         return <SwappingDotLoader></SwappingDotLoader>
     }
