@@ -4,9 +4,11 @@ import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 import Swal from "sweetalert2";
+import useAuth from "../../../Hooks/useAuth";
 
 const RequestedTickets = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const {
     data: allBookingsData = [],
     isLoading,
@@ -15,7 +17,7 @@ const RequestedTickets = () => {
   } = useQuery({
     queryKey: ["AllBookings"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/bookings`);
+      const { data } = await axiosSecure.get(`/bookings/${user.email}`);
       return data;
     },
   });
@@ -212,7 +214,7 @@ const handleReject = async (id) => {
   </div>
 
   {/* --- 2. Mobile (Below md) Card/List Layout --- */}
-  <div className="lg:hidden space-y-4">
+  <div className="md:hidden space-y-4">
     {allBookingsData.length > 0 ? (
       allBookingsData.map((req) => {
         const statusColor =
