@@ -32,9 +32,6 @@ const UserProfile = () => {
   }
   return (
     <div className="rounded-2xl border border-base-300 p-6 shadow-md bg-base-200 sm:p-8 text-base-content">
-      <h3 className="text-xl font-bold text-base-content mb-6 font-display">
-        Profile
-      </h3>
       <div className="flex items-start gap-6 sm:items-center">
         <div className="relative">
           <div

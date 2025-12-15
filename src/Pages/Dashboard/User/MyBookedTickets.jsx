@@ -37,9 +37,11 @@ const MyBookedTickets = () => {
 
     return (
         <section className="space-y-6">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white font-display">
-                My Booked Tickets
-            </h3>
+           <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
+         My Booked Tickets
+        </h1>
+      </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3">
                 {userBookings?.length > 0 ? (
                     userBookings.map((ticket) => (
