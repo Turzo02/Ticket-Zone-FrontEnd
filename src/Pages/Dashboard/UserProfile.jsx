@@ -35,7 +35,7 @@ const UserProfile = () => {
       <div className="flex items-start gap-6 sm:items-center">
         <div className="relative">
           <div
-            className="h-24 w-24 rounded-full bg-base-100 bg-cover bg-center shadow-md"
+            className="h-16 w-16 md:w-24 md:h-24 rounded-full bg-base-100 bg-cover bg-center shadow-md"
             style={{
               backgroundImage: `url('${loggedInUser.photoURL}')`,
             }}
