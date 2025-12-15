@@ -1,44 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 import { ArrowUpDown, Filter, MoveRight } from "lucide-react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
+import useAuth from "../../../Hooks/useAuth";
 
 const MyAddedTickets = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
-  const [page, setPage] = useState(1);
-  const [filterType, setFilterType] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
-  const limit = 7;
+  ///ticket/vendor/:vendorEmail
 
-  const handleFilterChange = (e) => {
-    setFilterType(e.target.value);
-    setPage(1);
-  };
-
-  const handleSortChange = (e) => {
-    setSortOrder(e.target.value);
-    setPage(1);
-  };
-
-  const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["MyAddedTickets", page, filterType, sortOrder],
+  const {
+    data: tickets = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ["MyAddedTickets"],
     queryFn: async () => {
-      let url = `/ticket?page=${page}&limit=${limit}`;
-      if (filterType) url += `&transport=${filterType}`;
-      if (sortOrder) url += `&sort=${sortOrder}`;
-
-      const { data } = await axiosSecure.get(url);
+      const { data } = await axiosSecure.get(`/ticket/vendor/${user.email}`);
       return data;
     },
-    keepPreviousData: true,
   });
-
-  const allTickets = data?.tickets || [];
-  const totalPages = Math.ceil((data?.total || 0) / limit);
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -87,6 +73,8 @@ const MyAddedTickets = () => {
     );
   }
 
+  console.log(tickets);
+
   return (
     <div className="sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
       <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
@@ -95,45 +83,9 @@ const MyAddedTickets = () => {
         </h1>
       </div>
       {/* Controls Container */}
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-10 w-full">
-        {/* Transport Filter */}
-        <div className="relative w-full sm:w-auto">
-          <div className="flex items-center space-x-2 bg-base-100 border border-base-300 rounded-lg px-4 py-2 shadow-sm hover:border-primary transition-colors focus-within:border-primary w-full">
-            <Filter className="w-5 h-5 text-primary shrink-0" />
-            <select
-              value={filterType}
-              onChange={handleFilterChange}
-              // w-full on mobile, p-0 h-auto min-h-0 makes it fill the container div
-              className="select select-ghost outline-none text-base-content font-semibold cursor-pointer w-full sm:w-36 p-0 h-auto min-h-0 bg-transparent"
-            >
-              <option value="">All Transports</option>
-              <option value="Bus">Bus</option>
-              <option value="Train">Train</option>
-              <option value="Flight">Flight</option>
-              <option value="Ship">Ship</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Price Sort Dropdown */}
-        <div className="relative w-full sm:w-auto">
-          <div className="flex items-center space-x-2 bg-base-100 border border-base-300 rounded-lg px-4 py-2 shadow-sm hover:border-primary transition-colors focus-within:border-primary w-full">
-            <ArrowUpDown className="w-5 h-5 text-primary shrink-0" />
-            <select
-              value={sortOrder}
-              onChange={handleSortChange}
-              className="select select-ghost outline-none text-base-content font-semibold cursor-pointer w-full sm:w-36 p-0 h-auto min-h-0 bg-transparent"
-            >
-              <option value="">Default Sort</option>
-              <option value="asc">Price: Low to High</option>
-              <option value="desc">Price: High to Low</option>
-            </select>
-          </div>
-        </div>
-      </div>
 
       {/* Ticket Grid */}
-      {allTickets.length === 0 ? (
+      {tickets.length === 0 ? (
         <div className="text-center py-20 bg-base-200 rounded-lg border border-dashed border-base-300">
           <h3 className="text-2xl font-bold text-base-content/50">
             No tickets found
@@ -141,7 +93,7 @@ const MyAddedTickets = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allTickets.map((ticket) => {
+          {tickets.map((ticket) => {
             const formattedPrice = new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
@@ -278,39 +230,6 @@ const MyAddedTickets = () => {
               </div>
             );
           })}
-        </div>
-      )}
-
-      {/* PAGINATION BAR */}
-      {totalPages > 1 && (
-        <div className="flex justify-center mt-10 gap-3">
-          <button
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-            disabled={page === 1}
-            className="btn btn-ghost disabled:opacity-50"
-          >
-            Prev
-          </button>
-
-          {[...Array(totalPages)].map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setPage(i + 1)}
-              className={`btn ${
-                page === i + 1 ? "btn-primary" : "btn-info" // Using primary for active, info for inactive page
-              }`}
-            >
-              {i + 1}
-            </button>
-          ))}
-
-          <button
-            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={page === totalPages}
-            className="btn btn-ghost disabled:opacity-50"
-          >
-            Next
-          </button>
         </div>
       )}
     </div>

@@ -20,24 +20,6 @@ const ManageUsers = () => {
     },
   });
 
-  // const handleMakeAdmin = async (id) => {
-  //   await axiosSecure.patch(`/users/${id}`, {
-  //     role: "admin",
-  //   });
-  //   refetch();
-  // };
-  // const handleMakeVendor = async (id) => {
-  //   await axiosSecure.patch(`/users/${id}`, {
-  //     role: "vendor",
-  //   });
-  //   refetch();
-  // };
-  // const handleMakeFraud = async (id) => {
-  //   await axiosSecure.patch(`/users/${id}`, {
-  //     role: "fraud",
-  //   });
-  //   refetch();
-  // };
 
   const handleRoleUpdate = async (id, newRole, actionName) => {
     const result = await Swal.fire({

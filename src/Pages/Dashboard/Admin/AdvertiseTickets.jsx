@@ -3,6 +3,7 @@ import { Train, Plane, Bus } from "lucide-react";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
+import Swal from "sweetalert2";
 
 const AdvertiseTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -44,28 +45,63 @@ const AdvertiseTickets = () => {
   const handleAdvertise = async (ticket) => {
     const newAdvertiseState = !ticket.isAdvertised;
 
+    // 1. Check Limit with Swal Error
     if (
       newAdvertiseState === true &&
       currentlyAdvertisedCount >= maxAdvertisedLimit
     ) {
-      alert(
-        `You can only advertise a maximum of ${maxAdvertisedLimit} tickets globally. Please remove an existing advertised ticket first.`
-      );
-
+      Swal.fire({
+        icon: "error",
+        title: "Limit Reached",
+        text: `You can only advertise a maximum of ${maxAdvertisedLimit} tickets globally. Please remove an existing advertised ticket first.`,
+      });
       return;
     }
 
-    try {
-      await axiosSecure.patch(`/ticket/${ticket._id}`, {
-        isAdvertised: newAdvertiseState,
-      });
+    // 2. Confirmation Dialog
+    Swal.fire({
+      title: newAdvertiseState
+        ? "Advertise this Ticket?"
+        : "Remove Advertisement?",
+      text: newAdvertiseState
+        ? "This ticket will be visible in the highlighted section."
+        : "This ticket will be removed from the highlighted section.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: newAdvertiseState
+        ? "Yes, Advertise it!"
+        : "Yes, Remove it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const { data } = await axiosSecure.patch(`/ticket/${ticket._id}`, {
+            isAdvertised: newAdvertiseState,
+          });
 
-      refetchTickets();
-      refetchCount();
-    } catch (error) {
-      alert("Failed to update advertisement status. Please try again.");
-      console.error(error);
-    }
+          if (data.modifiedCount > 0) {
+            refetchTickets();
+            refetchCount();
+
+            Swal.fire({
+              title: "Updated!",
+              text: "The advertisement status has been updated.",
+              icon: "success",
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          }
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Failed to update advertisement status. Please try again.",
+          });
+          console.error(error);
+        }
+      }
+    });
   };
 
   if (isLoading) {

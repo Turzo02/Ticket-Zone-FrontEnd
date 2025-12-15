@@ -147,7 +147,7 @@ export const router = createBrowserRouter([
                 {" "}
                 <RequestedTickets></RequestedTickets>{" "}
               </VendorRoute>
-            ),
+            )
           },
           {
             path: "revenue-overview",
