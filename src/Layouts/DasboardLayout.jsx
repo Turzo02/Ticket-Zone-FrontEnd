@@ -1,6 +1,8 @@
 import { SlidersHorizontal } from "lucide-react";
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { Link, NavLink, Outlet } from "react-router";
+import SwappingDotLoader from "../Components/Loading/SwappingDotLoader";
+import useRole from "../Hooks/useRole";
 const menuItems = [
   // all
   { label: "User Profile", path: "/dashboard/user-profile", roles: ["user","vendor","admin"] },
@@ -24,8 +26,11 @@ const menuItems = [
 
 const DashboardLayout = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const allowedMenuItems = menuItems.filter((item) => item.roles.includes("admin"));
-
+  const {role,roleLoading} = useRole();
+  if(roleLoading){
+    return <SwappingDotLoader></SwappingDotLoader>
+  }
+  const allowedMenuItems = menuItems.filter((item) => item.roles.includes(role));
   return (
     <div className="flex min-h-screen bg-base-100">
       {/* Sidebar */}
@@ -42,7 +47,7 @@ const DashboardLayout = () => {
           </h2>
 
           <nav className="flex flex-col space-y-2">
-            {menuItems.map((item) => (
+            {allowedMenuItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
@@ -51,8 +56,8 @@ const DashboardLayout = () => {
                   `px-3 py-2 rounded-lg font-medium transition duration-150 ease-in-out
                   ${
                     isActive
-                      ? "bg-primary text-primary-content shadow-md shadow-primary/30" // Active state
-                      : "text-base-content hover:bg-base-300" // Inactive state
+                      ? "bg-primary text-primary-content shadow-md shadow-primary/30" 
+                      : "text-base-content hover:bg-base-300" 
                   }`
                 }
               >

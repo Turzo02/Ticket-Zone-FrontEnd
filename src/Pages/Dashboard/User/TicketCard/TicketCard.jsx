@@ -142,7 +142,7 @@ const getPaymentStatusBadge = (status) => {
         <div>
           {ticket.paymentStatus === "paid" ? (
             <button className={paidButtonClasses}>
-              Ticket Purchased
+              Ticket Purchased !
             </button>
           ) : isPurchasable ? (
             <button 

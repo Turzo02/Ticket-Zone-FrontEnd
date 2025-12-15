@@ -26,6 +26,7 @@ const TicketDetailsPage = () => {
   const {
     register,
     handleSubmit,
+    formState: { errors },
   } = useForm();
 
   const handleBookingSubmit = (data) => {
@@ -220,6 +221,12 @@ const TicketDetailsPage = () => {
                     },
                   })}
                 />
+
+                {errors.quantity && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.quantity.message}
+                  </p>
+                )}
               </div>
 
               <button

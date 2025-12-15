@@ -22,6 +22,9 @@ import Revenue from "../Pages/Dashboard/Vendor/Revenue";
 import UpdateTicket from "../Pages/Dashboard/Vendor/UpdateTicket/UpdateTicket";
 import PaymentSuccessPage from "../Pages/PaymentPage/PaymentSuccess/PaymentSuccessPage";
 import PaymentFailedPage from "../Pages/PaymentPage/PaymentFailed/PaymentFailedPage";
+import AdminRoute from "./AdminRoute";
+import UserRoute from "./UserRoute";
+import VendorRoute from "./VendorRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -41,15 +44,27 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-tickets/:id",
-        Component: TicketDetailsPage,
+        element: (
+          <PrivateRoute>
+            <TicketDetailsPage></TicketDetailsPage>
+          </PrivateRoute>
+        ),
       },
       {
-        path:"/payment-success",
-        Component:PaymentSuccessPage
+        path: "/payment-success",
+        element: (
+          <PrivateRoute>
+            <PaymentSuccessPage></PaymentSuccessPage>
+          </PrivateRoute>
+        ),
       },
       {
-        path:"/payment-failed",
-        Component:PaymentFailedPage
+        path: "/payment-failed",
+        element: (
+          <PrivateRoute>
+            <PaymentFailedPage></PaymentFailedPage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "*",
@@ -58,7 +73,11 @@ export const router = createBrowserRouter([
 
       {
         path: "/dashboard",
-        Component: DasboardLayout,
+        element: (
+          <PrivateRoute>
+              <DasboardLayout></DasboardLayout>
+          </PrivateRoute>
+        ),
         children: [
           // for user routes
           {
@@ -67,11 +86,12 @@ export const router = createBrowserRouter([
           },
           {
             path: "my-booked-tickets",
-            Component: MyBookedTickets,
+            element: <UserRoute><MyBookedTickets></MyBookedTickets></UserRoute>
+
           },
           {
             path: "transaction-history",
-            Component: TransactionHistory,
+            element: <UserRoute><TransactionHistory></TransactionHistory></UserRoute>
           },
           {
             path: "user-profile",
@@ -80,36 +100,44 @@ export const router = createBrowserRouter([
           // for admin routes
           {
             path: "manage-users",
-            element: <ManageUsers></ManageUsers>,
+            element: <AdminRoute>
+              <ManageUsers></ManageUsers>,
+            </AdminRoute>
           },
           {
             path: "manage-tickets",
-            element: <ManageTickets></ManageTickets>,
+            element: 
+            <AdminRoute>
+              <ManageTickets></ManageTickets>,
+            </AdminRoute>
           },
           {
             path: "advertisement-tickets",
-            element: <AdvertiseTickets></AdvertiseTickets>,
+            element:
+            <AdminRoute>
+              <AdvertiseTickets></AdvertiseTickets>,
+            </AdminRoute>
           },
           //for vendor routes
           {
             path: "add-tickets",
-            element: <AddTicket></AddTicket>,
+            element: <VendorRoute> <AddTicket></AddTicket> </VendorRoute>,
           },
           {
             path: "my-added-tickets",
-            element: <MyAddedTickets></MyAddedTickets>,
+            element: <VendorRoute> <MyAddedTickets></MyAddedTickets> </VendorRoute>,
           },
           {
             path: "requested-tickets",
-            element: <RequestedTickets></RequestedTickets>,
+            element: <VendorRoute> <RequestedTickets></RequestedTickets> </VendorRoute>,
           },
           {
             path: "revenue-overview",
-            element: <Revenue></Revenue>,
+            element: <VendorRoute> <Revenue></Revenue> </VendorRoute>,
           },
           {
             path: "update-ticket-details/:id",
-            element: <UpdateTicket></UpdateTicket>,
+            element: <VendorRoute> <UpdateTicket></UpdateTicket> </VendorRoute>,
           },
         ],
       },
