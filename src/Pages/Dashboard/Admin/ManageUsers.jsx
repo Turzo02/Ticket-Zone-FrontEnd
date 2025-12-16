@@ -20,13 +20,14 @@ const ManageUsers = () => {
     },
   });
 
-  const handleRoleUpdate = async (id, newRole, actionName) => {
+  const handleRoleUpdate = async (userToUpdate, newRole, actionName) => {
+    const { _id: id, email: targetEmail } = userToUpdate;
     const result = await Swal.fire({
       title: `Are you sure?`,
-      text: `You are about to change this user's role to ${newRole.toUpperCase()} (${actionName}).`,
+      text: `You are about to change ${targetEmail}'s role to ${newRole.toUpperCase()} (${actionName}).`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: newRole === "fraud" ? "#d33" : "#3085d6",
+      confirmButtonColor: "#3085d6",
       cancelButtonColor: "#aaa",
       confirmButtonText: `Yes, ${actionName.toLowerCase()}!`,
     });
@@ -42,7 +43,7 @@ const ManageUsers = () => {
 
         Swal.fire(
           "Success!",
-          `User role has been updated to ${newRole}.`,
+          `User role for ${targetEmail} has been updated to ${newRole}.`,
           "success"
         );
       } catch (error) {
@@ -56,50 +57,50 @@ const ManageUsers = () => {
     }
   };
 
-  const handleMakeAdmin = (id) => {
-    handleRoleUpdate(id, "admin", "Make Admin");
+  const handleMakeAdmin = (userToAdmin) => {
+    handleRoleUpdate(userToAdmin, "admin", "Make Admin");
   };
 
-  const handleMakeVendor = (id) => {
-    handleRoleUpdate(id, "vendor", "Make Vendor");
+  const handleMakeVendor = (userToVendor) => {
+    handleRoleUpdate(userToVendor, "vendor", "Make Vendor");
   };
 
-  const handleMakeFraud = (id) => {
-    handleRoleUpdate(id, "fraud", "Mark as Fraud");
+  const handleMakeFraud = async (userToFraud) => {
+    const { _id: id, email: vendorEmail } = userToFraud;
+
+    const result = await Swal.fire({
+      title: `Mark ${vendorEmail} as Fraud?`,
+      text: `You are about to mark this user as FRAUD and permanently delete ALL ${vendorEmail}'s added tickets. This action cannot be undone.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33", // Red color for dangerous action
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, Mark as Fraud & Delete Tickets!",
+      cancelButtonText: "No, Cancel",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axiosSecure.delete(`/ticket/vendor/${vendorEmail}`);
+        await axiosSecure.patch(`/users/${id}`, {
+          role: "fraud",
+        });
+        refetch();
+        Swal.fire(
+          "Action Complete!",
+          `User ${vendorEmail} has been marked as FRAUD, and all associated tickets have been deleted.`,
+          "success"
+        );
+      } catch (error) {
+        Swal.fire(
+          "Error!",
+          "Failed to complete the fraud process (role update or ticket deletion failed). Please check the console.",
+          "error"
+        );
+        console.error("Delete error:", error);
+      }
+    }
   };
-  //manage user when press fraurd then ask a confirmation and yes then delete the  vendor added tickets
-  // const handleDelete = async (id) => {
-  //   const result = await Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You are about to delete this ticket. Once deleted, it cannot be recovered!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#d33",
-  //     cancelButtonColor: "#3085d6",
-  //     confirmButtonText: "Yes, delete it!",
-  //     cancelButtonText: "No, cancel",
-  //   });
-
-  //   if (result.isConfirmed) {
-  //     try {
-  //       await axiosSecure.delete(`/ticket/${id}`);
-  //       refetch();
-
-  //       Swal.fire({
-  //         title: "Deleted!",
-  //         text: "Your ticket has been successfully deleted, along with all associated bookings.",
-  //         icon: "success",
-  //       });
-  //     } catch (error) {
-  //       Swal.fire({
-  //         title: "Failed!",
-  //         text: "An error occurred while deleting the ticket.",
-  //         icon: "error",
-  //       });
-  //       console.error("Delete error:", error);
-  //     }
-  //   }
-  // };
 
   if (isLoading) {
     return (
@@ -113,7 +114,6 @@ const ManageUsers = () => {
   }
 
   return (
-
     <div>
       <div className="p-4 sm:p-8 max-w-7xl mx-auto min-h-screen bg-base-100 text-base-content">
         {/* Header */}
@@ -187,7 +187,7 @@ const ManageUsers = () => {
                       <div className="flex gap-3 justify-center">
                         {/* Make Admin */}
                         <button
-                          onClick={() => handleMakeAdmin(user._id)}
+                          onClick={() => handleMakeAdmin(user)}
                           disabled={user.role === "admin"}
                           className={`
                         btn btn-sm text-white border-none transition
@@ -203,7 +203,7 @@ const ManageUsers = () => {
 
                         {/* Make Vendor */}
                         <button
-                          onClick={() => handleMakeVendor(user._id)}
+                          onClick={() => handleMakeVendor(user)}
                           disabled={user.role === "vendor"}
                           className={`
                         btn btn-sm text-white border-none transition
@@ -229,7 +229,7 @@ const ManageUsers = () => {
                         <div className="flex justify-center">
                           {user.role === "vendor" ? (
                             <button
-                              onClick={() => handleMakeFraud(user._id)}
+                              onClick={() => handleMakeFraud(user)}
                               className="
                             btn btn-sm text-white border-none transition 
                             bg-linear-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 
