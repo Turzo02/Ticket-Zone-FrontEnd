@@ -20,7 +20,6 @@ const ManageUsers = () => {
     },
   });
 
-
   const handleRoleUpdate = async (id, newRole, actionName) => {
     const result = await Swal.fire({
       title: `Are you sure?`,
@@ -68,6 +67,39 @@ const ManageUsers = () => {
   const handleMakeFraud = (id) => {
     handleRoleUpdate(id, "fraud", "Mark as Fraud");
   };
+  //manage user when press fraurd then ask a confirmation and yes then delete the  vendor added tickets
+  // const handleDelete = async (id) => {
+  //   const result = await Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You are about to delete this ticket. Once deleted, it cannot be recovered!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#d33",
+  //     cancelButtonColor: "#3085d6",
+  //     confirmButtonText: "Yes, delete it!",
+  //     cancelButtonText: "No, cancel",
+  //   });
+
+  //   if (result.isConfirmed) {
+  //     try {
+  //       await axiosSecure.delete(`/ticket/${id}`);
+  //       refetch();
+
+  //       Swal.fire({
+  //         title: "Deleted!",
+  //         text: "Your ticket has been successfully deleted, along with all associated bookings.",
+  //         icon: "success",
+  //       });
+  //     } catch (error) {
+  //       Swal.fire({
+  //         title: "Failed!",
+  //         text: "An error occurred while deleting the ticket.",
+  //         icon: "error",
+  //       });
+  //       console.error("Delete error:", error);
+  //     }
+  //   }
+  // };
 
   if (isLoading) {
     return (
@@ -81,7 +113,6 @@ const ManageUsers = () => {
   }
 
   return (
-    // NOTE: Assuming 'users', 'handleMakeAdmin', 'handleMakeVendor', 'handleMakeFraud', 'X', 'AlertCircle', and 'BadgeCheck' are defined in the scope.
 
     <div>
       <div className="p-4 sm:p-8 max-w-7xl mx-auto min-h-screen bg-base-100 text-base-content">
