@@ -30,7 +30,6 @@ const Navbar = () => {
       </li>
     </>
   );
-
   return (
     <div
       className="

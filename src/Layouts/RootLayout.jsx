@@ -1,17 +1,22 @@
-import React from 'react';
-import { Outlet } from 'react-router';
-import Navbar from '../Components/Navbar/Navbar';
-import Footer from '../Components/Footer/Footer';
+import React from "react";
+import { Outlet } from "react-router";
+import Navbar from "../Components/Navbar/Navbar";
+import Footer from "../Components/Footer/Footer";
+import useAuth from "../Hooks/useAuth";
+import SwappingDotLoader from "../Components/Loading/SwappingDotLoader";
 const RootLayout = () => {
-
-    return (
-        <div className='max-w-7xl mx-auto'>
-            {/* Router And Layout setup Done */}
-            <Navbar></Navbar>
-            <Outlet></Outlet>
-            <Footer></Footer>
-        </div>
-    );
+  const { loading } = useAuth();
+  if (loading) {
+    return <SwappingDotLoader></SwappingDotLoader>;
+  }
+  return (
+    <div className="max-w-7xl mx-auto">
+      {/* Router And Layout setup Done */}
+      <Navbar></Navbar>
+      <Outlet></Outlet>
+      <Footer></Footer>
+    </div>
+  );
 };
 
 export default RootLayout;
