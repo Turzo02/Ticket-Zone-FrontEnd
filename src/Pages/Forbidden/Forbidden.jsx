@@ -1,6 +1,4 @@
 import React from 'react';
-// Assuming you have a custom icon or you're using Lucide React (like 'Lock')
-// import { Lock } from 'lucide-react';
 
 const Forbidden = () => {
     return (

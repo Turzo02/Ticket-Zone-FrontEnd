@@ -22,7 +22,6 @@ const UpdateTicket = () => {
   } = useForm();
 
     const handleUpdateTicket = async (data) => {
-    console.log(data);
     if (role !== "vendor") {
         console.error("Authorization failed on client side: User is not a Vendor.");
         Swal.fire({
@@ -62,7 +61,7 @@ const UpdateTicket = () => {
       const imgRes = await axios.post(img_Api_Url, formData);
       const hostedImg = imgRes.data.data.url;
 
-      console.log("Hosted Image URL:", hostedImg);
+      // console.log("Hosted Image URL:", hostedImg);
 
       // Ticket Data Submission
       const finalData = {
@@ -72,7 +71,7 @@ const UpdateTicket = () => {
       };
 
       const ticketRes = await axiosSecure.patch(`/ticket/vendor/${user.email}`, finalData);
-      console.log("after Update data", ticketRes.data);
+      // console.log("after Update data", ticketRes.data);
       Swal.fire({
         icon: "success",
         title: "Ticket Updated!",
@@ -122,7 +121,6 @@ const UpdateTicket = () => {
               {...register("title", { required: "Ticket Title is required" })}
               type="text"
               placeholder="e.g., Express Bus from London to Paris"
-              // Use DaisyUI input classes
               className="input input-bordered w-full"
             />
             {errors.title && (
@@ -171,7 +169,6 @@ const UpdateTicket = () => {
               {...register("transportType", {
                 required: "Transport type is required",
               })}
-              // Use DaisyUI select classes
               className="select select-bordered w-full"
               defaultValue=""
             >
@@ -329,7 +326,6 @@ const UpdateTicket = () => {
               type="text"
               value={user?.displayName || ""}
               {...register("vendorName")}
-              // Use input-disabled for read-only fields
               className="input input-bordered w-full input-disabled"
             />
           </div>
@@ -353,7 +349,6 @@ const UpdateTicket = () => {
           <div className="md:col-span-2 text-right pt-4">
             <button
               type="submit"
-              // Use DaisyUI btn-primary
               className="btn btn-lg btn-primary shadow-xl shadow-primary/40 transition"
             >
               Update Ticket

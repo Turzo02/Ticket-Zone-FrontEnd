@@ -22,10 +22,10 @@ const Register = () => {
   } = useForm();
 
   const handleRegister = (data) => {
-    console.log(data);
+    // console.log(data);
     registerUser(data.email, data.password)
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         //save user to database
         const userInfo = {
           name: data.name,
@@ -36,10 +36,10 @@ const Register = () => {
         axiosSecure
           .post("/users", userInfo)
           .then((res) => {
-            console.log(res.data, "user saved to database");
+            // console.log(res.data, "user saved to database");
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
 
         updateUserProfile({

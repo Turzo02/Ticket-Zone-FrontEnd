@@ -47,7 +47,6 @@ const TicketCard = ({ ticket }) => {
       quantity: ticket.quantity,
     };
 
-    // Assuming axiosSecure is configured correctly for this endpoint
     const res = await axiosSecure.post("/payment-checkout-session", ticketInfo);
     window.location.href = res.data.url;
   };
@@ -73,8 +72,7 @@ const TicketCard = ({ ticket }) => {
     return "bg-gradient-to-r from-amber-500 to-orange-500 text-white ";
   };
 
-  console.log(ticket);
-  return (
+    return (
     <div className="flex flex-col rounded-2xl border border-base-300 shadow-xl overflow-hidden bg-base-200 text-base-content">
       <img
         className="h-40 w-full object-cover"

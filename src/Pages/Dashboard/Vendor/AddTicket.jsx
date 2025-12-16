@@ -19,7 +19,6 @@ const AddTicket = () => {
   } = useForm();
 
   const handleAddTicket = async (data) => {
-    // console.log(data);
     if (role !== "vendor") {
       console.error(
         "Authorization failed on client side: User is not a Vendor."
@@ -64,7 +63,7 @@ const AddTicket = () => {
       const imgRes = await axios.post(img_Api_Url, formData);
       const hostedImg = imgRes.data.data.url;
 
-      console.log("Hosted Image URL:", hostedImg);
+      // console.log("Hosted Image URL:", hostedImg);
 
       // Ticket Data Submission
       const finalData = {
@@ -74,7 +73,7 @@ const AddTicket = () => {
       };
 
       const ticketRes = await axiosSecure.post("/ticket", finalData);
-      console.log("after post data", ticketRes.data);
+      // console.log("after post data", ticketRes.data);
       Swal.fire({
         icon: "success",
         title: "Ticket Added!",

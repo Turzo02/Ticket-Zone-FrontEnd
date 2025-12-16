@@ -10,7 +10,7 @@ const SocialLogin = () => {
   const handleGoogleSignIn = () => {
     signInGoogle()
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         //save userinfo to database
 
         const userInfo = {
@@ -22,15 +22,15 @@ const SocialLogin = () => {
         axiosSecure
           .post("/users", userInfo)
           .then((res) => {
-            console.log(res.data, "user saved to database");
+            // console.log(res.data, "user saved to database");
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
   return (

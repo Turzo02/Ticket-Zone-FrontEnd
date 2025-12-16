@@ -19,7 +19,7 @@ import {
 const Revenue = () => {
   const axiosSecure = useAxiosSecure();
 
-  // --- Data Fetching ---
+  //  Data Fetching 
   const { data: revenueData = [], isLoading: isRevenueLoading } = useQuery({
     queryKey: ["paid-revenue-data"],
     queryFn: async () => {
@@ -38,7 +38,7 @@ const Revenue = () => {
 
   const isCombinedLoading = isRevenueLoading || isTicketLoading;
 
-  // --- Loading State ---
+  // Loading State 
   if (isCombinedLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -47,7 +47,7 @@ const Revenue = () => {
     );
   }
 
-  // --- Calculations ---
+  //  Calculations
   const totalPrice = revenueData.reduce((acc, cur) => acc + cur.totalPrice, 0);
   const totalSoldTicket = revenueData.reduce(
     (acc, cur) => acc + cur.bookingQuantity,
@@ -56,9 +56,8 @@ const Revenue = () => {
   const totalTickets = ticketData.reduce((acc, cur) => acc + cur.quantity, 0);
   const availableTickets = totalTickets - totalSoldTicket;
 
-  // --- Chart Data Preparation ---
 
-  // 1. Ticket Pie Chart Data
+  // Ticket Pie Chart Data
   const ticketPieData = [
     { name: "Tickets Sold", value: totalSoldTicket },
     { name: "Tickets Available", value: availableTickets > 0 ? availableTickets : 0 },
@@ -84,7 +83,7 @@ const Revenue = () => {
         </h1>
       </div>
 
-      {/* KPI Cards (Summary) */}
+      {/* Cards (Summary) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div className="stat bg-base-200 shadow-md rounded-box">
           <div className="stat-title">Total Revenue</div>
@@ -118,7 +117,7 @@ const Revenue = () => {
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                <XAxis dataKey="name" hide /> {/* Hiding X labels if too many orders */}
+                <XAxis dataKey="name" hide /> 
                 <YAxis />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}

@@ -37,10 +37,8 @@ const LatestTickets = () => {
   }
 
   return (
-    // New DaisyUI-styled component
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       <section className="p-4 md:p-8">
-        {/* The Gradient Heading from the previous step */}
         <h1
           className="
   text-3xl sm:text-4xl lg:text-5xl 
@@ -55,7 +53,6 @@ const LatestTickets = () => {
 
         {/* Container for the Cards */}
         <div className="space-y-4 max-w-5xl mx-auto">
-          {/* Card Items will go here (see example below) */}
         </div>
       </section>
 

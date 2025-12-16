@@ -73,7 +73,6 @@ const MyAddedTickets = () => {
     );
   }
 
-  console.log(tickets);
 
   return (
     <div className="sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
@@ -133,7 +132,6 @@ const MyAddedTickets = () => {
                       <MoveRight className="text-base-content/80" />
 
                       <div className="flex items-center space-x-1">
-                        {/* Destination Point */}
                         <span className="text-base-content font-bold text-xl">
                           {ticket.to}
                         </span>
@@ -143,7 +141,6 @@ const MyAddedTickets = () => {
                   </div>
 
                   <div className="flex items-center text-sm font-semibold text-base-content/80">
-                    {/* Assuming ticket.icon is an SVG component */}
                     {ticket.icon}
                     {ticket.transport}
                   </div>

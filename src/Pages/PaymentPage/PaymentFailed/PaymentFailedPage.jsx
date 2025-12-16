@@ -62,7 +62,6 @@ const PaymentFailedPage = () => {
                     We couldn't process your payment. Your ticket was not booked. Please try again or use a different method.
                 </motion.p>
                 
-                {/* বাটন */}
                 <motion.div variants={item} className="space-y-3">
                     <motion.a 
                         href="/dashboard/my-booked-tickets" 

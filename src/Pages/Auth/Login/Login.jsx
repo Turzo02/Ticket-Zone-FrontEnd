@@ -17,14 +17,14 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const handleLogin = (data) => {
-    console.log(data);
+    // console.log(data);
     signInUser(data.email, data.password)
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         navigate( "/");
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
         setLoginError(error.message);
       });
   };

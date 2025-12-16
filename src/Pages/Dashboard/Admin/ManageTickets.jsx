@@ -59,13 +59,13 @@ const ManageTickets = () => {
           </h1>
         </div>
 
-        {/* Table/List Container */}
+        {/* Table Container */}
         <div className="shadow-lg rounded-2xl border border-base-300 bg-base-200 overflow-hidden">
           {/* Standard Table for Desktop/Tablet */}
           <div className="hidden sm:block overflow-x-auto">
             {/* Table starts */}
             <table className="table w-full text-left">
-              {/* Table Header (Visible on sm and up) */}
+              {/* Table Header */}
               <thead className=" uppercase text-sm bg-base-300 text-base-content">
                 <tr>
                   <th className="p-4">Ticket Title</th>
@@ -149,14 +149,14 @@ const ManageTickets = () => {
             {/* Table ends */}
           </div>
 
-          {/* Mobile Card View (Hidden on sm and up) */}
+          {/* Mobile Card View  */}
           <div className="block sm:hidden divide-y divide-base-300">
             {allTickets.map((ticket) => (
               <div
                 key={ticket._id}
                 className="p-4 hover:bg-base-300/50 transition"
               >
-                {/* Ticket Title (The most prominent) */}
+                {/* Ticket Title */}
                 <div className="text-lg font-bold text-base-content mb-2">
                   {ticket.title}
                 </div>
@@ -197,7 +197,7 @@ const ManageTickets = () => {
                   )}
                 </div>
 
-                {/* Action Buttons (Stacked at the bottom of the card) */}
+                {/* Action Buttons  */}
                 <div className="border-t border-base-300 pt-3 flex justify-center">
                   {ticket.status === "pending" ? (
                     <div className="flex gap-4 justify-center items-center w-full">
@@ -237,7 +237,7 @@ const ManageTickets = () => {
           </div>
         </div>
 
-        {/* PAGINATION BAR (Remains responsive) */}
+        {/* PAGINATION BAR */}
         <div>
           {totalPages > 1 && (
             <div className="flex justify-center mt-10 gap-2 sm:gap-3 flex-wrap">

@@ -1,7 +1,7 @@
 import React from 'react';
 import useRole from '../Hooks/useRole';
 import SwappingDotLoader from '../Components/Loading/SwappingDotLoader';
-import Forbidden from '../Pages/forbidden/Forbidden';
+import Forbidden from "../Pages/Forbidden/Forbidden"
 const AdminRoute = ({children}) => {
     const {role,roleLoading} = useRole();
     if(roleLoading){

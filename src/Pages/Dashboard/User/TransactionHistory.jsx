@@ -40,12 +40,11 @@ const TransactionHistory = () => {
         </h1>
       </div>
 
-      {/* --- Desktop/Tablet View (Standard Table) --- */}
+      {/* --- Desktop View --- */}
       <div className="hidden md:block mt-4 rounded-lg border border-base-300 shadow-xl overflow-hidden bg-base-200">
         <div className="overflow-x-auto">
-          {/* Using DaisyUI table class */}
           <table className="table min-w-full">
-            {/* Table Header: Using base-300 for a slight background lift */}
+            {/* Table Header */}
             <thead className="bg-base-300">
               <tr>
                 <th className="p-4 text-left text-xs font-semibold uppercase tracking-wider text-base-content/80">

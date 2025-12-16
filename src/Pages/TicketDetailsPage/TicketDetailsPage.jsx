@@ -46,11 +46,11 @@ const TicketDetailsPage = () => {
       photo: ticket.photo
     };
 
-    // post the data to database
+    // Make the POST request
     axiosSecure
       .post("/bookings", bookingData)
       .then((res) => {
-        console.log("after post data", res.data);
+        // console.log("after post data", res.data);
         // Show success alert
         Swal.fire({
           icon: "success",
@@ -60,7 +60,7 @@ const TicketDetailsPage = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -73,7 +73,6 @@ const TicketDetailsPage = () => {
 
   if (isLoading) return <SwappingDotLoader></SwappingDotLoader>;
   if (isError) return <p className="text-red-600">Error loading ticket</p>;
-  console.log(ticket)
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
 <div className="text-left py-6 px-4 border-b border-base-300 space-y-2">
@@ -233,7 +232,6 @@ const TicketDetailsPage = () => {
 
               <button
                 type="submit"
-                // Using Success for a confirmation button
                 className="btn w-full py-3 text-lg font-bold border-none text-white bg-linear-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 shadow-lg shadow-green-500/40"
               >
                 Confirm Booking

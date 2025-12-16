@@ -9,7 +9,6 @@ const MyBookedTickets = () => {
     const axiosSecure = useAxiosSecure();
     const { user, loading } = useAuth();
 
-    // FETCH DATA
     const {
         data: userBookings = [], 
         isLoading,

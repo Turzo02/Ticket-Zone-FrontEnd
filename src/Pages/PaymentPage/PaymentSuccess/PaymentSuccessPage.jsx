@@ -34,13 +34,13 @@ const PaymentSuccessPage = () => {
         .patch(`/payment-success?session_id=${sessionId}`)
         .then((res) =>{
             if(res.data.modifiedCount > 0){
-                console.log("payment success");
+                // console.log("payment success");
             }
         })
         
     }
   }, [sessionId, axiosSecure]);
- console.log(sessionId)
+//  console.log(sessionId)
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <motion.div
@@ -72,7 +72,6 @@ const PaymentSuccessPage = () => {
           email shortly.
         </motion.p>
 
-        {/* বাটন */}
         <motion.div variants={item} className="space-y-3">
           <motion.a
             href="/dashboard/transaction-history"

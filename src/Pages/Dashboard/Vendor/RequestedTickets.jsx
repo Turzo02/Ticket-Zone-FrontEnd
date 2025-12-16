@@ -115,7 +115,6 @@ const handleReject = async (id) => {
         </h1>
       </div>
 
-  {/* The table is visible from medium screens and up (md:block) */}
   <div className="hidden md:block overflow-x-auto shadow-xl rounded-lg border border-base-300 bg-base-200">
     <table className="table w-full">
       <thead className="bg-base-300 text-base-content">
@@ -151,12 +150,12 @@ const handleReject = async (id) => {
                 {req.title}
               </td>
 
-              {/* Quantity - Using accent for emphasis */}
+              {/* Quantity */}
               <td className="py-4 text-center text-lg font-bold text-accent">
                 {req.bookingQuantity}
               </td>
 
-              {/* Total Price - Using success for monetary value */}
+              {/* Total Price */}
               <td className="py-4 text-center text-lg font-bold text-success">
                 ${req.totalPrice}
               </td>
@@ -213,7 +212,7 @@ const handleReject = async (id) => {
     </table>
   </div>
 
-  {/* --- 2. Mobile (Below md) Card/List Layout --- */}
+  {/* ---  Mobile List Layout --- */}
   <div className="md:hidden space-y-4">
     {allBookingsData.length > 0 ? (
       allBookingsData.map((req) => {
@@ -262,7 +261,7 @@ const handleReject = async (id) => {
                 </div>
               </div>
 
-              {/* Action Buttons (Full width on mobile) */}
+              {/* Action Buttons */}
               <div className="card-actions flex-col gap-2">
                 <button
                   onClick={() => handleAccept(req._id)}
