@@ -6,8 +6,12 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import useRole from "../../../../Hooks/useRole";
 import SwappingDotLoader from "../../../../Components/Loading/SwappingDotLoader";
+import { useParams } from "react-router";
 
 const UpdateTicket = () => {
+
+  const {id} = useParams()
+  // console.log(id)
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const {role} = useRole();
@@ -70,7 +74,7 @@ const UpdateTicket = () => {
         photo: hostedImg,
       };
 
-      const ticketRes = await axiosSecure.patch(`/ticket/vendor/${user.email}`, finalData);
+      const ticketRes = await axiosSecure.patch(`/ticket/vendor/${id}`, finalData);
       // console.log("after Update data", ticketRes.data);
       Swal.fire({
         icon: "success",

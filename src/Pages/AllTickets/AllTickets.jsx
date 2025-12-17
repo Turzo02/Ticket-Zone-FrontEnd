@@ -86,9 +86,7 @@ const AllTickets = () => {
         </p>
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 text-base-content">
-        <h1 className="text-4xl font-extrabold text-center md:text-left">
-          Total Tickets {allTickets.length}
-        </h1>
+
 
         {/* Controls Container - Responsive Wrapper */}
         <div className="flex flex-col lg:flex-row gap-4 w-full p-2">
