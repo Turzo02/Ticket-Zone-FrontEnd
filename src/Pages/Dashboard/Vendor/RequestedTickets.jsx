@@ -4,11 +4,9 @@ import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 import Swal from "sweetalert2";
-import useAuth from "../../../Hooks/useAuth";
 
 const RequestedTickets = () => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
   const {
     data: allBookingsData = [],
     isLoading,
@@ -17,7 +15,7 @@ const RequestedTickets = () => {
   } = useQuery({
     queryKey: ["AllBookings"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/bookings/${user.email}`);
+      const { data } = await axiosSecure.get(`/bookings`);
       return data;
     },
   });

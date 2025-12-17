@@ -40,16 +40,18 @@ const MyBookedTickets = () => {
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
          My Booked Tickets
         </h1>
-      </div>
+      </div>  
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3">
                 {userBookings?.length > 0 ? (
                     userBookings.map((ticket) => (
                         <TicketCard key={ticket._id} ticket={ticket} />
                     ))
                 ) : (
-                    <p className="text-slate-600 dark:text-slate-300 col-span-full">
-                        You have no booked tickets yet.
-                    </p>
+                    <div className="col-span-full text-center py-20 bg-base-100  border border-dashed border-base-300 max-w-full ">
+                        <h3 className="text-2xl font-bold text-base-content/50">
+                            You have no Booked Tickets
+                        </h3>
+                    </div>
                 )}
             </div>
         </section>
