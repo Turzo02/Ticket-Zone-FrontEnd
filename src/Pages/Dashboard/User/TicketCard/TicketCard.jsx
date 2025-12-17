@@ -95,6 +95,7 @@ const TicketCard = ({ ticket }) => {
               <h1>To: {ticket.to}</h1>
             </div>
           </div>
+          
           {/* Total Price */}
           <div className="flex justify-between items-center border-b border-base-300">
             <span className="text-base-content/80 font-medium">

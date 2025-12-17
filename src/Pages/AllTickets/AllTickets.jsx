@@ -76,7 +76,7 @@ const AllTickets = () => {
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
-      <div className="text-center py-8 mb-12 md:py-16 px-4 space-y-4 bg-base-200 rounded-xl shadow-lg">
+      <div className="text-center py-8 mb-12 md:py-16 px-4 space-y-4 bg-base-200 rounded-xl shadow-md">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
           All Tickets
         </h1>
@@ -234,13 +234,13 @@ const AllTickets = () => {
                 </div>
 
                 {/* Body */}
-                <div className="pt-4 space-y-4">
+                <div className="pt-4 space-y-4 ">
                   {/* From -> To */}
                   <div className="flex items-center text-sm font-semibold space-x-2">
                     <div className="flex w-full justify-between items-center">
                       <div className="flex items-center space-x-1">
                         <span className="w-3 h-3 rounded-full bg-success"></span>
-                        <span className="text-base-content/80 font-bold text-xl">
+                        <span className="text-base-content/80 font-bold text-xl line-clamp-1">
                           {ticket.from}
                         </span>
                       </div>
@@ -248,7 +248,7 @@ const AllTickets = () => {
                       <MoveRight className="text-primary" />
 
                       <div className="flex items-center space-x-1">
-                        <span className="text-base-content/80 font-bold text-xl">
+                        <span className="text-base-content/80 font-bold text-xl line-clamp-1">
                           {ticket.to}
                         </span>
                         <span className="w-3 h-3 rounded-full bg-error"></span>
@@ -256,7 +256,7 @@ const AllTickets = () => {
                     </div>
                   </div>
                   {/* Price */}
-                  <div className="flex justify-between border-b border-base-300 pb-2">
+                  <div className="flex justify-between items-center border-b border-base-300 pb-2">
                     <p className="text-xs font-semibold text-base-content/60 uppercase">
                       Price (Per Unit)
                     </p>
@@ -352,7 +352,7 @@ const AllTickets = () => {
               key={i}
               onClick={() => setPage(i + 1)}
               className={`btn btn-sm ${
-                page === i + 1 ? "btn-primary" : "btn-success"
+                page === i + 1 ? "btn-primary" : ""
               }`}
             >
               {i + 1}
