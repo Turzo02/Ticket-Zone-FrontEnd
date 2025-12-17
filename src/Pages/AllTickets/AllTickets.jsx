@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiousSecure";
@@ -44,7 +44,8 @@ const AllTickets = () => {
       const { data } = await axiosSecure.get(url);
       return data;
     },
-    keepPreviousData: true,
+    // keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const allTickets = data?.tickets || [];
@@ -62,7 +63,7 @@ const AllTickets = () => {
 
   if (isLoading && !isFetching) {
     return (
-      <div className="flex justify-center items-center h-32">
+      <div className="flex justify-center items-center h-screen">
         <SwappingDotLoader />
       </div>
     );
@@ -70,12 +71,15 @@ const AllTickets = () => {
 
   if (isError) {
     return (
-      <p className="text-red-500 text-center mt-10">Failed to load tickets</p>
+      <p className="text-red-500 text-center mt-10 font-bold">
+        Failed to load tickets
+      </p>
     );
   }
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
+      {/* Header Section - Always Visible */}
       <div className="text-center py-8 mb-12 md:py-16 px-4 space-y-4 bg-base-200 rounded-xl shadow-md">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
           All Tickets
@@ -85,258 +89,173 @@ const AllTickets = () => {
           one place.
         </p>
       </div>
+
+      {/* Controls Container - Always Visible */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 text-base-content">
-
-
-        {/* Controls Container - Responsive Wrapper */}
         <div className="flex flex-col lg:flex-row gap-4 w-full p-2">
-          {/* Left Side: Filters & Sort (Stacks on mobile, row on tablet+) */}
           <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
             {/* Transport Filter */}
             <div className="relative group w-full sm:w-auto">
-              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-2 shadow-sm hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all w-full">
+              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-2 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
                 <Filter className="w-5 h-5 text-primary shrink-0" />
                 <select
                   value={filterType}
                   onChange={handleFilterChange}
-                  className="select select-ghost select-sm bg-transparent outline-none text-base-content font-semibold cursor-pointer w-full sm:w-36 focus:bg-transparent px-2"
+                  className="select select-ghost select-sm bg-transparent outline-none text-base-content font-semibold cursor-pointer w-full sm:w-36 px-2"
                 >
-                  <option
-                    value=""
-                    className="bg-base-100 text-base-content font-medium py-2"
-                  >
-                    All Transports
-                  </option>
-                  <option
-                    value="Bus"
-                    className="bg-base-100 text-base-content py-2"
-                  >
-                    Bus
-                  </option>
-                  <option
-                    value="Train"
-                    className="bg-base-100 text-base-content py-2"
-                  >
-                    Train
-                  </option>
-                  <option
-                    value="Flight"
-                    className="bg-base-100 text-base-content py-2"
-                  >
-                    Flight
-                  </option>
-                  <option
-                    value="Ship"
-                    className="bg-base-100 text-base-content py-2"
-                  >
-                    Ship
-                  </option>
+                  <option value="">All Transports</option>
+                  <option value="Bus">Bus</option>
+                  <option value="Train">Train</option>
+                  <option value="Flight">Flight</option>
+                  <option value="Ship">Ship</option>
                 </select>
               </div>
             </div>
 
-            {/* Price Sort Dropdown */}
+            {/* Price Sort */}
             <div className="relative group w-full sm:w-auto">
-              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-2 shadow-sm hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all w-full">
+              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-2 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
                 <ArrowUpDown className="w-5 h-5 text-primary shrink-0" />
                 <select
                   value={sortOrder}
                   onChange={handleSortChange}
-                  className="select select-ghost select-sm bg-transparent outline-none text-base-content font-semibold cursor-pointer w-full sm:w-40 focus:bg-transparent px-2"
+                  className="select select-ghost select-sm bg-transparent outline-none text-base-content font-semibold cursor-pointer w-full sm:w-40 px-2"
                 >
-                  <option
-                    value=""
-                    className="bg-base-100 text-base-content font-medium"
-                  >
-                    Default Sort
-                  </option>
-                  <option value="asc" className="bg-base-100 text-base-content">
-                    Price: Low to High
-                  </option>
-                  <option
-                    value="desc"
-                    className="bg-base-100 text-base-content"
-                  >
-                    Price: High to Low
-                  </option>
+                  <option value="">Default Sort</option>
+                  <option value="asc">Price: Low to High</option>
+                  <option value="desc">Price: High to Low</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Right Side: Location Search (Grid on mobile for even sizing) */}
+          {/* Search Inputs */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto grow">
-            {/* From Location Input */}
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="From (City/Station)"
-                value={fromLocation}
-                onChange={handleFromChange}
-                className="input input-bordered border-2 border-base-300 bg-base-100 focus:input-primary focus:border-primary shadow-sm w-full transition-all"
-              />
-            </div>
-
-            {/* To Location Input */}
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="To (City/Station)"
-                value={toLocation}
-                onChange={handleToChange}
-                className="input input-bordered border-2 border-base-300 bg-base-100 focus:input-primary focus:border-primary shadow-sm w-full transition-all"
-              />
-            </div>
+            <input
+              type="text"
+              placeholder="From (City/Station)"
+              value={fromLocation}
+              onChange={handleFromChange}
+              className="input input-bordered border-2 border-base-300 bg-base-100 focus:input-primary shadow-sm w-full transition-all"
+            />
+            <input
+              type="text"
+              placeholder="To (City/Station)"
+              value={toLocation}
+              onChange={handleToChange}
+              className="input input-bordered border-2 border-base-300 bg-base-100 focus:input-primary shadow-sm w-full transition-all"
+            />
           </div>
         </div>
       </div>
 
-      {/* Ticket Grid */}
-      {allTickets.length === 0 ? (
-        <div className="text-center py-20 bg-base-100  border border-dashed border-base-300">
-          <h3 className="text-2xl font-bold text-base-content/50">
-            No tickets found
-          </h3>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allTickets.map((ticket, index) => {
-            const formattedPrice = new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(ticket.price);
+      {/* Ticket Grid Section - RELATIVE CONTAINER FOR LOADING OVERLAY */}
+      <div className="relative min-h-[400px]">
+        {/* Loader Overlay: Only shows when data is fetching (sorting, searching, etc.) */}
+        {isFetching && (
+          <div className="absolute inset-0 z-10 flex justify-center items-start pt-32 bg-base-100/40 backdrop-blur-[2px] rounded-xl transition-all">
+            <div className="sticky top-1/2">
+              <SwappingDotLoader />
+            </div>
+          </div>
+        )}
 
-            return (
-              <div
-                key={index}
-                className={`
-                bg-base-200 
-                shadow-xl 
-                overflow-hidden 
-                hover:scale-[1.02] 
-                transition 
-                duration-300 
-                p-4 
-                rounded-lg
-              `}
-              >
-                {/* Header */}
-                <div className="relative h-40 rounded-lg overflow-hidden">
-                  <img
-                    src={ticket.photo}
-                    alt={ticket.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
-                  <h2 className="absolute bottom-2 left-3 right-3 text-white  text-2xl font-extrabold drop-shadow-xl">
-                    {ticket.title}
-                  </h2>
-                </div>
+        {allTickets.length === 0 && !isFetching ? (
+          <div className="text-center py-20 bg-base-100 border border-dashed border-base-300 rounded-xl">
+            <h3 className="text-2xl font-bold text-base-content/50">
+              No tickets found
+            </h3>
+          </div>
+        ) : (
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-opacity duration-300 ${
+              isFetching ? "opacity-30 pointer-events-none" : "opacity-100"
+            }`}
+          >
+            {allTickets.map((ticket, index) => {
+              const formattedPrice = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(ticket.price);
 
-                {/* Body */}
-                <div className="pt-4 space-y-4 ">
-                  {/* From -> To */}
-                  <div className="flex items-center text-sm font-semibold space-x-2">
-                    <div className="flex w-full justify-between items-center">
-                      <div className="flex items-center space-x-1">
-                        <span className="w-3 h-3 rounded-full bg-success"></span>
-                        <span className="text-base-content/80 font-bold text-xl line-clamp-1">
-                          {ticket.from}
-                        </span>
-                      </div>
+              return (
+                <div
+                  key={index}
+                  className="bg-base-200 shadow-xl overflow-hidden hover:scale-[1.02] transition duration-300 p-4 rounded-lg"
+                >
+                  {/* Header */}
+                  <div className="relative h-40 rounded-lg overflow-hidden">
+                    <img
+                      src={ticket.photo}
+                      alt={ticket.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
+                    <h2 className="absolute bottom-2 left-3 right-3 text-white text-2xl font-extrabold drop-shadow-xl">
+                      {ticket.title}
+                    </h2>
+                  </div>
 
-                      <MoveRight className="text-primary" />
-
-                      <div className="flex items-center space-x-1">
-                        <span className="text-base-content/80 font-bold text-xl line-clamp-1">
-                          {ticket.to}
-                        </span>
-                        <span className="w-3 h-3 rounded-full bg-error"></span>
+                  {/* Body */}
+                  <div className="pt-4 space-y-4">
+                    <div className="flex items-center text-sm font-semibold space-x-2">
+                      <div className="flex w-full justify-between items-center">
+                        <div className="flex items-center space-x-1">
+                          <span className="w-3 h-3 rounded-full bg-success"></span>
+                          <span className="text-base-content/80 font-bold text-xl line-clamp-1">
+                            {ticket.from}
+                          </span>
+                        </div>
+                        <MoveRight className="text-primary" />
+                        <div className="flex items-center space-x-1">
+                          <span className="text-base-content/80 font-bold text-xl line-clamp-1">
+                            {ticket.to}
+                          </span>
+                          <span className="w-3 h-3 rounded-full bg-error"></span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {/* Price */}
-                  <div className="flex justify-between items-center border-b border-base-300 pb-2">
-                    <p className="text-xs font-semibold text-base-content/60 uppercase">
-                      Price (Per Unit)
-                    </p>
-                    <span className="text-3xl font-bold text-info">
-                      {formattedPrice}
-                    </span>
-                  </div>
-
-                  {/* Quantity */}
-                  <div className="flex justify-between text-sm font-medium text-base-content">
-                    <span className="text-base-content/80">Available:</span>
-                    <span className="text-info font-bold">
-                      {ticket.quantity}
-                    </span>
-                  </div>
-
-                  {/* Transport */}
-                  <div className="flex justify-between items-center text-sm font-medium text-base-content py-2 rounded-lg ">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-xl">
-                        {ticket.transportType === "Train" && "🚆"}
-                        {ticket.transportType === "Bus" && "🚌"}
-                        {ticket.transportType === "Flight" && "✈️"}
-                        {ticket.transportType === "Ship" && "🚢"}
-                        {!["Train", "Bus", "Flight", "Ship"].includes(
-                          ticket.transportType
-                        ) && "🛺"}
+                    <div className="flex justify-between items-center border-b border-base-300 pb-2">
+                      <p className="text-xs font-semibold text-base-content/60 uppercase">
+                        Price (Per Unit)
+                      </p>
+                      <span className="text-3xl font-bold text-info">
+                        {formattedPrice}
                       </span>
-                      <span>{ticket.transportType}</span>
                     </div>
+                    <div className="flex justify-between text-sm font-medium">
+                      <span>Available:</span>
+                      <span className="text-info font-bold">
+                        {ticket.quantity}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm font-medium py-2">
+                      <div className="flex items-center space-x-2">
+                        <span>
+                          {ticket.transportType === "Train"
+                            ? "🚆"
+                            : ticket.transportType === "Bus"
+                            ? "🚌"
+                            : "✈️"}
+                        </span>
+                        <span>{ticket.transportType}</span>
+                      </div>
+                    </div>
+                  </div>
 
-                    <div className="px-2 py-1 bg-primary/10  rounded-lg font-semibold text-right whitespace-nowrap">
-                      📅{" "}
-                      {new Date(ticket.departure).toLocaleDateString("en-GB", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </div>
-                  </div>
-                  {/* Perks */}
-                  <div className="flex flex-col">
-                    <h3 className="text-xs font-semibold uppercase text-info mb-1">
-                      ✨ Perks
-                    </h3>
-                    <ul className="flex flex-wrap gap-2 text-sm text-base-content overflow-x-auto whitespace-nowrap">
-                      {ticket.perks.map((perk, i) => (
-                        <li
-                          key={i}
-                          className="bg-base-300 px-2 py-1 rounded-lg shrink-0"
-                        >
-                          {perk}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <Link to={`/all-tickets/${ticket._id}`}>
+                    <button className="w-full mt-4 py-3 text-lg font-bold btn rounded-lg shadow-lg text-white bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 border-none">
+                      See Details
+                    </button>
+                  </Link>
                 </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
-                {/* Button */}
-                <Link to={`/all-tickets/${ticket._id}`}>
-                  <button
-                    className={`
-  w-full mt-4 py-3 text-lg font-bold btn rounded lg shadow-lg
-  cursor-pointer text-white
-  bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 border-none
-  shadow-blue-500/40
-`}
-                  >
-                    See Details
-                  </button>
-                </Link>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* PAGINATION BAR */}
+      {/* PAGINATION BAR - Outside the relative container to keep it clickable */}
       {totalPages > 1 && (
         <div className="flex justify-center mt-10 gap-3">
           <button
@@ -346,19 +265,15 @@ const AllTickets = () => {
           >
             Prev
           </button>
-
           {[...Array(totalPages)].map((_, i) => (
             <button
               key={i}
               onClick={() => setPage(i + 1)}
-              className={`btn btn-sm ${
-                page === i + 1 ? "btn-primary" : ""
-              }`}
+              className={`btn btn-sm ${page === i + 1 ? "btn-primary" : ""}`}
             >
               {i + 1}
             </button>
           ))}
-
           <button
             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={page === totalPages}

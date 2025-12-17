@@ -1,63 +1,128 @@
 import React from "react";
-import { Plane, BusFront, TrainFront, ShipWheel } from "lucide-react";
+import {
+  Plane,
+  BusFront,
+  TrainFront,
+  ShipWheel,
+  ArrowRight,
+  MapPin,
+  Link,
+} from "lucide-react";
 
-const RouteCard = ({ icon: Icon, city1, city2, bgColor, iconColor }) => (
-  <div
-    className="
-      group
-      flex flex-col items-center justify-center gap-1
-      p-6 h-full cursor-pointer
-      rounded-2xl
-      bg-base-200/90
-      backdrop-blur-md
-      border border-base-300
-      shadow-sm
-      hover:shadow-md hover:-translate-y-0.5
-      transition-all duration-300
-    "
-  >
-    {/* Icon Container */}
+const RouteCard = ({ icon: Icon, city1, city2, themeColor }) => {
+  // Mapping theme colors to Tailwind classes dynamically
+  const colorMap = {
+    indigo: {
+      bg: "bg-indigo-50 dark:bg-indigo-900/10",
+      border:
+        "group-hover:border-indigo-200 dark:group-hover:border-indigo-800",
+      text: "text-indigo-600 dark:text-indigo-400",
+      glow: "group-hover:shadow-indigo-500/20",
+      gradient: "from-indigo-500 to-purple-600",
+    },
+    orange: {
+      bg: "bg-orange-50 dark:bg-orange-900/10",
+      border:
+        "group-hover:border-orange-200 dark:group-hover:border-orange-800",
+      text: "text-orange-600 dark:text-orange-400",
+      glow: "group-hover:shadow-orange-500/20",
+      gradient: "from-orange-500 to-red-500",
+    },
+    purple: {
+      bg: "bg-purple-50 dark:bg-purple-900/10",
+      border:
+        "group-hover:border-purple-200 dark:group-hover:border-purple-800",
+      text: "text-purple-600 dark:text-purple-400",
+      glow: "group-hover:shadow-purple-500/20",
+      gradient: "from-purple-500 to-pink-500",
+    },
+    teal: {
+      bg: "bg-teal-50 dark:bg-teal-900/10",
+      border: "group-hover:border-teal-200 dark:group-hover:border-teal-800",
+      text: "text-teal-600 dark:text-teal-400",
+      glow: "group-hover:shadow-teal-500/20",
+      gradient: "from-teal-400 to-emerald-500",
+    },
+  };
+
+  const theme = colorMap[themeColor] || colorMap.indigo;
+
+  return (
     <div
       className={`
-        w-16 h-16 rounded-full
-        flex items-center justify-center
-        mb-3
-        ${bgColor}
-        dark:bg-opacity-20
-        ring-1 ring-black/5 dark:ring-white/10
+        group relative w-full
+        bg-base-100 dark:bg-base-200
+        rounded-2xl
+        border border-base-200 dark:border-base-300
+        ${theme.border}
+        p-5 cursor-pointer
+        transition-all duration-300 ease-out
+        hover:-translate-y-1 hover:shadow-xl ${theme.glow}
+        overflow-hidden
       `}
     >
-      <Icon
-        className={`
-          w-8 h-8
-          ${iconColor}
-          dark:opacity-90
-        `}
+      {/* Background Decorative Blob */}
+      <div
+        className={`absolute -right-6 -top-6 w-24 h-24 rounded-full opacity-10 transition-transform duration-500 group-hover:scale-150 bg-linear-to-br ${theme.gradient}`}
       />
+
+      <div className="relative z-10 flex flex-col h-full justify-between gap-6">
+        {/* Top: Icon and Route Label */}
+        <div className="flex items-center justify-between">
+          <div className={`p-2.5 rounded-xl ${theme.bg} ${theme.text}`}>
+            <Icon className="w-6 h-6" />
+          </div>
+          <span className="text-xs font-medium uppercase tracking-wider text-base-content/40 bg-base-200/50 px-2 py-1 rounded-md">
+            Direct
+          </span>
+        </div>
+
+        {/* Middle: The Journey Visual */}
+        <div className="flex items-center justify-between gap-3">
+          {/* Origin */}
+          <div className="flex flex-col items-start">
+            <span className="text-xs text-base-content/50 mb-0.5">From</span>
+            <h3 className="text-lg font-bold text-base-content leading-tight">
+              {city1}
+            </h3>
+          </div>
+
+          {/* Connector Line */}
+          <div className="flex-1 flex flex-col items-center px-2">
+            <div className="relative w-full h-0.5 bg-base-300 rounded-full overflow-hidden">
+              {/* Moving Gradient Line on Hover */}
+              <div
+                className={`absolute inset-0 w-full h-full -translate-x-full group-hover:translate-x-0 transition-transform duration-700 bg-linear-to-r ${theme.gradient} opacity-50`}
+              />
+            </div>
+          </div>
+
+          {/* Destination */}
+          <div className="flex flex-col items-end text-right">
+            <span className="text-xs text-base-content/50 mb-0.5">To</span>
+            <h3 className={`text-lg font-bold ${theme.text} leading-tight`}>
+              {city2}
+            </h3>
+          </div>
+        </div>
+
+        {/* Bottom: Action / Footer */}
+        <div className="pt-4 border-t border-base-200 dark:border-base-content/5 flex items-center justify-between mt-auto">
+          <div className="flex items-center gap-1.5 text-xs text-base-content/60">
+            <MapPin size={14} />
+            <span>Popular Choice</span>
+          </div>
+
+            <div
+              className={`flex items-center gap-1 text-sm font-semibold ${theme.text} opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300`}
+            >
+              Book Now <ArrowRight size={16} />
+            </div>
+        </div>
+      </div>
     </div>
-
-    {/* City Names */}
-    <p
-      className="
-        text-lg font-semibold
-        text-base-content
-        whitespace-nowrap
-      "
-    >
-      {city1}
-    </p>
-
-    <p
-      className="
-        text-sm
-        text-base-content/60
-        whitespace-nowrap
-      "
-    >
-      to {city2}
-    </p>
-  </div>
-);
+  );
+};
 
 const PopularRoutes = () => {
   const routes = [
@@ -65,63 +130,56 @@ const PopularRoutes = () => {
       city1: "Dhaka",
       city2: "Rajshahi",
       icon: Plane,
-      bgColor: "bg-indigo-100 dark:bg-indigo-500/20",
-      iconColor: "text-indigo-600 dark:text-indigo-400",
+      themeColor: "indigo",
     },
     {
       city1: "Rangpur",
       city2: "Dhaka",
       icon: BusFront,
-      bgColor: "bg-orange-100 dark:bg-orange-500/20",
-      iconColor: "text-orange-600 dark:text-orange-400",
+      themeColor: "orange",
     },
     {
       city1: "Bogura",
       city2: "Shylet",
       icon: TrainFront,
-      bgColor: "bg-purple-100 dark:bg-purple-500/20",
-      iconColor: "text-purple-600 dark:text-purple-400",
+      themeColor: "purple",
     },
     {
       city1: "Dhaka",
-      city2: "Borishal",
+      city2: "Barishal",
       icon: ShipWheel,
-      bgColor: "bg-teal-100 dark:bg-teal-500/20",
-      iconColor: "text-teal-600 dark:text-teal-400",
+      themeColor: "teal",
     },
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10">
-      {/* Header */}
-      <div className="mb-8 flex flex-col gap-1">
-        <h2 className="text-2xl font-bold text-base-content">
-          Popular Routes
-        </h2>
-        <p className="text-sm text-base-content/60">
-          Traveler&apos;s favorites this month
-        </p>
-      </div>
+    <div className="w-full min-h-[50vh] flex flex-col justify-center bg-base-100 py-16 px-4 sm:px-8">
+      <div className="max-w-7xl mx-auto w-full">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-base-content mb-2">
+              Popular <span className="text-primary">Routes</span>
+            </h2>
+            <p className="text-base-content/60 text-lg">
+              Discover the most traveled paths across Bangladesh this month.
+            </p>
+          </div>
 
-      {/* Routes Grid */}
-      <div
-        className="
-          grid gap-5
-          sm:grid-cols-2
-          md:grid-cols-3
-          lg:grid-cols-4
-        "
-      >
-        {routes.map((route, index) => (
-          <RouteCard
-            key={index}
-            icon={route.icon}
-            city1={route.city1}
-            city2={route.city2}
-            bgColor={route.bgColor}
-            iconColor={route.iconColor}
-          />
-        ))}
+        </div>
+
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {routes.map((route, index) => (
+            <RouteCard
+              key={index}
+              icon={route.icon}
+              city1={route.city1}
+              city2={route.city2}
+              themeColor={route.themeColor}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

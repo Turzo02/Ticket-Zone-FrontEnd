@@ -18,7 +18,7 @@ This project is designed with **production-level architecture**, **secure authen
 ---
 
 ## 🌐 Live Site
-**Live URL:** https://your-live-site-link.com
+**Live URL:** https://ticketzone19.netlify.app/
 
 ---
 
@@ -198,8 +198,8 @@ This project is designed with **production-level architecture**, **secure authen
 
 
 ## 📁 GitHub Repositories
-- Client: https://github.com/your-username/TicketZone-client
-- Server: https://github.com/your-username/TicketZone-server
+- Client: https://github.com/Turzo02/Ticket-Zone-FrontEnd
+- Server: https://github.com/Turzo02/Ticket-Zone-BackEnd
 
 ---
 
