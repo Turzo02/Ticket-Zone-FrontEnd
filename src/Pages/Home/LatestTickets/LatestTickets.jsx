@@ -13,7 +13,9 @@ const LatestTickets = () => {
   } = useQuery({
     queryKey: ["latestTickets"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/ticket?page=1&limit=6&status=accepted");
+      const { data } = await axiosSecure.get(
+        "/ticket?page=1&limit=6&status=accepted"
+      );
       const ticketArray = data.tickets;
       const sortedTickets = ticketArray.sort((a, b) => {
         const dateA = new Date(a.departure);
@@ -52,9 +54,16 @@ const LatestTickets = () => {
         </h1>
 
         {/* Container for the Cards */}
-        <div className="space-y-4 max-w-5xl mx-auto">
-        </div>
+        <div className="space-y-4 max-w-5xl mx-auto"></div>
       </section>
+
+      {tickets.length === 0 && (
+        <div className="text-center py-20 bg-base-100  border border-dashed border-base-300 ">
+          <h3 className="text-2xl font-bold text-base-content/50">
+            No Latest Tickets found
+          </h3>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {tickets.map((ticket, index) => {

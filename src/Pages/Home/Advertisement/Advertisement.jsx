@@ -47,6 +47,13 @@ const Advertisement = () => {
       >
         Advertisement Tickets
       </h1>
+              {allTickets.length === 0 && (
+          <div className="text-center py-20 bg-base-100  border border-dashed border-base-300 ">
+            <h3 className="text-2xl font-bold text-base-content/50">
+              No Addvertisement Tickets found
+            </h3>
+          </div>
+        )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
         {allTickets.map((ticket) => {
           const formattedPrice = new Intl.NumberFormat("en-US", {

@@ -137,7 +137,7 @@ const handleReject = async (id) => {
                         </span>
                       ) : (
                         <span className="badge badge-error badge-outline text-xs px-3 py-1.5">
-                          Rejected
+                          Rejected 
                         </span>
                       )}
                     </td>
