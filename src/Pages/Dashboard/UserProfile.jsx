@@ -46,7 +46,6 @@ const UserProfile = () => {
             <h2 className="text-2xl font-bold text-base-content font-display">
               {loggedInUser.name}
             </h2>
-      
             <span
               className="
     badge badge-lg font-bold text-white border-none transition 

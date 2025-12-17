@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 import { CheckCheck } from "lucide-react";
+import Swal from "sweetalert2";
 
 const ManageTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -22,22 +23,56 @@ const ManageTickets = () => {
   const allTickets = data?.tickets || [];
   const totalPages = Math.ceil((data?.total || 0) / limit);
 
-  // Accept Booking
-  const handleAccept = async (id) => {
-    await axiosSecure.patch(`/ticket/${id}`, {
-      status: "accepted",
-    });
-    refetch();
-  };
 
-  // Reject Booking
-  const handleReject = async (id) => {
-    await axiosSecure.patch(`/ticket/${id}`, {
-      status: "rejected",
-    });
-    refetch();
-  };
+// Accept Booking
+const handleAccept = async (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to accept this ticket?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, accept it!"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await axiosSecure.patch(`/ticket/${id}`, {
+          status: "accepted",
+        });
+        refetch();
+        Swal.fire("Accepted!", "The ticket has been accepted.", "success");
+      } catch (error) {
+        Swal.fire("Error", "Something went wrong.", "error");
+      }
+    }
+  });
+};
 
+// Reject Booking
+const handleReject = async (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, reject it!"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await axiosSecure.patch(`/ticket/${id}`, {
+          status: "rejected",
+        });
+        refetch();
+        Swal.fire("Rejected!", "The ticket has been rejected.", "success");
+      } catch (error) {
+        Swal.fire("Error", "Something went wrong.", "error");
+      }
+    }
+  });
+};
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-32">

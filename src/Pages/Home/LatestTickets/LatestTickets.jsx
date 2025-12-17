@@ -13,7 +13,7 @@ const LatestTickets = () => {
   } = useQuery({
     queryKey: ["latestTickets"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/ticket?limit=10000");
+      const { data } = await axiosSecure.get("/ticket?page=1&limit=6&status=accepted");
       const ticketArray = data.tickets;
       const sortedTickets = ticketArray.sort((a, b) => {
         const dateA = new Date(a.departure);
