@@ -114,7 +114,6 @@ const ManageUsers = () => {
   }
 
   return (
-    <div>
       <div className="p-4 sm:p-8 max-w-7xl mx-auto min-h-screen bg-base-100 text-base-content">
         {/* Header */}
         <div className="text-center py-8 mb-8 md:py-8 bg-base-200 rounded-xl shadow-lg">
@@ -221,9 +220,9 @@ const ManageUsers = () => {
 
                     {/* Fraud Action column */}
                     <td className="p-4 text-center">
-                      {user.role === "admin" ? (
-                        <span className="text-sm text-green-500 flex justify-center">
-                          <X />
+                      {user.role === "user" || user.role === "admin" ? (
+                        <span className="text-sm text-gray-400 font-mono">
+                          Not available
                         </span>
                       ) : (
                         <div className="flex justify-center">
@@ -231,7 +230,7 @@ const ManageUsers = () => {
                             <button
                               onClick={() => handleMakeFraud(user)}
                               className="
-                            btn btn-sm text-white border-none transition 
+                            btn btn-sm w-full text-white border-none transition 
                             bg-linear-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 
                             shadow-md shadow-red-500/50
                             flex items-center gap-1
@@ -241,9 +240,8 @@ const ManageUsers = () => {
                               Fraud
                             </button>
                           ) : (
-                            // Non-vendor/non-admin roles show a simple indicator icon (assuming this is the 'fraud' role indicator)
-                            <span className="text-sm flex items-center gap-4 text-red-500">
-                              <BadgeCheck />
+                            <span className="text-sm flex items-center gap-1 text-red-500">
+                              <BadgeCheck /> Fraud
                             </span>
                           )}
                         </div>
@@ -304,55 +302,55 @@ const ManageUsers = () => {
               <div className="grid grid-cols-2 gap-3 mb-4">
                 {/* Make Admin */}
                 <button
-                  onClick={() => handleMakeAdmin(user._id)}
+                  onClick={() => handleMakeAdmin(user)}
                   disabled={user.role === "admin"}
                   className={`
-                btn btn-sm text-white border-none transition w-full
-                ${
-                  user.role === "admin"
-                    ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-300 text-base-content/70"
-                    : "bg-linear-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 shadow-md shadow-violet-500/50"
-                }
-              `}
+                        btn btn-sm text-white border-none transition
+                        ${
+                          user.role === "admin"
+                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-300 text-base-content/70"
+                            : "bg-linear-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 shadow-md shadow-violet-500/50"
+                        }
+                      `}
                 >
-                  Make Admin
+                  Admin
                 </button>
 
                 {/* Make Vendor */}
                 <button
-                  onClick={() => handleMakeVendor(user._id)}
+                  onClick={() => handleMakeVendor(user)}
                   disabled={user.role === "vendor"}
                   className={`
-                btn btn-sm text-white border-none transition w-full
-                ${
-                  user.role === "vendor"
-                    ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-300 text-base-content/70"
-                    : "bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-md shadow-blue-500/50"
-                }
-              `}
+                        btn btn-sm text-white border-none transition
+                        ${
+                          user.role === "vendor"
+                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-300 text-base-content/70"
+                            : "bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-md shadow-blue-500/50"
+                        }
+                      `}
                 >
-                  Make Vendor
+                  Vendor
                 </button>
               </div>
 
               {/* Fraud Action */}
               <div className="pt-2 border-t border-base-300/50 flex justify-center">
-                {user.role === "admin" ? (
-                  <span className="text-sm text-green-500 flex items-center gap-1 font-medium">
-                    <X size={18} /> Admin Access
+                {user.role === "admin" || user.role === "user" ? (
+                  <span className="text-sm text-gray-400 font-mono">
+                    Not available
                   </span>
                 ) : user.role === "vendor" ? (
                   <button
-                    onClick={() => handleMakeFraud(user._id)}
+                    onClick={() => handleMakeFraud(user)}
                     className="
-                  btn btn-sm text-white border-none transition 
-                  bg-linear-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 
-                  shadow-md shadow-red-500/50
-                  flex items-center gap-1 w-full justify-center
-                "
+                            btn btn-sm w-full text-white border-none transition 
+                            bg-linear-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 
+                            shadow-md shadow-red-500/50
+                            flex items-center gap-1
+                          "
                   >
                     <AlertCircle size={16} />
-                    Mark As Fraud
+                    Fraud
                   </button>
                 ) : (
                   <span className="text-sm flex items-center gap-1 text-red-500 font-medium">
@@ -364,7 +362,6 @@ const ManageUsers = () => {
           ))}
         </div>
       </div>
-    </div>
   );
 };
 
