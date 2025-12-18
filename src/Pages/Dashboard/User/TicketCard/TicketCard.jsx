@@ -15,7 +15,7 @@ const TicketCard = ({ ticket }) => {
     setIsDeparted(completedStatus);
   }, []);
 
-  const buttonClasses = `btn w-full mt-2 text-lg font-bold transition-all ${
+  const buttonClasses = `btn w-full mt-2 text-md font-bold transition-all ${
     isPurchasable
       ? "btn-primary text-primary-content shadow-lg shadow-primary/40 hover:shadow-xl"
       : "btn-disabled bg-base-300 text-base-content/60 shadow-none cursor-not-allowed"
@@ -72,7 +72,7 @@ const TicketCard = ({ ticket }) => {
     return "bg-gradient-to-r from-amber-500 to-orange-500 text-white ";
   };
 
-    return (
+  return (
     <div className="flex flex-col rounded-2xl border border-base-300 shadow-xl overflow-hidden bg-base-200 text-base-content">
       <img
         className="h-40 w-full object-cover"
@@ -80,22 +80,16 @@ const TicketCard = ({ ticket }) => {
         alt={ticket.title || "Ticket Image"}
       />
       <div className="flex flex-1 flex-col p-4">
-        <h4 className="text-xl font-extrabold text-base-content mb-3">
+        <h4 className="text-xl font-extrabold text-base-content mb-3 truncate">
           {ticket.title}
         </h4>
         <div className=" space-y-4 text-sm">
           {/* From to location */}
-          {/* From -> To */}
-          <div className="flex justify-between items-center flex-wrap">
-            <div>
-              <h1>From: {ticket.from}</h1>
-            </div>
-            <MoveRight  />
-            <div>
-              <h1>To: {ticket.to}</h1>
-            </div>
+          <div className="flex justify-between items-center gap-2">
+            <h1 className="truncate max-w-[100px]">From: {ticket.from}</h1>
+            <MoveRight className="shrink-0" />
+            <h1 className="truncate max-w-[100px]">To: {ticket.to}</h1>
           </div>
-          
           {/* Total Price */}
           <div className="flex justify-between items-center border-b border-base-300">
             <span className="text-base-content/80 font-medium">
@@ -121,7 +115,11 @@ const TicketCard = ({ ticket }) => {
             </div>
           </div>
           {/* Countdown Timer */}
-          <div className={`font-medium ${ticket.status === "rejected" ? "hidden" : ""}`}>
+          <div
+            className={`font-medium ${
+              ticket.status === "rejected" ? "hidden" : ""
+            }`}
+          >
             <TicketCountdown
               departure={ticket.departure}
               onCountdownComplete={handleDepartureComplete}
@@ -129,7 +127,7 @@ const TicketCard = ({ ticket }) => {
           </div>
 
           {/* Ticket Status */}
-          <div className="flex justify-between items-center border-t border-base-300">
+          <div className="flex justify-between items-center border-t pt-2 border-base-300">
             <span className="text-base-content/80">Ticket Status:</span>
             <span
               className={`badge badge-lg font-semibold ${getTicketStatusBadge(

@@ -1,7 +1,7 @@
 import React from "react";
-import stripeImg from "/stripe.png";
 import logo from "/favicon.png";
 import { Link } from "react-router";
+import { CreditCard, Lock, ShieldCheck } from "lucide-react";
 
 const Footer = () => {
   //Footer Added
@@ -20,17 +20,24 @@ const Footer = () => {
           <div className="space-y-3">
             <Link
               to="/"
-              className="
-          text-2xl font-bold
-          flex items-center gap-2
-          hover:text-primary
-          transition-colors
-        "
+              className="flex items-center gap-3 group transition-all duration-300 ease-in-out hover:opacity-80"
             >
-              <img className="w-9" src={logo} alt="Ticket Zone Logo" />
-              Ticket Zone
-            </Link>
+              <div className="relative">
+                <img
+                  className="relative w-10 h-10 object-contain transform group-hover:scale-105 transition-transform duration-300"
+                  src={logo}
+                  alt="Ticket Zone Logo"
+                />
+              </div>
 
+              {/* Text Logo with Dual Weights */}
+              <div className="flex flex-col">
+                <span className="text-2xl font-black tracking-tighter leading-none flex items-center gap-1">
+                  <span className="text-base-content">TICKET</span>
+                  <span className="text-info italic   scale-110">ZONE</span>
+                </span>
+              </div>
+            </Link>
             <p className="text-sm text-base-content/70 leading-relaxed">
               Book bus, train, ship & flight tickets easily with secure payments
               and real-time availability.
@@ -81,25 +88,45 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4 - Payment Methods */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Payment Methods</h3>
+          {/* Column 4 - Payment Methods ) */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-base-content/90">
+              Payment Methods
+            </h3>
 
-            <div
-              className="
-          bg-base-100
-          rounded-lg
-          p-4
-          inline-flex
-          items-center
-          shadow-sm
-        "
-            >
-              <img
-                src={stripeImg}
-                alt="Stripe Payment"
-                className="w-32 object-contain"
-              />
+            <div className="flex flex-col gap-3">
+              {/* Minimal Stripe Badge */}
+              <div className="flex items-center gap-2 group cursor-default">
+                <div className="bg-[#635BFF] text-white p-1 rounded-md shadow-sm">
+                  <CreditCard size={16} strokeWidth={2.5} />
+                </div>
+                <span className="font-bold italic text-lg tracking-tighter text-[#635BFF]">
+                  stripe
+                </span>
+                <div className="flex items-center gap-1 ml-1 px-2 py-0.5 bg-base-content/5 text-base-content/60 rounded-full border border-base-content/10 group-hover:border-base-content/20 transition-colors">
+                  <Lock size={10} strokeWidth={3} />
+                  <span className="text-[10px] font-bold uppercase tracking-tighter">
+                    Secure
+                  </span>
+                </div>
+              </div>
+
+              {/* Simple Card Icons Row */}
+              <div className="flex items-center gap-2 px-">
+                <div className="h-4 w-7 bg-base-content/10 rounded-sm border border-base-content/5 flex items-center justify-center text-[7px] font-black opacity-60">
+                  VISA
+                </div>
+                <div className="h-4 w-7 bg-base-content/10 rounded-sm border border-base-content/5 flex items-center justify-center text-[7px] font-black opacity-60">
+                  MC
+                </div>
+                <div className="h-4 w-7 bg-base-content/10 rounded-sm border border-base-content/5 flex items-center justify-center text-[7px] font-black opacity-60">
+                  AMEX
+                </div>
+              </div>
+
+              <p className="text-[10px] text-base-content/40 max-w-[200px] leading-tight">
+                Guaranteed safe & secure checkout.
+              </p>
             </div>
           </div>
         </div>

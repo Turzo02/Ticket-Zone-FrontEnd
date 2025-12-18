@@ -96,7 +96,7 @@ const AllTickets = () => {
           <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
             {/* Transport Filter */}
             <div className="relative group w-full sm:w-auto">
-              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-2 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
+              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-1 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
                 <Filter className="w-5 h-5 text-primary shrink-0" />
                 <select
                   value={filterType}
@@ -114,7 +114,7 @@ const AllTickets = () => {
 
             {/* Price Sort */}
             <div className="relative group w-full sm:w-auto">
-              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-2 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
+              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-1 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
                 <ArrowUpDown className="w-5 h-5 text-primary shrink-0" />
                 <select
                   value={sortOrder}
@@ -191,30 +191,24 @@ const AllTickets = () => {
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
-                    <h2 className="absolute bottom-2 left-3 right-3 text-white text-2xl font-extrabold drop-shadow-xl">
+                    <h2 className="absolute bottom-2 left-3 right-3 text-white text-2xl font-extrabold drop-shadow-xl truncate">
                       {ticket.title}
                     </h2>
                   </div>
 
                   {/* Body */}
                   <div className="pt-4 space-y-4">
-                    <div className="flex items-center text-sm font-semibold space-x-2">
-                      <div className="flex w-full justify-between items-center">
-                        <div className="flex items-center space-x-1">
-                          <span className="w-3 h-3 rounded-full bg-success"></span>
-                          <span className="text-base-content/80 font-bold text-xl line-clamp-1">
-                            {ticket.from}
-                          </span>
-                        </div>
-                        <MoveRight className="text-primary" />
-                        <div className="flex items-center space-x-1">
-                          <span className="text-base-content/80 font-bold text-xl line-clamp-1">
-                            {ticket.to}
-                          </span>
-                          <span className="w-3 h-3 rounded-full bg-error"></span>
-                        </div>
-                      </div>
+                    {/* From to location */}
+                    <div className="flex justify-between items-center gap-2">
+                      <h1 className="truncate max-w-[200px]">
+                        From: {ticket.from}
+                      </h1>
+                      <MoveRight className="shrink-0" />
+                      <h1 className="truncate max-w-[200px]">
+                        To: {ticket.to}
+                      </h1>
                     </div>
+
                     <div className="flex justify-between items-center border-b border-base-300 pb-2">
                       <p className="text-xs font-semibold text-base-content/60 uppercase">
                         Price (Per Unit)

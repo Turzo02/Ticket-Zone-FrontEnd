@@ -68,7 +68,3 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
 }
-
-.active {
-    @apply bg-primary/10 text-info font-semibold rounded-lg px-3 py-1.5 transition-all;
-}

@@ -83,7 +83,7 @@ const Advertisement = () => {
                       />
                       <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
 
-                      <h2 className="absolute bottom-0 w-full p-3 text-xl font-bold text-white drop-shadow-md">
+                      <h2 className="absolute bottom-0 w-full p-3 text-xl font-bold text-white drop-shadow-md truncate">
                         {ticket.title}
                       </h2>
                     </div>

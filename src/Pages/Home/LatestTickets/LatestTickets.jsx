@@ -97,7 +97,7 @@ const LatestTickets = () => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
-                  <h2 className="absolute bottom-2 left-3 right-3 text-white  text-2xl font-extrabold drop-shadow-xl">
+                  <h2 className="absolute bottom-2 left-3 right-3 text-white  text-2xl font-extrabold drop-shadow-xl truncate">
                     {ticket.title}
                   </h2>
                 </div>
