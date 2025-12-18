@@ -112,7 +112,7 @@ const MyAddedTickets = () => {
                   />
                   {/* Using gradient utility for overlay */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
-                  <h2 className="absolute bottom-2 left-3 right-3 text-white text-xl font-extrabold">
+                  <h2 className="absolute bottom-2 left-3 right-3 text-white text-xl font-extrabold truncate">
                     {ticket.title}
                   </h2>
                 </div>
@@ -124,7 +124,7 @@ const MyAddedTickets = () => {
                       <div className="flex items-center space-x-1">
                         {/* Start Point */}
                         <span className="w-3 h-3 rounded-full bg-success"></span>
-                        <span className="text-base-content font-bold text-xl">
+                        <span className="max-w-[100px] text-base-content font-bold text-md">
                           {ticket.from}
                         </span>
                       </div>
@@ -132,7 +132,7 @@ const MyAddedTickets = () => {
                       <MoveRight className="text-base-content/80" />
 
                       <div className="flex items-center space-x-1">
-                        <span className="text-base-content font-bold text-xl">
+                        <span className="text-base-content font-bold text-md">
                           {ticket.to}
                         </span>
                         <span className="w-3 h-3 rounded-full bg-error"></span>
