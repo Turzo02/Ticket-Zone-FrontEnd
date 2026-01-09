@@ -47,13 +47,11 @@ const Navbar = () => {
     <div
       className="
     sticky top-0 z-50
-    bg-base-100/80
-    dark:bg-base-100/60
     backdrop-blur-md
     border-b border-base-300
   "
     >
-      <div className="navbar max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="navbar  max-w-7xl mx-auto px-4 sm:px-6">
         {/* Navbar Start */}
         <div className="navbar-start">
           <div className="dropdown">

@@ -13,33 +13,33 @@ const RouteCard = ({ icon: Icon, city1, city2, themeColor }) => {
   // Mapping theme colors to Tailwind classes dynamically
   const colorMap = {
     indigo: {
-      bg: "bg-indigo-50 dark:bg-indigo-900/10",
+      bg: "bg-indigo-50 ",
       border:
-        "group-hover:border-indigo-200 dark:group-hover:border-indigo-800",
-      text: "text-indigo-600 dark:text-indigo-400",
+        "group-hover:border-indigo-200 ",
+      text: "text-indigo-600 ",
       glow: "group-hover:shadow-indigo-500/20",
       gradient: "from-indigo-500 to-purple-600",
     },
     orange: {
-      bg: "bg-orange-50 dark:bg-orange-900/10",
+      bg: "bg-orange-50 ",
       border:
-        "group-hover:border-orange-200 dark:group-hover:border-orange-800",
-      text: "text-orange-600 dark:text-orange-400",
+        "group-hover:border-orange-200 ",
+      text: "text-orange-600 ",
       glow: "group-hover:shadow-orange-500/20",
       gradient: "from-orange-500 to-red-500",
     },
     purple: {
-      bg: "bg-purple-50 dark:bg-purple-900/10",
+      bg: "bg-purple-50 ",
       border:
-        "group-hover:border-purple-200 dark:group-hover:border-purple-800",
-      text: "text-purple-600 dark:text-purple-400",
+        "group-hover:border-purple-200 ",
+      text: "text-purple-600 ",
       glow: "group-hover:shadow-purple-500/20",
       gradient: "from-purple-500 to-pink-500",
     },
     teal: {
-      bg: "bg-teal-50 dark:bg-teal-900/10",
-      border: "group-hover:border-teal-200 dark:group-hover:border-teal-800",
-      text: "text-teal-600 dark:text-teal-400",
+      bg: "bg-teal-50 ",
+      border: "group-hover:border-teal-200 ",
+      text: "text-teal-600 ",
       glow: "group-hover:shadow-teal-500/20",
       gradient: "from-teal-400 to-emerald-500",
     },
@@ -51,9 +51,9 @@ const RouteCard = ({ icon: Icon, city1, city2, themeColor }) => {
     <div
       className={`
         group relative w-full
-        bg-base-100 dark:bg-base-200
+        bg-base-100 
         rounded-2xl
-        border border-base-200 dark:border-base-300
+        border border-base-200 
         ${theme.border}
         p-5 cursor-pointer
         transition-all duration-300 ease-out
@@ -107,7 +107,7 @@ const RouteCard = ({ icon: Icon, city1, city2, themeColor }) => {
         </div>
 
         {/* Bottom: Action / Footer */}
-        <div className="pt-4 border-t border-base-200 dark:border-base-content/5 flex items-center justify-between mt-auto">
+        <div className="pt-4 border-t border-base-200  flex items-center justify-between mt-auto">
           <div className="flex items-center gap-1.5 text-xs text-base-content/60">
             <MapPin size={14} />
             <span>Popular Choice</span>

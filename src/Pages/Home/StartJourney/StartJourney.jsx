@@ -8,18 +8,16 @@ const StartJourney = () => {
       relative overflow-hidden
       rounded-2xl
       bg-primary
-      dark:bg-base-200
-      dark:backdrop-blur-md
-      border border-transparent dark:border-base-300
+      border border-transparent
     "
       >
         {/* Content */}
         <div className="relative z-10 text-center px-6 sm:px-12 py-12">
-          <h1 className="font-extrabold tracking-tight text-2xl sm:text-4xl lg:text-5xl text-white dark:text-base-content">
+          <h1 className="font-extrabold tracking-tight text-2xl sm:text-4xl lg:text-5xl text-white">
             Ready To Start Your Journey?
           </h1>
 
-          <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-white/90 dark:text-base-content/70">
+          <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-white/90">
             Join thousands of travelers who use TravelBooker to find the best
             prices and routes for their next adventure. Start planning your next
             trip today.

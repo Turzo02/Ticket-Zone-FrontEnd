@@ -61,7 +61,7 @@ const TicketCard = ({ ticket }) => {
       case "rejected":
         return "bg-gradient-to-r from-red-700  to-rose-600 text-white ";
       default:
-        return "bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-none";
+        return "bg-gray-300  text-gray-800 shadow-none";
     }
   };
 

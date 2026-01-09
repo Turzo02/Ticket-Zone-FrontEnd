@@ -9,7 +9,7 @@ const NotFound = () => {
       {/* Not Found Page Added */}
             <title>404</title>
 
-      <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden p-4 bg-background-light dark:bg-background-dark font-display">
+      <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden p-4 font-display">
         {/* Background */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-10"
