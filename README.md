@@ -22,8 +22,9 @@ This project is designed with **production-level architecture**, **secure authen
 
 ---
 
+## 📸 Project Preview
 
----
+![TicketZone Light Mode](https://i.ibb.co.com/gLjTcMkL/Light-Mode-Preview.png)
 
 ## 🚀 Key Features
 
