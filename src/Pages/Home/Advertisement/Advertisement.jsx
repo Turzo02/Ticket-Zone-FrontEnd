@@ -38,8 +38,8 @@ const Advertisement = () => {
   }
 
   return (
-    // Uses --bg-page (Deep Slate) and --text-main (Almost White)
-    <div className="w-full min-h-[50vh] bg-(--bg-page) text-(--text-main) py-16 transition-colors duration-300">
+  
+    <div className="w-full min-h-[50vh] bg-(--bg-soft-accent) text-(--text-main) py-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Section Header */}

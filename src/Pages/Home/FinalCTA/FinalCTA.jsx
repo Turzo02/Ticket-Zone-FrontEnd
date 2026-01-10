@@ -19,7 +19,7 @@ const FinalCTA = () => {
   ];
 
   return (
-    <section className="relative w-full py-24 lg:py-32 bg-(--bg-page)  overflow-hidden">
+    <section className="relative w-full py-24 lg:py-32 bg-(--bg-soft-accent)  overflow-hidden">
       <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 text-center">
         
         {/* Badge */}
@@ -76,7 +76,7 @@ const FinalCTA = () => {
           
           {/* Secondary Button */}
           <Link to="/routes">
-            <button className="px-8 py-4 rounded-xl font-bold text-(--text-main) bg-(--bg-card) border border-(--border-card) hover:bg-(--bg-page) hover:border-(--grad-start)/50 transition-all duration-300 min-w-[180px]">
+            <button className="px-8 py-4 rounded-xl font-bold text-(--text-main) bg-(--bg-card) border border-(--border-card) hover:bg-(--bg-soft-accent) hover:border-(--grad-start)/50 transition-all duration-300 min-w-[180px]">
               Browse Routes
             </button>
           </Link>
@@ -91,7 +91,7 @@ const FinalCTA = () => {
                     key={i}
                     src={`https://i.pravatar.cc/100?img=${i + 20}`} 
                     alt="user" 
-                    className="w-10 h-10 rounded-full border-4 border-(--bg-page)"
+                    className="w-10 h-10 rounded-full border-4 border-(--bg-soft-accent)"
                   />
                ))}
             </div>

@@ -30,7 +30,7 @@ const TrustBadges = () => {
   ];
 
   return (
-    <section className="w-full py-20 bg-(--bg-page) transition-colors duration-300 border-y border-(--border-card)">
+    <section className="w-full py-20 bg-(--bg-soft-accent) transition-colors duration-300 border-y border-(--border-card)">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* New Headline Section */}

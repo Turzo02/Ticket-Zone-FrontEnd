@@ -10,7 +10,7 @@ const RootLayout = () => {
     return <SwappingDotLoader></SwappingDotLoader>;
   }
   return (
-    <div >
+    <div className="bg-(--bg-soft-accent)">
       {/* Router And Layout setup Done */}
       <Navbar></Navbar>
       <Outlet className="max-w-7xl mx-auto"></Outlet>

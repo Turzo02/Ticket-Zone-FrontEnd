@@ -34,7 +34,7 @@ const PlatformStatistics = () => {
   ];
 
   return (
-    <section className="relative w-full py-24 bg-(--bg-page) transition-colors duration-300 overflow-hidden">
+    <section className="relative w-full py-24 bg-(--bg-soft-accent) transition-colors duration-300 overflow-hidden">
       
       {/* Decorative Background Pattern (Dot Grid) */}
       <div 
@@ -80,7 +80,7 @@ const PlatformStatistics = () => {
               "
             >
               {/* Icon Bubble */}
-              <div className="mb-6 p-4 rounded-2xl bg-(--bg-page) border border-(--border-card) group-hover:scale-110 transition-transform duration-300 text-(--grad-start)">
+              <div className="mb-6 p-4 rounded-2xl bg-(--bg-soft-accent) border border-(--border-card) group-hover:scale-110 transition-transform duration-300 text-(--grad-start)">
                 <stat.icon size={28} strokeWidth={1.5} />
               </div>
 

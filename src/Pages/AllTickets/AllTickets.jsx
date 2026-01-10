@@ -166,7 +166,7 @@ const AllTickets = () => {
 
   if (isLoading && !isFetching) {
     return (
-      <div className="flex justify-center items-center h-screen bg-(--bg-page)">
+      <div className="flex justify-center items-center h-screen bg-(--bg-soft-accent)">
         <SwappingDotLoader />
       </div>
     );
@@ -174,7 +174,7 @@ const AllTickets = () => {
 
   if (isError) {
     return (
-      <div className="flex justify-center items-center h-64 bg-(--bg-page)">
+      <div className="flex justify-center items-center h-64 bg-(--bg-soft-accent)">
         <p className="text-red-500 font-bold bg-(--bg-card) px-6 py-3 rounded-xl border border-(--border-card)">
           Failed to load tickets. Please try again.
         </p>
@@ -183,7 +183,7 @@ const AllTickets = () => {
   }
 
   return (
-    <div className="min-h-screen bg-(--bg-page) text-(--text-main) transition-colors duration-300 py-8">
+    <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) transition-colors duration-300 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         {/* Header Section */}
         <div className="text-center py-12 mb-10 px-4 space-y-4 bg-(--bg-card) border border-(--border-card) rounded-3xl shadow-sm">
@@ -250,7 +250,7 @@ const AllTickets = () => {
         <div className="relative min-h-[400px] z-10">
           {/* Loader Overlay */}
           {isFetching && (
-            <div className="absolute inset-0 z-20 flex justify-center items-start pt-32 bg-(--bg-page)/60 backdrop-blur-sm rounded-3xl transition-all">
+            <div className="absolute inset-0 z-20 flex justify-center items-start pt-32 bg-(--bg-soft-accent)/60 backdrop-blur-sm rounded-3xl transition-all">
               <div className="sticky top-1/2">
                 <SwappingDotLoader />
               </div>

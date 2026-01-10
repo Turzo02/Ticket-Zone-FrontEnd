@@ -82,7 +82,7 @@ const TicketDetailsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-(--bg-page)">
+      <div className="flex justify-center items-center h-screen bg-(--bg-soft-accent)">
         <SwappingDotLoader />
       </div>
     );
@@ -90,7 +90,7 @@ const TicketDetailsPage = () => {
 
   if (isError) {
     return (
-      <div className="flex justify-center items-center h-screen bg-(--bg-page)">
+      <div className="flex justify-center items-center h-screen bg-(--bg-soft-accent)">
         <p className="text-red-500 font-bold bg-(--bg-card) px-6 py-3 rounded-xl border border-(--border-card)">
           Error loading ticket details.
         </p>
@@ -99,7 +99,7 @@ const TicketDetailsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-(--bg-page) text-(--text-main) transition-colors duration-300 py-8">
+    <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) transition-colors duration-300 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         
         {/* Page Header */}

@@ -51,14 +51,14 @@ const LatestTickets = () => {
 
   if (isError) {
     return (
-      <div className="flex justify-center items-center h-40 bg-(--bg-page)">
+      <div className="flex justify-center items-center h-40 bg-(--bg-soft-accent)">
         <p className="text-red-500 font-medium">Failed to load tickets.</p>
       </div>
     );
   }
 
   return (
-    <section className="w-full py-20 bg-(--bg-page) transition-colors duration-300">
+    <section className="w-full py-20 bg-(--bg-soft-accent) transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Section Header */}

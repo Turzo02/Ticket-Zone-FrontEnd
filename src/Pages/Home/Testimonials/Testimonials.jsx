@@ -30,7 +30,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="w-full py-24 bg-(--bg-page) transition-colors duration-300 relative overflow-hidden">
+    <section className="w-full py-24 bg-(--bg-soft-accent) transition-colors duration-300 relative overflow-hidden">
       
       {/* Decorative Background Blur */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">

@@ -18,29 +18,49 @@ const Navbar = () => {
       });
   };
 
+  const navLinkClass = ({ isActive }) => `
+  relative px-4 py-2 rounded-md text-sm font-bold transition-all duration-300 ease-out
+  flex items-center gap-2
+  ${
+    isActive
+      ? "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--nav-text-active) shadow-lg shadow-(--grad-start)/20 scale-105"
+      : "text-(--text-muted) hover:text-(--brand-primary) hover:bg-(--surface-highlight)"
+  }
+`;
+
   const links = (
     <>
-      {["Home", "All Tickets", "Dashboard"].map((label) => {
-        const path =
-          label === "Home" ? "/" : `/${label.toLowerCase().replace(" ", "-")}`;
-        return (
-          <li key={label} className="mx-1">
-            <NavLink
-              to={path}
-              className={({ isActive }) =>
-                `relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 ease-out flex items-center gap-2
-              ${
-                isActive
-                  ? "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--nav-text-active) shadow-lg shadow-(--grad-start)/20 scale-105"
-                  : "text-(--text-muted) hover:text-(--brand-primary) hover:bg-(--surface-highlight)"
-              }`
-              }
-            >
-              {label}
-            </NavLink>
-          </li>
-        );
-      })}
+      <li className="mx-1">
+        <NavLink to="/" className={navLinkClass}>
+          Home
+        </NavLink>
+      </li>
+      <li className="mx-1">
+        <NavLink to="/about-us" className={navLinkClass}>
+          About Us
+        </NavLink>
+      </li>
+      <li className="mx-1">
+        <NavLink to="/terms-and-conditions" className={navLinkClass}>
+          Terms & Conditions
+        </NavLink>
+      </li>
+
+      {user && (
+        <li className="mx-1">
+          <NavLink to="/all-tickets" className={navLinkClass}>
+            All Tickets
+          </NavLink>
+        </li>
+      )}
+
+      {user && (
+        <li className="mx-1">
+          <NavLink to="/Dashboard" className={navLinkClass}>
+            Dashboard
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -55,10 +75,8 @@ const Navbar = () => {
       "
     >
       <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 h-20">
-        
         {/* Navbar Start: Mobile Menu & Logo */}
         <div className="navbar-start gap-3">
-          
           {/* Mobile Dropdown */}
           <div className="dropdown lg:hidden">
             <div
@@ -107,7 +125,6 @@ const Navbar = () => {
 
         {/* Navbar End: Auth & Theme */}
         <div className="navbar-end gap-3">
-          
           {/* Theme Toggle (Always visible) */}
           <button
             onClick={toggleTheme}
@@ -124,13 +141,13 @@ const Navbar = () => {
                 tabIndex={0}
                 className="
                   flex items-center gap-2 pl-1 pr-3 py-1 rounded-full 
-                  border border-(--border-subtle) hover:border-(--border-highlight)
+                   hover:border-(--border-highlight)
                   bg-(--surface-card) hover:bg-(--surface-highlight)
                   cursor-pointer transition-all duration-200
                 "
               >
                 <div className="avatar">
-                  <div className="w-8 h-8 rounded-full ring-2 ring-(--surface-page)">
+                  <div className="w-8 h-8 rounded-full ">
                     <img
                       src={
                         user.photoURL ||

@@ -3,12 +3,11 @@ import { ShieldCheck } from 'lucide-react';
 
 const BrandPromise = () => {
   return (
-    <section className="relative w-full py-24 lg:py-32 overflow-hidden bg-(--bg-page) transition-colors duration-300">
+    <section className="relative w-full py-24 lg:py-32 overflow-hidden bg-(--bg-soft-accent) transition-colors duration-300">
       
 
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        
         {/* Icon Container */}
         <div className="flex justify-center mb-8">
           <div className="relative group">

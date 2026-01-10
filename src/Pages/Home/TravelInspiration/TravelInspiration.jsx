@@ -21,7 +21,7 @@ const TravelInspiration = () => {
   ];
 
   return (
-    <section className="w-full py-24 bg-(--bg-page) transition-colors duration-300">
+    <section className="w-full py-24 bg-(--bg-soft-accent) transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Section Header */}

@@ -29,7 +29,7 @@ const NewsletterSignup = () => {
   ];
 
   return (
-    <section className="relative w-full py-24 overflow-hidden bg-(--bg-page) transition-colors duration-300">
+    <section className="relative w-full py-24 overflow-hidden bg-(--bg-soft-accent) transition-colors duration-300">
       
       {/* Background Decorative Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-full pointer-events-none">
@@ -86,7 +86,7 @@ const NewsletterSignup = () => {
                   
                   {/* Header inside card */}
                   <div className="flex items-center gap-3 mb-2">
-                     <div className="p-2 rounded-xl bg-(--bg-page) text-(--text-main)">
+                     <div className="p-2 rounded-xl bg-(--bg-soft-accent) text-(--text-main)">
                         <Mail size={24} />
                      </div>
                      <h3 className="text-xl font-bold text-(--text-main)">Subscribe Now</h3>

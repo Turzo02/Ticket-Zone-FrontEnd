@@ -60,7 +60,7 @@ const RouteCard = ({ icon: Icon, city1, city2, type, time }) => {
           <div className={`p-3 rounded-2xl transition-colors duration-300 ${themeClass}`}>
             <Icon className="w-6 h-6" strokeWidth={1.5} />
           </div>
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-(--bg-page) border border-(--border-card)">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-(--bg-soft-accent) border border-(--border-card)">
              <Clock size={12} className="text-(--text-muted)" />
              <span className="text-xs font-bold text-(--text-muted) uppercase tracking-wide">{time}</span>
           </div>
@@ -148,7 +148,7 @@ const PopularRoutes = () => {
   ];
 
   return (
-    <div className="w-full py-20 bg-(--bg-page) text-(--text-main) transition-colors duration-300">
+    <div className="w-full py-20 bg-(--bg-soft-accent) text-(--text-main) transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Section Header */}

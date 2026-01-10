@@ -25,6 +25,12 @@ import PaymentFailedPage from "../Pages/PaymentPage/PaymentFailed/PaymentFailedP
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
 import VendorRoute from "./VendorRoute";
+import AboutUs from "../Pages/AdditionalPages/AboutUs";
+import TermsCondition from "../Pages/AdditionalPages/TermsCondition";
+import Guideline from "../Pages/AdditionalPages/Guideline";
+import Privacy from "../Pages/AdditionalPages/Privacy";
+
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -34,6 +40,31 @@ export const router = createBrowserRouter([
         index: true,
         Component: Home,
       },
+      {
+        path: "/about-us",
+        element: (
+            <AboutUs></AboutUs>
+        )
+      },
+      {
+        path: "/terms-and-conditions",
+        element: (
+            <TermsCondition></TermsCondition>
+        )
+      },
+      {
+        path: "/guideline",
+        element: (
+           <Guideline></Guideline>
+        )
+      },
+      {
+        path: "/privacy-policy",
+        element: (
+           <Privacy></Privacy>
+        )
+      },
+
       {
         path: "/all-tickets",
         element: (
