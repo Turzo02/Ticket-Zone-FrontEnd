@@ -92,86 +92,70 @@
 
 }
 
+
 @plugin "daisyui/theme" {
   name: "dark";
 
   /* Backgrounds */
-  --bg-page: oklch(12% 0.03 260);
-  /* Deep Navy Black
-  --bg-card: oklch(16% 0.03 260);            /* Elevated dark navy surface */
-  --bg-badge: oklch(20% 0.04 260);
-  /* Lighter navy badge */
+  --bg-page: oklch(12% 0.02 230);        /* Deep Slate: A near-black with a cool, calming undertone. */
+  --bg-card: oklch(18% 0.03 230);        /* Elevated Slate: A slightly lighter surface for cards and modals. */
+  --bg-badge: oklch(25% 0.05 210);       /* Muted Blue-Gray for badges. */
 
   /* Text */
-  --text-main: oklch(96% 0.01 250);
-  /* Off-white */
-  --text-muted: oklch(75% 0.03 250);
-  /* Silver Blue */
-  --text-inv: oklch(10% 0.05 260);
-  /* Dark Navy text */
+  --text-main: oklch(97% 0.01 230);      /* Almost White: Crisp and highly readable. */
+  --text-muted: oklch(65% 0.02 230);     /* Cool Gray: For secondary information. */
+  --text-inv: oklch(12% 0.02 230);       /* Inverse Text (matches page background). */
 
   /* Borders & Shadows */
-  --border-card: oklch(25% 0.04 260);
-  /* Dark navy border */
-  --border-hover: oklch(50% 0.15 250);
-  /* Glowing Blue border */
+  --border-card: oklch(28% 0.03 230);    /* Subtle Slate Border */
+  --border-hover: oklch(70% 0.22 190);   /* Glowing Teal: A vibrant accent for hover states. */
 
-  /* Brand Gradients (Blue Theme) */
-  --grad-start: oklch(65% 0.18 250);
-  /* Bright Blue */
-  --grad-end: oklch(75% 0.15 220);
-  /* Cyan */
+  /* Brand Gradients (Teal/Cyan Theme) */
+  --grad-start: oklch(65% 0.22 195);     /* Vibrant Teal */
+  --grad-end: oklch(75% 0.2 185);        /* Bright Cyan */
 
   /* Specific Components */
-  --icon-bg: oklch(22% 0.06 260);
-  /* Dark transparent Blue */
+  --icon-bg: oklch(24% 0.04 220);        /* Transparent Cool Gray */
 
-  /* NEW: Transport Mode Specific Colors (Lighter, Glowing for Dark Mode) */
-  --route-plane: oklch(70% 0.18 260);
-  /* Light Blue */
-  --route-bus: oklch(75% 0.16 40);
-  /* Soft Orange */
-  --route-train: oklch(70% 0.18 300);
-  /* Lavender */
-  --route-ship: oklch(75% 0.15 180);
-  /* Cyan */
+  /* Transport Mode Specific Colors (Vibrant & Distinct) */
+  --route-plane: oklch(70% 0.2 240);     /* Sky Blue */
+  --route-bus: oklch(75% 0.18 50);       /* Saffron Orange */
+  --route-train: oklch(70% 0.18 290);    /* Electric Lavender */
+  --route-ship: oklch(75% 0.2 180);      /* Aqua Marine */
 
-  /* NEW: Route Card Specifics */
-  --route-line-base: oklch(25% 0.02 260);
-  /* Inactive line color */
-  --overlay-start: oklch(10% 0.05 260 / 0.95);
-  --overlay-end: oklch(10% 0.05 260 / 0.5);
+  /* Route Card Specifics */
+  --route-line-base: oklch(30% 0.02 230); /* Inactive line color */
+  --overlay-start: oklch(12% 0.02 230 / 0.95);
+  --overlay-end: oklch(12% 0.02 230 / 0.5);
 
-  /* NEW: Statistics Section Specifics */
-  --bg-stats: oklch(14% 0.03 260);
-  /* Dark Navy Strip */
-  --stats-border: oklch(22% 0.04 260);
-  /* Dark borders */
-    --pattern-color: oklch(80% 0.1 260 / 0.05); /* Faint white dot */
-       
-     /* NEW: Rating Star Color */
-  --star-color: oklch(88% 0.15 85);          /* Bright Gold */
-  --quote-icon: oklch(20% 0.05 260);    
-  
-    
-  /* NEW: Soft accent background for container boxes */
-  --bg-soft-accent: oklch(15% 0.03 260);     /* Darker navy/slate tint */
-  --icon-box-bg: oklch(20% 0.04 260);  
+  /* Statistics Section Specifics */
+  --bg-stats: oklch(15% 0.03 230);       /* Dark Slate Strip */
+  --stats-border: oklch(26% 0.04 230);   /* Subtle borders */
+  --pattern-color: oklch(80% 0.1 230 / 0.04); /* Faint dot pattern */
 
-    /* NEW: Form & Input Specifics */
-  --input-bg: oklch(18% 0.03 260);           /* Dark input surface */
-  --input-border: oklch(25% 0.03 260);       /* Subtle dark border */
-  --input-focus: oklch(65% 0.18 250);        /* Bright Blue focus ring */
-  
-  /* NEW: Success State Colors */
-  --success-bg: oklch(20% 0.05 140);         /* Dark Green background */
-  --success-text: oklch(85% 0.1 140); 
- /* NEW: Final CTA Section Background */
-  /* A vertical gradient from dark navy to slightly deeper navy */
-  --cta-bg-top: oklch(14% 0.03 260);
-  --cta-bg-bottom: oklch(10% 0.03 260);
+  /* Rating Star Color */
+  --star-color: oklch(85% 0.16 90);      /* Golden Yellow */
+  --quote-icon: oklch(25% 0.05 210);
 
+  /* Soft accent background for container boxes */
+  --bg-soft-accent: oklch(16% 0.03 230);  /* Darker slate tint */
+  --icon-box-bg: oklch(22% 0.04 220);
+
+  /* Form & Input Specifics */
+  --input-bg: oklch(15% 0.03 230);       /* Very dark input surface */
+  --input-border: oklch(30% 0.03 230);   /* Subtle dark border */
+  --input-focus: oklch(70% 0.22 190);    /* Glowing Teal focus ring */
+
+  /* Success State Colors */
+  --success-bg: oklch(25% 0.08 150);     /* Dark Mint background */
+  --success-text: oklch(85% 0.18 150);   /* Bright Mint text */
+
+  /* Final CTA Section Background */
+  --cta-bg-top: oklch(15% 0.03 230);
+  --cta-bg-bottom: oklch(12% 0.02 230);
 }
+
+
 
 
 

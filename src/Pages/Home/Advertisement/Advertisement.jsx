@@ -90,8 +90,7 @@ const Advertisement = () => {
                   return (
                     <div
                       key={ticket._id}
-                      className="
-                        group relative flex flex-col justify-between overflow-hidden rounded-2xl
+                      className="group relative flex flex-col justify-between overflow-hidden rounded-2xl
                         bg-(--bg-card) border border-(--border-card)
                         hover:border-(--border-hover)
                         shadow-[0_8px_30px_rgb(var(--shadow-color)/0.1)] 
