@@ -12,71 +12,125 @@
 
 @plugin "daisyui/theme" {
   name: "light";
-  
+
   /* Backgrounds */
-  --bg-page: oklch(98.5% 0.002 247.85);      /* Soft premium white/slate */
-  --bg-card: oklch(100% 0 0);                /* Pure white */
-  --bg-badge: oklch(96% 0.01 250);           /* Light blue-gray tint */
-  
+  --bg-page: oklch(98.5% 0.002 247.85);
+  /* Soft premium white/slate */
+  --bg-card: oklch(100% 0 0);
+  /* Pure white */
+  --bg-badge: oklch(96% 0.01 250);
+  /* Light blue-gray tint */
+
   /* Text */
-  --text-main: oklch(20.5% 0.04 265);        /* Deep Navy Slate */
-  --text-muted: oklch(55% 0.05 260);         /* Cool Gray */
-  --text-inv: oklch(100% 0 0);               /* White */
+  --text-main: oklch(20.5% 0.04 265);
+  /* Deep Navy Slate */
+  --text-muted: oklch(55% 0.05 260);
+  /* Cool Gray */
+  --text-inv: oklch(100% 0 0);
+  /* White */
 
   /* Borders & Shadows */
-  --border-card: oklch(94% 0.01 250);        /* Very subtle cool border */
-  --border-hover: oklch(85% 0.1 250);        /* Blue tint border */
-  --shadow-color: 0 0 0; 
+  --border-card: oklch(94% 0.01 250);
+  /* Very subtle cool border */
+  --border-hover: oklch(85% 0.1 250);
+  /* Blue tint border */
+  --shadow-color: 0 0 0;
 
   /* Brand Gradients (Blue Theme) */
-  --grad-start: oklch(55% 0.22 260);         /* Royal Blue */
-  --grad-end: oklch(65% 0.18 240);           /* Electric Cyan/Blue */
+  --grad-start: oklch(55% 0.22 260);
+  /* Royal Blue */
+  --grad-end: oklch(65% 0.18 240);
+  /* Electric Cyan/Blue */
 
   /* Specific Components */
-  --icon-bg: oklch(96% 0.03 250);            /* Very pale blue circle */
+  --icon-bg: oklch(96% 0.03 250);
+  /* Very pale blue circle */
 
-   /* NEW: Transport Mode Specific Colors (Vibrant but Readable) */
-  --route-plane: oklch(55% 0.22 260);        /* Royal Blue */
-  --route-bus: oklch(62% 0.19 40);           /* Burnt Orange */
-  --route-train: oklch(55% 0.22 300);        /* Deep Purple */
-  --route-ship: oklch(60% 0.18 180);         /* Ocean Teal */
-  
+  /* NEW: Transport Mode Specific Colors (Vibrant but Readable) */
+  --route-plane: oklch(55% 0.22 260);
+  /* Royal Blue */
+  --route-bus: oklch(62% 0.19 40);
+  /* Burnt Orange */
+  --route-train: oklch(55% 0.22 300);
+  /* Deep Purple */
+  --route-ship: oklch(60% 0.18 180);
+  /* Ocean Teal */
+
   /* NEW: Route Card Specifics */
-  --route-line-base: oklch(92% 0.01 250);    /* Inactive line color */
+  --route-line-base: oklch(92% 0.01 250);
+  /* Inactive line color */
+
+  --overlay-start: oklch(25% 0.15 260 / 0.9);
+  --overlay-end: oklch(25% 0.15 260 / 0.4);
+  /* NEW: Statistics Section Specifics */
+  --bg-stats: oklch(97.5% 0.01 250);
+  /* Very light cool gray/blue background */
+  --stats-border: oklch(90% 0.02 250);
+  /* Crisp borders for dividers */
+   --pattern-color: oklch(20% 0.1 260 / 0.05); /* Faint blue dot */
+
+
+
+
 }
 
 @plugin "daisyui/theme" {
   name: "dark";
-  
+
   /* Backgrounds */
-  --bg-page: oklch(12% 0.03 260);           /* Deep Navy Black
+  --bg-page: oklch(12% 0.03 260);
+  /* Deep Navy Black
   --bg-card: oklch(16% 0.03 260);            /* Elevated dark navy surface */
-  --bg-badge: oklch(20% 0.04 260);           /* Lighter navy badge */
-  
+  --bg-badge: oklch(20% 0.04 260);
+  /* Lighter navy badge */
+
   /* Text */
-  --text-main: oklch(96% 0.01 250);          /* Off-white */
-  --text-muted: oklch(75% 0.03 250);         /* Silver Blue */
-  --text-inv: oklch(10% 0.05 260);           /* Dark Navy text */
+  --text-main: oklch(96% 0.01 250);
+  /* Off-white */
+  --text-muted: oklch(75% 0.03 250);
+  /* Silver Blue */
+  --text-inv: oklch(10% 0.05 260);
+  /* Dark Navy text */
 
   /* Borders & Shadows */
-  --border-card: oklch(25% 0.04 260);        /* Dark navy border */
-  --border-hover: oklch(50% 0.15 250);       /* Glowing Blue border */
-  
+  --border-card: oklch(25% 0.04 260);
+  /* Dark navy border */
+  --border-hover: oklch(50% 0.15 250);
+  /* Glowing Blue border */
+
   /* Brand Gradients (Blue Theme) */
-  --grad-start: oklch(65% 0.18 250);         /* Bright Blue */
-  --grad-end: oklch(75% 0.15 220);           /* Cyan */
+  --grad-start: oklch(65% 0.18 250);
+  /* Bright Blue */
+  --grad-end: oklch(75% 0.15 220);
+  /* Cyan */
 
   /* Specific Components */
-  --icon-bg: oklch(22% 0.06 260);            /* Dark transparent Blue */
+  --icon-bg: oklch(22% 0.06 260);
+  /* Dark transparent Blue */
 
-    /* NEW: Transport Mode Specific Colors (Lighter, Glowing for Dark Mode) */
-  --route-plane: oklch(70% 0.18 260);        /* Light Blue */
-  --route-bus: oklch(75% 0.16 40);           /* Soft Orange */
-  --route-train: oklch(70% 0.18 300);        /* Lavender */
-  --route-ship: oklch(75% 0.15 180);         /* Cyan */
-  
+  /* NEW: Transport Mode Specific Colors (Lighter, Glowing for Dark Mode) */
+  --route-plane: oklch(70% 0.18 260);
+  /* Light Blue */
+  --route-bus: oklch(75% 0.16 40);
+  /* Soft Orange */
+  --route-train: oklch(70% 0.18 300);
+  /* Lavender */
+  --route-ship: oklch(75% 0.15 180);
+  /* Cyan */
+
   /* NEW: Route Card Specifics */
-  --route-line-base: oklch(25% 0.02 260);    /* Inactive line color */
+  --route-line-base: oklch(25% 0.02 260);
+  /* Inactive line color */
+  --overlay-start: oklch(10% 0.05 260 / 0.95);
+  --overlay-end: oklch(10% 0.05 260 / 0.5);
+
+  /* NEW: Statistics Section Specifics */
+  --bg-stats: oklch(14% 0.03 260);
+  /* Dark Navy Strip */
+  --stats-border: oklch(22% 0.04 260);
+  /* Dark borders */
+    --pattern-color: oklch(80% 0.1 260 / 0.05); /* Faint white dot */
+
 }
 
 
