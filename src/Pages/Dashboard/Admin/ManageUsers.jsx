@@ -114,7 +114,7 @@ const ManageUsers = () => {
   }
 
   return (
-      <div className="p-4 sm:p-8 max-w-7xl mx-auto min-h-screen bg-base-100 text-base-content">
+      <div className="p-4 sm:p-8 max-w-7xl mx-auto min-h-screen bg-base-200 text-base-content">
         {/* Header */}
         <div className="text-center py-8 mb-8 md:py-8 bg-base-200 rounded-xl shadow-lg">
           <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
@@ -125,9 +125,9 @@ const ManageUsers = () => {
         {/* --- Desktop/Tablet View (sm:block) --- */}
         <div className="hidden sm:block">
           {/* Table Container - Responsive scroll for smaller tables */}
-          <div className="shadow-xl border border-base-300 bg-base-200 overflow-x-auto rounded-xl">
+          <div className="shadow-xl border border-base-200 bg-base-200 overflow-x-auto rounded-xl">
             <table className="table w-full text-left">
-              <thead className="bg-base-300 text-base-content uppercase text-sm">
+              <thead className="bg-base-200 text-base-content uppercase text-sm">
                 <tr>
                   <th className="p-4 min-w-[150px]">Name</th>
                   <th className="p-4 min-w-[200px]">Email</th>
@@ -144,7 +144,7 @@ const ManageUsers = () => {
                 {users.map((user) => (
                   <tr
                     key={user._id}
-                    className="border-b border-base-300 last:border-b-0 hover:bg-base-300/50 transition"
+                    className="border-b border-base-200 last:border-b-0 hover:bg-base-200/50 transition"
                   >
                     <td className="p-4 font-medium text-base-content">
                       {user.name}
@@ -157,7 +157,7 @@ const ManageUsers = () => {
                         <span
                           className={`
                         block text-xs px-3 py-1.5 font-semibold uppercase rounded-sm
-                        text-base-content bg-base-100/90 shadow-md
+                        text-base-content bg-base-200/90 shadow-md
                         ${
                           user.role === "admin"
                             ? "bg-clip-text text-transparent bg-linear-to-r from-violet-600 to-fuchsia-600"
@@ -192,7 +192,7 @@ const ManageUsers = () => {
                         btn btn-sm text-white border-none transition
                         ${
                           user.role === "admin"
-                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-300 text-base-content/70"
+                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-200 text-base-content/70"
                             : "bg-linear-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 shadow-md shadow-violet-500/50"
                         }
                       `}
@@ -208,7 +208,7 @@ const ManageUsers = () => {
                         btn btn-sm text-white border-none transition
                         ${
                           user.role === "vendor"
-                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-300 text-base-content/70"
+                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-200 text-base-content/70"
                             : "bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-md shadow-blue-500/50"
                         }
                       `}
@@ -259,7 +259,7 @@ const ManageUsers = () => {
           {users.map((user) => (
             <div
               key={user._id}
-              className="bg-base-200 p-4 rounded-xl shadow-xl border border-base-300"
+              className="bg-base-200 p-4 rounded-xl shadow-xl border border-base-200"
             >
               <div className="flex justify-between items-start mb-3">
                 <h2 className="text-lg font-bold text-base-content">
@@ -271,7 +271,7 @@ const ManageUsers = () => {
                   <span
                     className={`
                   block text-xs px-3 py-1.5 font-semibold uppercase rounded-sm
-                  text-base-content bg-base-100/90 shadow-md
+                  text-base-content bg-base-200/90 shadow-md
                   ${
                     user.role === "admin"
                       ? "bg-clip-text text-transparent bg-linear-to-r from-violet-600 to-fuchsia-600"
@@ -308,7 +308,7 @@ const ManageUsers = () => {
                         btn btn-sm text-white border-none transition
                         ${
                           user.role === "admin"
-                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-300 text-base-content/70"
+                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-200 text-base-content/70"
                             : "bg-linear-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 shadow-md shadow-violet-500/50"
                         }
                       `}
@@ -324,7 +324,7 @@ const ManageUsers = () => {
                         btn btn-sm text-white border-none transition
                         ${
                           user.role === "vendor"
-                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-300 text-base-content/70"
+                            ? "disabled:opacity-90 disabled:cursor-not-allowed bg-base-200 text-base-content/70"
                             : "bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-md shadow-blue-500/50"
                         }
                       `}
@@ -334,7 +334,7 @@ const ManageUsers = () => {
               </div>
 
               {/* Fraud Action */}
-              <div className="pt-2 border-t border-base-300/50 flex justify-center">
+              <div className="pt-2 border-t border-base-200/50 flex justify-center">
                 {user.role === "admin" || user.role === "user" ? (
                   <span className="text-sm text-gray-400 font-mono">
                     Not available

@@ -75,7 +75,7 @@ const MyAddedTickets = () => {
 
 
   return (
-    <div className="sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
+    <div className="sm:p-8 max-w-7xl mx-auto bg-base-200 text-base-content">
       <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
           My Added Tickets
@@ -85,7 +85,7 @@ const MyAddedTickets = () => {
 
       {/* Ticket Grid */}
       {tickets.length === 0 ? (
-        <div className="text-center py-20 bg-base-200 rounded-lg border border-dashed border-base-300">
+        <div className="text-center py-20 bg-base-200 rounded-lg border border-dashed border-base-200">
           <h3 className="text-2xl font-bold text-base-content/50">
             No tickets found
           </h3>
@@ -217,7 +217,7 @@ const MyAddedTickets = () => {
     w-full mt-4 text-lg font-bold block transition duration-300 border-none
     ${
       ticket.status === "rejected"
-        ? "btn btn-disabled bg-base-300 text-base-content/70 shadow-none cursor-not-allowed"
+        ? "btn btn-disabled bg-base-200 text-base-content/70 shadow-none cursor-not-allowed"
         : "btn btn-block btn-lg text-white border-none transition  bg-linear-to-r from-red-700 via-red-600 to-rose-600 hover:from-red-800 hover:to-rose-700 shadow-lg shadow-red-700/50 flex items-center gap-2"
     }
   `}

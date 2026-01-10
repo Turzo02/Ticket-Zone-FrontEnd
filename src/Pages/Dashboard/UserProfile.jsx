@@ -31,11 +31,11 @@ const UserProfile = () => {
     return <p className="text-red-500">Failed to load tickets</p>;
   }
   return (
-    <div className="rounded-2xl border border-base-300 p-6 shadow-md bg-base-200 sm:p-8 text-base-content">
+    <div className="rounded-2xl border border-base-200 p-6 shadow-md bg-base-200 sm:p-8 text-base-content">
       <div className="flex items-start gap-6 sm:items-center">
         <div className="relative">
           <div
-            className="h-16 w-16 md:w-24 md:h-24 rounded-full bg-base-100 bg-cover bg-center shadow-md"
+            className="h-16 w-16 md:w-24 md:h-24 rounded-full bg-base-200 bg-cover bg-center shadow-md"
             style={{
               backgroundImage: `url('${loggedInUser.photoURL}')`,
             }}

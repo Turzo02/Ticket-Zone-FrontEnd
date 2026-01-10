@@ -75,7 +75,7 @@ const TicketDetailsPage = () => {
   if (isError) return <p className="text-red-600">Error loading ticket</p>;
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
-      <div className="text-left py-6 px-4 border-b border-base-300 space-y-2">
+      <div className="text-left py-6 px-4 border-b border-base-200 space-y-2">
         <h1
           className="
     text-3xl md:text-4xl 
@@ -92,7 +92,7 @@ const TicketDetailsPage = () => {
         </p>
       </div>
       {/* Header Image */}
-      <div className="relative h-64 sm:h-80 rounded-lg overflow-hidden mb-6 shadow-xl shadow-base-300/50">
+      <div className="relative h-64 sm:h-80 rounded-lg overflow-hidden mb-6 shadow-xl shadow-base-200/50">
         <img
           src={ticket.photo}
           alt="Ticket Header"
@@ -118,7 +118,7 @@ const TicketDetailsPage = () => {
         </div>
 
         {/* Price */}
-        <div className="flex justify-between items-center border-t border-base-300 pt-4">
+        <div className="flex justify-between items-center border-t border-base-200 pt-4">
           <span className="font-medium">Price:</span>
           <span className="text-info text-2xl font-bold">${ticket.price}</span>
         </div>
@@ -157,7 +157,7 @@ const TicketDetailsPage = () => {
             {ticket.perks.map((perk, i) => (
               <li
                 key={i}
-                className="badge badge-lg bg-base-300 px-3 py-1 rounded-lg shrink-0"
+                className="badge badge-lg bg-base-200 px-3 py-1 rounded-lg shrink-0"
               >
                 {perk}
               </li>
@@ -177,7 +177,7 @@ const TicketDetailsPage = () => {
   shadow-lg
   ${
     ticket.quantity === 0 || new Date(ticket.departure) < new Date()
-      ? "btn-disabled bg-base-300 text-base-content/50 cursor-not-allowed"
+      ? "btn-disabled bg-base-200 text-base-content/50 cursor-not-allowed"
       : "bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 border-none text-white shadow-lg shadow-purple-500/30"
   }
 `}
@@ -191,7 +191,7 @@ const TicketDetailsPage = () => {
       {/* Booking Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-          <div className="card bg-base-100 rounded-lg shadow-2xl w-11/12 max-w-md p-6 relative">
+          <div className="card bg-base-200 rounded-lg shadow-2xl w-11/12 max-w-md p-6 relative">
             <button
               onClick={() => setModalOpen(false)}
               className="absolute top-3 right-3 btn btn-ghost btn-sm text-base-content/60"

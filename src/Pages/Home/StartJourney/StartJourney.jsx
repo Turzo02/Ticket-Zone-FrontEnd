@@ -29,7 +29,7 @@ const StartJourney = () => {
               className="
             btn
             w-[200px]
-            bg-base-100
+            bg-base-200
             text-primary
             hover:bg-base-200
             border-none

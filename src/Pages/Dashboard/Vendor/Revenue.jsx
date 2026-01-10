@@ -75,7 +75,7 @@ const Revenue = () => {
   }));
 
   return (
-    <div className="p-6 bg-base-100 min-h-screen text-base-content">
+    <div className="p-6 bg-base-200 min-h-screen text-base-content">
       {/* Header */}
       <div className="text-center py-8 mb-8 bg-base-200 rounded-xl shadow-md">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">

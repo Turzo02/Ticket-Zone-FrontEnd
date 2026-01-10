@@ -62,7 +62,7 @@ const LatestTickets = () => {
           <SwappingDotLoader />
         </div>
       ) : tickets.length === 0 ? (
-        <div className="text-center py-20 bg-base-100  border border-dashed border-base-300 ">
+        <div className="text-center py-20 bg-base-200  border border-dashed border-base-200 ">
           <h3 className="text-2xl font-bold text-base-content/50">
             No Latest Tickets found
           </h3>
@@ -105,7 +105,7 @@ const LatestTickets = () => {
                 {/* Body */}
                 <div className="pt-4 space-y-4">
                   {/* Price */}
-                  <div className="flex justify-between border-b border-base-300 pb-2">
+                  <div className="flex justify-between border-b border-base-200 pb-2">
                     <p className="text-xs font-semibold text-base-content/60 uppercase">
                       Price (Per Unit)
                     </p>
@@ -157,7 +157,7 @@ const LatestTickets = () => {
                       {ticket.perks.map((perk, i) => (
                         <li
                           key={i}
-                          className="bg-base-300 px-2 py-1 rounded-lg shrink-0"
+                          className="bg-base-200 px-2 py-1 rounded-lg shrink-0"
                         >
                           {perk}
                         </li>

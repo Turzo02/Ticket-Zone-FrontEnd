@@ -4,15 +4,32 @@ import Banner from "./Banner/Banner";
 import LatestTickets from "./LatestTickets/LatestTickets";
 import PopularRoutes from "./PopularRoutes/PopularRoutes";
 import StartJourney from "./StartJourney/StartJourney";
+import BlogUpdates from "./BlogUpdates/BlogUpdates";
+import BrandPromise from "./BrandPromise/BrandPromise";
+import FinalCTA from "./FinalCTA/FinalCTA";
+import NewsletterSignup from "./NewsletterSignup/NewsletterSignup";
+import PlatformStatistics from "./PlatformStatistics/PlatformStatistics";
+import Testimonials from "./Testimonials/Testimonials";
+import TravelInspiration from "./TravelInspiration/TravelInspiration";
+import VisualHighlight from "./VisualHighlight/VisualHighlight";
+import TrustBadges from "./TrustBadges/TrustBadges";
 const Home = () => {
   return (
-    <div className="">
-      <Banner></Banner>
-      <Advertisement></Advertisement>
-      <LatestTickets></LatestTickets>
-      <PopularRoutes></PopularRoutes>
-      <StartJourney></StartJourney> 
-
+    <div className="max-w-7xl mx-auto">
+      <Banner />
+      <Advertisement />
+      <BrandPromise />
+      <TrustBadges />
+      <PopularRoutes />
+      <VisualHighlight />
+      <PlatformStatistics />
+      <LatestTickets />
+      <Testimonials />
+      <TravelInspiration />
+      <BlogUpdates />
+      <NewsletterSignup />
+      <FinalCTA />
+      <StartJourney />
     </div>
   );
 };

@@ -2,8 +2,8 @@ import React from 'react';
 
 const Forbidden = () => {
     return (
-        <div className="min-h-screen max-w-7xl mx-auto flex items-center justify-center p-4 bg-base-100 text-base-content">
-            <div className="text-center max-w-lg p-8 space-y-8 bg-base-200 rounded-2xl shadow-2xl border border-base-300">
+        <div className="min-h-screen max-w-7xl mx-auto flex items-center justify-center p-4 bg-base-200 text-base-content">
+            <div className="text-center max-w-lg p-8 space-y-8 bg-base-200 rounded-2xl shadow-2xl border border-base-200">
                 
 
                 {/* 2. Main Title */}

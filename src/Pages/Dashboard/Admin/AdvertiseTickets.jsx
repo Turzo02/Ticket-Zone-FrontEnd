@@ -119,7 +119,7 @@ const AdvertiseTickets = () => {
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-4xl mx-auto min-h-screen bg-base-100 text-base-content">
+    <div className="p-4 sm:p-8 max-w-4xl mx-auto min-h-screen bg-base-200 text-base-content">
       <h1 className="text-3xl font-bold text-center text-primary sm:text-4xl"></h1>
 
       <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
@@ -134,8 +134,8 @@ const AdvertiseTickets = () => {
 
       {/* Table/Card Container - Using DaisyUI Card/Base styles */}
 
-      <div className="shadow-xl rounded-2xl border border-base-300 bg-base-200 overflow-hidden">
-        <div className="hidden md:grid grid-cols-4 gap-4 p-4 bg-base-300 text-base-content uppercase text-sm font-bold">
+      <div className="shadow-xl rounded-2xl border border-base-200 bg-base-200 overflow-hidden">
+        <div className="hidden md:grid grid-cols-4 gap-4 p-4 bg-base-200 text-base-content uppercase text-sm font-bold">
           <div className="col-span-1">Ticket Title</div>
 
           <div className="col-span-1">From - To</div>
@@ -219,7 +219,7 @@ const AdvertiseTickets = () => {
             <button
               onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
               disabled={page === 1}
-              className="btn btn-sm btn-ghost bg-base-300 disabled:opacity-50"
+              className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
             >
               Prev
             </button>
@@ -239,7 +239,7 @@ const AdvertiseTickets = () => {
             <button
               onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={page === totalPages}
-              className="btn btn-sm btn-ghost bg-base-300 disabled:opacity-50"
+              className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
             >
               Next
             </button>

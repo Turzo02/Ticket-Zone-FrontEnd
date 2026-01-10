@@ -101,14 +101,14 @@ const AddTicket = () => {
   }
 
   return (
-    <div className="p-4 sm:p-8 bg-base-100 text-base-content max-w-7xl mx-auto">
+    <div className="p-4 sm:p-8 bg-base-200 text-base-content max-w-7xl mx-auto">
       <div className="text-center py-8 mb-6 md:py-8  bg-base-200 rounded-xl shadow-lg">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
           Add A New Ticket
         </h1>
       </div>
 
-      <div className="rounded-2xl border border-base-300 bg-base-200 p-6 lg:p-8 shadow-2xl">
+      <div className="rounded-2xl border border-base-200 bg-base-200 p-6 lg:p-8 shadow-2xl">
         <form
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
           onSubmit={handleSubmit(handleAddTicket)}

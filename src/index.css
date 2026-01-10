@@ -7,59 +7,50 @@
 
 /* 3️⃣ DaisyUI themes */
 
-@plugin "daisyui/theme" {
-  name: "dark";
 
-  --color-base-100: #111621;
-  --color-base-200: rgba(30, 41, 59, 0.75);
-  /* glass card */
-  --color-base-300: #1f2937;
-  --color-base-content: #ffffff;
-
-  --color-primary: #2463eb;
-  --color-primary-content: #ffffff;
-
-  --color-neutral: rgba(17, 22, 33, 0.8);
-  --color-neutral-content: #ffffff;
-
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-
-  --text-success: #a7f3d0;
-  --text-warning: #fcd34d;
-  --text-error: #fca5a5;
-  --text-info: #93c5fd;
-  --text-muted: #d1d5db;
-
-}
 
 
 @plugin "daisyui/theme" {
   name: "light";
+  
+  --bg-page: oklch(98.5% 0.002 247.85);      /* Soft premium white/slate */
+  --bg-card: oklch(100% 0 0);                /* Pure white */
+  --bg-badge: oklch(96% 0.01 247.85);        /* Light gray badge bg */
+  
+  --text-main: oklch(20.5% 0.04 255.6);      /* Deep slate */
+  --text-muted: oklch(55.6% 0.03 255.6);     /* Soft gray */
+  --text-inv: oklch(100% 0 0);               /* White text */
 
-  --color-base-100: #f6f6f8;
-  --color-base-200: #ffffff;
-  --color-base-300: #e5e7eb;
-  --color-base-content: #0f172a;
-
-  --color-primary: #2463eb;
-  --color-primary-content: #ffffff;
-
-  --color-neutral: #f8fafc;
-  --color-neutral-content: #0f172a;
-
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-
-  --text-success: #166534;
-  --text-warning: #78350f;
-  --text-error: #991b1b;
-  --text-info: #0c4a6e;
-  --text-muted: #6b7280;
-
+  --border-card: oklch(92% 0.01 255.6);      /* Subtle light border */
+  --border-hover: oklch(80% 0.1 60);         /* Orange tint border */
+  
+  --grad-start: oklch(62% 0.23 45);          /* Vivid Orange */
+  --grad-end: oklch(85% 0.18 85);            /* Rich Amber */
+  
+  /* Helper for shadows (rgb values) */
+  --shadow-color: 0 0 0; 
 }
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  
+  --bg-page: oklch(12% 0.02 255);            /* Deep premium black/blue */
+  --bg-card: oklch(17% 0.02 255);            /* Elevated dark surface */
+  --bg-badge: oklch(22% 0.02 255);           /* Lighter dark badge */
+  
+  --text-main: oklch(95% 0.01 250);          /* Off-white */
+  --text-muted: oklch(70% 0.02 250);         /* Silver/Gray */
+  --text-inv: oklch(15% 0.05 45);            /* Dark text */
+
+  --border-card: oklch(25% 0.02 255);        /* Dark gray border */
+  --border-hover: oklch(60% 0.15 45);        /* Glowing orange border */
+  
+  --grad-start: oklch(70% 0.19 45);          /* Bright Orange */
+  --grad-end: oklch(90% 0.15 85);            /* Pale Gold */
+  
+  --shadow-color: 0 0 0;
+}
+
 
 
 /* 4️⃣ Global styles */

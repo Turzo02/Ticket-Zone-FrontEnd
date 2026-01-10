@@ -47,7 +47,7 @@ const MyBookedTickets = () => {
                         <TicketCard key={ticket._id} ticket={ticket} />
                     ))
                 ) : (
-                    <div className="col-span-full text-center py-20 bg-base-100  border border-dashed border-base-300 max-w-full ">
+                    <div className="col-span-full text-center py-20 bg-base-200  border border-dashed border-base-200 max-w-full ">
                         <h3 className="text-2xl font-bold text-base-content/50">
                             You have no Booked Tickets
                         </h3>

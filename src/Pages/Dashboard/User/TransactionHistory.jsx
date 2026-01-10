@@ -33,7 +33,7 @@ const TransactionHistory = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-base-100 text-base-content">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-base-200 text-base-content">
       <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
           Transaction History
@@ -41,11 +41,11 @@ const TransactionHistory = () => {
       </div>
 
       {/* --- Desktop View --- */}
-      <div className="hidden md:block mt-4 rounded-lg border border-base-300 shadow-xl overflow-hidden bg-base-200">
+      <div className="hidden md:block mt-4 rounded-lg border border-base-200 shadow-xl overflow-hidden bg-base-200">
         <div className="overflow-x-auto">
           <table className="table min-w-full">
             {/* Table Header */}
-            <thead className="bg-base-300">
+            <thead className="bg-base-200">
               <tr>
                 <th className="p-4 text-left text-xs font-semibold uppercase tracking-wider text-base-content/80">
                   Transaction ID
@@ -68,7 +68,7 @@ const TransactionHistory = () => {
               {bookings.map((tx) => (
                 <tr
                   key={tx._id}
-                  className="border-b border-base-300 hover:bg-base-300/50 transition duration-150 ease-in-out"
+                  className="border-b border-base-200 hover:bg-base-200/50 transition duration-150 ease-in-out"
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-base-content/60">
                     {tx.transactionId ? (
@@ -129,7 +129,7 @@ const TransactionHistory = () => {
         {bookings.map((tx) => (
           <div
             key={tx._id}
-            className="p-4 border border-base-300 rounded-lg shadow-lg bg-base-200"
+            className="p-4 border border-base-200 rounded-lg shadow-lg bg-base-200"
           >
             {/* Row 1: Title and Amount */}
             <div className="flex justify-between items-start mb-2">
@@ -168,7 +168,7 @@ const TransactionHistory = () => {
             </div>
 
             {/* Row 3: Transaction ID */}
-            <div className="pt-2 border-t border-base-300 flex justify-between items-center">
+            <div className="pt-2 border-t border-base-200 flex justify-between items-center">
               <p className="text-xs font-medium text-base-content/60">
                 Transaction ID
               </p>

@@ -18,7 +18,7 @@ const TicketCard = ({ ticket }) => {
   const buttonClasses = `btn w-full mt-2 text-md font-bold transition-all ${
     isPurchasable
       ? "btn-primary text-primary-content shadow-lg shadow-primary/40 hover:shadow-xl"
-      : "btn-disabled bg-base-300 text-base-content/60 shadow-none cursor-not-allowed"
+      : "btn-disabled bg-base-200 text-base-content/60 shadow-none cursor-not-allowed"
   }`;
 
   // Paid Button: Success color, disabled state
@@ -73,7 +73,7 @@ const TicketCard = ({ ticket }) => {
   };
 
   return (
-    <div className="flex flex-col rounded-2xl border border-base-300 shadow-xl overflow-hidden bg-base-200 text-base-content">
+    <div className="flex flex-col rounded-2xl border border-base-200 shadow-xl overflow-hidden bg-base-200 text-base-content">
       <img
         className="h-40 w-full object-cover"
         src={ticket.photo}
@@ -91,7 +91,7 @@ const TicketCard = ({ ticket }) => {
             <h1 className="truncate max-w-[100px]">To: {ticket.to}</h1>
           </div>
           {/* Total Price */}
-          <div className="flex justify-between items-center border-b border-base-300">
+          <div className="flex justify-between items-center border-b border-base-200">
             <span className="text-base-content/80 font-medium">
               Total Price:
             </span>
@@ -100,7 +100,7 @@ const TicketCard = ({ ticket }) => {
             </span>
           </div>
           {/* Booking Quantity */}
-          <div className="flex justify-between items-center border-b border-base-300">
+          <div className="flex justify-between items-center border-b border-base-200">
             <span className="text-base-content/80 font-medium">Quantity:</span>
             <span className="text-lg font-semibold text-orange-500">
               {ticket.bookingQuantity}
@@ -127,7 +127,7 @@ const TicketCard = ({ ticket }) => {
           </div>
 
           {/* Ticket Status */}
-          <div className="flex justify-between items-center border-t pt-2 border-base-300">
+          <div className="flex justify-between items-center border-t pt-2 border-base-200">
             <span className="text-base-content/80">Ticket Status:</span>
             <span
               className={`badge badge-lg font-semibold ${getTicketStatusBadge(

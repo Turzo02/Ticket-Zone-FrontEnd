@@ -51,7 +51,7 @@ const RouteCard = ({ icon: Icon, city1, city2, themeColor }) => {
     <div
       className={`
         group relative w-full
-        bg-base-100 
+        bg-base-200 
         rounded-2xl
         border border-base-200 
         ${theme.border}
@@ -89,7 +89,7 @@ const RouteCard = ({ icon: Icon, city1, city2, themeColor }) => {
 
           {/* Connector Line */}
           <div className="flex-1 flex flex-col items-center px-2">
-            <div className="relative w-full h-0.5 bg-base-300 rounded-full overflow-hidden">
+            <div className="relative w-full h-0.5 bg-base-200 rounded-full overflow-hidden">
               {/* Moving Gradient Line on Hover */}
               <div
                 className={`absolute inset-0 w-full h-full -translate-x-full group-hover:translate-x-0 transition-transform duration-700 bg-linear-to-r ${theme.gradient} opacity-50`}
@@ -153,7 +153,7 @@ const PopularRoutes = () => {
   ];
 
   return (
-    <div className="w-full min-h-[50vh] flex flex-col justify-center bg-base-100 py-16 px-4 sm:px-8">
+    <div className="w-full min-h-[50vh] flex flex-col justify-center bg-base-200 py-16 px-4 sm:px-8">
       <div className="max-w-7xl mx-auto w-full">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">

@@ -96,7 +96,7 @@ const AllTickets = () => {
           <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
             {/* Transport Filter */}
             <div className="relative group w-full sm:w-auto">
-              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-1 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
+              <div className="flex items-center space-x-2 bg-base-200 border-2 border-base-200 rounded-lg px-3 py-1 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
                 <Filter className="w-5 h-5 text-primary shrink-0" />
                 <select
                   value={filterType}
@@ -114,7 +114,7 @@ const AllTickets = () => {
 
             {/* Price Sort */}
             <div className="relative group w-full sm:w-auto">
-              <div className="flex items-center space-x-2 bg-base-100 border-2 border-base-300 rounded-lg px-3 py-1 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
+              <div className="flex items-center space-x-2 bg-base-200 border-2 border-base-200 rounded-lg px-3 py-1 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
                 <ArrowUpDown className="w-5 h-5 text-primary shrink-0" />
                 <select
                   value={sortOrder}
@@ -136,14 +136,14 @@ const AllTickets = () => {
               placeholder="From (City/Station)"
               value={fromLocation}
               onChange={handleFromChange}
-              className="input input-bordered border-2 border-base-300 bg-base-100 focus:input-primary shadow-sm w-full transition-all"
+              className="input input-bordered border-2 border-base-200 bg-base-200 focus:input-primary shadow-sm w-full transition-all"
             />
             <input
               type="text"
               placeholder="To (City/Station)"
               value={toLocation}
               onChange={handleToChange}
-              className="input input-bordered border-2 border-base-300 bg-base-100 focus:input-primary shadow-sm w-full transition-all"
+              className="input input-bordered border-2 border-base-200 bg-base-200 focus:input-primary shadow-sm w-full transition-all"
             />
           </div>
         </div>
@@ -153,7 +153,7 @@ const AllTickets = () => {
       <div className="relative min-h-[400px]">
         {/* Loader Overlay: Only shows when data is fetching (sorting, searching, etc.) */}
         {isFetching && (
-          <div className="absolute inset-0 z-10 flex justify-center items-start pt-32 bg-base-100/40 backdrop-blur-[2px] rounded-xl transition-all">
+          <div className="absolute inset-0 z-10 flex justify-center items-start pt-32 bg-base-200/40 backdrop-blur-[2px] rounded-xl transition-all">
             <div className="sticky top-1/2">
               <SwappingDotLoader />
             </div>
@@ -161,7 +161,7 @@ const AllTickets = () => {
         )}
 
         {allTickets.length === 0 && !isFetching ? (
-          <div className="text-center py-20 bg-base-100 border border-dashed border-base-300 rounded-xl">
+          <div className="text-center py-20 bg-base-200 border border-dashed border-base-200 rounded-xl">
             <h3 className="text-2xl font-bold text-base-content/50">
               No tickets found
             </h3>
@@ -209,7 +209,7 @@ const AllTickets = () => {
                       </h1>
                     </div>
 
-                    <div className="flex justify-between items-center border-b border-base-300 pb-2">
+                    <div className="flex justify-between items-center border-b border-base-200 pb-2">
                       <p className="text-xs font-semibold text-base-content/60 uppercase">
                         Price (Per Unit)
                       </p>
@@ -255,7 +255,7 @@ const AllTickets = () => {
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}
-            className="btn btn-sm btn-ghost bg-base-300 disabled:opacity-50"
+            className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
           >
             Prev
           </button>
@@ -271,7 +271,7 @@ const AllTickets = () => {
           <button
             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={page === totalPages}
-            className="btn btn-sm btn-ghost bg-base-300 disabled:opacity-50"
+            className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
           >
             Next
           </button>

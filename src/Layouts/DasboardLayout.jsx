@@ -32,11 +32,11 @@ const DashboardLayout = () => {
   }
   const allowedMenuItems = menuItems.filter((item) => item.roles.includes(role));
   return (
-    <div className="flex min-h-screen bg-base-100">
+    <div className="flex min-h-screen bg-base-200">
       {/* Sidebar */}
       <aside
-        className={`fixed lg:relative bg-base-100 top-0 left-0 z-30 h-full w-64 transform 
-        border-r border-base-300 transition-transform duration-300 ease-in-out 
+        className={`fixed lg:relative bg-base-200 top-0 left-0 z-30 h-full w-64 transform 
+        border-r border-base-200 transition-transform duration-300 ease-in-out 
         ${
           drawerOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
@@ -57,7 +57,7 @@ const DashboardLayout = () => {
                   ${
                     isActive
                       ? "bg-primary text-primary-content shadow-md shadow-primary/30" 
-                      : "text-base-content hover:bg-base-300" 
+                      : "text-base-content hover:bg-base-200" 
                   }`
                 }
               >
@@ -77,9 +77,9 @@ const DashboardLayout = () => {
       )}
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col min-h-screen bg-base-100">
+      <div className="flex-1 flex flex-col min-h-screen bg-base-200">
         {/* Mobile menu button & Header */}
-        <header className="flex items-center justify-between p-4 bg-base-100 border-b border-base-300 lg:hidden">
+        <header className="flex items-center justify-between p-4 bg-base-200 border-b border-base-200 lg:hidden">
           <h1 className="text-xl font-bold text-base-content">
             Dashboard
           </h1>
@@ -91,7 +91,7 @@ const DashboardLayout = () => {
           </button>
         </header>
 
-        <main className="flex-1 p-4 bg-base-100">
+        <main className="flex-1 p-4 bg-base-200">
           <Outlet />
         </main>
       </div>

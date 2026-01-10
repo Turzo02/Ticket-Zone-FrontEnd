@@ -87,7 +87,7 @@ const handleReject = async (id) => {
 
   return (
     <div>
-      <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
+      <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-200 text-base-content">
         <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
           <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
             Manage Tickets
@@ -95,13 +95,13 @@ const handleReject = async (id) => {
         </div>
 
         {/* Table Container */}
-        <div className="shadow-lg rounded-2xl border border-base-300 bg-base-200 overflow-hidden">
+        <div className="shadow-lg rounded-2xl border border-base-200 bg-base-200 overflow-hidden">
           {/* Standard Table for Desktop/Tablet */}
           <div className="hidden sm:block overflow-x-auto">
             {/* Table starts */}
             <table className="table w-full text-left">
               {/* Table Header */}
-              <thead className=" uppercase text-sm bg-base-300 text-base-content">
+              <thead className=" uppercase text-sm bg-base-200 text-base-content">
                 <tr>
                   <th className="p-4">Ticket Title</th>
                   <th className="p-4">Vendor Info</th>
@@ -114,7 +114,7 @@ const handleReject = async (id) => {
                 {allTickets.map((ticket) => (
                   <tr
                     key={ticket._id}
-                    className="border-b border-base-300 hover:bg-base-300/50 transition"
+                    className="border-b border-base-200 hover:bg-base-200/50 transition"
                   >
                     <td className="p-4 font-semibold text-base-content">
                       {ticket.title}
@@ -185,11 +185,11 @@ const handleReject = async (id) => {
           </div>
 
           {/* Mobile Card View  */}
-          <div className="block sm:hidden divide-y divide-base-300">
+          <div className="block sm:hidden divide-y divide-base-200">
             {allTickets.map((ticket) => (
               <div
                 key={ticket._id}
-                className="p-4 hover:bg-base-300/50 transition"
+                className="p-4 hover:bg-base-200/50 transition"
               >
                 {/* Ticket Title */}
                 <div className="text-lg font-bold text-base-content mb-2">
@@ -233,7 +233,7 @@ const handleReject = async (id) => {
                 </div>
 
                 {/* Action Buttons  */}
-                <div className="border-t border-base-300 pt-3 flex justify-center">
+                <div className="border-t border-base-200 pt-3 flex justify-center">
                   {ticket.status === "pending" ? (
                     <div className="flex gap-4 justify-center items-center w-full">
                       <button
@@ -279,7 +279,7 @@ const handleReject = async (id) => {
               <button
                 onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                 disabled={page === 1}
-                className="btn btn-sm btn-ghost bg-base-300 disabled:opacity-50"
+                className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
               >
                 Prev
               </button>
@@ -301,7 +301,7 @@ const handleReject = async (id) => {
                   setPage((prev) => Math.min(prev + 1, totalPages))
                 }
                 disabled={page === totalPages}
-                className="btn btn-sm btn-ghost bg-base-300 disabled:opacity-50"
+                className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
               >
                 Next
               </button>

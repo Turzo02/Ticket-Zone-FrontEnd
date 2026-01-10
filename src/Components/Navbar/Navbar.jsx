@@ -48,7 +48,7 @@ const Navbar = () => {
       className="
     sticky top-0 z-50
     backdrop-blur-md
-    border-b border-base-300
+    border-b border-base-200
   "
     >
       <div className="navbar  max-w-7xl mx-auto px-4 sm:px-6">
@@ -77,7 +77,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-1 p-3 shadow-2xl bg-base-100 border border-base-300 rounded-2xl w-52 gap-2"
+              className="menu menu-sm dropdown-content mt-3 z-1 p-3 shadow-2xl bg-base-200 border border-base-200 rounded-2xl w-52 gap-2"
             >
               {links}
             </ul>
@@ -123,7 +123,7 @@ const Navbar = () => {
                 className="btn btn-ghost rounded-full flex items-center gap-2 px-2 hover:bg-base-200 transition-colors"
               >
                 <div className="avatar">
-                  <div className="w-9 h-9 rounded-full ring-1 ring-base-300">
+                  <div className="w-9 h-9 rounded-full ring-1 ring-base-200">
                     <img
                       src={
                         user.photoURL ||
@@ -141,7 +141,7 @@ const Navbar = () => {
               {/* Dropdown Menu */}
               <ul
                 tabIndex={0}
-                className="menu dropdown-content mt-3 z-1 p-2 shadow-xl bg-base-100 border border-base-300 rounded-xl w-52"
+                className="menu dropdown-content mt-3 z-1 p-2 shadow-xl bg-base-200 border border-base-200 rounded-xl w-52"
               >
                 <li>
                   <Link

@@ -134,7 +134,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div
           className="
-      border-t border-base-300
+      border-t border-base-200
       py-4
       text-center
       text-xs

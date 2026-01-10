@@ -106,16 +106,16 @@ const RequestedTickets = () => {
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-100 text-base-content">
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-200 text-base-content">
       <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
           Requested Tickets
         </h1>
       </div>
 
-      <div className="hidden md:block overflow-x-auto shadow-xl rounded-lg border border-base-300 bg-base-200">
+      <div className="hidden md:block overflow-x-auto shadow-xl rounded-lg border border-base-200 bg-base-200">
         <table className="table w-full">
-          <thead className="bg-base-300 text-base-content">
+          <thead className="bg-base-200 text-base-content">
             <tr>
               <th className="p-4 text-left">Email</th>
               <th className="p-4 text-left">Ticket Title</th>
@@ -137,7 +137,7 @@ const RequestedTickets = () => {
               return (
                 <tr
                   key={req._id}
-                  className="border-b border-base-300 hover:bg-base-300/50 transition"
+                  className="border-b border-base-200 hover:bg-base-200/50 transition"
                 >
                   <td className="p-4 ">{req.userEmail}</td>
 
@@ -225,7 +225,7 @@ const RequestedTickets = () => {
             return (
               <div
                 key={req._id}
-                className="card bg-base-200 shadow-xl border border-base-300 transition hover:shadow-2xl"
+                className="card bg-base-200 shadow-xl border border-base-200 transition hover:shadow-2xl"
               >
                 <div className="card-body p-4">
                   {/* Header/Status */}
@@ -239,7 +239,7 @@ const RequestedTickets = () => {
                   </div>
 
                   {/* Details Grid */}
-                  <div className="grid grid-cols-2 gap-2 text-sm mb-4 border-t pt-2 border-base-300">
+                  <div className="grid grid-cols-2 gap-2 text-sm mb-4 border-t pt-2 border-base-200">
                     <div className="font-semibold text-base-content/70">
                       Email:
                     </div>
