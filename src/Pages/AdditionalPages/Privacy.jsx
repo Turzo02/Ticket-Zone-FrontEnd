@@ -92,7 +92,7 @@ const Privacy = () => {
                       {section.title}
                     </h2>
                   </div>
-                  <p className="text-(--text-muted) leading-7 pl-[3.25rem]">
+                  <p className="text-(--text-muted) leading-7 pl-13">
                     {section.content}
                   </p>
                 </div>
