@@ -10,10 +10,10 @@ const RootLayout = () => {
     return <SwappingDotLoader></SwappingDotLoader>;
   }
   return (
-    <div className="max-w-7xl mx-auto">
+    <div >
       {/* Router And Layout setup Done */}
       <Navbar></Navbar>
-      <Outlet></Outlet>
+      <Outlet className="max-w-7xl mx-auto"></Outlet>
       <Footer></Footer>
     </div>
   );

@@ -1,8 +1,9 @@
 import { Link, NavLink } from "react-router";
 import logo from "/favicon.png";
 import { useTheme } from "../../Context/ThemeToggle/useTheme";
-import { LogOut, Moon, Sun, User } from "lucide-react";
+import { LogOut, Moon, Sun, User, Menu, ChevronDown } from "lucide-react";
 import useAuth from "../../Hooks/useAuth";
+
 const Navbar = () => {
   const [theme, toggleTheme] = useTheme();
   const { logOut, user } = useAuth();
@@ -27,11 +28,11 @@ const Navbar = () => {
             <NavLink
               to={path}
               className={({ isActive }) =>
-                `relative px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ease-out
+                `relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 ease-out flex items-center gap-2
               ${
                 isActive
-                  ? "bg-primary text-primary-content shadow-lg shadow-primary/25 scale-105"
-                  : "text-base-content/70 hover:text-primary hover:bg-primary/10"
+                  ? "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--nav-text-active) shadow-lg shadow-(--grad-start)/20 scale-105"
+                  : "text-(--text-muted) hover:text-(--brand-primary) hover:bg-(--surface-highlight)"
               }`
               }
             >
@@ -46,149 +47,146 @@ const Navbar = () => {
   return (
     <div
       className="
-    sticky top-0 z-50
-    backdrop-blur-md
-    border-b border-base-200
-  "
+        sticky top-0 z-50
+        backdrop-blur-xl
+        bg-(--surface-nav)
+        border-b border-(--nav-border)
+        transition-colors duration-300
+      "
     >
-      <div className="navbar  max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Navbar Start */}
-        <div className="navbar-start">
-          <div className="dropdown">
+      <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 h-20">
+        
+        {/* Navbar Start: Mobile Menu & Logo */}
+        <div className="navbar-start gap-3">
+          
+          {/* Mobile Dropdown */}
+          <div className="dropdown lg:hidden">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost lg:hidden hover:bg-primary/10 hover:text-primary transition-colors"
+              className="btn btn-ghost btn-circle hover:bg-(--surface-highlight) text-(--text-main)"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
+              <Menu size={24} />
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-1 p-3 shadow-2xl bg-base-200 border border-base-200 rounded-2xl w-52 gap-2"
+              className="menu menu-sm dropdown-content mt-3 z-50 p-3 shadow-2xl bg-(--surface-card) border border-(--border-card) rounded-2xl w-56 gap-2"
             >
               {links}
             </ul>
           </div>
 
           {/* Logo */}
-          {/* Logo Section */}
           <Link
             to="/"
-            className="flex items-center gap-3 group transition-all duration-300 ease-in-out hover:opacity-80"
+            className="flex items-center gap-2.5 group transition-all duration-300 ease-in-out hover:opacity-90"
           >
             <div className="relative">
               <img
-                className="relative w-10 h-10 object-contain transform group-hover:scale-105 transition-transform duration-300"
+                className="relative w-9 h-9 object-contain transform group-hover:rotate-12 transition-transform duration-300"
                 src={logo}
                 alt="Ticket Zone Logo"
               />
             </div>
 
-            {/* Text Logo with Dual Weights */}
             <div className="flex flex-col">
-              <span className="text-2xl font-black tracking-tighter leading-none flex items-center gap-1">
-                <span className="text-base-content">TICKET</span>
-                <span className="text-info italic">ZONE</span>
+              <span className="text-xl sm:text-2xl font-black tracking-tighter leading-none flex items-center gap-0.5">
+                <span className="text-(--text-main)">TICKET</span>
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end) italic pr-1">
+                  ZONE
+                </span>
               </span>
             </div>
           </Link>
         </div>
 
-        {/* Navbar Center */}
+        {/* Navbar Center: Desktop Menu */}
         <div className="navbar-center hidden lg:flex">
           <ul className="flex items-center gap-1">{links}</ul>
         </div>
 
-        {/* Navbar End */}
+        {/* Navbar End: Auth & Theme */}
+        <div className="navbar-end gap-3">
+          
+          {/* Theme Toggle (Always visible) */}
+          <button
+            onClick={toggleTheme}
+            className="btn btn-ghost btn-circle btn-sm hover:bg-(--surface-highlight) text-(--text-muted) hover:text-(--brand-primary) transition-colors"
+            title="Toggle Theme"
+          >
+            {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
 
-        <div className="navbar-end gap-2">
           {user ? (
             <div className="dropdown dropdown-end">
-              {/* User Button */}
+              {/* User Avatar Trigger */}
               <label
                 tabIndex={0}
-                className="btn btn-ghost rounded-full flex items-center gap-2 px-2 hover:bg-base-200 transition-colors"
+                className="
+                  flex items-center gap-2 pl-1 pr-3 py-1 rounded-full 
+                  border border-(--border-subtle) hover:border-(--border-highlight)
+                  bg-(--surface-card) hover:bg-(--surface-highlight)
+                  cursor-pointer transition-all duration-200
+                "
               >
                 <div className="avatar">
-                  <div className="w-9 h-9 rounded-full ring-1 ring-base-200">
+                  <div className="w-8 h-8 rounded-full ring-2 ring-(--surface-page)">
                     <img
                       src={
                         user.photoURL ||
-                        "https://api.dicebear.com/7.x/notionists/svg?seed=Data_User_006"
+                        "https://api.dicebear.com/7.x/notionists/svg?seed=TicketUser"
                       }
                       alt="User"
                     />
                   </div>
                 </div>
-                <span className="hidden sm:block font-semibold text-sm mr-1">
-                  {user.displayName?.split(" ")[0] || "User"}
-                </span>
+                <div className="hidden sm:flex flex-col items-start gap-0.5">
+                  <span className="text-xs font-bold text-(--text-main) leading-none max-w-20 truncate">
+                    {user.displayName?.split(" ")[0] || "User"}
+                  </span>
+                </div>
+                <ChevronDown size={14} className="text-(--text-muted) ml-1" />
               </label>
 
-              {/* Dropdown Menu */}
+              {/* User Dropdown Menu */}
               <ul
                 tabIndex={0}
-                className="menu dropdown-content mt-3 z-1 p-2 shadow-xl bg-base-200 border border-base-200 rounded-xl w-52"
+                className="menu dropdown-content mt-3 z-50 p-2 shadow-xl bg-(--surface-card) border border-(--border-card) rounded-2xl w-56 gap-1"
               >
+                <li className="menu-title px-4 py-2 text-(--text-muted) text-xs font-bold uppercase tracking-wider">
+                  Account
+                </li>
                 <li>
                   <Link
                     to="/dashboard"
-                    className="flex items-center gap-2 py-3"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-(--surface-highlight) text-(--text-main) font-medium active:bg-(--surface-highlight)"
                   >
-                    <User size={16} />
+                    <User size={16} className="text-(--brand-primary)" />
                     My Profile
                   </Link>
                 </li>
-                <li>
-                  <button
-                    onClick={toggleTheme}
-                    className="flex items-center gap-2 py-3"
-                  >
-                    {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
-                    {theme === "light" ? "Dark Mode" : "Light Mode"}
-                  </button>
-                </li>
-                <div className="divider my-0 opacity-50"></div>
+                <div className="h-px bg-(--border-subtle) my-1 mx-2"></div>
                 <li>
                   <button
                     onClick={handleLogOut}
-                    className="flex items-center gap-2 py-3 text-error hover:bg-error/10"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-500/10 hover:text-red-600 font-bold"
                   >
                     <LogOut size={16} />
-                    <span className="font-bold">Logout</span>
+                    Logout
                   </button>
                 </li>
               </ul>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <button
-                onClick={toggleTheme}
-                className="btn btn-ghost btn-circle btn-sm hover:bg-base-200"
-              >
-                {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-              </button>
-
-              <Link
-                to="/login"
-                className="btn btn-primary btn-sm px-5 rounded-lg font-bold"
-              >
-                Login
-              </Link>
-            </div>
+            <Link
+              to="/login"
+              className="
+                group relative px-6 py-2.5 rounded-xl font-bold text-sm text-white overflow-hidden shadow-lg shadow-(--grad-start)/20 hover:shadow-(--grad-start)/40 transition-all duration-300
+              "
+            >
+              <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end) group-hover:scale-105 transition-transform duration-300"></span>
+              <span className="relative">Login</span>
+            </Link>
           )}
         </div>
       </div>

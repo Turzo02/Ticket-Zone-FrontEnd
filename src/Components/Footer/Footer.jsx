@@ -1,44 +1,46 @@
 import React from "react";
 import logo from "/favicon.png";
 import { Link } from "react-router";
-import { CreditCard, Lock, ShieldCheck } from "lucide-react";
+import { CreditCard, Lock, ShieldCheck, Facebook, Mail, Phone } from "lucide-react";
 
 const Footer = () => {
-  //Footer Added
   return (
-    <div>
-      <footer className="mt-16 bg-base-200 text-base-content">
-        <div
-          className="
-      max-w-7xl mx-auto
-      px-6 py-12
-      grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4
-      gap-10
-    "
-        >
-          {/* Column 1 - Logo + Description */}
-          <div className="space-y-3">
+    <div className="w-full">
+      {/* 
+        Background: Uses --bg-stats for a distinct footer strip color 
+        Text: Uses --text-muted for general text, --text-main for headings
+      */}
+      <footer className="mt-16 bg-(--bg-page) text-(--text-main) border-t border-(--stats-border) transition-colors duration-300">
+        <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+          
+          {/* Column 1 - Brand & Description */}
+          <div className="space-y-4">
             <Link
               to="/"
-              className="flex items-center gap-3 group transition-all duration-300 ease-in-out hover:opacity-80"
+              className="flex items-center gap-3 group w-fit"
             >
               <div className="relative">
+                {/* Logo with slight hover rotation */}
                 <img
-                  className="relative w-10 h-10 object-contain transform group-hover:scale-105 transition-transform duration-300"
+                  className="relative w-10 h-10 object-contain transform group-hover:rotate-12 transition-transform duration-300"
                   src={logo}
                   alt="Ticket Zone Logo"
                 />
               </div>
 
-              {/* Text Logo with Dual Weights */}
+              {/* Text Logo with Theme Gradient */}
               <div className="flex flex-col">
                 <span className="text-2xl font-black tracking-tighter leading-none flex items-center gap-1">
-                  <span className="text-base-content">TICKET</span>
-                  <span className="text-info italic   scale-110">ZONE</span>
+                  <span className="text-(--text-main)">TICKET</span>
+                  {/* Gradient applied to ZONE matching the theme (Blue vs Green) */}
+                  <span className="italic scale-110 text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+                    ZONE
+                  </span>
                 </span>
               </div>
             </Link>
-            <p className="text-sm text-base-content/70 leading-relaxed">
+            
+            <p className="text-sm text-(--text-muted) leading-relaxed">
               Book bus, train, ship & flight tickets easily with secure payments
               and real-time availability.
             </p>
@@ -46,21 +48,21 @@ const Footer = () => {
 
           {/* Column 2 - Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-
-            <ul className="space-y-2 text-sm">
+            <h3 className="text-lg font-bold mb-4 text-(--text-main)">Quick Links</h3>
+            <ul className="space-y-2 text-sm font-medium">
               {["Home", "All Tickets", "Contact Us", "About"].map((item) => (
                 <li key={item}>
-                  <a
-                    href="/"
+                  <Link
+                    to="/"
                     className="
-                text-base-content/70
-                hover:text-primary
-                transition-colors
-              "
+                      text-(--text-muted)
+                      hover:text-(--grad-start)
+                      hover:translate-x-1
+                      transition-all duration-200 block
+                    "
                   >
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -68,42 +70,49 @@ const Footer = () => {
 
           {/* Column 3 - Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
-
-            <ul className="space-y-2 text-sm text-base-content/70">
-              <li>Email: support@ticketzone.com</li>
-              <li>Phone: +880 1234-567890</li>
+            <h3 className="text-lg font-bold mb-4 text-(--text-main)">Contact Info</h3>
+            <ul className="space-y-3 text-sm font-medium text-(--text-muted)">
+              <li className="flex items-center gap-2">
+                 <Mail size={16} className="text-(--grad-start)" />
+                 <span>support@ticketzone.com</span>
+              </li>
+              <li className="flex items-center gap-2">
+                 <Phone size={16} className="text-(--grad-start)" />
+                 <span>+880 1234-567890</span>
+              </li>
               <li>
-                Facebook:{" "}
                 <a
                   href="#"
-                  className="
-              hover:text-primary
-              transition-colors
-            "
+                  className="flex items-center gap-2 hover:text-(--grad-start) transition-colors"
                 >
-                  TicketZone/BD
+                  <Facebook size={16} className="text-(--grad-start)" />
+                  <span>TicketZone/BD</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 4 - Payment Methods ) */}
+          {/* Column 4 - Payment Methods */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-base-content/90">
+            <h3 className="text-lg font-bold text-(--text-main)">
               Payment Methods
             </h3>
-
             <div className="flex flex-col gap-3">
-              {/* Minimal Stripe Badge */}
+              
+              {/* Stripe Badge - Themed */}
               <div className="flex items-center gap-2 group cursor-default">
-                <div className="bg-[#635BFF] text-white p-1 rounded-md shadow-sm">
-                  <CreditCard size={16} strokeWidth={2.5} />
+                {/* Icon Box */}
+                <div className="bg-(--bg-card) border border-(--border-card) p-1.5 rounded-md shadow-sm text-(--grad-start)">
+                  <CreditCard size={20} strokeWidth={2} />
                 </div>
-                <span className="font-bold italic text-lg tracking-tighter text-[#635BFF]">
+                
+                {/* Stripe Text - Uses Gradient to match theme */}
+                <span className="font-bold italic text-lg tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
                   stripe
                 </span>
-                <div className="flex items-center gap-1 ml-1 px-2 py-0.5 bg-base-content/5 text-base-content/60 rounded-full border border-base-content/10 group-hover:border-base-content/20 transition-colors">
+                
+                {/* Secure Badge */}
+                <div className="flex items-center gap-1 ml-1 px-2 py-0.5 bg-(--bg-badge) text-(--text-muted) rounded-full border border-(--border-card) group-hover:border-(--grad-start) transition-colors">
                   <Lock size={10} strokeWidth={3} />
                   <span className="text-[10px] font-bold uppercase tracking-tighter">
                     Secure
@@ -111,36 +120,25 @@ const Footer = () => {
                 </div>
               </div>
 
-              {/* Simple Card Icons Row */}
-              <div className="flex items-center gap-2 px-">
-                <div className="h-4 w-7 bg-base-content/10 rounded-sm border border-base-content/5 flex items-center justify-center text-[7px] font-black opacity-60">
-                  VISA
-                </div>
-                <div className="h-4 w-7 bg-base-content/10 rounded-sm border border-base-content/5 flex items-center justify-center text-[7px] font-black opacity-60">
-                  MC
-                </div>
-                <div className="h-4 w-7 bg-base-content/10 rounded-sm border border-base-content/5 flex items-center justify-center text-[7px] font-black opacity-60">
-                  AMEX
-                </div>
+              {/* Card Icons Row */}
+              <div className="flex items-center gap-2">
+                {["VISA", "MC", "AMEX"].map((card) => (
+                  <div key={card} className="h-5 px-2 bg-(--bg-card) rounded-sm border border-(--border-card) flex items-center justify-center text-[8px] font-black text-(--text-muted) opacity-80">
+                    {card}
+                  </div>
+                ))}
               </div>
 
-              <p className="text-[10px] text-base-content/40 max-w-[200px] leading-tight">
-                Guaranteed safe & secure checkout.
+              <p className="flex items-center gap-1.5 text-[10px] text-(--text-muted) opacity-80">
+                <ShieldCheck size={12} className="text-(--success-text)" />
+                <span>Guaranteed safe & secure checkout.</span>
               </p>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div
-          className="
-      border-t border-base-200
-      py-4
-      text-center
-      text-xs
-      text-base-content/60
-    "
-        >
+        <div className="border-t border-(--stats-border) py-6 text-center text-xs font-semibold text-(--text-muted)">
           © 2025 TicketZone. All rights reserved.
         </div>
       </footer>

@@ -89,71 +89,13 @@
   --cta-bg-top: oklch(100% 0 0);
   --cta-bg-bottom: oklch(96% 0.02 240);
 
+    /* NEW: Navigation Specifics */
+  --surface-nav: oklch(98.5% 0.002 247.85 / 0.85); /* Frosty White */
+  --nav-border: oklch(92% 0.01 250);              /* Separator */
+  --nav-text-active: oklch(100% 0 0);   
+
 
 }
-
-
-@plugin "daisyui/theme" {
-  name: "Normal-dark";
-
-  /* Backgrounds */
-  --bg-page: oklch(12% 0.02 230);        /* Deep Slate: A near-black with a cool, calming undertone. */
-  --bg-card: oklch(18% 0.03 230);        /* Elevated Slate: A slightly lighter surface for cards and modals. */
-  --bg-badge: oklch(25% 0.05 210);       /* Muted Blue-Gray for badges. */
-
-  /* Text */
-  --text-main: oklch(97% 0.01 230);      /* Almost White: Crisp and highly readable. */
-  --text-muted: oklch(65% 0.02 230);     /* Cool Gray: For secondary information. */
-  --text-inv: oklch(12% 0.02 230);       /* Inverse Text (matches page background). */
-
-  /* Borders & Shadows */
-  --border-card: oklch(28% 0.03 230);    /* Subtle Slate Border */
-  --border-hover: oklch(70% 0.22 190);   /* Glowing Teal: A vibrant accent for hover states. */
-
-  /* Brand Gradients (Teal/Cyan Theme) */
-  --grad-start: oklch(65% 0.22 195);     /* Vibrant Teal */
-  --grad-end: oklch(75% 0.2 185);        /* Bright Cyan */
-
-  /* Specific Components */
-  --icon-bg: oklch(24% 0.04 220);        /* Transparent Cool Gray */
-
-  /* Transport Mode Specific Colors (Vibrant & Distinct) */
-  --route-plane: oklch(70% 0.2 240);     /* Sky Blue */
-  --route-bus: oklch(75% 0.18 50);       /* Saffron Orange */
-  --route-train: oklch(70% 0.18 290);    /* Electric Lavender */
-  --route-ship: oklch(75% 0.2 180);      /* Aqua Marine */
-
-  /* Route Card Specifics */
-  --route-line-base: oklch(30% 0.02 230); /* Inactive line color */
-  --overlay-start: oklch(12% 0.02 230 / 0.95);
-  --overlay-end: oklch(12% 0.02 230 / 0.5);
-
-  /* Statistics Section Specifics */
-  --bg-stats: oklch(15% 0.03 230);       /* Dark Slate Strip */
-  --stats-border: oklch(26% 0.04 230);   /* Subtle borders */
-  --pattern-color: oklch(80% 0.1 230 / 0.04); /* Faint dot pattern */
-
-  /* Rating Star Color */
-  --star-color: oklch(85% 0.16 90);      /* Golden Yellow */
-  --quote-icon: oklch(25% 0.05 210);
-
-  /* Soft accent background for container boxes */
-  --bg-soft-accent: oklch(16% 0.03 230);  /* Darker slate tint */
-  --icon-box-bg: oklch(22% 0.04 220);
-
-  /* Form & Input Specifics */
-  --input-bg: oklch(15% 0.03 230);       /* Very dark input surface */
-  --input-border: oklch(30% 0.03 230);   /* Subtle dark border */
-  --input-focus: oklch(70% 0.22 190);    /* Glowing Teal focus ring */
-
-  /* Success State Colors */
-  --success-bg: oklch(25% 0.08 150);     /* Dark Mint background */
-  --success-text: oklch(85% 0.18 150);   /* Bright Mint text */
-
-  /* Final CTA Section Background */
-  --cta-bg-top: oklch(15% 0.03 230);
-  --cta-bg-bottom: oklch(12% 0.02 230);
-} 
 
 
 
@@ -218,6 +160,10 @@
   /* Final CTA Section Background */
   --cta-bg-top: oklch(15% 0.03 230);
   --cta-bg-bottom: oklch(12% 0.02 230);
+    /* NEW: Navigation Specifics */
+  --surface-nav: oklch(12% 0.06 260 / 0.85);      /* Frosty Navy */
+  --nav-border: oklch(20% 0.04 260);              /* Separator */
+  --nav-text-active: oklch(98% 0.01 250);   
 }
 
 
