@@ -10,7 +10,7 @@ const Footer = () => {
         Background: Uses --bg-stats for a distinct footer strip color 
         Text: Uses --text-muted for general text, --text-main for headings
       */}
-      <footer className="mt-16 bg-(--bg-page) text-(--text-main) border-t border-(--stats-border) transition-colors duration-300">
+      <footer className="bg-(--bg-stats) text-(--text-main) border-t border-(--stats-border) transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
           
           {/* Column 1 - Brand & Description */}

@@ -121,7 +121,7 @@ const LatestTickets = () => {
                           
                           {/* Title Badge */}
                           <div className="absolute bottom-3 left-4 right-4">
-                             <h2 className="text-lg font-bold text-white leading-tight drop-shadow-md line-clamp-2">
+                             <h2 className="text-lg font-bold text-white leading-tight drop-shadow-md line-clamp-1">
                               {ticket.title}
                             </h2>
                           </div>
@@ -130,7 +130,7 @@ const LatestTickets = () => {
                         {/* Card Body */}
                         <div className="p-5 space-y-4 relative z-10">
                           {/* Price Row */}
-                          <div className="flex justify-between items-end pb-3 border-b border-(--border-card)">
+                          <div className="flex justify-between items-center pb-3 border-b border-(--border-card)">
                             <div className="flex flex-col">
                               <p className="text-[10px] font-bold text-(--text-muted) uppercase tracking-widest mb-0.5">
                                 Price

@@ -49,7 +49,7 @@ const Navbar = () => {
       className="
         sticky top-0 z-50
         backdrop-blur-xl
-        bg-(--surface-nav)
+        bg-(--bg-stats)
         border-b border-(--nav-border)
         transition-colors duration-300
       "
