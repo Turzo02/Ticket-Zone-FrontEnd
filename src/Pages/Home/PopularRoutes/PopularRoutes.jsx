@@ -6,118 +6,109 @@ import {
   ShipWheel,
   ArrowRight,
   MapPin,
-  Link,
+  Clock,
 } from "lucide-react";
 
-const RouteCard = ({ icon: Icon, city1, city2, themeColor }) => {
-  // Mapping theme colors to Tailwind classes dynamically
-  const colorMap = {
-    indigo: {
-      bg: "bg-indigo-50 ",
-      border:
-        "group-hover:border-indigo-200 ",
-      text: "text-indigo-600 ",
-      glow: "group-hover:shadow-indigo-500/20",
-      gradient: "from-indigo-500 to-purple-600",
-    },
-    orange: {
-      bg: "bg-orange-50 ",
-      border:
-        "group-hover:border-orange-200 ",
-      text: "text-orange-600 ",
-      glow: "group-hover:shadow-orange-500/20",
-      gradient: "from-orange-500 to-red-500",
-    },
-    purple: {
-      bg: "bg-purple-50 ",
-      border:
-        "group-hover:border-purple-200 ",
-      text: "text-purple-600 ",
-      glow: "group-hover:shadow-purple-500/20",
-      gradient: "from-purple-500 to-pink-500",
-    },
-    teal: {
-      bg: "bg-teal-50 ",
-      border: "group-hover:border-teal-200 ",
-      text: "text-teal-600 ",
-      glow: "group-hover:shadow-teal-500/20",
-      gradient: "from-teal-400 to-emerald-500",
-    },
+const RouteCard = ({ icon: Icon, city1, city2, type, time }) => {
+  
+  // Dynamic styling based on transport type using CSS variables
+  const getThemeClass = (type) => {
+    switch (type) {
+      case "plane": return "text-(--route-plane) bg-(--route-plane)/10 border-(--route-plane)/20 hover:border-(--route-plane)";
+      case "bus": return "text-(--route-bus) bg-(--route-bus)/10 border-(--route-bus)/20 hover:border-(--route-bus)";
+      case "train": return "text-(--route-train) bg-(--route-train)/10 border-(--route-train)/20 hover:border-(--route-train)";
+      case "ship": return "text-(--route-ship) bg-(--route-ship)/10 border-(--route-ship)/20 hover:border-(--route-ship)";
+      default: return "text-(--text-main)";
+    }
+  };
+  
+  // Specific text color helper for the arrow/icons
+  const getTextColor = (type) => {
+     switch (type) {
+      case "plane": return "text-(--route-plane)";
+      case "bus": return "text-(--route-bus)";
+      case "train": return "text-(--route-train)";
+      case "ship": return "text-(--route-ship)";
+      default: return "text-(--text-main)";
+    }
   };
 
-  const theme = colorMap[themeColor] || colorMap.indigo;
+  const themeClass = getThemeClass(type);
+  const textColor = getTextColor(type);
 
   return (
     <div
       className={`
         group relative w-full
-        bg-base-200 
-        rounded-2xl
-        border border-base-200 
-        ${theme.border}
-        p-5 cursor-pointer
+        bg-(--bg-card) 
+        rounded-3xl
+        border border-(--border-card)
+        p-6 cursor-pointer
         transition-all duration-300 ease-out
-        hover:-translate-y-1 hover:shadow-xl ${theme.glow}
+        hover:-translate-y-2 
+        hover:shadow-xl hover:shadow-(--shadow-color)/5
         overflow-hidden
       `}
     >
-      {/* Background Decorative Blob */}
-      <div
-        className={`absolute -right-6 -top-6 w-24 h-24 rounded-full opacity-10 transition-transform duration-500 group-hover:scale-150 bg-linear-to-br ${theme.gradient}`}
-      />
+      {/* Background Decorative Blob (Subtle) */}
+      <div className={`absolute -right-12 -top-12 w-32 h-32 rounded-full opacity-0 group-hover:opacity-20 transition-all duration-500 ${textColor} bg-current blur-3xl`} />
 
-      <div className="relative z-10 flex flex-col h-full justify-between gap-6">
-        {/* Top: Icon and Route Label */}
-        <div className="flex items-center justify-between">
-          <div className={`p-2.5 rounded-xl ${theme.bg} ${theme.text}`}>
-            <Icon className="w-6 h-6" />
+      <div className="relative z-10 flex flex-col h-full gap-6">
+        
+        {/* Top: Header Row */}
+        <div className="flex items-start justify-between">
+          <div className={`p-3 rounded-2xl transition-colors duration-300 ${themeClass}`}>
+            <Icon className="w-6 h-6" strokeWidth={1.5} />
           </div>
-          <span className="text-xs font-medium uppercase tracking-wider text-base-content/40 bg-base-200/50 px-2 py-1 rounded-md">
-            Direct
-          </span>
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-(--bg-page) border border-(--border-card)">
+             <Clock size={12} className="text-(--text-muted)" />
+             <span className="text-xs font-bold text-(--text-muted) uppercase tracking-wide">{time}</span>
+          </div>
         </div>
 
-        {/* Middle: The Journey Visual */}
-        <div className="flex items-center justify-between gap-3">
+        {/* Middle: The Journey Route */}
+        <div className="flex items-center justify-between gap-2 mt-2">
+          
           {/* Origin */}
           <div className="flex flex-col items-start">
-            <span className="text-xs text-base-content/50 mb-0.5">From</span>
-            <h3 className="text-lg font-bold text-base-content leading-tight">
+            <span className="text-xs font-medium text-(--text-muted) mb-1 uppercase tracking-wider">From</span>
+            <h3 className="text-xl font-black text-(--text-main) leading-none tracking-tight">
               {city1}
             </h3>
           </div>
 
-          {/* Connector Line */}
-          <div className="flex-1 flex flex-col items-center px-2">
-            <div className="relative w-full h-0.5 bg-base-200 rounded-full overflow-hidden">
-              {/* Moving Gradient Line on Hover */}
-              <div
-                className={`absolute inset-0 w-full h-full -translate-x-full group-hover:translate-x-0 transition-transform duration-700 bg-linear-to-r ${theme.gradient} opacity-50`}
-              />
-            </div>
+          {/* Connector Graphic */}
+          <div className="flex-1 px-4 flex flex-col items-center">
+             {/* Animated Plane/Icon moving across */}
+             <div className="w-full relative">
+                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-(--route-line-base) -translate-y-1/2 rounded-full"></div>
+                <div className={`absolute top-1/2 left-0 h-0.5 bg-current -translate-y-1/2 rounded-full w-0 group-hover:w-full transition-all duration-700 ease-in-out ${textColor}`}></div>
+                <div className={`absolute top-1/2 left-0 -translate-y-1/2 transition-all duration-700 ease-in-out group-hover:left-full group-hover:-translate-x-full ${textColor}`}>
+                   <div className="w-2 h-2 rounded-full bg-current shadow-sm"></div>
+                </div>
+             </div>
           </div>
 
           {/* Destination */}
           <div className="flex flex-col items-end text-right">
-            <span className="text-xs text-base-content/50 mb-0.5">To</span>
-            <h3 className={`text-lg font-bold ${theme.text} leading-tight`}>
+            <span className="text-xs font-medium text-(--text-muted) mb-1 uppercase tracking-wider">To</span>
+            <h3 className={`text-xl font-black leading-none tracking-tight ${textColor}`}>
               {city2}
             </h3>
           </div>
         </div>
 
-        {/* Bottom: Action / Footer */}
-        <div className="pt-4 border-t border-base-200  flex items-center justify-between mt-auto">
-          <div className="flex items-center gap-1.5 text-xs text-base-content/60">
-            <MapPin size={14} />
-            <span>Popular Choice</span>
+        {/* Bottom: Action Footer */}
+        <div className="pt-5 border-t border-(--border-card) flex items-center justify-between mt-auto">
+          <div className="flex items-center gap-1.5 text-xs font-medium text-(--text-muted)">
+            <MapPin size={14} className={textColor} />
+            <span>Daily Service</span>
           </div>
 
-            <div
-              className={`flex items-center gap-1 text-sm font-semibold ${theme.text} opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300`}
-            >
-              Book Now <ArrowRight size={16} />
-            </div>
+          <div className={`flex items-center gap-2 text-sm font-bold opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ${textColor}`}>
+            <span>Book Seat</span>
+            <ArrowRight size={16} />
+          </div>
         </div>
       </div>
     </div>
@@ -130,42 +121,52 @@ const PopularRoutes = () => {
       city1: "Dhaka",
       city2: "Rajshahi",
       icon: Plane,
-      themeColor: "indigo",
+      type: "plane",
+      time: "45 min"
     },
     {
       city1: "Rangpur",
       city2: "Dhaka",
       icon: BusFront,
-      themeColor: "orange",
+      type: "bus",
+      time: "6 hrs"
     },
     {
-      city1: "Bogura",
-      city2: "Shylet",
+      city1: "Sylhet",
+      city2: "Chittagong",
       icon: TrainFront,
-      themeColor: "purple",
+      type: "train",
+      time: "5 hrs"
     },
     {
       city1: "Dhaka",
       city2: "Barishal",
       icon: ShipWheel,
-      themeColor: "teal",
+      type: "ship",
+      time: "Overnight"
     },
   ];
 
   return (
-    <div className="w-full min-h-[50vh] flex flex-col justify-center bg-base-200 py-16 px-4 sm:px-8">
-      <div className="max-w-7xl mx-auto w-full">
+    <div className="w-full py-20 bg-(--bg-page) text-(--text-main) transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10">
+        
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-base-content mb-2">
-              Popular <span className="text-primary">Routes</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-4">
+              Popular <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">Destinations</span>
             </h2>
-            <p className="text-base-content/60 text-lg">
-              Discover the most traveled paths across Bangladesh this month.
+            <p className="text-(--text-muted) text-lg font-medium leading-relaxed">
+              Explore our most traveled routes. Whether by air, road, rail, or river — we get you there in comfort.
             </p>
           </div>
-
+          
+          {/* View All Button */}
+          <button className="hidden md:flex items-center gap-2 px-6 py-3 rounded-xl font-bold border border-(--border-card) bg-(--bg-card) hover:bg-(--bg-badge) hover:border-(--grad-start) transition-all duration-300 shadow-sm">
+             <span>View All Routes</span>
+             <ArrowRight size={16} className="text-(--grad-start)"/>
+          </button>
         </div>
 
         {/* Grid Layout */}
@@ -176,10 +177,19 @@ const PopularRoutes = () => {
               icon={route.icon}
               city1={route.city1}
               city2={route.city2}
-              themeColor={route.themeColor}
+              type={route.type}
+              time={route.time}
             />
           ))}
         </div>
+        
+        {/* Mobile View All Button (Only visible on small screens) */}
+         <div className="mt-8 md:hidden">
+            <button className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold bg-(--bg-card) border border-(--border-card) text-(--text-main)">
+               View All Routes <ArrowRight size={16} />
+            </button>
+         </div>
+
       </div>
     </div>
   );

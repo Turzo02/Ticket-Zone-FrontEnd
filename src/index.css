@@ -13,49 +13,72 @@
 @plugin "daisyui/theme" {
   name: "light";
   
+  /* Backgrounds */
   --bg-page: oklch(98.5% 0.002 247.85);      /* Soft premium white/slate */
   --bg-card: oklch(100% 0 0);                /* Pure white */
-  --bg-badge: oklch(96% 0.01 247.85);        /* Light gray badge bg */
+  --bg-badge: oklch(96% 0.01 250);           /* Light blue-gray tint */
   
-  --text-main: oklch(20.5% 0.04 255.6);      /* Deep slate */
-  --text-muted: oklch(55.6% 0.03 255.6);     /* Soft gray */
-  --text-inv: oklch(100% 0 0);               /* White text */
+  /* Text */
+  --text-main: oklch(20.5% 0.04 265);        /* Deep Navy Slate */
+  --text-muted: oklch(55% 0.05 260);         /* Cool Gray */
+  --text-inv: oklch(100% 0 0);               /* White */
 
-  --border-card: oklch(92% 0.01 255.6);      /* Subtle light border */
-  --border-hover: oklch(80% 0.1 60);         /* Orange tint border */
-  
-  --grad-start: oklch(62% 0.23 45);          /* Vivid Orange */
-  --grad-end: oklch(85% 0.18 85);            /* Rich Amber */
-
-  --blob-color: oklch(96% 0.05 50);          /* Very subtle warm wash */
-
-  
-  /* Helper for shadows (rgb values) */
+  /* Borders & Shadows */
+  --border-card: oklch(94% 0.01 250);        /* Very subtle cool border */
+  --border-hover: oklch(85% 0.1 250);        /* Blue tint border */
   --shadow-color: 0 0 0; 
+
+  /* Brand Gradients (Blue Theme) */
+  --grad-start: oklch(55% 0.22 260);         /* Royal Blue */
+  --grad-end: oklch(65% 0.18 240);           /* Electric Cyan/Blue */
+
+  /* Specific Components */
+  --icon-bg: oklch(96% 0.03 250);            /* Very pale blue circle */
+
+   /* NEW: Transport Mode Specific Colors (Vibrant but Readable) */
+  --route-plane: oklch(55% 0.22 260);        /* Royal Blue */
+  --route-bus: oklch(62% 0.19 40);           /* Burnt Orange */
+  --route-train: oklch(55% 0.22 300);        /* Deep Purple */
+  --route-ship: oklch(60% 0.18 180);         /* Ocean Teal */
+  
+  /* NEW: Route Card Specifics */
+  --route-line-base: oklch(92% 0.01 250);    /* Inactive line color */
 }
 
 @plugin "daisyui/theme" {
   name: "dark";
   
-  --bg-page: oklch(12% 0.02 255);            /* Deep premium black/blue */
-  --bg-card: oklch(17% 0.02 255);            /* Elevated dark surface */
-  --bg-badge: oklch(22% 0.02 255);           /* Lighter dark badge */
+  /* Backgrounds */
+  --bg-page: oklch(12% 0.03 260);           /* Deep Navy Black
+  --bg-card: oklch(16% 0.03 260);            /* Elevated dark navy surface */
+  --bg-badge: oklch(20% 0.04 260);           /* Lighter navy badge */
   
-  --text-main: oklch(95% 0.01 250);          /* Off-white */
-  --text-muted: oklch(70% 0.02 250);         /* Silver/Gray */
-  --text-inv: oklch(15% 0.05 45);            /* Dark text */
+  /* Text */
+  --text-main: oklch(96% 0.01 250);          /* Off-white */
+  --text-muted: oklch(75% 0.03 250);         /* Silver Blue */
+  --text-inv: oklch(10% 0.05 260);           /* Dark Navy text */
 
-  --border-card: oklch(25% 0.02 255);        /* Dark gray border */
-  --border-hover: oklch(60% 0.15 45);        /* Glowing orange border */
+  /* Borders & Shadows */
+  --border-card: oklch(25% 0.04 260);        /* Dark navy border */
+  --border-hover: oklch(50% 0.15 250);       /* Glowing Blue border */
   
-  --grad-start: oklch(70% 0.19 45);          /* Bright Orange */
-  --grad-end: oklch(90% 0.15 85);            /* Pale Gold */
+  /* Brand Gradients (Blue Theme) */
+  --grad-start: oklch(65% 0.18 250);         /* Bright Blue */
+  --grad-end: oklch(75% 0.15 220);           /* Cyan */
 
-  --blob-color: oklch(20% 0.2 45);           /* Deep, rich amber glow */
+  /* Specific Components */
+  --icon-bg: oklch(22% 0.06 260);            /* Dark transparent Blue */
 
+    /* NEW: Transport Mode Specific Colors (Lighter, Glowing for Dark Mode) */
+  --route-plane: oklch(70% 0.18 260);        /* Light Blue */
+  --route-bus: oklch(75% 0.16 40);           /* Soft Orange */
+  --route-train: oklch(70% 0.18 300);        /* Lavender */
+  --route-ship: oklch(75% 0.15 180);         /* Cyan */
   
-  --shadow-color: 0 0 0;
+  /* NEW: Route Card Specifics */
+  --route-line-base: oklch(25% 0.02 260);    /* Inactive line color */
 }
+
 
 
 

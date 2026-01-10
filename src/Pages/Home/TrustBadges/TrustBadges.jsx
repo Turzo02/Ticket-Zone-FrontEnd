@@ -5,56 +5,82 @@ const TrustBadges = () => {
   const badges = [
     {
       id: 1,
-      icon: <ShieldCheck className="w-10 h-10 md:w-12 md:h-12 text-blue-600 dark:text-blue-400" />,
-      title: "Secure Payments",
-      description: "100% protected transactions"
+      icon: ShieldCheck,
+      title: "Secure Transactions",
+      description: "Bank-grade encryption for every payment."
     },
     {
       id: 2,
-      icon: <UserCheck className="w-10 h-10 md:w-12 md:h-12 text-blue-600 dark:text-blue-400" />,
+      icon: UserCheck,
       title: "Verified Operators",
-      description: "Trusted partners only"
+      description: "We only partner with trusted travel providers."
     },
     {
       id: 3,
-      icon: <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-blue-600 dark:text-blue-400" />,
+      icon: CheckCircle,
       title: "Instant Confirmation",
-      description: "Tickets sent immediately"
+      description: "Get your digital tickets immediately."
     },
     {
       id: 4,
-      icon: <Headphones className="w-10 h-10 md:w-12 md:h-12 text-blue-600 dark:text-blue-400" />,
-      title: "24/7 Support",
-      description: "Always here to help"
+      icon: Headphones,
+      title: "24/7 Expert Support",
+      description: "Our team is here to help, anytime, anywhere."
     }
   ];
 
   return (
-    <section className="w-full py-20 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full py-20 bg-(--bg-page) transition-colors duration-300 border-y border-(--border-card)">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
-        {/* Header (Optional, purely for accessibility/structure) */}
-        <h2 className="sr-only">Why Choose TicketZone?</h2>
-
-        {/* Badge Grid: 2x2 on Mobile, 4x1 on Desktop */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+        {/* New Headline Section */}
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-4 text-(--text-main)">
+            Why Travelers <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">Trust Us</span>
+          </h2>
+          <p className="text-(--text-muted) text-lg font-medium">
+            We prioritize your safety and convenience with a seamless booking experience you can rely on.
+          </p>
+        </div>
+        
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {badges.map((badge) => (
             <div 
               key={badge.id} 
-              className="flex flex-col items-center text-center group"
+              className="
+                group relative flex flex-col items-center text-center p-8 rounded-3xl
+                border border-(--border-card) hover:border-(--border-hover)
+                bg-(--bg-card) 
+                shadow-sm hover:shadow-xl hover:shadow-(--grad-start)/10 hover:-translate-y-1
+                transition-all duration-300 ease-out
+                cursor-default
+              "
             >
-              {/* Icon Wrapper with subtle hover animation */}
-              <div className="mb-4 p-3 rounded-full  group-hover:scale-110 transition-transform duration-300">
-                {badge.icon}
+              {/* Icon Wrapper */}
+              <div className="
+                mb-6 p-5 rounded-2xl 
+                bg-(--icon-bg)
+                group-hover:scale-110 group-hover:rotate-6 
+                transition-transform duration-300 ease-out
+              ">
+                <badge.icon 
+                  className="w-10 h-10 text-(--grad-start)" 
+                  strokeWidth={1.5}
+                />
               </div>
               
               {/* Text Content */}
-              <h3 className="text-base md:text-lg font-semibold  mb-1">
+              <h3 className="text-xl font-bold mb-3 text-(--text-main) tracking-tight">
                 {badge.title}
               </h3>
-              <p className="text-sm">
+              
+              <p className="text-sm font-medium text-(--text-muted) leading-relaxed">
                 {badge.description}
               </p>
+
+              {/* Decorative Hover Line */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1.5 bg-linear-to-r from-(--grad-start) to-(--grad-end) rounded-t-full opacity-0 group-hover:w-16 group-hover:opacity-100 transition-all duration-500 delay-75 ease-out" />
             </div>
           ))}
         </div>
