@@ -1,31 +1,84 @@
-import React from 'react';
-import { MapPin, Compass, Heart, ArrowRight, Sun, Shield } from 'lucide-react';
+import React, { useRef, useEffect } from "react";
+import { MapPin, Compass, Heart, ArrowRight, Sun, Shield } from "lucide-react";
+
+// GSAP Imports
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TravelInspiration = () => {
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const boxRef = useRef(null);
+  const tipsRef = useRef([]);
+
   const travelTips = [
     {
       icon: Sun,
       title: "Best Time to Visit",
-      description: "October to March offers the most pleasant weather for exploring."
+      description: "October to March offers the most pleasant weather for exploring.",
     },
     {
       icon: MapPin,
       title: "Popular Routes",
-      description: "Don't miss the scenic drive from Chittagong to Bandarban."
+      description: "Don't miss the scenic drive from Chittagong to Bandarban.",
     },
     {
       icon: Shield,
       title: "Travel Smart",
-      description: "Always book with verified operators for a hassle-free journey."
-    }
+      description: "Always book with verified operators for a hassle-free journey.",
+    },
   ];
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "center center",
+          scrub: 1,
+        }
+      });
+
+      tl.fromTo(headerRef.current, 
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.5 }
+      )
+      
+      .fromTo(boxRef.current,
+        { scale: 0.95, opacity: 0, y: 50 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.8 },
+        "<0.2"
+      )
+
+      .fromTo(tipsRef.current,
+        { y: 30, opacity: 0 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          stagger: 0.2,
+          duration: 0.5 
+        },
+        "-=0.4" 
+      );
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="w-full py-24 bg-(--bg-soft-accent) transition-colors duration-300">
+    <section 
+      ref={sectionRef}
+      className="w-full py-24 bg-(--bg-soft-accent) transition-colors duration-300"
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Section Header */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
+        <div ref={headerRef} className="text-center mb-16 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-(--grad-start)/10 border border-(--grad-start)/20">
             <Compass size={14} className="text-(--grad-start)" />
             <span className="text-xs font-bold text-(--grad-start) uppercase tracking-widest">
@@ -41,7 +94,10 @@ const TravelInspiration = () => {
         </div>
 
         {/* Feature Box: Travel Tips */}
-        <div className="relative rounded-3xl overflow-hidden border border-(--border-card) shadow-sm shadow-(--grad-start)/5">
+        <div 
+          ref={boxRef}
+          className="relative rounded-3xl overflow-hidden border border-(--border-card) shadow-sm shadow-(--grad-start)/5"
+        >
           
           {/* Background linear/Fill */}
           <div className="absolute inset-0 bg-(--bg-soft-accent)"></div>
@@ -63,6 +119,9 @@ const TravelInspiration = () => {
               {travelTips.map((tip, index) => (
                 <div
                   key={index}
+                  // Ref Assignment
+                  ref={(el) => (tipsRef.current[index] = el)}
+                  
                   className="
                     group flex items-start gap-5 p-6 rounded-2xl
                     bg-(--icon-box-bg) border border-(--border-card)
