@@ -1,117 +1,150 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, MapPin, Compass } from "lucide-react";
 
-import busImg from "/bus.jpeg";
-import trainImg from "/train.jpeg";
-import planeImg from "/plane.jpeg";
-import launchImg from "/launch.jpeg";
-
-const bannerData = [
-  {
-    id: 1,
-    imgSrc: busImg,
-    alt: "Modern bus traveling on the highway",
-    title: "Comfortable Bus Journeys",
-  },
-  {
-    id: 2,
-    imgSrc: trainImg,
-    alt: "High-speed train passing through a scenic route",
-    title: "Fast & Reliable Train Rides",
-  },
-  {
-    id: 3,
-    imgSrc: planeImg,
-    alt: "Passenger airplane flying across the sky",
-    title: "Fly to Your Destination",
-  },
-  {
-    id: 4,
-    imgSrc: launchImg,
-    alt: "Luxury launch sailing over calm water",
-    title: "Relaxing Launch Experience",
-  },
-];
-
-const Banner = ({ slides = bannerData, interval = 4500 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const goToNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  }, [slides.length]);
-
-  const goToPrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
-
-  useEffect(() => {
-    const timer = setInterval(goToNext, interval);
-    return () => clearInterval(timer);
-  }, [goToNext, interval]);
+// --- Helper Component ---
+const Column = ({ images = [], direction = "up", duration = 20 }) => {
+  if (!images || images.length === 0) return null;
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto">
-      <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px]">
-        
-        {slides.map((slide, index) => (
-          <div
-            key={slide.id}
-            className={`absolute w-full h-full transition-opacity duration-700 ease-in-out 
-            ${index === currentIndex ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-          >
-            <img
-              src={slide.imgSrc}
-              alt={slide.alt}
-              className="w-full h-full object-cover"
-            />
-
-            {/* Gradient */}
-            <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent"></div>
-
-            {/* Text */}
-            <div className="absolute inset-0 flex justify-center items-end p-6 md:p-12 lg:p-10">
-              <div
-                className={`max-w-2xl transition-all duration-700 delay-300
-                ${index === currentIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-              >
-                <h2 className="text-2xl text-center sm:text-3xl lg:text-5xl font-extrabold text-white">
-                  {slide.title}
-                </h2>
-              </div>
-            </div>
+    <div className="relative w-full h-full">
+      <motion.div
+        className="flex flex-col gap-6"
+        animate={{
+          y: direction === "up" ? ["0%", "-50%"] : ["-50%", "0%"]
+        }}
+        transition={{
+          duration: duration,
+          ease: "linear",
+          repeat: Infinity,
+        }}
+      >
+        {[...images, ...images, ...images].map((src, idx) => (
+          <div key={idx} className="w-full h-64 md:h-80 rounded-2xl overflow-hidden shrink-0 relative group">
+             <img 
+               src={src} 
+               alt="Travel Destination" 
+               className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-in-out" 
+             />
+             {/* Subtle overlay to blend images with theme */}
+             <div className="absolute inset-0 bg-(--bg-page)/10 transition-colors" />
           </div>
         ))}
-
-        {/* Prev Button */}
-        <button
-          onClick={goToPrev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full z-10 transition hidden md:block"
-        >
-          <ChevronLeft size={24} />
-        </button>
-
-        {/* Next Button */}
-        <button
-          onClick={goToNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full z-10 transition hidden md:block"
-        >
-          <ChevronRight size={24} />
-        </button>
-
-        {/* Pagination Dots */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all
-                ${index === currentIndex ? "bg-white scale-125" : "bg-white/50 hover:bg-white/80"}`}
-            />
-          ))}
-        </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
 
-export default Banner;
+// --- Main Component ---
+const HeroInfinite = () => {
+  
+  // Placeholder Data
+  const imagesCol1 = [
+    "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop", 
+    "https://images.unsplash.com/photo-1474487548417-781cb714c2f0?q=80&w=2069&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop",
+  ];
+  
+  const imagesCol2 = [
+    "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?q=80&w=2070&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop",
+  ];
+
+  const imagesCol3 = [
+    "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=2071&auto=format&fit=crop", 
+    "https://images.unsplash.com/photo-1532105956626-9569c03602f6?q=80&w=1974&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=2070&auto=format&fit=crop",
+  ];
+
+  return (
+    <section className="relative w-full h-screen overflow-hidden bg-(--bg-page) flex items-center justify-center transition-colors duration-300">
+      
+      {/* --- BACKGROUND: Infinite Moving Columns --- */}
+      <div className="absolute inset-0 w-full h-full flex gap-4 md:gap-6 px-4 md:px-0 -skew-y-3 scale-110 opacity-30">
+        <div className="flex-1 hidden md:block overflow-hidden relative">
+          <Column images={imagesCol1} direction="up" duration={45} />
+        </div>
+        <div className="flex-1 overflow-hidden relative">
+           <Column images={imagesCol2} direction="down" duration={55} />
+        </div>
+        <div className="flex-1 hidden md:block overflow-hidden relative">
+           <Column images={imagesCol3} direction="up" duration={50} />
+        </div>
+      </div>
+
+      {/* --- OVERLAY: Gradient Fade into Page Color --- */}
+      <div className="absolute inset-0 bg-linear-to-b from-(--bg-soft-accent) via-(--bg-soft-accent)/10 to-(--bg-soft-accent)" />
+      <div className="absolute inset-0 bg-radial-gradient from-transparent to-(--bg-soft-accent) opacity-90" />
+
+      {/* --- FOREGROUND: Content --- */}
+      <div className="relative z-20 text-center max-w-5xl px-6">
+        
+        {/* Badge - Soft Opacity Background */}
+        <motion.div 
+           initial={{ opacity: 0, scale: 0.9 }}
+           animate={{ opacity: 1, scale: 1 }}
+           transition={{ duration: 0.8 }}
+           className="inline-flex items-center gap-2 border border-(--border-card) bg-(--bg-soft-accent)/40 backdrop-blur-md px-4 py-2 rounded-2xl mb-8"
+        >
+           <span className="w-2 h-2 rounded-2xl bg-(--grad-start) animate-pulse" />
+           <span className="text-xs font-bold text-(--text-muted) uppercase tracking-widest">
+             Gateway to 64 Districts
+           </span>
+        </motion.div>
+
+        {/* Headline */}
+        <motion.h1 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-5xl md:text-8xl font-black text-(--text-main) tracking-tighter mb-8 leading-[0.9] drop-shadow-xl"
+        >
+          Your Journey <br />
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+            Starts Here.
+          </span>
+        </motion.h1>
+
+        {/* Static CTA Buttons (Replaced Input Field) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+            <button className="group relative px-8 py-4 rounded-2xl font-bold text-(--text-inv) text-lg overflow-hidden shadow-xl shadow-(--grad-start)/20 hover:shadow-(--grad-start)/40 transition-all duration-300 hover:-translate-y-1">
+              <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end)"></span>
+              <span className="relative flex items-center gap-2">
+                Book Your Ticket
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </span>
+            </button>
+
+            <button className="flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-(--text-main) bg-(--bg-soft-accent)/60 border border-(--border-card) hover:bg-(--bg-soft-accent) transition-all duration-300 backdrop-blur-sm">
+               <Compass size={18} className="text-(--grad-start)" />
+               Explore Routes
+            </button>
+        </motion.div>
+
+        {/* Quick Links (Static Design) */}
+        <motion.div 
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           transition={{ delay: 0.8 }}
+           className="mt-10 flex flex-wrap justify-center gap-6 text-(--text-muted) text-sm font-medium"
+        >
+           <span>Trending:</span>
+           {['Cox\'s Bazar', 'Sylhet', 'Sajek', 'Bandarban'].map((place) => (
+             <span key={place} className="flex items-center gap-1 hover:text-(--grad-start) cursor-pointer transition-colors duration-300">
+               <MapPin size={14} className="opacity-70" /> {place}
+             </span>
+           ))}
+        </motion.div>
+
+      </div>
+    </section>
+  );
+};
+
+export default HeroInfinite;

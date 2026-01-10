@@ -41,8 +41,8 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li className="mx-1">
-        <NavLink to="/terms-and-conditions" className={navLinkClass}>
-          Terms & Conditions
+        <NavLink to="/guideline" className={navLinkClass}>
+          Guildline
         </NavLink>
       </li>
 

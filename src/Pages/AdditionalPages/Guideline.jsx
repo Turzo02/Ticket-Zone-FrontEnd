@@ -45,7 +45,13 @@ const Guideline = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) transition-colors duration-300 py-16">
+    <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) transition-colors duration-300 py-16 relative">
+
+              {/* Ambient Background Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full pointer-events-none">
+           <div className="absolute top-20 left-10 w-72 h-72 bg-(--grad-start) rounded-full opacity-10 blur-[100px]" />
+           <div className="absolute top-40 right-10 w-96 h-96 bg-(--grad-end) rounded-full opacity-10 blur-[100px]" />
+        </div>
       {/* --- Header --- */}
       <div className="max-w-4xl mx-auto px-6 text-center mb-16">
         <div className="inline-flex items-center justify-center p-3 mb-6 rounded-2xl bg-(--bg-card) border border-(--border-card) shadow-sm">

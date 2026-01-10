@@ -1,69 +1,155 @@
-import React from 'react';
-import { Play, ArrowRight } from 'lucide-react';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, MapPin } from "lucide-react";
 
 const VisualHighlight = () => {
+  // Default active card is the first one
+  const [activeId, setActiveId] = useState(1);
+
+  const destinations = [
+    {
+      id: 1,
+      title: "Cox's Bazar",
+      location: "Chittagong Division",
+      desc: "The world's longest natural sea beach awaits your footprints.",
+      img: "/Cox.png",
+    },
+    {
+      id: 2,
+      title: "Sylhet",
+      location: "Tea Gardens",
+      desc: "Lush green carpets of tea and the crystal clear waters of Jaflong.",
+      img: "/Shy.png",
+    },
+    {
+      id: 3,
+      title: "Saint Martin",
+      location: "Coral Island",
+      desc: "Blue waters and coconut groves. Bangladesh's only coral island.",
+      img: "/martin.png",
+    },
+    {
+      id: 4,
+      title: "Sajek Valley",
+      location: "Rangamati",
+      desc: "Touch the clouds and experience the serenity of the hills.",
+      img: "/sajek.png",
+    },
+  ];
+
   return (
-    <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden group">
-      
-      {/* 1. Background Image with Parallax-like scale effect */}
-      <div 
-        className="absolute inset-0 z-0 w-full h-full transform transition-transform duration-2000 ease-out group-hover:scale-103"
-        style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop')", // Swapped for a more 'travel' centric wide shot
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
-
-      {/* 2. Theme-Based Gradient Overlay */}
-      {/* This uses the variables to tint the image Blue in light mode / Dark Navy in dark mode */}
-      <div className="absolute inset-0 z-10 bg-black/40" />
-
-      {/* 3. Content Container */}
-      <div className="relative z-20 w-full h-full max-w-7xl mx-auto px-6 sm:px-10 flex flex-col justify-center">
-        
-        <div className="max-w-3xl">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
-            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-            <span className="text-xs font-bold text-white uppercase tracking-widest">Premium Travel</span>
-          </div>
-
-          {/* Headline */}
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter leading-[1.1] mb-6 drop-shadow-xl">
-            Designed for the <br />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-200 to-white">
-              Modern Traveler
-            </span>
-          </h2>
-
-          {/* Subtext */}
-          <p className="text-lg md:text-xl text-blue-50 font-medium max-w-xl leading-relaxed mb-10 drop-shadow-md">
-            Experience the next generation of booking. Seamless, secure, and crafted for your comfort from departure to arrival.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            
-            {/* Primary CTA */}
-            <button className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white text-blue-900 font-bold hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-white/20 active:scale-95">
-              <span>Start Booking</span>
-              <ArrowRight size={18} />
-            </button>
-
-            {/* Secondary Glass Button */}
-            <button className="flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/20 text-white font-semibold hover:bg-white/10 transition-all duration-300">
-              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-white text-blue-900">
-                <Play size={10} fill="currentColor" />
-              </div>
-              <span>Watch Video</span>
-            </button>
-
+    <section className="relative w-full h-[90vh] overflow-hidden flex flex-col transition-colors duration-300">
+      {/* 1. Top Navbar / Brand Area */}
+      <div className="absolute top-0 left-0 w-full p-8 z-30 flex justify-between items-center pointer-events-none">
+        <div className="hidden md:flex gap-4 pointer-events-auto">
+          {/* Decorative pill */}
+          <div className="px-4 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10 text-xs font-bold text-white uppercase tracking-widest shadow-sm">
+            Explore The Unseen
           </div>
         </div>
-
       </div>
 
+      {/* 2. The Main Expandable Slider */}
+      <div className="flex flex-col md:flex-row h-full w-full">
+        {destinations.map((item) => (
+          <motion.div
+            key={item.id}
+            layout // Handles smooth width animation automatically
+            onClick={() => setActiveId(item.id)}
+            onHoverStart={() => setActiveId(item.id)}
+            className={`
+              relative h-full cursor-pointer overflow-hidden 
+              border-b md:border-b-0 md:border-r border-white/10 
+              group
+              ${activeId === item.id ? "flex-3 md:flex-4" : "flex-1"} 
+              transition-[flex] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]
+            `}
+          >
+            {/* Background Image with Zoom Effect */}
+            <div className="absolute inset-0 w-full h-full">
+              <motion.img
+                src={item.img}
+                alt={item.title}
+                className="w-full h-full object-cover"
+                animate={{ scale: activeId === item.id ? 1.1 : 1 }} // Slow zoom when active
+                transition={{ duration: 10, ease: "linear" }}
+              />
+
+              {/* Theme-Aware Overlays */}
+              <div
+                className={`
+    absolute inset-0 transition-opacity duration-500
+    bg-black
+    ${activeId === item.id ? "opacity-1" : "opacity-60 group-hover:opacity-50"}
+  `}
+              />
+
+              {/* 2. Gradient Readability Layer: Hardcoded black for universal contrast */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/10 to-transparent opacity-100" />
+            </div>
+
+            {/* Content Container */}
+            <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
+              
+              {/* Vertical Title (Inactive State - Desktop) */}
+              {/* Centered vertically to save bottom space and look more artistic */}
+              {activeId !== item.id && (
+                <div className="hidden md:flex absolute inset-0 items-center justify-center">
+                  <h3 className="text-4xl font-black text-white -rotate-90 whitespace-nowrap tracking-[0.15em] uppercase mix-blend-overlay">
+                    {item.title}
+                  </h3>
+                </div>
+              )}
+
+              {/* Expanded Content (Active State) */}
+              <AnimatePresence mode="wait">
+                {activeId === item.id && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                    className="relative z-10"
+                  >
+           
+
+                    {/* Massive Showcase Title - Tightly stacked */}
+                    <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] mb-5 drop-shadow-2xl">
+                      {item.title}
+                    </h2>
+
+                    {/* Compact Footer: Description & Button Side-by-Side */}
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-t border-white/20 pt-5">
+                      <p className="text-white/90 text-sm md:text-base font-medium max-w-xs leading-snug drop-shadow-md">
+                        {item.desc}
+                      </p>
+                      
+                      <button className="w-fit flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-(--grad-start) hover:text-white transition-all duration-300 shadow-xl shadow-black/20 group/btn">
+                        Explore
+                        <ArrowRight size={16} className="group-hover/btn:-rotate-45 transition-transform duration-300" />
+                      </button>
+                    </div>
+
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Mobile Title (Inactive State - Mobile) */}
+              <div className="md:hidden">
+                {activeId !== item.id && (
+                  <h3 className="text-2xl font-black text-white/90 tracking-tighter drop-shadow-lg">
+                    {item.title}
+                  </h3>
+                )}
+              </div>
+
+            </div>
+
+         
+
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 };
