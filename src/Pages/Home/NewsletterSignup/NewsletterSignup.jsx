@@ -31,11 +31,7 @@ const NewsletterSignup = () => {
   return (
     <section className="relative w-full py-24 overflow-hidden bg-(--bg-soft-accent) transition-colors duration-300">
       
-      {/* Background Decorative Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-full pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-(--grad-start) rounded-full opacity-5 blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-(--grad-end) rounded-full opacity-5 blur-[120px]" />
-      </div>
+
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10">
         
@@ -78,7 +74,7 @@ const NewsletterSignup = () => {
             <div className="
               relative overflow-hidden p-8 rounded-3xl
               bg-(--bg-card) border border-(--border-card)
-              shadow-2xl shadow-(--grad-start)/10
+              shadow-xl shadow-(--grad-start)/10
             ">
               
               {!isSubscribed ? (

@@ -11,20 +11,22 @@ import Testimonials from "./Testimonials/Testimonials";
 import TravelInspiration from "./TravelInspiration/TravelInspiration";
 import VisualHighlight from "./VisualHighlight/VisualHighlight";
 import TrustBadges from "./TrustBadges/TrustBadges";
+import FAQ from "./FAQ/FAQ";
 const Home = () => {
   return (
     <div className="max-w-7xl mx-auto">
       <Banner />
       <Advertisement />
-      <BrandPromise />
-      <TrustBadges />
       <PopularRoutes />
+      <BrandPromise />
+      <LatestTickets />
+      <TrustBadges />
       <VisualHighlight />
       <PlatformStatistics />
-      <LatestTickets />
       <Testimonials />
       <TravelInspiration />
       <NewsletterSignup />
+      <FAQ></FAQ>
       <FinalCTA />
     </div>
   );
