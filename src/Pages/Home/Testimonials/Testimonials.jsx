@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Quote, Star, MapPin } from "lucide-react";
 
+// GSAP Imports
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const Testimonials = () => {
+  const containerRef = useRef(null);
+  const cardsRef = useRef([]);
+
   const testimonials = [
     {
       id: 1,
@@ -29,8 +38,43 @@ const Testimonials = () => {
     },
   ];
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      
+      gsap.fromTo(cardsRef.current,
+        {
+          y: 100, 
+          opacity: 0,
+          scale: 0.8, 
+          rotate: (index) => index % 2 === 0 ? -10 : 10, 
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          rotate: 0, 
+          ease: "back.out(1.7)",
+          duration: 0.8,
+          stagger: 0.25, 
+
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom", 
+            end: "center center", 
+            scrub: 1,
+          }
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="w-full py-24 bg-(--bg-soft-accent) transition-colors duration-300 relative overflow-hidden">
+    <section 
+      ref={containerRef}
+      className="w-full py-24 bg-(--bg-soft-accent) transition-colors duration-300 relative overflow-hidden"
+    >
       
       {/* Decorative Background Blur */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
@@ -52,9 +96,12 @@ const Testimonials = () => {
 
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((item) => (
+          {testimonials.map((item, index) => (
             <div
               key={item.id}
+              // Ref Assignment
+              ref={(el) => (cardsRef.current[index] = el)}
+              
               className="
                 group relative flex flex-col justify-between
                 p-8 rounded-3xl
@@ -111,7 +158,6 @@ const Testimonials = () => {
                     {item.route}
                   </div>
                 </div>
-
               </div>
             </div>
           ))}
