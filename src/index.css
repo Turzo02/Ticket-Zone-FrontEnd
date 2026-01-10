@@ -26,6 +26,9 @@
   
   --grad-start: oklch(62% 0.23 45);          /* Vivid Orange */
   --grad-end: oklch(85% 0.18 85);            /* Rich Amber */
+
+  --blob-color: oklch(96% 0.05 50);          /* Very subtle warm wash */
+
   
   /* Helper for shadows (rgb values) */
   --shadow-color: 0 0 0; 
@@ -47,9 +50,14 @@
   
   --grad-start: oklch(70% 0.19 45);          /* Bright Orange */
   --grad-end: oklch(90% 0.15 85);            /* Pale Gold */
+
+  --blob-color: oklch(20% 0.2 45);           /* Deep, rich amber glow */
+
   
   --shadow-color: 0 0 0;
 }
+
+
 
 
 
