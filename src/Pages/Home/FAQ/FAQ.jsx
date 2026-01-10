@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Plus, Minus, HelpCircle } from "lucide-react";
+
+// GSAP Imports
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const FAQ = () => {
   // Track which accordion item is open
   const [activeIndex, setActiveIndex] = useState(0);
+  
+  // Refs for Animation
+  const containerRef = useRef(null);
+  const headerRef = useRef(null);
+  const faqItemsRef = useRef([]);
 
   const faqs = [
     {
@@ -42,11 +53,55 @@ const FAQ = () => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  // --- ANIMATION: STAGGERED LIST SLIDE UP ---
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom", 
+          end: "center center", 
+          scrub: 1,
+        }
+      });
+
+      // 1. Header Animation
+      tl.fromTo(headerRef.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.5 }
+      )
+      
+      // 2. FAQ Items Cascade Up
+      .fromTo(faqItemsRef.current,
+        { 
+          y: 50, 
+          opacity: 0,
+        },
+        { 
+          y: 0, 
+          opacity: 1, 
+          stagger: 0.15, // Delay between each item
+          duration: 0.8,
+          ease: "power2.out"
+        },
+        "<0.2" // Start slightly after header
+      );
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="w-full py-20 bg-(--bg-soft-accent) transition-colors duration-300">
+    <section 
+      ref={containerRef}
+      className="w-full py-20 bg-(--bg-soft-accent) transition-colors duration-300"
+    >
       <div className="max-w-4xl mx-auto px-6 sm:px-10">
+        
         {/* --- Header --- */}
-        <div className="text-center mb-12">
+        <div ref={headerRef} className="text-center mb-12">
           <div className="inline-flex items-center justify-center p-3 mb-4 rounded-full bg-(--bg-card) border border-(--border-card) shadow-sm text-(--grad-start)">
             <HelpCircle size={24} />
           </div>
@@ -66,10 +121,12 @@ const FAQ = () => {
         <div className="space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = activeIndex === index;
-
             return (
               <div
                 key={faq.id}
+                // Ref Assignment
+                ref={(el) => (faqItemsRef.current[index] = el)}
+                
                 onClick={() => toggleFAQ(index)}
                 className={`
                   group rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden
@@ -89,7 +146,7 @@ const FAQ = () => {
                   >
                     {faq.question}
                   </h3>
-
+                  
                   {/* Icon Toggle */}
                   <div
                     className={`
@@ -122,7 +179,7 @@ const FAQ = () => {
         </div>
 
         {/* --- Support Link --- */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-12 opacity-0 animate-fade-in" style={{animationDelay: '1s', animationFillMode: 'forwards'}}>
           <p className="text-(--text-muted) font-medium">
             Still have questions?{" "}
             <a

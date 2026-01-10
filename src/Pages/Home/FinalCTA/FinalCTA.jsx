@@ -1,66 +1,122 @@
-import React from 'react';
-import { ArrowRight, Star, ShieldCheck, Clock, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router'; // Assuming you are using react-router
+import React, { useRef, useEffect } from "react";
+import { ArrowRight, Star, ShieldCheck, Clock, CheckCircle } from "lucide-react";
+import { Link } from "react-router";
+
+// GSAP Imports
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const FinalCTA = () => {
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
+  const badgeRef = useRef(null);
+  const titleRef = useRef(null);
+  const btnRef = useRef(null);
+
   const features = [
-    {
-      icon: Star,
-      text: "Best Price Guarantee"
-    },
-    {
-      icon: ShieldCheck,
-      text: "100% Secure Booking"
-    },
-    {
-      icon: Clock,
-      text: "24/7 Expert Support"
-    }
+    { icon: Star, text: "Best Price Guarantee" },
+    { icon: ShieldCheck, text: "100% Secure Booking" },
+    { icon: Clock, text: "24/7 Expert Support" }
   ];
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom", 
+          end: "center center",
+          scrub: 1,
+        }
+      });
+
+      // 1. Zoom Out Effect (Creates depth)
+      tl.fromTo(contentRef.current,
+        { scale: 1.1, filter: "blur(5px)", opacity: 0 },
+        { scale: 1, filter: "blur(0px)", opacity: 1, duration: 1 }
+      )
+
+      // 2. Badge Pops
+      .fromTo(badgeRef.current,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, ease: "back.out(1.7)" },
+        "<0.3"
+      )
+
+      // 3. Title & Text Slide Up rapidly
+      .fromTo(titleRef.current.children,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.1 },
+        "<0.2"
+      )
+
+      // 4. Buttons Elastic Pop
+      .fromTo(btnRef.current.children,
+        { scale: 0.8, opacity: 0 },
+        { scale: 1, opacity: 1, stagger: 0.1, ease: "elastic.out(1, 0.5)" },
+        "-=0.2"
+      );
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative w-full py-24 lg:py-32 bg-(--bg-soft-accent)  overflow-hidden">
-      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 text-center">
+    <section 
+      ref={sectionRef}
+      className="relative w-full py-24 lg:py-32 bg-(--bg-soft-accent) overflow-hidden"
+    >
+      <div 
+        ref={contentRef} 
+        className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 text-center"
+      >
         
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-(--bg-card) border border-(--border-card) shadow-sm animate-bounce-slow">
+        <div ref={badgeRef} className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-(--bg-card) border border-(--border-card) shadow-sm">
            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-(--grad-start) opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-(--grad-start)"></span>
-            </span>
+           </span>
            <span className="text-xs font-bold text-(--text-main) tracking-widest uppercase">
              Start Your Adventure
            </span>
         </div>
 
-        {/* Headline */}
-        <h2 className="text-4xl md:text-6xl font-black text-(--text-main) tracking-tighter mb-6 leading-[1.1]">
-          Ready to Start Your <br className="hidden md:block" />
-          <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
-            Journey?
-          </span>
-        </h2>
-        
-        {/* Subtext */}
-        <p className="text-xl text-(--text-muted) font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
-          Join over 50,000+ travelers who skip the lines and book smart with TicketZone. fast, secure, and reliable.
-        </p>
+        {/* Wrapper for Title & Text Animation */}
+        <div ref={titleRef}>
+            {/* Headline */}
+            <h2 className="text-4xl md:text-6xl font-black text-(--text-main) tracking-tighter mb-6 leading-[1.1]">
+            Ready to Start Your <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+                Journey?
+            </span>
+            </h2>
+            
+            {/* Subtext */}
+            <p className="text-xl text-(--text-muted) font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
+            Join over 50,000+ travelers who skip the lines and book smart with TicketZone. fast, secure, and reliable.
+            </p>
 
-        {/* Features Row */}
-        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-12">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-(--bg-card)/50 border border-(--border-card) backdrop-blur-sm"
-            >
-              <feature.icon className="w-5 h-5 text-(--grad-start)" />
-              <span className="text-sm font-bold text-(--text-main)">{feature.text}</span>
+            {/* Features Row */}
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-12">
+            {features.map((feature, index) => (
+                <div
+                key={index}
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-(--bg-card)/50 border border-(--border-card) backdrop-blur-sm"
+                >
+                <feature.icon className="w-5 h-5 text-(--grad-start)" />
+                <span className="text-sm font-bold text-(--text-main)">{feature.text}</span>
+                </div>
+            ))}
             </div>
-          ))}
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+        <div ref={btnRef} className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
           
           {/* Primary Button */}
           <Link to="/all-tickets">
