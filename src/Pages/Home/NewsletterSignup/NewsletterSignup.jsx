@@ -40,7 +40,7 @@ const NewsletterSignup = () => {
       <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10">
         
         {/* Main Content Container */}
-        <div className="flex flex-col lg:flex-row items-center justify-between lg:justify-center gap-6 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-center justify-between lg:justify-center gap-4 lg:gap-12">
           
           {/* Left Side: Text & Value Prop */}
           <div className="flex-1 text-center md:text-left">

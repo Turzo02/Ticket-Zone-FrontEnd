@@ -84,7 +84,7 @@ const Revenue = () => {
       </div>
 
       {/* Cards (Summary) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
         <div className="stat bg-base-200 shadow-md rounded-box">
           <div className="stat-title">Total Revenue</div>
           <div className="stat-value text-primary">${totalPrice}</div>

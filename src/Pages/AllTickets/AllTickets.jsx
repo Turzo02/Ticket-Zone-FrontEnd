@@ -1,27 +1,132 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
-import { MoveRight, Filter, ArrowUpDown } from "lucide-react";
+import { Filter, ArrowUpDown, Search, ChevronDown, Check } from "lucide-react";
+import SingleTicket from "./SingleTicket/SingleTicket";
 
+// --- Internal Custom Dropdown Component ---
+const CustomDropdown = ({
+  options,
+  value,
+  onChange,
+  icon: Icon,
+  placeholder,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectedOption = options.find((opt) => opt.value === value);
+
+  return (
+    <div className="relative w-full sm:w-auto min-w-[180px]" ref={dropdownRef}>
+      {/* Trigger Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`
+          flex items-center justify-between w-full px-4 py-2.5 rounded-xl border transition-all duration-200
+          ${
+            isOpen
+              ? "border-(--input-focus) ring-1 ring-(--input-focus) bg-(--input-bg)"
+              : "border-(--input-border) bg-(--input-bg) hover:border-(--input-focus)"
+          }
+        `}
+      >
+        <div className="flex items-center gap-2.5 overflow-hidden">
+          {Icon && <Icon className="w-5 h-5 text-(--grad-start) shrink-0" />}
+          <span
+            className={`text-sm font-semibold truncate ${
+              selectedOption ? "text-(--text-main)" : "text-(--text-main)"
+            }`}
+          >
+            {selectedOption ? selectedOption.label : placeholder}
+          </span>
+        </div>
+        <ChevronDown
+          className={`w-4 h-4 text-(--text-muted) transition-transform duration-200 shrink-0 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-2 z-50 p-1.5 rounded-xl border border-(--border-card) bg-(--bg-card) shadow-xl shadow-black/10 animate-in fade-in zoom-in-95 duration-100 origin-top">
+          <div className="max-h-60 overflow-y-auto space-y-0.5 custom-scrollbar">
+            {options.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => {
+                  onChange(option.value);
+                  setIsOpen(false);
+                }}
+                className={`
+                  w-full flex items-center justify-between px-3 py-2 text-sm font-semibold rounded-lg transition-colors
+                  ${
+                    value === option.value
+                      ? "bg-(--grad-start) text-white"
+                      : "text-(--text-main) hover:bg-(--bg-soft-accent)"
+                  }
+                `}
+              >
+                <span>{option.label}</span>
+                {value === option.value && <Check className="w-3.5 h-3.5" />}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// --- Main AllTickets Component ---
 const AllTickets = () => {
   const axiosSecure = useAxiosSecure();
-
   const [page, setPage] = useState(1);
   const [filterType, setFilterType] = useState("");
   const [sortOrder, setSortOrder] = useState("");
-  const limit = 6;
+  const limit = 8;
   const [fromLocation, setFromLocation] = useState("");
   const [toLocation, setToLocation] = useState("");
-  const handleFilterChange = (e) => {
-    setFilterType(e.target.value);
+
+  // Options for Transport Filter
+  const transportOptions = [
+    { label: "All Transports", value: "" },
+    { label: "Bus", value: "Bus" },
+    { label: "Train", value: "Train" },
+    { label: "Flight", value: "Flight" },
+    { label: "Ship", value: "Ship" },
+  ];
+
+  // Options for Sorting
+  const sortOptions = [
+    { label: "Default Sort", value: "" },
+    { label: "Price: Low to High", value: "asc" },
+    { label: "Price: High to Low", value: "desc" },
+  ];
+
+  // Handlers (Updated to accept value directly from CustomDropdown)
+  const handleFilterChange = (val) => {
+    setFilterType(val);
     setPage(1);
   };
 
-  const handleSortChange = (e) => {
-    setSortOrder(e.target.value);
+  const handleSortChange = (val) => {
+    setSortOrder(val);
     setPage(1);
   };
 
@@ -40,11 +145,9 @@ const AllTickets = () => {
       if (sortOrder) url += `&sort=${sortOrder}`;
       if (fromLocation) url += `&from=${fromLocation}`;
       if (toLocation) url += `&to=${toLocation}`;
-
       const { data } = await axiosSecure.get(url);
       return data;
     },
-    // keepPreviousData: true,
     placeholderData: keepPreviousData,
   });
 
@@ -63,7 +166,7 @@ const AllTickets = () => {
 
   if (isLoading && !isFetching) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen bg-(--bg-page)">
         <SwappingDotLoader />
       </div>
     );
@@ -71,212 +174,165 @@ const AllTickets = () => {
 
   if (isError) {
     return (
-      <p className="text-red-500 text-center mt-10 font-bold">
-        Failed to load tickets
-      </p>
+      <div className="flex justify-center items-center h-64 bg-(--bg-page)">
+        <p className="text-red-500 font-bold bg-(--bg-card) px-6 py-3 rounded-xl border border-(--border-card)">
+          Failed to load tickets. Please try again.
+        </p>
+      </div>
     );
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto">
-      {/* Header Section - Always Visible */}
-      <div className="text-center py-8 mb-12 md:py-16 px-4 space-y-4 bg-base-200 rounded-xl shadow-md">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
-          All Tickets
-        </h1>
-        <p className="text-lg md:text-xl text-base-content/80 max-w-3xl mx-auto">
-          Easily manage and view all your travel bookings and reservations in
-          one place.
-        </p>
-      </div>
+    <div className="min-h-screen bg-(--bg-page) text-(--text-main) transition-colors duration-300 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        {/* Header Section */}
+        <div className="text-center py-12 mb-10 px-4 space-y-4 bg-(--bg-card) border border-(--border-card) rounded-3xl shadow-sm">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+            All Tickets
+          </h1>
+          <p className="text-lg md:text-xl text-(--text-muted) max-w-2xl mx-auto font-medium">
+            Find your perfect journey. Filter by transport, price, or
+            destination.
+          </p>
+        </div>
 
-      {/* Controls Container - Always Visible */}
-      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 text-base-content">
-        <div className="flex flex-col lg:flex-row gap-4 w-full p-2">
-          <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-            {/* Transport Filter */}
-            <div className="relative group w-full sm:w-auto">
-              <div className="flex items-center space-x-2 bg-base-200 border-2 border-base-200 rounded-lg px-3 py-1 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
-                <Filter className="w-5 h-5 text-primary shrink-0" />
-                <select
-                  value={filterType}
-                  onChange={handleFilterChange}
-                  className="select select-ghost select-sm bg-transparent outline-none text-base-content font-semibold cursor-pointer w-full sm:w-36 px-2"
-                >
-                  <option value="">All Transports</option>
-                  <option value="Bus">Bus</option>
-                  <option value="Train">Train</option>
-                  <option value="Flight">Flight</option>
-                  <option value="Ship">Ship</option>
-                </select>
-              </div>
+        {/* Controls Container */}
+        <div className="flex flex-col lg:flex-row justify-between items-center mb-10 gap-4">
+          {/* Filters & Sort using Custom Dropdown */}
+          <div className="flex flex-row gap-4 w-full z-30">
+            <div className="w-1/2 lg:w-auto">
+              <CustomDropdown
+                options={transportOptions}
+                value={filterType}
+                onChange={handleFilterChange}
+                icon={Filter}
+                placeholder="All Transports"
+              />
             </div>
 
-            {/* Price Sort */}
-            <div className="relative group w-full sm:w-auto">
-              <div className="flex items-center space-x-2 bg-base-200 border-2 border-base-200 rounded-lg px-3 py-1 shadow-sm hover:border-primary focus-within:border-primary transition-all w-full">
-                <ArrowUpDown className="w-5 h-5 text-primary shrink-0" />
-                <select
-                  value={sortOrder}
-                  onChange={handleSortChange}
-                  className="select select-ghost select-sm bg-transparent outline-none text-base-content font-semibold cursor-pointer w-full sm:w-40 px-2"
-                >
-                  <option value="">Default Sort</option>
-                  <option value="asc">Price: Low to High</option>
-                  <option value="desc">Price: High to Low</option>
-                </select>
-              </div>
+            <div className="w-1/2 lg:w-auto">
+              <CustomDropdown
+                options={sortOptions}
+                value={sortOrder}
+                onChange={handleSortChange}
+                icon={ArrowUpDown}
+                placeholder="Default Sort"
+              />
             </div>
           </div>
 
           {/* Search Inputs */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto grow">
-            <input
-              type="text"
-              placeholder="From (City/Station)"
-              value={fromLocation}
-              onChange={handleFromChange}
-              className="input input-bordered border-2 border-base-200 bg-base-200 focus:input-primary shadow-sm w-full transition-all"
-            />
-            <input
-              type="text"
-              placeholder="To (City/Station)"
-              value={toLocation}
-              onChange={handleToChange}
-              className="input input-bordered border-2 border-base-200 bg-base-200 focus:input-primary shadow-sm w-full transition-all"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Ticket Grid Section - RELATIVE CONTAINER FOR LOADING OVERLAY */}
-      <div className="relative min-h-[400px]">
-        {/* Loader Overlay: Only shows when data is fetching (sorting, searching, etc.) */}
-        {isFetching && (
-          <div className="absolute inset-0 z-10 flex justify-center items-start pt-32 bg-base-200/40 backdrop-blur-[2px] rounded-xl transition-all">
-            <div className="sticky top-1/2">
-              <SwappingDotLoader />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto lg:grow lg:max-w-2xl z-20">
+            <div className="relative group">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-(--text-muted) group-focus-within:text-(--grad-start) transition-colors" />
+              <input
+                type="text"
+                placeholder="From (City/Station)"
+                value={fromLocation}
+                onChange={handleFromChange}
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted) focus:border-(--input-focus) focus:ring-1 focus:ring-(--input-focus) outline-none transition-all shadow-sm"
+              />
+            </div>
+            <div className="relative group">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-(--text-muted) group-focus-within:text-(--grad-start) transition-colors" />
+              <input
+                type="text"
+                placeholder="To (City/Station)"
+                value={toLocation}
+                onChange={handleToChange}
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted) focus:border-(--input-focus) focus:ring-1 focus:ring-(--input-focus) outline-none transition-all shadow-sm"
+              />
             </div>
           </div>
-        )}
+        </div>
 
-        {allTickets.length === 0 && !isFetching ? (
-          <div className="text-center py-20 bg-base-200 border border-dashed border-base-200 rounded-xl">
-            <h3 className="text-2xl font-bold text-base-content/50">
-              No tickets found
-            </h3>
-          </div>
-        ) : (
-          <div
-            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-opacity duration-300 ${
-              isFetching ? "opacity-30 pointer-events-none" : "opacity-100"
-            }`}
-          >
-            {allTickets.map((ticket, index) => {
-              const formattedPrice = new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-              }).format(ticket.price);
+        {/* Ticket Grid Section */}
+        <div className="relative min-h-[400px] z-10">
+          {/* Loader Overlay */}
+          {isFetching && (
+            <div className="absolute inset-0 z-20 flex justify-center items-start pt-32 bg-(--bg-page)/60 backdrop-blur-sm rounded-3xl transition-all">
+              <div className="sticky top-1/2">
+                <SwappingDotLoader />
+              </div>
+            </div>
+          )}
+
+          {allTickets.length === 0 && !isFetching ? (
+            <div className="flex flex-col items-center justify-center py-24 bg-(--bg-card) border border-dashed border-(--border-card) rounded-3xl">
+              <h3 className="text-xl font-bold text-(--text-muted)">
+                No tickets found matching your criteria.
+              </h3>
+            </div>
+          ) : (
+            <div
+              className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 transition-opacity duration-300 ${
+                isFetching ? "opacity-40 pointer-events-none" : "opacity-100"
+              }`}
+            >
+              {allTickets.map((ticket, index) => {
+                const formattedPrice = new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(ticket.price);
+
+                return (
+                  <SingleTicket
+                    key={index}
+                    ticket={ticket}
+                    formattedPrice={formattedPrice}
+                    index={index}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Pagination Bar */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-16 gap-2">
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+              className="px-4 py-2 rounded-lg text-sm font-bold bg-(--bg-card) border border-(--border-card) text-(--text-main) hover:border-(--grad-start) disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            >
+              Prev
+            </button>
+
+            {[...Array(totalPages)].map((_, i) => {
+              if (
+                totalPages > 8 &&
+                Math.abs(page - (i + 1)) > 2 &&
+                i !== 0 &&
+                i !== totalPages - 1
+              )
+                return null;
 
               return (
-                <div
-                  key={index}
-                  className="bg-base-200 shadow-xl overflow-hidden hover:scale-[1.02] transition duration-300 p-4 rounded-lg"
+                <button
+                  key={i}
+                  onClick={() => setPage(i + 1)}
+                  className={`min-w-10 h-10 rounded-lg text-sm font-bold transition-all border ${
+                    page === i + 1
+                      ? "bg-(--grad-start) text-(--text-inv) border-(--grad-start) shadow-lg shadow-(--grad-start)/20"
+                      : "bg-(--bg-card) border-(--border-card) text-(--text-main) hover:border-(--grad-start)"
+                  }`}
                 >
-                  {/* Header */}
-                  <div className="relative h-40 rounded-lg overflow-hidden">
-                    <img
-                      src={ticket.photo}
-                      alt={ticket.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
-                    <h2 className="absolute bottom-2 left-3 right-3 text-white text-2xl font-extrabold drop-shadow-xl truncate">
-                      {ticket.title}
-                    </h2>
-                  </div>
-
-                  {/* Body */}
-                  <div className="pt-4 space-y-4">
-                    {/* From to location */}
-                    <div className="flex justify-between items-center gap-2">
-                      <h1 className="truncate max-w-[200px]">
-                        From: {ticket.from}
-                      </h1>
-                      <MoveRight className="shrink-0" />
-                      <h1 className="truncate max-w-[200px]">
-                        To: {ticket.to}
-                      </h1>
-                    </div>
-
-                    <div className="flex justify-between items-center border-b border-base-200 pb-2">
-                      <p className="text-xs font-semibold text-base-content/60 uppercase">
-                        Price (Per Unit)
-                      </p>
-                      <span className="text-3xl font-bold text-info">
-                        {formattedPrice}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm font-medium">
-                      <span>Available:</span>
-                      <span className="text-info font-bold">
-                        {ticket.quantity}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm font-medium py-2">
-                      <div className="flex items-center space-x-2">
-                        <span>
-                          {ticket.transportType === "Train"
-                            ? "🚆"
-                            : ticket.transportType === "Bus"
-                            ? "🚌"
-                            : "✈️"}
-                        </span>
-                        <span>{ticket.transportType}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <Link to={`/all-tickets/${ticket._id}`}>
-                    <button className="w-full mt-4 py-3 text-lg font-bold btn rounded-lg shadow-lg text-white bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 border-none">
-                      See Details
-                    </button>
-                  </Link>
-                </div>
+                  {i + 1}
+                </button>
               );
             })}
+
+            <button
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+              className="px-4 py-2 rounded-lg text-sm font-bold bg-(--bg-card) border border-(--border-card) text-(--text-main) hover:border-(--grad-start) disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            >
+              Next
+            </button>
           </div>
         )}
       </div>
-
-      {/* PAGINATION BAR - Outside the relative container to keep it clickable */}
-      {totalPages > 1 && (
-        <div className="flex justify-center mt-10 gap-3">
-          <button
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-            disabled={page === 1}
-            className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
-          >
-            Prev
-          </button>
-          {[...Array(totalPages)].map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setPage(i + 1)}
-              className={`btn btn-sm ${page === i + 1 ? "btn-primary" : ""}`}
-            >
-              {i + 1}
-            </button>
-          ))}
-          <button
-            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={page === totalPages}
-            className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-      )}
     </div>
   );
 };

@@ -59,7 +59,7 @@ const TravelInspiration = () => {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               {travelTips.map((tip, index) => (
                 <div
                   key={index}

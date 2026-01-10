@@ -113,7 +113,7 @@ const UpdateTicket = () => {
 
       <div className="rounded-2xl border border-base-200 bg-base-200 p-6 lg:p-8 shadow-2xl">
         <form
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
           onSubmit={handleSubmit(handleUpdateTicket)}
         >
           {/* Ticket Title */}
@@ -257,7 +257,7 @@ const UpdateTicket = () => {
             <label className="label">
               <span className="label-text font-semibold">Perks</span>
             </label>
-            <div className="flex flex-wrap gap-6 text-sm">
+            <div className="flex flex-wrap gap-4 text-sm">
               <label className="label cursor-pointer gap-2">
                 <input
                   {...register("perks", { required: "Perks are required" })}

@@ -131,7 +131,7 @@ const TicketDetailsPage = () => {
           </span>
         </div>
 
-        <div className="px-2 py-1 flex items-center gap-6 bg-primary/10  rounded-lg font-semibold text-right whitespace-nowrap">
+        <div className="px-2 py-1 flex items-center gap-4 bg-primary/10  rounded-lg font-semibold text-right whitespace-nowrap">
           📅 <span className="text-base-content/80">Departure:</span>{" "}
           {new Date(ticket.departure).toLocaleDateString("en-GB", {
             day: "2-digit",

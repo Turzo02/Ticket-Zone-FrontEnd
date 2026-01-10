@@ -53,7 +53,7 @@ const RouteCard = ({ icon: Icon, city1, city2, type, time }) => {
       {/* Background Decorative Blob (Subtle) */}
       <div className={`absolute -right-12 -top-12 w-32 h-32 rounded-full opacity-0 group-hover:opacity-20 transition-all duration-500 ${textColor} bg-current blur-3xl`} />
 
-      <div className="relative z-10 flex flex-col h-full gap-6">
+      <div className="relative z-10 flex flex-col h-full gap-4">
         
         {/* Top: Header Row */}
         <div className="flex items-start justify-between">
@@ -152,7 +152,7 @@ const PopularRoutes = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-4">
               Popular <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">Destinations</span>
@@ -170,7 +170,7 @@ const PopularRoutes = () => {
         </div>
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {routes.map((route, index) => (
             <RouteCard
               key={index}

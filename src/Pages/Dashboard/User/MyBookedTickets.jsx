@@ -41,7 +41,7 @@ const MyBookedTickets = () => {
          My Booked Tickets
         </h1>
       </div>  
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-3">
                 {userBookings?.length > 0 ? (
                     userBookings.map((ticket) => (
                         <TicketCard key={ticket._id} ticket={ticket} />
