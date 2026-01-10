@@ -19,17 +19,7 @@ const FinalCTA = () => {
   ];
 
   return (
-    <section className="relative w-full py-24 lg:py-32 overflow-hidden">
-      
-      {/* Background linear */}
-      <div className="absolute inset-0 bg-linear-to-b from-(--cta-bg-top) to-(--cta-bg-bottom)" />
-      
-      {/* Decorative Ambient Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
-        <div className="absolute -top-24 left-1/4 w-[500px] h-[500px] bg-(--grad-start) rounded-full opacity-10 blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-(--grad-end) rounded-full opacity-10 blur-[100px]" />
-      </div>
-
+    <section className="relative w-full py-24 lg:py-32 bg-(--bg-page)  overflow-hidden">
       <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 text-center">
         
         {/* Badge */}

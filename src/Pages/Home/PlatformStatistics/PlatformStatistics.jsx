@@ -34,7 +34,7 @@ const PlatformStatistics = () => {
   ];
 
   return (
-    <section className="relative w-full py-24 bg-(--bg-stats) transition-colors duration-300 overflow-hidden">
+    <section className="relative w-full py-24 bg-(--bg-page) transition-colors duration-300 overflow-hidden">
       
       {/* Decorative Background Pattern (Dot Grid) */}
       <div 
@@ -100,7 +100,7 @@ const PlatformStatistics = () => {
               </div>
 
               {/* Bottom Line Accent */}
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-linear-to-r from-(--grad-start) to-(--grad-end) transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 rounded-b-3xl" />
+              <div className="absolute -bottom-0.5 left-0 w-full h-2 bg-linear-to-r from-(--grad-start) to-(--grad-end) transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 rounded-b-3xl" />
             </div>
           ))}
         </div>
