@@ -68,7 +68,13 @@
   --stats-border: oklch(90% 0.02 250);
   /* Crisp borders for dividers */
    --pattern-color: oklch(20% 0.1 260 / 0.05); /* Faint blue dot */
-
+   /* NEW: Rating Star Color */
+  --star-color: oklch(85% 0.18 85);          /* Premium Gold/Amber */
+  --quote-icon: oklch(90% 0.05 260);  
+  
+  /* NEW: Soft accent background for container boxes */
+  --bg-soft-accent: oklch(96% 0.01 240);     /* Cool light gray/blue tint */
+  --icon-box-bg: oklch(100% 0 0);    
 
 
 
@@ -130,7 +136,15 @@
   --stats-border: oklch(22% 0.04 260);
   /* Dark borders */
     --pattern-color: oklch(80% 0.1 260 / 0.05); /* Faint white dot */
-      
+       
+     /* NEW: Rating Star Color */
+  --star-color: oklch(88% 0.15 85);          /* Bright Gold */
+  --quote-icon: oklch(20% 0.05 260);    
+  
+    
+  /* NEW: Soft accent background for container boxes */
+  --bg-soft-accent: oklch(15% 0.03 260);     /* Darker navy/slate tint */
+  --icon-box-bg: oklch(20% 0.04 260);  
 
 
 }

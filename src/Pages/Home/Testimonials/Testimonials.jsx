@@ -1,4 +1,5 @@
 import React from "react";
+import { Quote, Star, MapPin } from "lucide-react";
 
 const Testimonials = () => {
   const testimonials = [
@@ -6,35 +7,46 @@ const Testimonials = () => {
       id: 1,
       name: "Ali Khan",
       route: "Dhaka → Chittagong",
-      quote: "Booking tickets was fast and easy. Loved the platform!",
-      image: "https://i.pravatar.cc/150?u=ali", // Placeholder image
+      quote: "Booking tickets was incredibly fast. The UI is so intuitive, and I got my confirmation instantly.",
+      image: "https://i.pravatar.cc/150?u=ali",
+      rating: 5,
     },
     {
       id: 2,
       name: "Fatima Rahman",
       route: "Sylhet → Dhaka",
-      quote: "The bus tracking feature was a lifesaver. Highly recommended!",
+      quote: "The bus tracking feature was a lifesaver. I knew exactly when to leave home. Highly recommended!",
       image: "https://i.pravatar.cc/150?u=fatima",
+      rating: 5,
     },
     {
       id: 3,
       name: "Tanvir Hasan",
       route: "Khulna → Jessore",
-      quote: "Great prices and very comfortable seat selection process.",
+      quote: "Great prices and very comfortable seat selection process. This is my go-to travel app now.",
       image: "https://i.pravatar.cc/150?u=tanvir",
+      rating: 4,
     },
   ];
 
   return (
-    <section className="py-20">
-      <div className="container mx-auto px-6">
+    <section className="w-full py-24 bg-(--bg-page) transition-colors duration-300 relative overflow-hidden">
+      
+      {/* Decorative Background Blur */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
+        <div className="absolute top-[20%] left-[10%] w-72 h-72 bg-(--grad-start) rounded-full opacity-5 blur-[100px]" />
+        <div className="absolute bottom-[20%] right-[10%] w-96 h-96 bg-(--grad-end) rounded-full opacity-5 blur-[100px]" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10">
+        
         {/* Section Title */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4">
-            What Our Travelers Say
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-black text-(--text-main) tracking-tight mb-4">
+            Loved by <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">Travelers</span>
           </h2>
-          <p className="text-lg max-w-2xl mx-auto">
-            Discover why thousands of travelers trust TicketZone for their journeys.
+          <p className="text-lg text-(--text-muted) font-medium">
+            Join thousands of satisfied passengers who trust us for their daily commutes and holiday journeys.
           </p>
         </div>
 
@@ -43,24 +55,64 @@ const Testimonials = () => {
           {testimonials.map((item) => (
             <div
               key={item.id}
-              className=" shadow-sm rounded-2xl p-6 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300 border "
+              className="
+                group relative flex flex-col justify-between
+                p-8 rounded-3xl
+                bg-(--bg-card) border border-(--border-card)
+                hover:border-(--border-hover)
+                shadow-sm hover:shadow-xl hover:shadow-(--grad-start)/5
+                hover:-translate-y-2
+                transition-all duration-300 ease-out
+              "
             >
-              {/* User Photo */}
-              <div className="avatar mb-4">
-                <div className="w-16 h-16 rounded-full ring-2 ring-offset-2 ">
-                  <img src={item.image} alt={item.name} />
-                </div>
+              {/* Large Decorative Quote Icon */}
+              <div className="absolute top-6 right-8 text-(--quote-icon) transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
+                <Quote size={64} fill="currentColor" stroke="none" />
               </div>
 
-              {/* Content */}
-              <h3 className="text-lg font-bold">{item.name}</h3>
-              <p className="text-sm  font-medium mb-3">
-                {item.route}
-              </p>
-              
-              <blockquote className="italic">
-                "{item.quote}"
-              </blockquote>
+              <div>
+                {/* Star Rating */}
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      size={18} 
+                      className={`${i < item.rating ? "text-(--star-color)" : "text-(--border-card)"} fill-current`} 
+                    />
+                  ))}
+                </div>
+
+                {/* Quote Text */}
+                <blockquote className="relative z-10 text-lg font-medium text-(--text-main) leading-relaxed mb-8">
+                  "{item.quote}"
+                </blockquote>
+              </div>
+
+              {/* User Profile Section */}
+              <div className="flex items-center gap-4 pt-6 border-t border-(--border-card)">
+                
+                {/* Avatar with Gradient Ring */}
+                <div className="relative shrink-0">
+                  <div className="absolute inset-0 bg-linear-to-br from-(--grad-start) to-(--grad-end) rounded-full blur-[2px] opacity-70 group-hover:opacity-100 transition-opacity" />
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className="relative w-12 h-12 rounded-full border-2 border-(--bg-card) object-cover"
+                  />
+                </div>
+
+                {/* Info */}
+                <div className="flex flex-col">
+                  <h3 className="text-base font-bold text-(--text-main)">
+                    {item.name}
+                  </h3>
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-(--text-muted)">
+                    <MapPin size={12} className="text-(--grad-start)" />
+                    {item.route}
+                  </div>
+                </div>
+
+              </div>
             </div>
           ))}
         </div>

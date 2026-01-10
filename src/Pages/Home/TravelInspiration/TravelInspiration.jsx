@@ -1,75 +1,110 @@
 import React from 'react';
-import { MapPin, Compass, Heart, Star } from 'lucide-react';
+import { MapPin, Compass, Heart, ArrowRight, Sun, Shield } from 'lucide-react';
 
 const TravelInspiration = () => {
-
-
   const travelTips = [
     {
-      icon: <Compass className="w-6 h-6" />,
+      icon: Sun,
       title: "Best Time to Visit",
-      description: "October to March offers pleasant weather for most destinations"
+      description: "October to March offers the most pleasant weather for exploring."
     },
     {
-      icon: <MapPin className="w-6 h-6" />,
+      icon: MapPin,
       title: "Popular Routes",
-      description: "Dhaka-Cox's Bazar, Dhaka-Sylhet, and Chittagong-Bandarban"
+      description: "Don't miss the scenic drive from Chittagong to Bandarban."
     },
     {
-      icon: <Heart className="w-6 h-6" />,
-      title: "Travel Safe",
-      description: "Book verified operators and check weather conditions before travel"
+      icon: Shield,
+      title: "Travel Smart",
+      description: "Always book with verified operators for a hassle-free journey."
     }
   ];
 
   return (
-    <section className="py-20 ">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full py-24 bg-(--bg-page) transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10">
+        
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold  mb-4">
-            Discover Bangladesh
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-(--grad-start)/10 border border-(--grad-start)/20">
+            <Compass size={14} className="text-(--grad-start)" />
+            <span className="text-xs font-bold text-(--grad-start) uppercase tracking-widest">
+              Explore
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-(--text-main) tracking-tight mb-4">
+            Discover <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">Bangladesh</span>
           </h2>
-          <p className="text-lg  max-w-2xl mx-auto">
-            From pristine beaches to lush tea gardens, explore the diverse beauty of Bangladesh with our curated destinations.
+          <p className="text-lg text-(--text-muted) font-medium leading-relaxed">
+            From the world's longest sea beach to lush tea gardens, uncover the hidden gems and diverse beauty of our country.
           </p>
         </div>
 
-        {/* Travel Tips Section */}
-        <div className=" rounded-2xl p-8 border ">
-          <h3 className="text-2xl font-bold mb-8 text-center">
-            Travel Smart Tips
-          </h3>
+        {/* Feature Box: Travel Tips */}
+        <div className="relative rounded-3xl overflow-hidden border border-(--border-card) shadow-sm shadow-(--grad-start)/5">
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {travelTips.map((tip, index) => (
-              <div
-                key={index}
-                className="flex gap-4 p-4  rounded-xl shadow-sm"
-              >
-                <div className="shrink-0 w-12 h-12  rounded-lg flex items-center justify-center ">
-                  {tip.icon}
+          {/* Background linear/Fill */}
+          <div className="absolute inset-0 bg-(--bg-soft-accent)"></div>
+          
+          <div className="relative z-10 p-8 md:p-12">
+            <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
+              <h3 className="text-2xl md:text-3xl font-bold text-(--text-main) flex items-center gap-3">
+                <span className="p-2 rounded-xl bg-(--grad-start) text-white shadow-lg shadow-(--grad-start)/30">
+                  <Heart size={24} fill="currentColor" />
+                </span>
+                Traveler's Essentials
+              </h3>
+              <p className="text-(--text-muted) font-medium text-sm md:text-right max-w-md">
+                Curated advice to help you make the most of your trip, whether it's business or leisure.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {travelTips.map((tip, index) => (
+                <div
+                  key={index}
+                  className="
+                    group flex items-start gap-5 p-6 rounded-2xl
+                    bg-(--icon-box-bg) border border-(--border-card)
+                    hover:border-(--grad-start)/30
+                    shadow-sm hover:shadow-lg hover:shadow-(--grad-start)/10
+                    transition-all duration-300 ease-out
+                  "
+                >
+                  <div className="
+                    shrink-0 w-12 h-12 rounded-xl 
+                    bg-(--bg-soft-accent) text-(--grad-start)
+                    flex items-center justify-center
+                    group-hover:scale-110 group-hover:bg-(--grad-start) group-hover:text-white
+                    transition-all duration-300
+                  ">
+                    <tip.icon size={24} strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-(--text-main) mb-2 group-hover:text-(--grad-start) transition-colors">
+                      {tip.title}
+                    </h4>
+                    <p className="text-sm font-medium text-(--text-muted) leading-relaxed">
+                      {tip.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-1">
-                    {tip.title}
-                  </h4>
-                  <p className="text-sm ">
-                    {tip.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <button className="px-8 py-3  font-medium rounded-full transition-colors duration-200 inline-flex items-center gap-2">
-            View All Destinations
-            <MapPin className="w-4 h-4" />
+        {/* CTA Section */}
+        <div className="text-center mt-16">
+          <button className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-(--bg-card) border border-(--border-card) text-(--text-main) font-bold overflow-hidden shadow-lg shadow-(--shadow-color)/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <span className="absolute inset-0 bg-linear-to-r from-(--grad-start) to-(--grad-end) opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+            <span>View All Destinations</span>
+            <span className="p-1 rounded-full bg-(--bg-soft-accent) group-hover:bg-(--grad-start) group-hover:text-white transition-colors duration-300">
+              <ArrowRight size={16} />
+            </span>
           </button>
         </div>
+
       </div>
     </section>
   );
