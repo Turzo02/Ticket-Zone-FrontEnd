@@ -38,19 +38,23 @@ const Advertisement = () => {
   }
 
   return (
-    // Clean variable syntax
+    // Uses --bg-page (Deep Slate) and --text-main (Almost White)
     <div className="w-full min-h-[50vh] bg-(--bg-page) text-(--text-main) py-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         
         {/* Section Header */}
         <div className="relative mb-16 text-center">
- 
-          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) via-(--grad-end) to-(--grad-start) animate-gradient-x pb-2">
+          {/* Uses --grad-start (Vibrant Green) and --grad-end (Mint) */}
+           <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) via-(--grad-end) to-(--grad-start) animate-gradient-x pb-2">
             Exclusive Deals
           </h1>
           <p className="mt-4 text-(--text-muted) font-medium tracking-widest uppercase text-sm">
             Premium Travel • Limited Offers
-          </p>
+          </p> 
+
+
+
+
         </div>
 
         {isLoading ? (
@@ -90,11 +94,13 @@ const Advertisement = () => {
                   return (
                     <div
                       key={ticket._id}
-                      className="group relative flex flex-col justify-between overflow-hidden rounded-2xl
-                        bg-(--bg-card) border border-(--border-card)
+                      className="
+                        group relative flex flex-col justify-between overflow-hidden rounded-2xl
+                        bg-(--bg-card) 
+                        border border-(--border-card)
                         hover:border-(--border-hover)
-                        shadow-[0_8px_30px_rgb(var(--shadow-color)/0.1)] 
-                        hover:shadow-[0_20px_40px_rgb(var(--shadow-color)/0.2)]
+                        shadow-lg shadow-black/10
+                        hover:shadow-xl hover:shadow-(--grad-start)/10
                         hover:-translate-y-2
                         transition-all duration-500 ease-out
                       "
@@ -108,7 +114,9 @@ const Advertisement = () => {
                             className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
                             loading="lazy"
                           />
-                          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
+                          {/* Gradient Overlay for Text Readability */}
+                          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent"></div>
+                          
                           <div className="absolute bottom-3 left-4 right-4">
                              <h2 className="text-lg font-bold text-white leading-tight drop-shadow-md line-clamp-1">
                               {ticket.title}
@@ -119,7 +127,7 @@ const Advertisement = () => {
                         {/* Card Body */}
                         <div className="p-5 space-y-4 relative z-10">
                           {/* Price Row */}
-                          <div className="flex justify-between items-end pb-3 border-b border-(--border-card)">
+                          <div className="flex justify-between items-center pb-3 border-b border-(--border-card)">
                             <div className="flex flex-col">
                               <p className="text-[10px] font-bold text-(--text-muted) uppercase tracking-widest mb-0.5">
                                 Price
@@ -132,7 +140,7 @@ const Advertisement = () => {
                                <p className="text-[10px] font-bold text-(--text-muted) uppercase tracking-widest mb-0.5">
                                 Left
                               </p>
-                              <span className={`text-sm font-bold ${ticket.quantity < 5 ? 'text-red-500' : 'text-emerald-500'}`}>
+                              <span className={`text-sm font-bold ${ticket.quantity < 5 ? 'text-red-500' : 'text-(--success-text)'}`}>
                                 {ticket.quantity} Seats
                               </span>
                             </div>
@@ -141,17 +149,18 @@ const Advertisement = () => {
                           {/* Info Grid */}
                           <div className="grid grid-cols-2 gap-2">
                             {/* Transport */}
-                            <div className="bg-(--bg-badge) rounded-lg p-2 flex items-center gap-2 border border-(--border-card) group-hover:border-(--border-hover) transition-colors">
-                              <span className="p-1.5 rounded-md bg-(--bg-card) shadow-sm text-(--grad-start)">
+                            <div className="rounded-lg p-2 flex items-center gap-2 border border-(--border-card) group-hover:border-(--border-hover) transition-colors">
+                              <span className="p-1.5 rounded-md bg-(--icon-bg) shadow-sm text-(--grad-start)">
                                 {getTransportIcon(ticket.transportType)}
                               </span>
                               <span className="text-xs font-semibold text-(--text-main)">
                                 {ticket.transportType}
                               </span>
                             </div>
+                            
                             {/* Date */}
-                            <div className="bg-(--bg-badge) rounded-lg p-2 flex items-center gap-2 border border-(--border-card) group-hover:border-(--border-hover) transition-colors">
-                              <span className="p-1.5 rounded-md bg-(--bg-card) shadow-sm text-(--grad-start)">
+                            <div className="rounded-lg p-2 flex items-center gap-2 border border-(--border-card) group-hover:border-(--border-hover) transition-colors">
+                              <span className="p-1.5 rounded-md bg-(--icon-bg) shadow-sm text-(--grad-start)">
                                 <Calendar size={14} />
                               </span>
                               <span className="text-xs font-semibold text-(--text-main)">
@@ -193,7 +202,8 @@ const Advertisement = () => {
                       {/* Action Button */}
                       <div className="p-5 pt-0 mt-auto">
                         <Link to={`/all-tickets/${ticket._id}`} className="block w-full">
-                          <button className="relative w-full py-3 rounded-xl font-bold text-sm uppercase tracking-wide overflow-hidden group/btn text-(--text-inv) shadow-lg  shadow-(--grad-start)/20 transition-all duration-300 hover:shadow-(--grad-start)/40">
+                          <button className="relative w-full py-3 rounded-xl font-bold text-sm uppercase tracking-wide overflow-hidden group/btn text-(--text-inv) shadow-lg shadow-(--grad-start)/20 transition-all duration-300 hover:shadow-(--grad-start)/40">
+                            {/* Uses Green Gradient */}
                             <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end) group-hover/btn:scale-[1.02] transition-transform duration-300"></span>
                             <span className="relative flex items-center justify-center gap-2">
                               View Details

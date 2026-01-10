@@ -63,7 +63,7 @@ const LatestTickets = () => {
         
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-(--grad-start) via-(--grad-end) to-(--grad-start) animate-gradient-x pb-2">
+          <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) via-(--grad-end) to-(--grad-start) animate-gradient-x pb-2">
             Latest Tickets
           </h1>
           <p className="mt-4 text-(--text-muted) font-medium tracking-widest uppercase text-sm">
@@ -117,7 +117,7 @@ const LatestTickets = () => {
                             loading="lazy"
                           />
                           {/* Gradient Overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
                           
                           {/* Title Badge */}
                           <div className="absolute bottom-3 left-4 right-4">
@@ -152,7 +152,7 @@ const LatestTickets = () => {
                           {/* Info Grid */}
                           <div className="grid grid-cols-2 gap-2">
                             {/* Transport */}
-                            <div className="bg-(--bg-badge) rounded-lg p-2 flex items-center gap-2 border border-(--border-card) group-hover:border-(--border-hover) transition-colors">
+                            <div className=" rounded-lg p-2 flex items-center gap-2 border border-(--border-card) group-hover:border-(--border-hover) transition-colors">
                               <span className="p-1.5 rounded-md bg-(--bg-card) shadow-sm text-(--grad-start)">
                                 {getTransportIcon(ticket.transportType)}
                               </span>
@@ -162,7 +162,7 @@ const LatestTickets = () => {
                             </div>
                             
                             {/* Date */}
-                            <div className="bg-(--bg-badge) rounded-lg p-2 flex items-center gap-2 border border-(--border-card) group-hover:border-(--border-hover) transition-colors">
+                            <div className=" rounded-lg p-2 flex items-center gap-2 border border-(--border-card) group-hover:border-(--border-hover) transition-colors">
                               <span className="p-1.5 rounded-md bg-(--bg-card) shadow-sm text-(--grad-start)">
                                 <Calendar size={14} />
                               </span>
@@ -206,7 +206,7 @@ const LatestTickets = () => {
                       <div className="p-5 pt-0 mt-auto">
                         <Link to={`/all-tickets/${ticket._id}`} className="block w-full">
                           <button className="relative w-full py-3 rounded-xl font-bold text-sm uppercase tracking-wide overflow-hidden group/btn text-(--text-inv) shadow-lg shadow-(--grad-start)/20 transition-all duration-300 hover:shadow-(--grad-start)/40">
-                            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-(--grad-start) to-(--grad-end) group-hover/btn:scale-[1.02] transition-transform duration-300"></span>
+                            <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end) group-hover/btn:scale-[1.02] transition-transform duration-300"></span>
                             <span className="relative flex items-center justify-center gap-2">
                               View Details
                               <svg className="w-3 h-3 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
