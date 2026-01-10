@@ -3,8 +3,6 @@ import Advertisement from "./Advertisement/Advertisement";
 import Banner from "./Banner/Banner";
 import LatestTickets from "./LatestTickets/LatestTickets";
 import PopularRoutes from "./PopularRoutes/PopularRoutes";
-import StartJourney from "./StartJourney/StartJourney";
-import BlogUpdates from "./BlogUpdates/BlogUpdates";
 import BrandPromise from "./BrandPromise/BrandPromise";
 import FinalCTA from "./FinalCTA/FinalCTA";
 import NewsletterSignup from "./NewsletterSignup/NewsletterSignup";
@@ -26,10 +24,8 @@ const Home = () => {
       <LatestTickets />
       <Testimonials />
       <TravelInspiration />
-      <BlogUpdates />
       <NewsletterSignup />
       <FinalCTA />
-      <StartJourney />
     </div>
   );
 };

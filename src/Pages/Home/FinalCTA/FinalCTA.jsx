@@ -1,81 +1,123 @@
 import React from 'react';
-import { ArrowRight, Star, Shield, Clock } from 'lucide-react';
+import { ArrowRight, Star, ShieldCheck, Clock, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router'; // Assuming you are using react-router
 
 const FinalCTA = () => {
   const features = [
     {
-      icon: <Star className="w-5 h-5" />,
+      icon: Star,
       text: "Best Price Guarantee"
     },
     {
-      icon: <Shield className="w-5 h-5" />,
-      text: "Secure Booking"
+      icon: ShieldCheck,
+      text: "100% Secure Booking"
     },
     {
-      icon: <Clock className="w-5 h-5" />,
-      text: "24/7 Support"
+      icon: Clock,
+      text: "24/7 Expert Support"
     }
   ];
 
   return (
-    <section className="relative py-20 lg:py-32 overflow-hidden">
-      {/* Background with gradient */}
-      <div className="absolute inset-0 " />
+    <section className="relative w-full py-24 lg:py-32 overflow-hidden">
       
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96  rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl" />
+      {/* Background linear */}
+      <div className="absolute inset-0 bg-linear-to-b from-(--cta-bg-top) to-(--cta-bg-bottom)" />
+      
+      {/* Decorative Ambient Glows */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
+        <div className="absolute -top-24 left-1/4 w-[500px] h-[500px] bg-(--grad-start) rounded-full opacity-10 blur-[120px] animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-(--grad-end) rounded-full opacity-10 blur-[100px]" />
+      </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Main Content */}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold  mb-6">
-          Ready to Start Your Journey?
+      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 text-center">
+        
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-(--bg-card) border border-(--border-card) shadow-sm animate-bounce-slow">
+           <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-(--grad-start) opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-(--grad-start)"></span>
+            </span>
+           <span className="text-xs font-bold text-(--text-main) tracking-widest uppercase">
+             Start Your Adventure
+           </span>
+        </div>
+
+        {/* Headline */}
+        <h2 className="text-4xl md:text-6xl font-black text-(--text-main) tracking-tighter mb-6 leading-[1.1]">
+          Ready to Start Your <br className="hidden md:block" />
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+            Journey?
+          </span>
         </h2>
         
-        <p className="text-lg md:text-xl  mb-8 max-w-2xl mx-auto">
-          Join thousands of satisfied travelers who trust TicketZone for their bus booking needs. 
-          Your next adventure is just a click away.
+        {/* Subtext */}
+        <p className="text-xl text-(--text-muted) font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
+          Join over 50,000+ travelers who skip the lines and book smart with TicketZone. fast, secure, and reliable.
         </p>
 
-        {/* Features */}
-        <div className="flex flex-wrap justify-center gap-6 mb-10">
+        {/* Features Row */}
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-12">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex items-center gap-2  font-medium"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-(--bg-card)/50 border border-(--border-card) backdrop-blur-sm"
             >
-              <div className="flex items-center justify-center w-6 h-6 rounded-full">
-                {feature.icon}
-              </div>
-              <span>{feature.text}</span>
+              <feature.icon className="w-5 h-5 text-(--grad-start)" />
+              <span className="text-sm font-bold text-(--text-main)">{feature.text}</span>
             </div>
           ))}
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button className="px-8 py-4  font-bold rounded-full transition-all duration-200 transform hover:scale-105 shadow-lg">
-            Book Your First Ticket
-            <ArrowRight className="inline-block w-5 h-5 ml-2" />
-          </button>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
           
-          <button className="px-8 py-4 bg-transparent border-2 font-bold rounded-full  0 transition-all duration-200">
-            Browse Routes
-          </button>
+          {/* Primary Button */}
+          <Link to="/all-tickets">
+            <button className="group relative px-8 py-4 rounded-xl font-bold text-white text-lg overflow-hidden shadow-xl shadow-(--grad-start)/30 hover:shadow-(--grad-start)/50 transition-all duration-300 hover:-translate-y-1">
+              <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end)"></span>
+              <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-end) to-(--grad-start) opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <span className="relative flex items-center gap-2">
+                Book First Ticket
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </span>
+            </button>
+          </Link>
+          
+          {/* Secondary Button */}
+          <Link to="/routes">
+            <button className="px-8 py-4 rounded-xl font-bold text-(--text-main) bg-(--bg-card) border border-(--border-card) hover:bg-(--bg-page) hover:border-(--grad-start)/50 transition-all duration-300 min-w-[180px]">
+              Browse Routes
+            </button>
+          </Link>
         </div>
 
-        {/* Trust indicators */}
-        <div className="mt-12 pt-8 border-t ">
-          <p className=" text-sm mb-4">
-            Trusted by over 50,000+ travelers across Bangladesh
-          </p>
-          <div className="flex justify-center items-center gap-1">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-            ))}
-            <span className="ml-2  font-medium">4.8/5 Rating</span>
+        {/* Trust Indicators / Social Proof */}
+        <div className="pt-8 border-t border-(--border-card) max-w-xl mx-auto">
+          <div className="flex flex-col items-center gap-3">
+            <div className="flex -space-x-3">
+               {[...Array(5)].map((_, i) => (
+                  <img 
+                    key={i}
+                    src={`https://i.pravatar.cc/100?img=${i + 20}`} 
+                    alt="user" 
+                    className="w-10 h-10 rounded-full border-4 border-(--bg-page)"
+                  />
+               ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} className="fill-(--star-color) text-(--star-color)" />
+                ))}
+              </div>
+              <span className="text-sm font-bold text-(--text-main)">4.8/5</span>
+              <span className="text-sm font-medium text-(--text-muted) px-2">•</span>
+              <span className="text-sm font-medium text-(--text-muted)">Verified Reviews</span>
+            </div>
           </div>
         </div>
+
       </div>
     </section>
   );

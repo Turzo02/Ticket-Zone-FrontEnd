@@ -75,7 +75,19 @@
   /* NEW: Soft accent background for container boxes */
   --bg-soft-accent: oklch(96% 0.01 240);     /* Cool light gray/blue tint */
   --icon-box-bg: oklch(100% 0 0);    
-
+ /* NEW: Form & Input Specifics */
+  --input-bg: oklch(100% 0 0);               /* Pure white input */
+  --input-border: oklch(90% 0.01 250);       /* Light crisp border */
+  --input-focus: oklch(55% 0.22 260);        /* Brand Blue focus ring */
+  
+  /* NEW: Success State Colors */
+  --success-bg: oklch(96% 0.04 140);         /* Pale Green background */
+  --success-text: oklch(50% 0.15 140);
+  
+    /* NEW: Final CTA Section Background */
+  /* A very subtle vertical gradient from white to pale blue */
+  --cta-bg-top: oklch(100% 0 0);
+  --cta-bg-bottom: oklch(96% 0.02 240);
 
 
 }
@@ -146,6 +158,18 @@
   --bg-soft-accent: oklch(15% 0.03 260);     /* Darker navy/slate tint */
   --icon-box-bg: oklch(20% 0.04 260);  
 
+    /* NEW: Form & Input Specifics */
+  --input-bg: oklch(18% 0.03 260);           /* Dark input surface */
+  --input-border: oklch(25% 0.03 260);       /* Subtle dark border */
+  --input-focus: oklch(65% 0.18 250);        /* Bright Blue focus ring */
+  
+  /* NEW: Success State Colors */
+  --success-bg: oklch(20% 0.05 140);         /* Dark Green background */
+  --success-text: oklch(85% 0.1 140); 
+ /* NEW: Final CTA Section Background */
+  /* A vertical gradient from dark navy to slightly deeper navy */
+  --cta-bg-top: oklch(14% 0.03 260);
+  --cta-bg-bottom: oklch(10% 0.03 260);
 
 }
 
