@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Ticket, Map, Users, Star } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const PlatformStatistics = () => {
+  const containerRef = useRef(null);
+  const numbersRef = useRef([]);
+  const cardsRef = useRef([]);
+
   const stats = [
     {
       id: 1,
@@ -13,7 +21,7 @@ const PlatformStatistics = () => {
     {
       id: 2,
       icon: Map,
-      value: "1k+",
+      value: "90k+",
       label: "Routes Covered",
       desc: "Connecting every corner"
     },
@@ -33,10 +41,64 @@ const PlatformStatistics = () => {
     },
   ];
 
-  return (
-    <section className="relative w-full py-24 bg-(--bg-soft-accent) transition-colors duration-300 overflow-hidden">
+  useEffect(() => {
+    const ctx = gsap.context(() => {
       
-      {/* Decorative Background Pattern (Dot Grid) */}
+      gsap.fromTo(cardsRef.current, 
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "center center",
+            scrub: 1,
+          }
+        }
+      );
+
+      stats.forEach((stat, index) => {
+        const element = numbersRef.current[index];
+        if (!element) return;
+
+        const valueString = stat.value; 
+        const numericValue = parseFloat(valueString.replace(/,/g, '')); 
+        const suffix = valueString.replace(/[0-9.]/g, '');
+
+        const proxy = { val: 0 };
+
+        gsap.to(proxy, {
+          val: numericValue,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "center center",
+            scrub: 1, 
+          },
+          onUpdate: () => {
+            if (element) {
+              element.textContent = Math.floor(proxy.val) + suffix;
+            }
+          }
+        });
+      });
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  });
+
+  return (
+    <section 
+      ref={containerRef}
+      className="relative w-full py-24 bg-(--bg-soft-accent) transition-colors duration-300 overflow-hidden"
+    >
+      
+      {/* Decorative Background Pattern */}
       <div 
         className="absolute inset-0 w-full h-full pointer-events-none"
         style={{
@@ -46,7 +108,7 @@ const PlatformStatistics = () => {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10">
-
+        
         {/* 1. Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-block mb-3 px-3 py-1 rounded-full bg-(--grad-start)/10 border border-(--grad-start)/20">
@@ -67,9 +129,11 @@ const PlatformStatistics = () => {
         
         {/* 2. Statistics Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((stat) => (
+          {stats.map((stat, index) => (
             <div 
               key={stat.id} 
+              // Ref for the Card Animation
+              ref={el => cardsRef.current[index] = el}
               className="
                 group relative p-8 rounded-3xl overflow-hidden
                 bg-(--bg-card) border border-(--border-card)
@@ -84,9 +148,14 @@ const PlatformStatistics = () => {
                 <stat.icon size={28} strokeWidth={1.5} />
               </div>
 
-              {/* Number */}
-              <div className="text-4xl md:text-5xl font-black mb-3 text-(--text-main) group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-(--grad-start) group-hover:to-(--grad-end) transition-all duration-300">
-                {stat.value}
+              {/* Number - THIS IS WHAT WE ANIMATE */}
+              <div 
+                className="text-4xl md:text-5xl font-black mb-3 text-(--text-main) group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-(--grad-start) group-hover:to-(--grad-end) transition-all duration-300"
+              >
+                {/* We put a span here to target just the text */}
+                <span ref={el => numbersRef.current[index] = el}>
+                    0{/* Initial Value */}
+                </span>
               </div>
 
               {/* Label */}
