@@ -130,6 +130,8 @@
   --stats-border: oklch(22% 0.04 260);
   /* Dark borders */
     --pattern-color: oklch(80% 0.1 260 / 0.05); /* Faint white dot */
+      
+
 
 }
 
