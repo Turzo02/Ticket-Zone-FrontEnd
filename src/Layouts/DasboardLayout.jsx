@@ -33,7 +33,7 @@ const DashboardLayout = () => {
 
   return (
     // Root Wrapper: Stops whole page scrolling, handles layout
-    <div className="flex max-w-7xl mx-auto bg-(--bg-page) text-(--text-main) overflow-hidden">
+    <div className="flex max-w-7xl mx-auto bg-(--sidebar-bg) text-(--text-main) overflow-hidden">
       
       {/* 
           MOBILE OVERLAY (Backdrop)
@@ -53,16 +53,16 @@ const DashboardLayout = () => {
         className={`
           fixed lg:static inset-y-0 left-0 z-50
           w-72 h-full
-          bg-(--sidebar-bg) border-r border-(--sidebar-border)
+          bg-(--sidebar-bg) 
           transform transition-transform duration-300 ease-in-out
-          ${drawerOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full lg:translate-x-0 lg:shadow-none"}
+          ${drawerOpen ? "" : "-translate-x-full lg:translate-x-0 lg:shadow-none"}
           flex flex-col
         `}
       >
         {/* Sidebar Header */}
         <div className="p-6 border-b border-(--sidebar-border) flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-(--grad-start)/10 rounded-xl">
+            <div className="p-2 rounded-xl">
                <LayoutDashboard className="text-(--grad-start)" size={24} />
             </div>
             <div>
@@ -122,7 +122,7 @@ const DashboardLayout = () => {
       <div className="flex-1 flex flex-col h-full overflow-hidden bg-(--bg-soft-accent)">
         
         {/* Mobile Header (Sticky) */}
-        <header className="lg:hidden flex items-center justify-between p-4 bg-(--bg-page) border-b border-(--sidebar-border) sticky top-0 z-30 shadow-sm">
+        <header className="lg:hidden flex items-center justify-between p-4 border-b border-(--sidebar-border) sticky top-0 z-30 shadow-sm">
           <div className="flex items-center gap-2">
             <LayoutDashboard className="text-(--grad-start)" size={20} />
             <h1 className="text-lg font-black text-(--text-main)">

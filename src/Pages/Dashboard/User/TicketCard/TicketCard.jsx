@@ -117,7 +117,7 @@ const TicketCard = ({ ticket }) => {
 
       {/* Floating Title Card (Overlaps Image) */}
       <div className="relative px-6 -mt-12 z-10">
-        <div className="p-4 rounded-2xl bg-(--bg-card) border border-(--border-card) shadow-lg shadow-black/5">
+        <div className="p-4 rounded-2xl flex flex-col items-center justify-center bg-(--bg-card) border border-(--border-card) shadow-lg shadow-black/5">
            <h4 className="text-lg font-black text-(--text-main) line-clamp-1">
              {ticket.title}
            </h4>

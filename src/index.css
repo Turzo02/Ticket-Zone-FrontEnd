@@ -115,13 +115,18 @@
   /* White */
 
   /* MONEY & STATUS GRADIENTS */
---grad-money-start: oklch(60% 0.18 145);  /* Vibrant Emerald */
---grad-money-end: oklch(50% 0.20 160);    /* Deep Teal */
+  --grad-money-start: oklch(60% 0.18 145);
+  /* Vibrant Emerald */
+  --grad-money-end: oklch(50% 0.20 160);
+  /* Deep Teal */
 
---grad-wait-start: oklch(70% 0.16 50);    /* Bright Amber */
---grad-wait-end: oklch(60% 0.18 30);      /* Burnt Orange */
+  --grad-wait-start: oklch(70% 0.16 50);
+  /* Bright Amber */
+  --grad-wait-end: oklch(60% 0.18 30);
+  /* Burnt Orange */
 
---surface-highlight: oklch(100% 0 0 / 0.6); /* Glassy White */
+  --surface-highlight: oklch(100% 0 0 / 0.6);
+  /* Glassy White */
 
 }
 
@@ -221,7 +226,7 @@
   /* Separator */
   --nav-text-active: oklch(98% 0.01 250);
 
-  --sidebar-bg: oklch(12% 0.02 230);
+  --sidebar-bg: oklch(20% 0.02 230);
   /* Matches Page BG */
   --sidebar-border: oklch(20% 0.04 260);
   /* Darker border */
@@ -233,13 +238,18 @@
   /* Dark Text */
 
   /* MONEY & STATUS GRADIENTS */
---grad-money-start: oklch(70% 0.2 150);   /* Neon Green */
---grad-money-end: oklch(60% 0.18 170);    /* Cyan */
+  --grad-money-start: oklch(70% 0.2 150);
+  /* Neon Green */
+  --grad-money-end: oklch(60% 0.18 170);
+  /* Cyan */
 
---grad-wait-start: oklch(75% 0.16 60);    /* Gold */
---grad-wait-end: oklch(65% 0.18 40);      /* Orange */
+  --grad-wait-start: oklch(75% 0.16 60);
+  /* Gold */
+  --grad-wait-end: oklch(65% 0.18 40);
+  /* Orange */
 
---surface-highlight: oklch(25% 0.05 230 / 0.4); /* Glassy Dark */
+  --surface-highlight: oklch(25% 0.05 230 / 0.4);
+  /* Glassy Dark */
 
 }
 
