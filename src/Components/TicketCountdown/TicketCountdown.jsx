@@ -1,6 +1,7 @@
 import React from 'react';
 import Countdown from "react-countdown";
 import PropTypes from 'prop-types';
+import { Timer } from 'lucide-react';
 
 const TicketCountdown = ({ departure, onCountdownComplete }) => {
     // text-gray-400 -> text-base-content/50
@@ -22,7 +23,7 @@ const TicketCountdown = ({ departure, onCountdownComplete }) => {
 
     return (
         <div className="text-base-content/80 font-medium flex items-center gap-1">
-            <span className="text-base-content font-semibold">Countdown:</span>
+            <Timer className='h-5 w-5'/>
             <Countdown
                 date={departureDate}
                 renderer={renderer}
