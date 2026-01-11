@@ -95,14 +95,14 @@ const RequestedTickets = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-32">
+      <div className="flex justify-center items-center h-32 bg-(--sidebar-bg)">
         <SwappingDotLoader></SwappingDotLoader>
       </div>
     );
   }
 
   if (isError) {
-    return <p className="text-red-500">Failed to load tickets</p>;
+    return <p className="text-red-500 bg-(--bg-soft-accent)">Failed to load tickets</p>;
   }
 
   return (

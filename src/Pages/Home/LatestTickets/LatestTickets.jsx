@@ -229,7 +229,7 @@ const LatestTickets = () => {
                         >
                           <button className="relative w-full py-3 rounded-xl font-bold text-sm uppercase tracking-wide overflow-hidden group/btn text-(--text-inv) shadow-lg shadow-(--grad-start)/20 transition-all duration-300 hover:shadow-(--grad-start)/40">
                             <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end) group-hover/btn:scale-[1.02] transition-transform duration-300"></span>
-                            <span className="relative flex items-center justify-center gap-2">
+                            <span className="relative flex items-center justify-center gap-2 text-white">
                               View Details
                               <svg
                                 className="w-3 h-3 transition-transform group-hover/btn:translate-x-1"

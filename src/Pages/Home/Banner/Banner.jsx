@@ -115,7 +115,7 @@ const HeroInfinite = () => {
         >
             <button className="group relative px-8 py-4 rounded-2xl font-bold text-(--text-inv) text-lg overflow-hidden shadow-xl shadow-(--grad-start)/20 hover:shadow-(--grad-start)/40 transition-all duration-300 hover:-translate-y-1">
               <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end)"></span>
-              <span className="relative flex items-center gap-2">
+              <span className="relative flex items-center gap-2 text-white">
                 Book Your Ticket
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </span>
