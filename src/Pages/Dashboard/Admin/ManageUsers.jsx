@@ -114,26 +114,32 @@ const ManageUsers = () => {
   }
 
   return (
-      <div className="p-4 sm:p-8 max-w-7xl mx-auto min-h-screen bg-base-200 text-base-content">
+      <div className="relative p-4 sm:p-8 max-w-7xl mx-auto min-h-screen bg-(--bg-soft-accent)">
+
+        
         {/* Header */}
-        <div className="text-center py-8 mb-8 md:py-8 bg-base-200 rounded-xl shadow-lg">
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
-            Manage User Panel
+        <div className="text-center py-8 mb-8 md:py-8 rounded-xl shadow-lg">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+            We are <br className="md:hidden" />
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+              TicketZone
+            </span>
           </h1>
         </div>
+        
 
         {/* --- Desktop/Tablet View (sm:block) --- */}
         <div className="hidden sm:block">
           {/* Table Container - Responsive scroll for smaller tables */}
-          <div className="shadow-xl border border-base-200 bg-base-200 overflow-x-auto rounded-xl">
+          <div className="shadow-xl  overflow-x-auto rounded-xl">
             <table className="table w-full text-left">
-              <thead className="bg-base-200 text-base-content uppercase text-sm">
+              <thead className=" border border-(--border-card) bg-(--bg-card)  uppercase text-sm">
                 <tr>
-                  <th className="p-4 min-w-[150px]">Name</th>
-                  <th className="p-4 min-w-[200px]">Email</th>
-                  <th className="p-4 text-center min-w-[100px]">Role</th>
-                  <th className="p-4 text-center min-w-[220px]">Actions</th>
-                  <th className="p-4 text-center min-w-[150px]">
+                  <th className="p-4 min-w-37.5">Name</th>
+                  <th className="p-4 min-w-50">Email</th>
+                  <th className="p-4 text-center min-w-25">Role</th>
+                  <th className="p-4 text-center min-w-55">Actions</th>
+                  <th className="p-4 text-center min-w-40">
                     Fraud Action
                   </th>
                 </tr>
@@ -144,7 +150,7 @@ const ManageUsers = () => {
                 {users.map((user) => (
                   <tr
                     key={user._id}
-                    className="border-b border-base-200 last:border-b-0 hover:bg-base-200/50 transition"
+                    className="border-b  border-(--border-card) bg-(--bg-card) shadow-sm hover:shadow-2xl hover:shadow-(--grad-start)/10 hover:border-(--border-hover) transition-all duration-300 last:border-b-0 hover:bg-base-200/50"
                   >
                     <td className="p-4 font-medium text-base-content">
                       {user.name}
@@ -363,6 +369,8 @@ const ManageUsers = () => {
         </div>
       </div>
   );
+
+  
 };
 
 export default ManageUsers;

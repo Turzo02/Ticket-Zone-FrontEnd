@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
-import { CheckCheck } from "lucide-react";
+import { Check, X ,CheckCheck ,Store} from "lucide-react";
 import Swal from "sweetalert2";
 
 const ManageTickets = () => {
@@ -86,231 +86,198 @@ const handleReject = async (id) => {
   }
 
   return (
-    <div>
-      <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-200 text-base-content">
-        <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
+    <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) p-4 sm:p-8 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto space-y-8">
+        
+        {/* Header */}
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
             Manage Tickets
           </h1>
+          <p className="text-(--text-muted) font-medium text-sm">
+            Admin Panel • Ticket Approval System
+          </p>
         </div>
 
-        {/* Table Container */}
-        <div className="shadow-lg rounded-2xl border border-base-200 bg-base-200 overflow-hidden">
-          {/* Standard Table for Desktop/Tablet */}
+        {/* Main Card */}
+        <div className="rounded-4xl border border-(--border-card) bg-(--bg-card) shadow-xl shadow-black/5 overflow-hidden">
+          
+          {/* --- Desktop Table --- */}
           <div className="hidden sm:block overflow-x-auto">
-            {/* Table starts */}
-            <table className="table w-full text-left">
-              {/* Table Header */}
-              <thead className=" uppercase text-sm bg-base-200 text-base-content">
-                <tr>
-                  <th className="p-4">Ticket Title</th>
-                  <th className="p-4">Vendor Info</th>
-                  <th className="p-4">Status</th>
-                  <th className="p-4 text-center">Actions</th>
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-(--bg-soft-accent) border-b border-(--border-card)">
+                  <th className="p-5 text-xs font-extrabold uppercase text-(--text-muted) tracking-widest">Ticket Title</th>
+                  <th className="p-5 text-xs font-extrabold uppercase text-(--text-muted) tracking-widest">Vendor</th>
+                  <th className="p-5 text-xs font-extrabold uppercase text-(--text-muted) tracking-widest text-center">Status</th>
+                  <th className="p-5 text-xs font-extrabold uppercase text-(--text-muted) tracking-widest text-center">Actions</th>
                 </tr>
               </thead>
-              {/* Table Body */}
-              <tbody>
+              <tbody className="divide-y divide-(--border-card)">
                 {allTickets.map((ticket) => (
-                  <tr
-                    key={ticket._id}
-                    className="border-b border-base-200 hover:bg-base-200/50 transition"
-                  >
-                    <td className="p-4 font-semibold text-base-content">
+                  <tr key={ticket._id} className="group hover:bg-(--bg-soft-accent)/50 transition-colors">
+                    {/* Title */}
+                    <td className="p-5 font-bold text-(--text-main) truncate ">
                       {ticket.title}
                     </td>
-                    <td className="p-4 text-base-content/80">
-                      {ticket.vendorName} <br />{" "}
-                      <span className="text-xs text-base-content/50">
-                        {ticket.vendorEmail}
+                    
+                    {/* Vendor */}
+                    <td className="p-5">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-sm text-(--text-main)">{ticket.vendorName}</span>
+                        <span className="text-xs text-(--text-muted) font-mono opacity-80">{ticket.vendorEmail}</span>
+                      </div>
+                    </td>
+
+                    {/* Status Badge (Uses New Vars) */}
+                    <td className="p-5 text-center">
+                      <span className={`
+                        inline-flex items-center px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border
+                        ${ticket.status === "pending" 
+                          ? "bg-(--color-warn-bg) text-(--color-warn-text) border-(--color-warn-border)" 
+                          : ticket.status === "accepted"
+                          ? "bg-(--success-bg) text-(--success-text) border-(--success-text)/20"
+                          : "bg-(--color-error-bg) text-(--color-error-text) border-(--color-error-border)"
+                        }
+                      `}>
+                        {ticket.status}
                       </span>
                     </td>
-                    <td className="p-4">
-                      {/* Status Badge */}
+
+                    {/* Actions */}
+                    <td className="p-5 text-center">
                       {ticket.status === "pending" ? (
-                        <span className="badge badge-warning badge-outline text-xs px-3 py-1.5">
-                          Pending
-                        </span>
-                      ) : ticket.status === "accepted" ? (
-                        <span className="badge badge-success badge-outline text-xs px-3 py-1.5">
-                          Accepted
-                        </span>
+                        <div className="flex justify-center gap-3">
+                          {/* Approve Btn */}
+                          <button
+                            onClick={() => handleAccept(ticket._id)}
+                            className="p-2.5 rounded-xl border transition-all duration-200 bg-(--success-bg) border-(--success-text)/20 text-(--success-text) hover:scale-110 hover:shadow-lg"
+                            title="Approve"
+                          >
+                            <Check className="w-5 h-5" strokeWidth={3} />
+                          </button>
+                          
+                          {/* Reject Btn */}
+                          <button
+                            onClick={() => handleReject(ticket._id)}
+                            className="p-2.5 rounded-xl border transition-all duration-200 bg-(--color-error-bg) border-(--color-error-border) text-(--color-error-text) hover:scale-110 hover:shadow-lg"
+                            title="Reject"
+                          >
+                            <X className="w-5 h-5" strokeWidth={3} />
+                          </button>
+                        </div>
                       ) : (
-                        <span className="badge badge-error badge-outline text-xs px-3 py-1.5">
-                          Rejected 
+                        <span className="text-xs font-bold text-(--text-muted) opacity-50 flex items-center justify-center gap-1">
+                          <CheckCheck className="w-4 h-4" /> Done
                         </span>
                       )}
-                    </td>
-                    <td className="p-4">
-                      {/* Action Buttons */}
-                      <div className="flex justify-center gap-3">
-                        {ticket.status === "pending" ? (
-                          <div className="flex gap-4 justify-center items-center ">
-                            <button
-                              onClick={() => handleAccept(ticket._id)}
-                              title="Approve"
-                              className="
-                          btn btn-sm text-white border-none transition 
-                          bg-linear-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600
-                          shadow-md shadow-green-500/40
-                        "
-                            >
-                              ✓
-                            </button>
-                            {/* Reject Button (Error) */}
-                            <button
-                              onClick={() => handleReject(ticket._id)}
-                              title="Reject"
-                              className="
-                          btn btn-sm text-white border-none transition 
-                          bg-linear-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700
-                          shadow-md shadow-red-500/40
-                        "
-                            >
-                              ✕
-                            </button>
-                          </div>
-                        ) : (
-                          <span className="text-sm font-medium text-success">
-                            <CheckCheck />
-                          </span>
-                        )}
-                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            {/* Table ends */}
           </div>
 
-          {/* Mobile Card View  */}
-          <div className="block sm:hidden divide-y divide-base-200">
+          {/* --- Mobile Card View --- */}
+          <div className="sm:hidden p-4 space-y-4 bg-(--bg-soft-accent)">
             {allTickets.map((ticket) => (
-              <div
-                key={ticket._id}
-                className="p-4 hover:bg-base-200/50 transition"
-              >
-                {/* Ticket Title */}
-                <div className="text-lg font-bold text-base-content mb-2">
-                  {ticket.title}
+              <div key={ticket._id} className="p-5 rounded-3xl bg-(--bg-card) border border-(--border-card) shadow-sm space-y-4">
+                
+                {/* Header */}
+                <div className="flex justify-between items-start gap-4">
+                  <h3 className="font-black text-(--text-main) text-lg line-clamp-2 leading-tight">
+                    {ticket.title}
+                  </h3>
+                  <span className={`
+                    shrink-0 px-2.5 py-1 rounded-md text-[10px] font-black uppercase tracking-wider border
+                    ${ticket.status === "pending" 
+                      ? "bg-(--color-warn-bg) text-(--color-warn-text) border-(--color-warn-border)" 
+                      : ticket.status === "accepted"
+                      ? "bg-(--success-bg) text-(--success-text) border-(--success-text)/20"
+                      : "bg-(--color-error-bg) text-(--color-error-text) border-(--color-error-border)"
+                    }
+                  `}>
+                    {ticket.status}
+                  </span>
                 </div>
 
-                {/* Vendor Info Section */}
-                <div className="flex justify-between items-start mb-2">
-                  <div className="text-sm font-semibold text-info/90">
-                    Vendor Info:
+                {/* Vendor Row */}
+                <div className="flex items-center gap-3 py-3 border-t border-b border-(--border-card)">
+                  <div className="w-8 h-8 rounded-full bg-(--bg-soft-accent) flex items-center justify-center text-(--text-muted)">
+                    <Store size={14} />
                   </div>
-                  <div className="text-right">
-                    <div className="font-medium text-base-content">
-                      {ticket.vendorName}
-                    </div>
-                    <div className="text-xs text-base-content/50">
-                      {ticket.vendorEmail}
-                    </div>
+                  <div>
+                    <p className="text-xs font-bold text-(--text-muted) uppercase">Vendor</p>
+                    <p className="font-bold text-(--text-main) text-sm">{ticket.vendorName}</p>
                   </div>
                 </div>
 
-                {/* Status Section */}
-                <div className="flex justify-between items-center mb-4">
-                  <div className="text-sm font-semibold text-info/90">
-                    Status:
+                {/* Actions */}
+                {ticket.status === "pending" ? (
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => handleReject(ticket._id)}
+                      className="w-full py-3 rounded-xl font-bold text-sm bg-(--color-error-bg) text-(--color-error-text) border border-(--color-error-border) active:scale-95 transition-transform"
+                    >
+                      Reject
+                    </button>
+                    <button
+                      onClick={() => handleAccept(ticket._id)}
+                      className="w-full py-3 rounded-xl font-bold text-sm bg-(--success-bg) text-(--success-text) border border-(--success-text)/20 active:scale-95 transition-transform"
+                    >
+                      Approve
+                    </button>
                   </div>
-                  {/* Status Badge */}
-                  {ticket.status === "pending" ? (
-                    <span className="badge badge-warning badge-outline text-xs px-3 py-1.5">
-                      Pending
-                    </span>
-                  ) : ticket.status === "accepted" ? (
-                    <span className="badge badge-success badge-outline text-xs px-3 py-1.5">
-                      Accepted
-                    </span>
-                  ) : (
-                    <span className="badge badge-error badge-outline text-xs px-3 py-1.5">
-                      Rejected
-                    </span>
-                  )}
-                </div>
-
-                {/* Action Buttons  */}
-                <div className="border-t border-base-200 pt-3 flex justify-center">
-                  {ticket.status === "pending" ? (
-                    <div className="flex gap-4 justify-center items-center w-full">
-                      <button
-                        onClick={() => handleAccept(ticket._id)}
-                        title="Approve"
-                        className="
-                    btn btn-sm flex-1 text-white border-none transition 
-                    bg-linear-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600
-                    shadow-md shadow-green-500/40
-                  "
-                      >
-                        Approve ✓
-                      </button>
-                      {/* Reject Button (Error) */}
-                      <button
-                        onClick={() => handleReject(ticket._id)}
-                        title="Reject"
-                        className="
-                    btn btn-sm flex-1 text-white border-none transition 
-                    bg-linear-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700
-                    shadow-md shadow-red-500/40
-                  "
-                      >
-                        Reject ✕
-                      </button>
-                    </div>
-                  ) : (
-                    <span className="text-sm font-medium text-success flex items-center justify-center gap-2">
-                      <CheckCheck />
-                      <span className="ml-2">Action Completed</span>
-                    </span>
-                  )}
-                </div>
+                ) : (
+                  <div className="w-full py-2.5 text-center rounded-xl bg-(--bg-soft-accent) text-(--text-muted) text-xs font-bold border border-(--border-card)">
+                    Action Completed
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
 
-        {/* PAGINATION BAR */}
-        <div>
-          {totalPages > 1 && (
-            <div className="flex justify-center mt-10 gap-2 sm:gap-3 flex-wrap">
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center gap-2 pt-4">
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+              className="px-5 py-2.5 rounded-xl text-xs font-bold bg-(--bg-card) border border-(--border-card) text-(--text-main) hover:border-(--grad-start) disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            >
+              Prev
+            </button>
+            
+            {[...Array(totalPages)].map((_, i) => (
               <button
-                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                disabled={page === 1}
-                className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
+                key={i}
+                onClick={() => setPage(i + 1)}
+                className={`
+                  w-10 h-10 rounded-xl text-xs font-bold transition-all border
+                  ${page === i + 1
+                    ? "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--text-inv) border-transparent shadow-lg shadow-(--grad-start)/30"
+                    : "bg-(--bg-card) border-(--border-card) text-(--text-main) hover:border-(--grad-start)"
+                  }
+                `}
               >
-                Prev
+                {i + 1}
               </button>
+            ))}
 
-              {[...Array(totalPages)].map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setPage(i + 1)}
-                  className={`btn btn-sm ${
-                    page === i + 1 ? "btn-primary" : "btn-success"
-                  }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
-
-              <button
-                onClick={() =>
-                  setPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={page === totalPages}
-                className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-          )}
-        </div>
+            <button
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+              className="px-5 py-2.5 rounded-xl text-xs font-bold bg-(--bg-card) border border-(--border-card) text-(--text-main) hover:border-(--grad-start) disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
+
 };
 
 export default ManageTickets;

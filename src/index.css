@@ -128,6 +128,16 @@
   --surface-highlight: oklch(100% 0 0 / 0.6);
   /* Glassy White */
 
+    /* ✅ NEW: Semantic Status Colors (Light) */
+  --color-error-bg: oklch(96% 0.03 20);    /* Soft Red */
+  --color-error-text: oklch(55% 0.22 25);  /* Deep Red */
+  --color-error-border: oklch(90% 0.05 20);
+
+  --color-warn-bg: oklch(97% 0.04 85);     /* Soft Amber */
+  --color-warn-text: oklch(55% 0.15 70);   /* Deep Orange */
+  --color-warn-border: oklch(90% 0.08 85);
+  
+
 }
 
 
@@ -250,6 +260,14 @@
 
   --surface-highlight: oklch(25% 0.05 230 / 0.4);
   /* Glassy Dark */
+
+    --color-error-bg: oklch(25% 0.1 20 / 0.5); /* Glassy Red */
+  --color-error-text: oklch(85% 0.15 20);    /* Bright Pastel Red */
+  --color-error-border: oklch(35% 0.12 20);
+
+  --color-warn-bg: oklch(25% 0.08 70 / 0.5); /* Glassy Amber */
+  --color-warn-text: oklch(90% 0.15 85);     /* Bright Gold */
+  --color-warn-border: oklch(35% 0.1 70);
 
 }
 
