@@ -19,14 +19,14 @@ const Navbar = () => {
   };
 
   const navLinkClass = ({ isActive }) => `
-  relative px-4 py-2 rounded-md text-sm font-bold transition-all duration-300 ease-out
-  flex items-center gap-2
-  ${
-    isActive
-      ? "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--nav-text-active) shadow-lg shadow-(--grad-start)/20 scale-105"
-      : "text-(--text-muted) hover:text-(--brand-primary) hover:bg-(--surface-highlight)"
-  }
-`;
+    relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 ease-out
+    flex items-center gap-2
+    ${
+      isActive
+        ? "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--nav-text-active) shadow-lg shadow-(--grad-start)/20 scale-105"
+        : "text-(--text-muted) hover:text-(--text-main) hover:bg-(--bg-soft-accent)"
+    }
+  `;
 
   const links = (
     <>
@@ -42,10 +42,13 @@ const Navbar = () => {
       </li>
       <li className="mx-1">
         <NavLink to="/guideline" className={navLinkClass}>
-          Guildline
+          Guideline
         </NavLink>
       </li>
-
+      {/* 
+         Note: Adjust these conditions if 'All Tickets' should be visible to everyone.
+         Currently respecting your logic: user && ...
+      */}
       {user && (
         <li className="mx-1">
           <NavLink to="/all-tickets" className={navLinkClass}>
@@ -53,10 +56,9 @@ const Navbar = () => {
           </NavLink>
         </li>
       )}
-
       {user && (
         <li className="mx-1">
-          <NavLink to="/Dashboard" className={navLinkClass}>
+          <NavLink to="/dashboard" className={navLinkClass}>
             Dashboard
           </NavLink>
         </li>
@@ -69,26 +71,34 @@ const Navbar = () => {
       className="
         sticky top-0 z-50
         backdrop-blur-xl
-        bg-(--bg-stats)
+        bg-(--surface-nav)
         border-b border-(--nav-border)
         transition-colors duration-300
       "
     >
       <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 h-20">
+        
         {/* Navbar Start: Mobile Menu & Logo */}
         <div className="navbar-start gap-3">
+          
           {/* Mobile Dropdown */}
           <div className="dropdown lg:hidden">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle hover:bg-(--surface-highlight) text-(--text-main)"
+              className="btn btn-ghost btn-circle hover:bg-(--bg-soft-accent) text-(--text-main)"
             >
               <Menu size={24} />
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-50 p-3 shadow-2xl bg-(--surface-card) border border-(--border-card) rounded-2xl w-56 gap-2"
+              className="
+                menu menu-sm dropdown-content mt-3 z-50 p-3 
+                shadow-2xl 
+                bg-(--bg-card) 
+                border border-(--border-card) 
+                rounded-2xl w-56 gap-2
+              "
             >
               {links}
             </ul>
@@ -106,7 +116,6 @@ const Navbar = () => {
                 alt="Ticket Zone Logo"
               />
             </div>
-
             <div className="flex flex-col">
               <span className="text-xl sm:text-2xl font-black tracking-tighter leading-none flex items-center gap-0.5">
                 <span className="text-(--text-main)">TICKET</span>
@@ -125,14 +134,17 @@ const Navbar = () => {
 
         {/* Navbar End: Auth & Theme */}
         <div className="navbar-end gap-3">
-          {/* Theme Toggle (Always visible) */}
+          
+          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="btn btn-ghost btn-circle btn-sm hover:bg-(--surface-highlight) text-(--text-muted) hover:text-(--brand-primary) transition-colors"
+            className="btn btn-ghost btn-circle btn-sm hover:bg-(--bg-soft-accent) text-(--text-muted) hover:text-(--text-main) transition-colors"
             title="Toggle Theme"
           >
             {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
           </button>
+
+
 
           {user ? (
             <div className="dropdown dropdown-end">
@@ -141,13 +153,13 @@ const Navbar = () => {
                 tabIndex={0}
                 className="
                   flex items-center gap-2 pl-1 pr-3 py-1 rounded-full 
-                   hover:border-(--border-highlight)
-                  bg-(--surface-card) hover:bg-(--surface-highlight)
+                  border border-transparent hover:border-(--border-hover)
+                  bg-(--bg-soft-accent) hover:bg-(--bg-badge)
                   cursor-pointer transition-all duration-200
                 "
               >
                 <div className="avatar">
-                  <div className="w-8 h-8 rounded-full ">
+                  <div className="w-8 h-8 rounded-full ring-2 ring-(--bg-page)">
                     <img
                       src={
                         user.photoURL ||
@@ -168,7 +180,13 @@ const Navbar = () => {
               {/* User Dropdown Menu */}
               <ul
                 tabIndex={0}
-                className="menu dropdown-content mt-3 z-50 p-2 shadow-xl bg-(--surface-card) border border-(--border-card) rounded-2xl w-56 gap-1"
+                className="
+                  menu dropdown-content mt-3 z-50 p-2 
+                  shadow-xl 
+                  bg-(--bg-card) 
+                  border border-(--border-card) 
+                  rounded-2xl w-56 gap-1
+                "
               >
                 <li className="menu-title px-4 py-2 text-(--text-muted) text-xs font-bold uppercase tracking-wider">
                   Account
@@ -176,13 +194,13 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/dashboard"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-(--surface-highlight) text-(--text-main) font-medium active:bg-(--surface-highlight)"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-(--bg-soft-accent) text-(--text-main) font-medium active:bg-(--bg-soft-accent)"
                   >
-                    <User size={16} className="text-(--brand-primary)" />
+                    <User size={16} className="text-(--grad-start)" />
                     My Profile
                   </Link>
                 </li>
-                <div className="h-px bg-(--border-subtle) my-1 mx-2"></div>
+                <div className="h-px bg-(--border-card) my-1 mx-2"></div>
                 <li>
                   <button
                     onClick={handleLogOut}
