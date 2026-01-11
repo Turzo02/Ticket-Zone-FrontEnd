@@ -29,15 +29,15 @@ const Login = () => {
     switch (role) {
       case "admin":
         email = "admin2026@ticketzone.com";
-        password = "Admin!2026#Secure";
+        password = `${import.meta.env.VITE_AdminPass}`;
         break;
       case "vendor":
         email = "vendor2026@ticketzone.com";
-        password = "Vendor!2026#Secure";
+        password = `${import.meta.env.VITE_VendorPass}`;
         break;
       case "user":
         email = "user2026@ticketzone.com";
-        password = "User!2026#Secure";
+        password = `${import.meta.env.VITE_UserPass}`;
         break;
       default:
         break;
@@ -51,15 +51,7 @@ const Login = () => {
     setLoginError("");
     signInUser(data.email, data.password)
       .then((result) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Welcome back!",
-          showConfirmButton: false,
-          timer: 1500,
-          background: "oklch(var(--bg-card))",
-          color: "oklch(var(--text-main))",
-        });
+        // console.log(result.user);
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
