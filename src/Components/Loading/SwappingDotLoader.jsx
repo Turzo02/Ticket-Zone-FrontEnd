@@ -5,7 +5,7 @@ const SwappingDotLoader = () => {
   const circles = Array.from({ length: 3 });
 
   return (
-    <div className="flex justify-center items-center h-32 space-x-4">
+    <div className="flex justify-center items-center min-h-screen space-x-4">
       {circles.map((_, i) => (
         <motion.div
           key={i}

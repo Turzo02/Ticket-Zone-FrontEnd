@@ -101,7 +101,7 @@ const AddTicket = () => {
   }
 
   return (
-    <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) p-4 sm:p-8 transition-colors duration-300">
+    <div className="min-h-screen bg-(--bg-page) text-(--text-main) p-4 sm:p-8 transition-colors duration-300">
       <div className="max-w-5xl mx-auto space-y-8">
         
         {/* Header */}
@@ -120,49 +120,50 @@ const AddTicket = () => {
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
             onSubmit={handleSubmit(handleAddTicket)}
           >
+            
             {/* 1. Ticket Title */}
             <div className="form-control md:col-span-2 space-y-2">
-              <label className="text-sm font-bold text-(--text-muted) uppercase tracking-wide">Ticket Title</label>
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Ticket Title</label>
               <input
                 {...register("title", { required: "Ticket Title is required" })}
                 type="text"
                 placeholder="e.g., Express Business Class to Cox's Bazar"
-                className="w-full px-5 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/50 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/40 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium"
               />
-              {errors.title && <p className="text-red-500 text-xs font-bold pl-2">{errors.title.message}</p>}
+              {errors.title && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.title.message}</p>}
             </div>
 
-            {/* 2. Route Info (From -> To) */}
+            {/* 2. Locations (From -> To) */}
             <div className="form-control space-y-2">
-              <label className="text-sm font-bold text-(--text-muted) uppercase tracking-wide">From (Origin)</label>
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">From (Origin)</label>
               <input
                 {...register("from", { required: "Origin is required" })}
                 type="text"
                 placeholder="e.g., Dhaka"
-                className="w-full px-5 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/50 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/40 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium"
               />
-              {errors.from && <p className="text-red-500 text-xs font-bold pl-2">{errors.from.message}</p>}
+              {errors.from && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.from.message}</p>}
             </div>
 
             <div className="form-control space-y-2">
-              <label className="text-sm font-bold text-(--text-muted) uppercase tracking-wide">To (Destination)</label>
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">To (Destination)</label>
               <input
                 {...register("to", { required: "Destination is required" })}
                 type="text"
                 placeholder="e.g., Chittagong"
-                className="w-full px-5 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/50 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/40 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium"
               />
-              {errors.to && <p className="text-red-500 text-xs font-bold pl-2">{errors.to.message}</p>}
+              {errors.to && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.to.message}</p>}
             </div>
 
             {/* 3. Transport & Schedule */}
             <div className="form-control space-y-2">
-              <label className="text-sm font-bold text-(--text-muted) uppercase tracking-wide">Transport Mode</label>
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Transport Mode</label>
               <div className="relative">
                 <select
                   {...register("transportType", { required: "Required" })}
                   defaultValue=""
-                  className="w-full px-5 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) appearance-none focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300"
+                  className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) appearance-none focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium cursor-pointer"
                 >
                   <option value="" disabled>Select Type</option>
                   <option>Bus</option>
@@ -170,81 +171,85 @@ const AddTicket = () => {
                   <option>Flight</option>
                   <option>Ship</option>
                 </select>
-                {/* Custom Arrow */}
-                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-(--text-muted)">
-                  ▼
+                {/* Custom Arrow Icon */}
+                <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-(--text-muted)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </div>
               </div>
-              {errors.transportType && <p className="text-red-500 text-xs font-bold pl-2">{errors.transportType.message}</p>}
+              {errors.transportType && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.transportType.message}</p>}
             </div>
 
             <div className="form-control space-y-2">
-              <label className="text-sm font-bold text-(--text-muted) uppercase tracking-wide">Departure Time</label>
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Departure Time</label>
               <input
                 {...register("departure", { required: "Date is required" })}
                 type="datetime-local"
-                className="w-full px-5 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium cursor-pointer"
               />
-              {errors.departure && <p className="text-red-500 text-xs font-bold pl-2">{errors.departure.message}</p>}
+              {errors.departure && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.departure.message}</p>}
             </div>
 
             {/* 4. Pricing & Stock */}
             <div className="form-control space-y-2">
-              <label className="text-sm font-bold text-(--text-muted) uppercase tracking-wide">Price ($)</label>
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Price ($)</label>
               <input
                 {...register("price", { required: "Price is required", valueAsNumber: true })}
                 type="number"
                 placeholder="0.00"
-                className="w-full px-5 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/50 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-mono font-bold"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/40 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-mono font-bold text-lg"
               />
-              {errors.price && <p className="text-red-500 text-xs font-bold pl-2">{errors.price.message}</p>}
+              {errors.price && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.price.message}</p>}
             </div>
 
             <div className="form-control space-y-2">
-              <label className="text-sm font-bold text-(--text-muted) uppercase tracking-wide">Total Seats</label>
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Total Seats</label>
               <input
                 {...register("quantity", { required: "Qty is required", valueAsNumber: true })}
                 type="number"
                 placeholder="e.g., 40"
-                className="w-full px-5 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/50 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-mono font-bold"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/40 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-mono font-bold text-lg"
               />
-              {errors.quantity && <p className="text-red-500 text-xs font-bold pl-2">{errors.quantity.message}</p>}
+              {errors.quantity && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.quantity.message}</p>}
             </div>
 
-            {/* 5. Perks (Checkbox Group) */}
+            {/* 5. Perks (Interactive Toggle Buttons) */}
             <div className="form-control md:col-span-2 space-y-3">
-              <label className="text-sm font-bold text-(--text-muted) uppercase tracking-wide">Included Perks</label>
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Included Perks</label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {["AC", "Breakfast", "Wi-Fi", "Power Outlet"].map((perk) => (
-                  <label key={perk} className="cursor-pointer group">
+                  <label key={perk} className="cursor-pointer group relative">
                     <input
-                      {...register("perks")}
+                      {...register("perks", { required: "Please select at least one perk" })}
                       type="checkbox"
                       value={perk}
                       className="peer sr-only"
                     />
                     <div className="
-                      px-4 py-3 rounded-xl border border-(--input-border) bg-(--input-bg) text-center font-bold text-sm text-(--text-muted)
+                      w-full h-full flex items-center justify-center py-4 rounded-2xl
+                      border border-(--input-border) bg-(--input-bg) 
+                      text-sm font-bold text-(--text-muted)
                       transition-all duration-200
                       peer-checked:bg-linear-to-r peer-checked:from-(--grad-start) peer-checked:to-(--grad-end) 
-                      peer-checked:text-(--text-inv) peer-checked:border-transparent peer-checked:shadow-lg peer-checked:shadow-(--grad-start)/20
-                      group-hover:border-(--grad-start)/50
+                      peer-checked:text-(--text-inv) peer-checked:border-transparent 
+                      peer-checked:shadow-lg peer-checked:shadow-(--grad-start)/20
+                      peer-checked:scale-[1.02]
+                      group-hover:border-(--grad-start)/30
                     ">
                       {perk}
                     </div>
                   </label>
                 ))}
               </div>
-              {errors.perks && <p className="text-red-500 text-xs font-bold pl-2">{errors.perks.message}</p>}
+              {errors.perks && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.perks.message}</p>}
             </div>
 
             {/* 6. Image Upload */}
             <div className="form-control md:col-span-2 space-y-2">
-              <label className="text-sm font-bold text-(--text-muted) uppercase tracking-wide">Ticket Thumbnail</label>
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Ticket Thumbnail</label>
               <div className="relative">
                 <input
                   type="file"
-                  {...register("photo", { required: true })}
+                  {...register("photo", { required: "Ticket image is required" })}
                   className="
                     block w-full text-sm text-(--text-muted)
                     file:mr-4 file:py-3 file:px-6
@@ -252,45 +257,43 @@ const AddTicket = () => {
                     file:text-xs file:font-bold file:uppercase file:tracking-wide
                     file:bg-(--bg-soft-accent) file:text-(--text-main)
                     hover:file:bg-(--grad-start) hover:file:text-white
-                    file:transition-all file:cursor-pointer
+                    file:transition-all file:cursor-pointer file:shadow-sm
                     border border-dashed border-(--input-border) rounded-2xl p-2
+                    bg-(--input-bg)
                   "
                 />
               </div>
-              {errors.photo && <p className="text-red-500 text-xs font-bold pl-2">Image is required.</p>}
+              {errors.photo && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.photo.message}</p>}
             </div>
 
-            {/* 7. Read-Only Vendor Info */}
-            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-(--border-card)">
-              <div className="form-control space-y-1 opacity-70">
-                <label className="text-xs font-bold text-(--text-muted) uppercase">Vendor Name</label>
-                <input
-                  readOnly
-                  type="text"
-                  value={user?.displayName || ""}
-                  {...register("vendorName")}
-                  className="w-full bg-transparent font-bold text-(--text-main) border-none p-0 outline-none focus:ring-0"
-                />
+            {/* 7. Read-Only Vendor Info (Clean Footer) */}
+            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-(--border-card) opacity-70">
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-(--text-muted) uppercase">Vendor Name</label>
+                {/* Visual Display */}
+                <div className="w-full bg-transparent font-bold text-(--text-main) text-sm border-none p-0">
+                   {user?.displayName || "N/A"}
+                </div>
+                {/* Hidden Input for Form Logic */}
+                <input type="hidden" value={user?.displayName || ""} {...register("vendorName")} />
               </div>
-              <div className="form-control space-y-1 opacity-70">
-                <label className="text-xs font-bold text-(--text-muted) uppercase">Vendor Email</label>
-                <input
-                  readOnly
-                  type="email"
-                  value={user?.email || ""}
-                  {...register("vendorEmail")}
-                  className="w-full bg-transparent font-mono text-sm text-(--text-main) border-none p-0 outline-none focus:ring-0"
-                />
+              
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-(--text-muted) uppercase">Vendor Email</label>
+                <div className="w-full bg-transparent font-mono text-sm text-(--text-main) border-none p-0">
+                   {user?.email || "N/A"}
+                </div>
+                <input type="hidden" value={user?.email || ""} {...register("vendorEmail")} />
               </div>
             </div>
 
-            {/* Submit */}
-            <div className="md:col-span-2 pt-6">
+            {/* Submit Button */}
+            <div className="md:col-span-2 pt-4">
               <button
                 type="submit"
-                className="w-full py-4 rounded-2xl font-black text-lg text-white bg-linear-to-r from-(--grad-start) to-(--grad-end) shadow-xl shadow-(--grad-start)/30 hover:shadow-(--grad-start)/50 hover:-translate-y-1 active:scale-95 transition-all duration-300 cursor-pointer"
+                className="w-full py-4 rounded-2xl font-black text-lg  bg-linear-to-r from-(--grad-start) to-(--grad-end) shadow-xl shadow-(--grad-start)/30 hover:shadow-(--grad-start)/50 hover:-translate-y-1 active:scale-95 transition-all duration-300 cursor-pointer text-white"
               >
-                Create Ticket
+                Post Ticket
               </button>
             </div>
 

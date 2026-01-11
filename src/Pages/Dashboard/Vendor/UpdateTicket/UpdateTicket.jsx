@@ -102,267 +102,201 @@ const UpdateTicket = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-(--bg-page) text-(--text-main) p-4 sm:p-8 transition-colors duration-300">
+      <div className="max-w-5xl mx-auto space-y-8">
+        
+        {/* Header */}
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+            Update Ticket Info
+          </h1>
+          <p className="text-(--text-muted) font-medium text-sm">
+            Modify route details, pricing, or schedule.
+          </p>
+        </div>
 
-    <div className="p-4 sm:p-8 bg-base-200 text-base-content max-w-7xl mx-auto">
-      <div className="text-center py-8 mb-6 md:py-8  bg-base-200 rounded-xl shadow-lg">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
-          Update Your Ticket Info
-        </h1>
-      </div>
-
-      <div className="rounded-2xl border border-base-200 bg-base-200 p-6 lg:p-8 shadow-2xl">
-        <form
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
-          onSubmit={handleSubmit(handleUpdateTicket)}
-        >
-          {/* Ticket Title */}
-          <div className="form-control md:col-span-2">
-            <label className="label">
-              <span className="label-text font-semibold">Ticket Title</span>
-            </label>
-            <input
-              {...register("title", { required: "Ticket Title is required" })}
-              type="text"
-              placeholder="e.g., Express Bus from London to Paris"
-              className="input input-bordered w-full"
-            />
-            {errors.title && (
-              <p className="text-error text-sm mt-1">{errors.title.message}</p>
-            )}
-          </div>
-
-          {/* From */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">From (Location)</span>
-            </label>
-            <input
-              {...register("from", { required: "From location is required" })}
-              type="text"
-              placeholder="e.g., London"
-              className="input input-bordered w-full"
-            />
-            {errors.from && (
-              <p className="text-error text-sm mt-1">{errors.from.message}</p>
-            )}
-          </div>
-
-          {/* To */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">To (Location)</span>
-            </label>
-            <input
-              {...register("to", { required: "To location is required" })}
-              type="text"
-              placeholder="e.g., Paris"
-              className="input input-bordered w-full"
-            />
-            {errors.to && (
-              <p className="text-error text-sm mt-1">{errors.to.message}</p>
-            )}
-          </div>
-
-          {/* Transport Type */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Transport Type</span>
-            </label>
-            <select
-              {...register("transportType", {
-                required: "Transport type is required",
-              })}
-              className="select select-bordered w-full"
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select transport
-              </option>
-              <option>Bus</option>
-              <option>Train</option>
-              <option>Flight</option>
-              <option>Ship</option>
-            </select>
-            {errors.transportType && (
-              <p className="text-error text-sm mt-1">
-                {errors.transportType.message}
-              </p>
-            )}
-          </div>
-
-          {/* Departure Date */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">
-                Departure Date & Time
-              </span>
-            </label>
-            <input
-              {...register("departure", {
-                required: "Departure date & time is required",
-              })}
-              type="datetime-local"
-              className="input input-bordered w-full"
-            />
-            {errors.departure && (
-              <p className="text-error text-sm mt-1">
-                {errors.departure.message}
-              </p>
-            )}
-          </div>
-
-          {/* Price */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Price (per unit)</span>
-            </label>
-            <input
-              {...register("price", {
-                required: "Price is required",
-                valueAsNumber: true,
-              })}
-              type="number"
-              placeholder="0.00"
-              className="input input-bordered w-full"
-            />
-            {errors.price && (
-              <p className="text-error text-sm mt-1">{errors.price.message}</p>
-            )}
-          </div>
-
-          {/* Quantity */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Ticket Quantity</span>
-            </label>
-            <input
-              {...register("quantity", {
-                required: "Quantity is required",
-                valueAsNumber: true,
-              })}
-              type="number"
-              placeholder="100"
-              className="input input-bordered w-full"
-            />
-            {errors.quantity && (
-              <p className="text-error text-sm mt-1">
-                {errors.quantity.message}
-              </p>
-            )}
-          </div>
-
-          {/* Perks */}
-          <div className="form-control md:col-span-2">
-            <label className="label">
-              <span className="label-text font-semibold">Perks</span>
-            </label>
-            <div className="flex flex-wrap gap-4 text-sm">
-              <label className="label cursor-pointer gap-2">
-                <input
-                  {...register("perks", { required: "Perks are required" })}
-                  type="checkbox"
-                  value="AC"
-                  className="checkbox checkbox-primary"
-                />
-                <span className="label-text">AC</span>
-              </label>
-              <label className="label cursor-pointer gap-2">
-                <input
-                  {...register("perks")}
-                  type="checkbox"
-                  value="Breakfast"
-                  className="checkbox checkbox-primary"
-                />
-                <span className="label-text">Breakfast</span>
-              </label>
-              <label className="label cursor-pointer gap-2">
-                <input
-                  {...register("perks")}
-                  type="checkbox"
-                  value="Wi-Fi"
-                  className="checkbox checkbox-primary"
-                />
-                <span className="label-text">Wi-Fi</span>
-              </label>
-              <label className="label cursor-pointer gap-2">
-                <input
-                  {...register("perks")}
-                  type="checkbox"
-                  value="Power Outlet"
-                  className="checkbox checkbox-primary"
-                />
-                <span className="label-text">Power Outlet</span>
-              </label>
+        {/* Form Container */}
+        <div className="rounded-[2.5rem] bg-(--bg-card) border border-(--border-card) p-8 lg:p-12 shadow-2xl shadow-black/5">
+          <form
+            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+            onSubmit={handleSubmit(handleUpdateTicket)}
+          >
+            
+            {/* 1. Ticket Title */}
+            <div className="form-control md:col-span-2 space-y-2">
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Ticket Title</label>
+              <input
+                {...register("title", { required: "Ticket Title is required" })}
+                type="text"
+                placeholder="e.g., Express Bus Service"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) placeholder:text-(--text-muted)/40 focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium"
+              />
+              {errors.title && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.title.message}</p>}
             </div>
-            {errors.perks && (
-              <p className="text-error text-sm mt-1">{errors.perks.message}</p>
-            )}
-          </div>
 
-          {/* Image Upload */}
-          <div className="form-control md:col-span-2">
-            <label className="label">
-              <span className="label-text font-semibold">
-                Ticket Image (Required)
-              </span>
-            </label>
+            {/* 2. Locations */}
+            <div className="form-control space-y-2">
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">From</label>
+              <input
+                {...register("from", { required: "Origin is required" })}
+                type="text"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium"
+              />
+              {errors.from && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.from.message}</p>}
+            </div>
 
-            <input
-              type="file"
-              {...register("photo", { required: true })}
-              className="file-input file-input-bordered file-input-primary w-full"
-              placeholder="Your Photo"
-            />
+            <div className="form-control space-y-2">
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">To</label>
+              <input
+                {...register("to", { required: "Destination is required" })}
+                type="text"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium"
+              />
+              {errors.to && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.to.message}</p>}
+            </div>
 
-            {errors.photo && errors.photo.type === "required" && (
-              <p className="text-error text-sm mt-1">Photo is required.</p>
-            )}
-          </div>
+            {/* 3. Transport & Schedule */}
+            <div className="form-control space-y-2">
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Transport Mode</label>
+              <div className="relative">
+                <select
+                  {...register("transportType", { required: "Transport type is required" })}
+                  className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) appearance-none focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium cursor-pointer"
+                >
+                  <option value="" disabled>Select Type</option>
+                  <option>Bus</option>
+                  <option>Train</option>
+                  <option>Flight</option>
+                  <option>Ship</option>
+                </select>
+                <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-(--text-muted)">
+                  ▼
+                </div>
+              </div>
+              {errors.transportType && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.transportType.message}</p>}
+            </div>
 
-          {/* Vendor Name (Read-Only) */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Vendor Name</span>
-            </label>
-            <input
-              readOnly
-              type="text"
-              value={user?.displayName || ""}
-              {...register("vendorName")}
-              className="input input-bordered w-full input-disabled"
-            />
-          </div>
+            <div className="form-control space-y-2">
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Departure</label>
+              <input
+                {...register("departure", { required: "Departure time is required" })}
+                type="datetime-local"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-medium cursor-pointer"
+              />
+              {errors.departure && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.departure.message}</p>}
+            </div>
 
-          {/* Vendor Email (Read-Only) */}
+            {/* 4. Price & Qty */}
+            <div className="form-control space-y-2">
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Price ($)</label>
+              <input
+                {...register("price", { required: "Price is required", valueAsNumber: true })}
+                type="number"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-mono font-bold text-lg"
+              />
+              {errors.price && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.price.message}</p>}
+            </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Vendor Email</span>
-            </label>
-            <input
-              readOnly
-              type="email"
-              value={user?.email || ""}
-              {...register("vendorEmail")}
-              className="input input-bordered w-full input-disabled"
-            />
-          </div>
+            <div className="form-control space-y-2">
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Quantity</label>
+              <input
+                {...register("quantity", { required: "Quantity is required", valueAsNumber: true })}
+                type="number"
+                className="w-full px-6 py-4 rounded-2xl bg-(--input-bg) border border-(--input-border) text-(--text-main) focus:border-(--grad-start) focus:ring-4 focus:ring-(--grad-start)/10 outline-none transition-all duration-300 font-mono font-bold text-lg"
+              />
+              {errors.quantity && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.quantity.message}</p>}
+            </div>
 
-          {/* Submit Button */}
-          <div className="md:col-span-2 text-right pt-4">
-            <button
-              type="submit"
-              className="btn btn-lg btn-primary shadow-xl shadow-primary/40 transition"
-            >
-              Update Ticket
-            </button>
-          </div>
-        </form>
+            {/* 5. Perks Toggle */}
+            <div className="form-control md:col-span-2 space-y-3">
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Perks</label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {["AC", "Breakfast", "Wi-Fi", "Power Outlet"].map((perk) => (
+                  <label key={perk} className="cursor-pointer group relative">
+                    <input
+                      {...register("perks", { required: "Please select at least one perk" })} // ✅ Added Validation Here
+                      type="checkbox"
+                      value={perk}
+                      className="peer sr-only"
+                    />
+                    <div className="
+                      w-full h-full flex items-center justify-center py-4 rounded-2xl
+                      border border-(--input-border) bg-(--input-bg) 
+                      text-sm font-bold text-(--text-muted)
+                      transition-all duration-200
+                      peer-checked:bg-linear-to-r peer-checked:from-(--grad-start) peer-checked:to-(--grad-end) 
+                      peer-checked:text-(--text-inv) peer-checked:border-transparent 
+                      peer-checked:shadow-lg peer-checked:shadow-(--grad-start)/20
+                      peer-checked:scale-[1.02]
+                      group-hover:border-(--grad-start)/30
+                    ">
+                      {perk}
+                    </div>
+                  </label>
+                ))}
+              </div>
+              {/* ✅ Error Message Display */}
+              {errors.perks && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.perks.message}</p>}
+            </div>
+
+            {/* 6. Image Upload */}
+            <div className="form-control md:col-span-2 space-y-2">
+              <label className="text-xs font-bold text-(--text-muted) uppercase tracking-wide ml-1">Ticket Thumbnail</label>
+              <div className="relative">
+                <input
+                  type="file"
+                  {...register("photo", { required: "Ticket image is required" })} // ✅ Added Validation Here
+                  className="
+                    block w-full text-sm text-(--text-muted)
+                    file:mr-4 file:py-3 file:px-6
+                    file:rounded-xl file:border-0
+                    file:text-xs file:font-bold file:uppercase file:tracking-wide
+                    file:bg-(--bg-soft-accent) file:text-(--text-main)
+                    hover:file:bg-(--grad-start) hover:file:text-white
+                    file:transition-all file:cursor-pointer file:shadow-sm
+                    border border-dashed border-(--input-border) rounded-2xl p-2
+                    bg-(--input-bg)
+                  "
+                />
+              </div>
+              {/* ✅ Error Message Display */}
+              {errors.photo && <p className="text-red-500 text-xs font-bold pl-2 mt-1">{errors.photo.message}</p>}
+            </div>
+
+            {/* 7. Read-Only Footer */}
+            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-(--border-card) opacity-70">
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-(--text-muted) uppercase">Vendor Name</label>
+                <div className="text-sm font-bold text-(--text-main)">
+                   {user?.displayName || "N/A"}
+                </div>
+                <input type="hidden" value={user?.displayName || ""} {...register("vendorName")} />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-(--text-muted) uppercase">Vendor Email</label>
+                <div className="text-sm font-mono font-medium text-(--text-main)">
+                   {user?.email || "N/A"}
+                </div>
+                <input type="hidden" value={user?.email || ""} {...register("vendorEmail")} />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="md:col-span-2 pt-4">
+              <button
+                type="submit"
+                className="w-full py-4 rounded-2xl font-black text-lg text-(--text-inv) bg-linear-to-r from-(--grad-start) to-(--grad-end) shadow-xl shadow-(--grad-start)/20 hover:shadow-(--grad-start)/40 hover:-translate-y-1 active:scale-95 transition-all duration-300 cursor-pointer"
+              >
+                Save Changes
+              </button>
+            </div>
+
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
+
 };
 
 export default UpdateTicket;
