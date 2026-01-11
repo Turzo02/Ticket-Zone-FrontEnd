@@ -46,16 +46,12 @@ const Navbar = () => {
           Guideline
         </NavLink>
       </li>
-      {/* 
-
-      */}
-      {user && (
+ 
         <li className="mx-1">
           <NavLink to="/all-tickets" className={navLinkClass}>
             All Tickets
           </NavLink>
         </li>
-      )}
       {user && (
         <li className="mx-1">
           <NavLink to="/dashboard" className={navLinkClass}>

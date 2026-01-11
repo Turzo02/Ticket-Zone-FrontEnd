@@ -16,6 +16,7 @@ import {
   Tag, 
   Clock 
 } from "lucide-react";
+import TicketDetailsSkeleton from "./TicketDetailsSkeleton";
 
 const TicketDetailsPage = () => {
   const axiosSecure = useAxiosSecure();
@@ -81,11 +82,7 @@ const TicketDetailsPage = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-(--bg-soft-accent)">
-        <SwappingDotLoader />
-      </div>
-    );
+    return (<TicketDetailsSkeleton></TicketDetailsSkeleton>);
   }
 
   if (isError) {
@@ -220,25 +217,36 @@ const TicketDetailsPage = () => {
             </ul>
           </div>
 
-          {/* CTA Button */}
-          <button
-            disabled={
-              ticket.quantity === 0 || new Date(ticket.departure) < new Date()
-            }
-            onClick={() => setModalOpen(true)}
-            className={`
-              w-full py-4 text-lg font-bold rounded-xl shadow-lg transition-all duration-300
-              ${
-                ticket.quantity === 0 || new Date(ticket.departure) < new Date()
-                  ? "bg-(--bg-soft-accent) text-(--text-muted) cursor-not-allowed"
-                  : "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--text-inv) shadow-(--grad-start)/30 hover:shadow-(--grad-start)/50 hover:scale-[1.01]"
-              }
-            `}
-          >
-            {ticket.quantity === 0 || new Date(ticket.departure) < new Date()
-              ? "Booking Closed"
-              : "Book Now"}
-          </button>
+          {/* CTA Button Logic */}
+          {(() => {
+            const isBookingClosed = ticket.quantity === 0 || new Date(ticket.departure) < new Date();
+            const isLoggedIn = !!user;
+            const isDisabled = isBookingClosed || !isLoggedIn;
+
+            return (
+              <button
+                disabled={isDisabled}
+                onClick={() => setModalOpen(true)}
+                className={`
+                  w-full py-4 text-lg font-bold rounded-xl shadow-lg transition-all duration-300
+                  ${
+                    isDisabled
+                      ? "bg-(--bg-soft-accent) text-(--text-muted) cursor-not-allowed border border-(--border-card)"
+                      : "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--text-inv) shadow-(--grad-start)/30 hover:shadow-(--grad-start)/50 hover:scale-[1.01] cursor-pointer"
+                  }
+                `}
+              >
+                {isBookingClosed 
+                  ? "Booking Closed" 
+                  : !isLoggedIn 
+                    ? "Login to Book" 
+                    : "Book Now"
+                }
+              </button>
+            );
+          })()}
+
+
         </div>
       </div>
 
@@ -249,7 +257,7 @@ const TicketDetailsPage = () => {
             
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-(--bg-soft-accent) text-(--text-muted) transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-(--bg-soft-accent) text-(--text-muted) transition-colors cursor-pointer"
             >
               <X size={20} />
             </button>
@@ -290,9 +298,9 @@ const TicketDetailsPage = () => {
               {/* Modal Action */}
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl font-bold text-lg text-(--text-inv) bg-linear-to-r from-(--grad-start) to-(--grad-end) shadow-lg shadow-(--grad-start)/20 hover:shadow-(--grad-start)/40 hover:-translate-y-0.5 transition-all duration-200"
+                className="w-full py-3.5 rounded-xl font-bold text-lg text-(--text-inv) bg-linear-to-r from-(--grad-start) to-(--grad-end) shadow-lg shadow-(--grad-start)/20 hover:shadow-(--grad-start)/40 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
               >
-                Confirm & Pay
+                Confirm
               </button>
             </form>
           </div>
