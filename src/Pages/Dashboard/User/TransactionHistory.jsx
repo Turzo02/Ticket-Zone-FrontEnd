@@ -3,6 +3,15 @@ import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
+import {
+  Receipt,
+  TrendingUp,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+  Wallet,
+  ArrowUpRight,
+} from "lucide-react";
 
 const TransactionHistory = () => {
   const { user } = useAuth();
@@ -20,165 +29,267 @@ const TransactionHistory = () => {
     },
   });
 
+  // Calculate Stats
+  const totalSpent = bookings.reduce(
+    (acc, curr) => acc + (curr.totalPrice || 0),
+    0
+  );
+  const successCount = bookings.filter((b) => b.paymentStatus).length;
+
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-32">
-        <SwappingDotLoader></SwappingDotLoader>
+      <div className="flex justify-center items-center h-64 w-full bg-(--bg-card) rounded-3xl border border-(--border-card)">
+        <SwappingDotLoader />
       </div>
     );
   }
 
   if (isError) {
-    return <p className="text-red-500">Failed to load tickets</p>;
+    return (
+      <div className="p-8 text-center bg-red-50 border border-red-100 rounded-2xl text-red-600 dark:bg-red-900/10 dark:border-red-900/30">
+        <p className="font-bold">Failed to load transaction history.</p>
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-base-200 text-base-content">
-      <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
-          Transaction History
-        </h1>
+    <div className="max-w-7xl mx-auto space-y-8">
+      {/* 1. Header & Stats Section */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Title Block */}
+        <div className="md:col-span-3 pb-4">
+          <h1 className="text-4xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+            My Wallet & History
+          </h1>
+          <p className="text-(--text-muted) font-medium mt-2">
+            Track your payments and ticket statuses in real-time.
+          </p>
+        </div>
+
+        {/* Stat Card: Total Spent */}
+        <div className="relative overflow-hidden p-6 rounded-3xl bg-(--bg-card) border border-(--border-card) shadow-xl shadow-(--grad-start)/5 group">
+          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+            <Wallet size={80} className="text-(--grad-start)" />
+          </div>
+          <div className="relative z-10">
+            <p className="text-xs font-bold uppercase tracking-widest text-(--text-muted) mb-1">
+              Total Spent
+            </p>
+            <h2 className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-(--grad-money-start) to-(--grad-money-end)">
+              $
+              {totalSpent.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+              })}
+            </h2>
+          </div>
+        </div>
+
+        {/* Stat Card: Successful Orders */}
+        <div className="relative overflow-hidden p-6 rounded-3xl bg-(--bg-card) border border-(--border-card) shadow-xl shadow-(--grad-start)/5 group">
+          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+            <CheckCircle2 size={80} className="text-(--grad-money-start)" />
+          </div>
+          <div className="relative z-10">
+            <p className="text-xs font-bold uppercase tracking-widest text-(--text-muted) mb-1">
+              Successful Orders
+            </p>
+            <h2 className="text-3xl font-black text-(--text-main)">
+              {successCount}{" "}
+              <span className="text-lg text-(--text-muted) font-medium">
+                / {bookings.length}
+              </span>
+            </h2>
+          </div>
+        </div>
+
+        {/* Stat Card: Last Activity */}
+        <div className="relative overflow-hidden p-6 rounded-3xl bg-linear-to-br from-(--grad-start) to-(--grad-end) text-white shadow-xl shadow-(--grad-start)/20">
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl"></div>
+          <div className="relative z-10 flex flex-col justify-between h-full">
+            <p className="text-xs font-bold uppercase tracking-widest text-white/80 mb-1">
+              Latest Activity
+            </p>
+            <div className="flex items-center justify-between">
+              <span className="text-2xl font-black">
+                {bookings.length > 0 ? bookings[0].title.split(" ")[0] : "None"}
+              </span>
+              <ArrowUpRight className="text-white/80" />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* --- Desktop View --- */}
-      <div className="hidden md:block mt-4 rounded-lg border border-base-200 shadow-xl overflow-hidden bg-base-200">
+      {/* 2. Desktop View (Premium Table) */}
+      <div className="hidden md:block rounded-3xl border border-(--border-card) bg-(--bg-card) overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="table min-w-full">
-            {/* Table Header */}
-            <thead className="bg-base-200">
-              <tr>
-                <th className="p-4 text-left text-xs font-semibold uppercase tracking-wider text-base-content/80">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-(--surface-highlight) border-b border-(--border-card)">
+                <th className="px-8 py-5 text-[10px] font-extrabold uppercase text-(--text-muted) tracking-widest">
                   Transaction ID
                 </th>
-                <th className="p-4 text-left text-xs font-semibold uppercase tracking-wider text-base-content/80">
-                  Ticket Title
+                <th className="px-8 py-5 text-[10px] font-extrabold uppercase text-(--text-muted) tracking-widest">
+                  Details
                 </th>
-                <th className="p-4 text-right text-xs font-semibold uppercase tracking-wider text-base-content/80">
+                <th className="px-8 py-5 text-[10px] font-extrabold uppercase text-(--text-muted) tracking-widest text-right">
                   Amount
                 </th>
-                <th className="p-4 text-center text-xs font-semibold uppercase tracking-wider text-base-content/80">
+                <th className="px-8 py-5 text-[10px] font-extrabold uppercase text-(--text-muted) tracking-widest text-center">
                   Status
                 </th>
-                <th className="p-4 text-right text-xs font-semibold uppercase tracking-wider text-base-content/80">
-                  Payment Date
+                <th className="px-8 py-5 text-[10px] font-extrabold uppercase text-(--text-muted) tracking-widest text-right">
+                  Date
                 </th>
               </tr>
             </thead>
-            <tbody className="">
+            <tbody className="divide-y divide-(--border-card)">
               {bookings.map((tx) => (
                 <tr
                   key={tx._id}
-                  className="border-b border-base-200 hover:bg-base-200/50 transition duration-150 ease-in-out"
+                  className="group hover:bg-(--surface-highlight) transition-colors duration-200"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-base-content/60">
-                    {tx.transactionId ? (
-                      tx.transactionId
+                  {/* ID */}
+                  <td className="px-8 py-6">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-(--bg-soft-accent) text-(--grad-start) group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <Receipt size={16} />
+                      </div>
+                      <span className="font-mono text-xs font-bold text-(--text-muted) opacity-70 group-hover:opacity-100 transition-opacity">
+                        {tx.transactionId
+                          ? `#${tx.transactionId.slice(-6)}`
+                          : "---"}
+                      </span>
+                    </div>
+                  </td>
+
+                  {/* Title */}
+                  <td className="px-8 py-6">
+                    <p className="font-bold text-(--text-main) text-sm line-clamp-1">
+                      {tx.title}
+                    </p>
+                    <p className="text-xs text-(--text-muted) mt-0.5">
+                      Ticket Purchase
+                    </p>
+                  </td>
+
+                  {/* Amount (Gradient Text) */}
+                  <td className="px-8 py-6 text-right">
+                    <span className="font-black text-lg text-transparent bg-clip-text bg-linear-to-r from-(--grad-money-start) to-(--grad-money-end)">
+                      ${tx.totalPrice}
+                    </span>
+                  </td>
+
+                  {/* Status Badge (Glow) */}
+                  <td className="px-8 py-6 text-center">
+                    {tx.paymentStatus ? (
+                      // PAID STATUS (Clean Emerald Glass)
+                      <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        Completed
+                      </span>
                     ) : (
-                      <span className="text-base-content/40">
-                        Not available
+                      // PENDING STATUS (Subtle Amber Glass)
+                      <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs">
+                        <span className="h-2 w-2 rounded-full bg-amber-500"></span>
+                        Processing
                       </span>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-base-content">
-                    {tx.title}
-                  </td>
-                  {/* Amount - Using semantic success color */}
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-success">
-                    ${tx.totalPrice}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-center text-sm">
-                    {/* Status - Using gradient badge classes */}
-                    <span
-                      className={`
-      text-sm px-3 py-1.5 font-bold border-none rounded-md text-white shadow-md
-      ${
-        tx.paymentStatus
-          ? "bg-linear-to-r from-emerald-400  to-green-700"
-          : "bg-linear-to-r from-yellow-500  to-yellow-600"
-      }
-    `}
-                    >
-                      {tx.paymentStatus ? "Paid" : "Unpaid"}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-base-content/60">
+
+                  {/* Date */}
+                  <td className="px-8 py-6 text-right text-xs font-bold text-(--text-muted)">
                     {tx.paidAt ? (
-                      new Date(tx.paidAt).toLocaleTimeString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })
+                      <>
+                        <div className="text-(--text-main)">
+                          {new Date(tx.paidAt).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </div>
+                        <div className="text-[10px] opacity-60">
+                          {new Date(tx.paidAt).toLocaleTimeString("en-US", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </div>
+                      </>
                     ) : (
-                      <span className="text-base-content/40 font-mono">
-                        Not available
-                      </span>
+                      <span className="italic opacity-50">Processing...</span>
                     )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          {bookings.length === 0 && (
+            <div className="p-16 flex flex-col items-center justify-center text-center opacity-60">
+              <Receipt size={48} className="text-(--text-muted) mb-4" />
+              <h3 className="text-lg font-bold text-(--text-main)">
+                No Transactions Yet
+              </h3>
+              <p className="text-sm text-(--text-muted)">
+                Your purchase history will appear here.
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* --- Mobile View (Card Layout) --- */}
-      <div className="md:hidden mt-4 space-y-4">
+      {/* 3. Mobile View (Gradient Cards) */}
+      <div className="md:hidden space-y-4">
         {bookings.map((tx) => (
           <div
             key={tx._id}
-            className="p-4 border border-base-200 rounded-lg shadow-lg bg-base-200"
+            className="relative overflow-hidden p-5 rounded-2xl bg-(--bg-card) border border-(--border-card) shadow-lg space-y-4"
           >
-            {/* Row 1: Title and Amount */}
-            <div className="flex justify-between items-start mb-2">
-              <p className="text-base font-bold text-base-content">
-                {tx.title}
-              </p>
-              {/* Amount - Using semantic success color */}
-              <p className="text-lg font-bold text-success">${tx.totalPrice}</p>
+            {/* Status Strip */}
+            <div
+              className={`absolute left-0 top-0 bottom-0 w-1.5 ${
+                tx.paymentStatus
+                  ? "bg-(--grad-money-start)"
+                  : "bg-(--grad-wait-start)"
+              }`}
+            ></div>
+
+            {/* Row 1: Header */}
+            <div className="flex justify-between items-start gap-4 pl-2">
+              <div>
+                <h3 className="font-bold text-(--text-main) text-sm line-clamp-1">
+                  {tx.title}
+                </h3>
+                <p className="text-[10px] font-mono text-(--text-muted) mt-1 opacity-70">
+                  ID: {tx.transactionId || "N/A"}
+                </p>
+              </div>
+              <span className="font-black text-xl text-transparent bg-clip-text bg-linear-to-r from-(--grad-money-start) to-(--grad-money-end)">
+                ${tx.totalPrice}
+              </span>
             </div>
 
-            {/* Row 2: Status and Date */}
-            <div className="flex justify-between items-center mb-2">
-              {/* Status - Using semantic badge classes */}
+            {/* Row 2: Footer */}
+            <div className="flex justify-between items-center pl-2 pt-2 border-t border-(--border-card)">
               <span
                 className={`
-      text-sm px-3 py-1.5 font-bold border-none rounded-md text-white shadow-md
-      ${
-        tx.paymentStatus
-          ? "bg-linear-to-r from-emerald-400  to-green-700"
-          : "bg-linear-to-r from-amber-500  to-orange-500"
-      }
-    `}
+                 text-[10px] font-black uppercase tracking-wider flex items-center gap-1
+                 ${
+                   tx.paymentStatus ? "text-(--success-text)" : "text-amber-500"
+                 }
+               `}
               >
-                {tx.paymentStatus ? "Paid" : "Pending"}
-              </span>
-
-              <p className="text-xs text-base-content/60">
-                {tx.paidAt
-                  ? new Date(tx.paidAt).toLocaleTimeString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })
-                  : "N/A"}
-              </p>
-            </div>
-
-            {/* Row 3: Transaction ID */}
-            <div className="pt-2 border-t border-base-200 flex justify-between items-center">
-              <p className="text-xs font-medium text-base-content/60">
-                Transaction ID
-              </p>
-              <p className="text-sm font-mono text-base-content break-all">
-                {tx.transactionId ? (
-                  tx.transactionId
+                {tx.paymentStatus ? (
+                  <CheckCircle2 size={14} />
                 ) : (
-                  <span className="text-base-content/40">Not available</span>
+                  <Clock size={14} />
                 )}
-              </p>
+                {tx.paymentStatus ? "Paid Successfully" : "Pending Payment"}
+              </span>
+              <span className="text-xs font-bold text-(--text-muted)">
+                {tx.paidAt ? new Date(tx.paidAt).toLocaleDateString() : "---"}
+              </span>
             </div>
           </div>
         ))}

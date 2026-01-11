@@ -113,6 +113,16 @@
   /* Brand Blue */
   --nav-active-text: oklch(100% 0 0);
   /* White */
+
+  /* MONEY & STATUS GRADIENTS */
+--grad-money-start: oklch(60% 0.18 145);  /* Vibrant Emerald */
+--grad-money-end: oklch(50% 0.20 160);    /* Deep Teal */
+
+--grad-wait-start: oklch(70% 0.16 50);    /* Bright Amber */
+--grad-wait-end: oklch(60% 0.18 30);      /* Burnt Orange */
+
+--surface-highlight: oklch(100% 0 0 / 0.6); /* Glassy White */
+
 }
 
 
@@ -221,6 +231,16 @@
   /* Brand Green */
   --nav-active-text: oklch(12% 0.02 230);
   /* Dark Text */
+
+  /* MONEY & STATUS GRADIENTS */
+--grad-money-start: oklch(70% 0.2 150);   /* Neon Green */
+--grad-money-end: oklch(60% 0.18 170);    /* Cyan */
+
+--grad-wait-start: oklch(75% 0.16 60);    /* Gold */
+--grad-wait-end: oklch(65% 0.18 40);      /* Orange */
+
+--surface-highlight: oklch(25% 0.05 230 / 0.4); /* Glassy Dark */
+
 }
 
 

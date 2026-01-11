@@ -56,7 +56,7 @@ const UserProfile = () => {
             
             {/* Avatar with Ring */}
             <div className="relative group">
-              <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-full p-1.5 bg-(--bg-card) shadow-2xl">
+              <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-full p-1.5 bg-(--bg-card) shadow-xl">
                 <div 
                   className="h-full w-full rounded-full bg-cover bg-center border border-(--border-card) bg-gray-200"
                   style={{ backgroundImage: `url('${loggedInUser.photoURL || user?.photoURL}')` }}

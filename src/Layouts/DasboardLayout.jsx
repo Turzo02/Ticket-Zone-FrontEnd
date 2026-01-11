@@ -33,7 +33,7 @@ const DashboardLayout = () => {
 
   return (
     // Root Wrapper: Stops whole page scrolling, handles layout
-    <div className="flex h-screen max-w-7xl mx-auto bg-(--bg-page) text-(--text-main) overflow-hidden">
+    <div className="flex max-w-7xl mx-auto bg-(--bg-page) text-(--text-main) overflow-hidden">
       
       {/* 
           MOBILE OVERLAY (Backdrop)
