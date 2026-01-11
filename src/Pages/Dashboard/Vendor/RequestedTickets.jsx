@@ -106,205 +106,194 @@ const RequestedTickets = () => {
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-(--bg-soft-accent)">
-        {/* Header */}
-        <div className="text-center pb-8">
-          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
-           Requested Tickets
-          </h1>
+    <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) p-4 sm:p-8 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto space-y-8 relative">
+                {/* Ambient Background Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full pointer-events-none">
+           <div className="absolute top-20 left-10 w-72 h-72 bg-(--grad-start) rounded-full opacity-10 blur-[100px]" />
+           <div className="absolute top-40 right-10 w-96 h-96 bg-(--grad-end) rounded-full opacity-10 blur-[100px]" />
         </div>
 
-      <div className="hidden md:block overflow-x-auto shadow-xl rounded-lg border border-base-200 bg-base-200">
-        <table className="table w-full">
-          <thead className="bg-base-200 text-base-content">
-            <tr>
-              <th className="p-4 text-left">Email</th>
-              <th className="p-4 text-left">Ticket Title</th>
-              <th className="p-4 text-center">Quantity</th>
-              <th className="p-4 text-center">Total Price</th>
-              <th className="p-4 text-center">Actions</th>
-            </tr>
-          </thead>
+        
+        {/* Header */}
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+            Booking Requests
+          </h1>
+          <p className="text-(--text-muted) font-medium text-sm">
+            Approve or reject customer booking attempts.
+          </p>
+        </div>
 
-          <tbody>
-            {allBookingsData.map((req) => {
-              const statusColor =
-                req.status === "accepted"
-                  ? "badge badge-success badge-outline text-xs px-3 py-1.5 "
-                  : req.status === "rejected"
-                  ? "badge badge-error badge-outline text-xs px-3 py-1.5"
-                  : "badge badge-warning badge-outline text-xs px-3 py-1.5";
-
-              return (
-                <tr
-                  key={req._id}
-                  className="border-b border-base-200 hover:bg-base-200/50 transition"
-                >
-                  <td className="p-4 ">{req.userEmail}</td>
-
-                  <td className="py-4 font-semibold text-base-content">
-                    {req.title}
-                  </td>
-
-                  {/* Quantity */}
-                  <td className="py-4 text-center text-lg font-bold text-accent">
-                    {req.bookingQuantity}
-                  </td>
-
-                  {/* Total Price */}
-                  <td className="py-4 text-center text-lg font-bold text-success">
-                    ${req.totalPrice}
-                  </td>
-
-                  {/* Action Buttons */}
-                  {req.status === "pending" ? (
-                    <td className="py-4 flex justify-center gap-3">
-                      <button
-                        onClick={() => handleAccept(req._id)}
-                        className="
-                    btn btn-sm text-white border-none transition
-                    bg-linear-to-r from-emerald-400 via-green-500 to-green-700
-                    hover:from-emerald-500 hover:to-green-800
-                    shadow-lg shadow-green-600/40
-                    flex items-center gap-2
-                  "
-                      >
-                        <CheckCircle size={18} /> Accept
-                      </button>
-
-                      <button
-                        onClick={() => handleReject(req._id)}
-                        className="
-                    btn btn-sm text-white border-none transition
-                    bg-linear-to-r from-red-700 via-red-600 to-rose-600
-                    hover:from-red-800 hover:to-rose-700
-                    shadow-lg shadow-red-700/50
-                    flex items-center gap-2
-                  "
-                      >
-                        <Ban size={18} /> Reject
-                      </button>
+        {/* Main Content Card */}
+        <div className="rounded-4xl border border-(--border-card) bg-(--bg-card) shadow-xl shadow-black/5 overflow-hidden">
+          
+          {/* --- Desktop Table View --- */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-(--bg-soft-accent) border-b border-(--border-card)">
+                  <th className="p-5 text-xs font-extrabold uppercase text-(--text-muted) tracking-widest w-[40%]">Request Details</th>
+                  <th className="p-5 text-xs font-extrabold uppercase text-(--text-muted) tracking-widest text-center">Qty</th>
+                  <th className="p-5 text-xs font-extrabold uppercase text-(--text-muted) tracking-widest text-right">Total</th>
+                  <th className="p-5 text-xs font-extrabold uppercase text-(--text-muted) tracking-widest text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-(--border-card)">
+                {allBookingsData.map((req) => (
+                  <tr key={req._id} className="group hover:bg-(--bg-soft-accent)/50 transition-colors">
+                    
+                    {/* COMBINED COLUMN: Ticket + Email */}
+                    <td className="p-5">
+                      <div className="flex flex-col gap-1">
+                        <span className="font-black text-(--text-main) text-sm line-clamp-1">
+                          {req.title}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-(--grad-start)"></span>
+                          <span className="text-xs font-mono font-bold text-(--text-muted) opacity-80">
+                            {req.userEmail}
+                          </span>
+                        </div>
+                      </div>
                     </td>
-                  ) : (
-                    <td className="p-4 text-center">
-                      <span
-                        className={`badge ${statusColor} badge-lg font-bold`}
-                      >
-                        {req.status.toUpperCase()}
+
+                    {/* Quantity */}
+                    <td className="p-5 text-center">
+                      <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-(--bg-soft-accent) text-sm font-black text-(--text-main) border border-(--border-card)">
+                        {req.bookingQuantity}
                       </span>
                     </td>
-                  )}
-                </tr>
-              );
-            })}
 
-            {allBookingsData.length === 0 && (
-              <tr>
-                <td
-                  colSpan="6"
-                  className="p-6 text-center text-lg text-base-content/60 font-medium"
-                >
-                  No pending booking requests 🎉
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+                    {/* Total Price (Money Gradient) */}
+                    <td className="p-5 text-right">
+                      <span className="font-black text-lg text-transparent bg-clip-text bg-linear-to-r from-(--grad-money-start) to-(--grad-money-end)">
+                        ${req.totalPrice}
+                      </span>
+                    </td>
 
-      {/* ---  Mobile List Layout --- */}
-      <div className="md:hidden space-y-4">
-        {allBookingsData.length > 0 ? (
-          allBookingsData.map((req) => {
-            const statusColor =
-              req.status === "accepted"
-                ? "bg-green-500 text-white "
-                : req.status === "rejected"
-                ? "bg-red-500 text-white"
-                : "bg-yellow-500 text-black ";
+                    {/* Actions / Status */}
+                    <td className="p-5 text-center">
+                      {req.status === "pending" ? (
+                        <div className="flex justify-center gap-3">
+                          <button
+                            onClick={() => handleAccept(req._id)}
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-(--success-bg) text-(--success-text) border border-(--success-text)/20 hover:scale-105 hover:shadow-lg hover:shadow-green-500/20 transition-all text-[10px] font-black uppercase tracking-wider"
+                          >
+                            <CheckCircle size={14} strokeWidth={3} /> Accept
+                          </button>
+                          <button
+                            onClick={() => handleReject(req._id)}
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-(--color-error-bg) text-(--color-error-text) border border-(--color-error-border) hover:scale-105 hover:shadow-lg hover:shadow-red-500/20 transition-all text-[10px] font-black uppercase tracking-wider"
+                          >
+                            <Ban size={14} strokeWidth={3} /> Reject
+                          </button>
+                        </div>
+                      ) : (
+                        <span className={`
+                          inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border
+                          ${req.status === "accepted"
+                            ? "bg-(--success-bg) text-(--success-text) border-(--success-text)/20"
+                            : "bg-(--color-error-bg) text-(--color-error-text) border-(--color-error-border)"
+                          }
+                        `}>
+                          {req.status === "accepted" ? <CheckCircle size={12}/> : <Ban size={12}/>}
+                          {req.status}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
 
-            return (
-              <div
-                key={req._id}
-                className="card bg-base-200 shadow-xl border border-base-200 transition hover:shadow-2xl"
-              >
-                <div className="card-body p-4">
-                  {/* Header/Status */}
-                  <div className="flex justify-between items-start mb-2">
-                    <h2 className="card-title text-base-content text-xl font-bold">
-                      {req.title}
-                    </h2>
-                    <span className={`badge ${statusColor} badge-lg font-bold`}>
-                      {req.status.toUpperCase()}
+                {/* Empty State */}
+                {allBookingsData.length === 0 && (
+                  <tr>
+                    <td colSpan="4" className="p-12 text-center">
+                      <div className="inline-block p-4 rounded-full bg-(--bg-soft-accent) mb-3">
+                        <CheckCircle size={24} className="text-(--text-muted) opacity-50"/>
+                      </div>
+                      <p className="text-(--text-muted) font-bold text-sm">No pending requests found.</p>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* --- Mobile Card View --- */}
+          <div className="md:hidden p-4 space-y-4 bg-(--bg-soft-accent)">
+            {allBookingsData.length > 0 ? (
+              allBookingsData.map((req) => (
+                <div key={req._id} className="relative overflow-hidden p-5 rounded-3xl bg-(--bg-card) border border-(--border-card) shadow-sm">
+                  
+                  {/* Decorative Status Bar */}
+                  <div className={`absolute left-0 top-0 bottom-0 w-1.5 
+                    ${req.status === 'pending' ? 'bg-(--color-warn-bg)' 
+                    : req.status === 'accepted' ? 'bg-(--success-bg)' 
+                    : 'bg-(--color-error-bg)'}`} 
+                  />
+
+                  {/* Top Row: Title + Status */}
+                  <div className="flex justify-between items-start gap-3 pl-3 mb-3">
+                    <div>
+                      <h3 className="font-black text-(--text-main) text-sm line-clamp-2">{req.title}</h3>
+                      <p className="text-[10px] font-mono font-bold text-(--text-muted) mt-1 opacity-80">{req.userEmail}</p>
+                    </div>
+                    <span className={`
+                      shrink-0 px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-wider
+                      ${req.status === "pending" ? "bg-(--color-warn-bg) text-(--color-warn-text)" : 
+                        req.status === "accepted" ? "bg-(--success-bg) text-(--success-text)" :
+                        "bg-(--color-error-bg) text-(--color-error-text)"}
+                    `}>
+                      {req.status}
                     </span>
                   </div>
 
-                  {/* Details Grid */}
-                  <div className="grid grid-cols-2 gap-2 text-sm mb-4 border-t pt-2 border-base-200">
-                    <div className="font-semibold text-base-content/70">
-                      Email:
+                  {/* Middle Row: Stats */}
+                  <div className="flex items-center justify-between pl-3 py-3 border-t border-b border-(--border-card) mb-4">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-bold text-(--text-muted) uppercase">Quantity</span>
+                      <span className="text-sm font-black text-(--text-main)">x{req.bookingQuantity}</span>
                     </div>
-                    <div className="truncate text-base-content font-medium text-right">
-                      {req.userEmail}
-                    </div>
-
-                    <div className="font-semibold text-base-content/70">
-                      Quantity:
-                    </div>
-                    <div className="text-right text-lg font-bold text-accent">
-                      {req.bookingQuantity}
-                    </div>
-
-                    <div className="font-semibold text-base-content/70">
-                      Total Price:
-                    </div>
-                    <div className="text-right text-lg font-bold text-success">
-                      ${req.totalPrice}
+                    <div className="flex flex-col items-end">
+                      <span className="text-[10px] font-bold text-(--text-muted) uppercase">Total</span>
+                      <span className="text-lg font-black text-transparent bg-clip-text bg-linear-to-r from-(--grad-money-start) to-(--grad-money-end)">
+                        ${req.totalPrice}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
+                  {/* Bottom Row: Actions */}
                   {req.status === "pending" && (
-                    <div className="card-actions flex-col gap-2">
-                      <button
-                        onClick={() => handleAccept(req._id)}
-                        className="
-                    btn btn-block btn-sm text-white border-none transition
-                    bg-linear-to-r from-emerald-400 via-green-500 to-green-700
-                    hover:from-emerald-500 hover:to-green-800
-                    shadow-lg shadow-green-600/40
-                    flex items-center gap-2
-                  "
-                      >
-                        <CheckCircle size={18} /> Accept
-                      </button>
-
+                    <div className="grid grid-cols-2 gap-3 pl-3">
                       <button
                         onClick={() => handleReject(req._id)}
-                        className="
-                    btn btn-block btn-sm text-white border-none transition
-                    bg-linear-to-r from-red-700 via-red-600 to-rose-600
-                    hover:from-red-800 hover:to-rose-700
-                    shadow-lg shadow-red-700/50
-                    flex items-center gap-2
-                  "
+                        className="w-full py-2.5 rounded-xl font-bold text-xs uppercase bg-(--color-error-bg) text-(--color-error-text) border border-(--color-error-border) active:scale-95 transition-transform"
                       >
-                        <Ban size={18} /> Reject
+                        Reject
+                      </button>
+                      <button
+                        onClick={() => handleAccept(req._id)}
+                        className="w-full py-2.5 rounded-xl font-bold text-xs uppercase bg-(--success-bg) text-(--success-text) border border-(--success-text)/20 active:scale-95 transition-transform"
+                      >
+                        Accept
                       </button>
                     </div>
                   )}
                 </div>
+              ))
+            ) : (
+              <div className="p-8 text-center bg-(--bg-card) rounded-2xl border border-dashed border-(--border-card)">
+                <p className="text-(--text-muted) font-bold text-sm">No requests found.</p>
               </div>
-            );
-          })
-        ) : (
-          <div className="p-6 text-center text-lg text-base-content/60 font-medium bg-base-200 rounded-lg shadow-xl">
-            No pending booking requests 🎉
+            )}
           </div>
-        )}
+
+        </div>
       </div>
     </div>
   );
+
 };
 
 export default RequestedTickets;
