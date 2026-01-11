@@ -13,6 +13,7 @@ const RootLayout = () => {
     <div className="bg-(--bg-soft-accent)">
       {/* Router And Layout setup Done */}
       <Navbar></Navbar>
+      <div className="py-8"></div>
       <Outlet className="max-w-7xl mx-auto"></Outlet>
       <Footer></Footer>
     </div>

@@ -143,6 +143,12 @@
 --chart-3: oklch(62% 0.19 40);     /* Orange */
 --chart-grid: oklch(20% 0.1 260 / 0.05); /* Very faint grid */
 --chart-text: oklch(55% 0.05 260);
+/* Add to 'light' and 'dark' themes if missing */
+--nav-glass: oklch(100% 0 0 / 0.8); /* Light Mode Glass */
+--nav-glass-scrolled: oklch(100% 0 0 / 0.95);
+
+
+
 
 }
 
@@ -151,6 +157,10 @@
 
 @plugin "daisyui/theme" {
   name: "dark";
+
+  /* Dark Mode */
+--nav-glass: oklch(12% 0.02 230 / 0.8);
+--nav-glass-scrolled: oklch(12% 0.02 230 / 0.95);
 /* CHART COLORS */
 --chart-1: oklch(65% 0.2 155);     /* Neon Green */
 --chart-2: oklch(75% 0.18 145);    /* Mint */
