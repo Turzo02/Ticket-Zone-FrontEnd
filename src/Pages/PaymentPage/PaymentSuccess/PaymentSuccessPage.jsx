@@ -1,94 +1,143 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, Plane } from "lucide-react";
-import { useSearchParams } from "react-router";
+import { Check, Plane, Ticket, ArrowRight, Copy } from "lucide-react";
+import { useSearchParams, Link } from "react-router"; // Use Link for SPA navigation
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 
 const PaymentSuccessPage = () => {
-  const variants = {
-    initial: { opacity: 0, scale: 0.95 },
-    animate: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const item = {
-    initial: { y: 20, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-  };
-
   const [searchParams] = useSearchParams();
   const axiosSecure = useAxiosSecure();
-
   const sessionId = searchParams.get("session_id");
 
+  // Logic: Verify Payment
   useEffect(() => {
     if (sessionId) {
       axiosSecure
         .patch(`/payment-success?session_id=${sessionId}`)
-        .then((res) =>{
-            if(res.data.modifiedCount > 0){
-                // console.log("payment success");
-            }
+        .then((res) => {
+          if (res.data.modifiedCount > 0) {
+            // Optional: Add toast or tracking here
+          }
         })
-        
+        .catch((err) => console.error("Payment Confirmation Error", err));
     }
   }, [sessionId, axiosSecure]);
-//  console.log(sessionId)
+
+  // Animation Variants
+  const containerVariants = {
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { 
+      opacity: 1, 
+      scale: 1, 
+      transition: { duration: 0.5, ease: "easeOut", staggerChildren: 0.1 }
+    },
+  };
+
+  const itemVariants = {
+    initial: { y: 20, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen w-full flex items-center justify-center bg-(--bg-page) text-(--text-main) p-4 relative overflow-hidden">
+      
+      {/* 1. Background Ambient Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-(--success-bg) rounded-full blur-[120px] opacity-50 pointer-events-none" />
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none"></div>
+
       <motion.div
-        className="bg-white p-8 md:p-10 rounded-xl shadow-2xl text-center max-w-md w-full border-t-4 border-green-500"
-        variants={variants}
+        className="relative w-full max-w-md"
+        variants={containerVariants}
         initial="initial"
         animate="animate"
       >
-        <motion.div variants={item} className="mx-auto mb-6">
-          <motion.div
-            className="w-20 h-20 mx-auto text-green-500"
-            initial={{ scale: 0.5 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.4, type: "spring", stiffness: 150 }}
-          >
-            <CheckCircle className="w-full h-full" strokeWidth={1.5} />
-          </motion.div>
-        </motion.div>
+        {/* Main Card */}
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-(--bg-card) border border-(--border-card) shadow-2xl shadow-emerald-900/5">
+          
+          {/* Top Decorative Line */}
+          <div className="absolute top-0 left-0 right-0 h-1.5 bg-linear-to-r from-emerald-400 to-teal-500"></div>
 
-        <motion.h1
-          className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-2"
-          variants={item}
-        >
-          Ticket Booked Successfully!
-        </motion.h1>
+          <div className="p-8 md:p-10 text-center">
+            
+            {/* 2. Animated Success Icon */}
+            <motion.div variants={itemVariants} className="relative mx-auto w-24 h-24 mb-6 flex items-center justify-center">
+              <motion.div
+                initial={{ scale: 0, rotate: -90 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                className="w-20 h-20 rounded-full bg-(--success-bg) flex items-center justify-center shadow-lg shadow-emerald-500/20 z-10 relative"
+              >
+                <Check size={40} className="text-(--success-text)" strokeWidth={4} />
+              </motion.div>
+              {/* Pulse Rings */}
+              <div className="absolute inset-0 rounded-full border-2 border-(--success-text) opacity-20 animate-ping"></div>
+              <div className="absolute inset-0 rounded-full border border-(--success-text) opacity-40 scale-125"></div>
+            </motion.div>
 
-        <motion.p className="text-md text-gray-600 mb-6" variants={item}>
-          Your e-ticket has been confirmed. You will receive the details via
-          email shortly.
-        </motion.p>
+            {/* 3. Text Content */}
+            <motion.h1 
+              variants={itemVariants} 
+              className="text-3xl font-black text-(--text-main) tracking-tight mb-2"
+            >
+              Ticket Confirmed!
+            </motion.h1>
+            <motion.p 
+              variants={itemVariants} 
+              className="text-(--text-muted) font-medium text-sm mb-8"
+            >
+              Your payment was successful. <br/> We've sent the details to your email.
+            </motion.p>
 
-        <motion.div variants={item} className="space-y-3">
-          <motion.a
-            href="/dashboard/transaction-history"
-            className="w-full inline-flex items-center justify-center px-8 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-300"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Plane className="w-5 h-5 mr-2" /> View My Tickets
-          </motion.a>
-          <motion.a
-            href="/all-tickets"
-            className="w-full inline-block text-sm text-green-600 hover:text-green-700 transition duration-300"
-            whileHover={{ scale: 1.02 }}
-          >
-            Search for More Journeys
-          </motion.a>
-        </motion.div>
+            {/* 4. Digital Receipt Box */}
+            <motion.div 
+              variants={itemVariants} 
+              className="bg-(--bg-soft-accent) rounded-3xl p-5 mb-8 border border-(--border-card) relative"
+            >
+               {/* Ticket Cutout Visuals */}
+               <div className="absolute top-1/2 -left-3 w-6 h-6 bg-(--bg-card) rounded-full border-r border-(--border-card)"></div>
+               <div className="absolute top-1/2 -right-3 w-6 h-6 bg-(--bg-card) rounded-full border-l border-(--border-card)"></div>
+
+               <p className="text-[10px] font-bold uppercase tracking-widest text-(--text-muted) mb-2">Transaction ID</p>
+               
+               <div className="flex items-center justify-center gap-2">
+                 <code className="text-lg font-mono font-bold text-(--text-main)">
+                    {sessionId ? sessionId.slice(-12).toUpperCase() : "PROCESSING..."}
+                 </code>
+                 {sessionId && <Copy size={14} className="text-(--text-muted)" />}
+               </div>
+               
+               <div className="my-4 border-b border-dashed border-(--border-card)/50"></div>
+
+               <div className="flex justify-between text-sm font-bold text-(--text-muted)">
+                  <span>Status</span>
+                  <span className="text-(--success-text)">Paid Successfully</span>
+               </div>
+            </motion.div>
+
+            {/* 5. Action Buttons */}
+            <motion.div variants={itemVariants} className="space-y-3">
+              <Link to="/dashboard/transaction-history" className="block">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group relative w-full py-4 rounded-2xl font-bold text-(--text-inv) shadow-lg shadow-(--grad-start)/30 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-linear-to-r from-(--grad-start) to-(--grad-end)"></div>
+                  <span className="relative flex items-center justify-center gap-2">
+                    <Ticket size={18} /> View My Tickets
+                  </span>
+                </motion.button>
+              </Link>
+
+              <Link to="/all-tickets" className="block">
+                 <button className="w-full py-4 rounded-2xl font-bold text-sm text-(--text-main) bg-(--bg-page) border border-(--border-card) hover:bg-(--bg-soft-accent) transition-colors flex items-center justify-center gap-2">
+                    <Plane size={16} className="text-(--grad-start)" /> Book Another Trip
+                 </button>
+              </Link>
+            </motion.div>
+
+          </div>
+        </div>
       </motion.div>
     </div>
   );

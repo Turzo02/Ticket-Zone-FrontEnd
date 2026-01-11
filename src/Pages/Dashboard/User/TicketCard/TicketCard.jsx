@@ -213,7 +213,7 @@ const TicketCard = ({ ticket }) => {
             className="group/btn relative w-full overflow-hidden rounded-2xl py-4 font-bold text-sm text-(--text-inv) shadow-lg shadow-(--grad-start)/30 transition-all duration-300 hover:shadow-(--grad-start)/50 hover:-translate-y-1 active:scale-95"
           >
             <div className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end)"></div>
-            <div className="relative flex items-center justify-center gap-2">
+            <div className="relative flex items-center justify-center gap-2 cursor-pointer">
               <CreditCard size={18} />
               <span>Complete Payment</span>
             </div>
