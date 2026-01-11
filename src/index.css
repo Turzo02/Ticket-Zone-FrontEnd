@@ -103,7 +103,16 @@
   /* Separator */
   --nav-text-active: oklch(100% 0 0);
 
-
+  --sidebar-bg: oklch(98.5% 0.002 247.85);
+  /* Matches Page BG */
+  --sidebar-border: oklch(94% 0.01 250);
+  /* Subtle border */
+  --nav-item-hover: oklch(96% 0.01 240);
+  /* Soft hover */
+  --nav-active-bg: oklch(55% 0.22 260);
+  /* Brand Blue */
+  --nav-active-text: oklch(100% 0 0);
+  /* White */
 }
 
 
@@ -201,6 +210,17 @@
   --nav-border: oklch(20% 0.04 260);
   /* Separator */
   --nav-text-active: oklch(98% 0.01 250);
+
+  --sidebar-bg: oklch(12% 0.02 230);
+  /* Matches Page BG */
+  --sidebar-border: oklch(20% 0.04 260);
+  /* Darker border */
+  --nav-item-hover: oklch(18% 0.03 230);
+  /* Slight lighten */
+  --nav-active-bg: oklch(65% 0.2 155);
+  /* Brand Green */
+  --nav-active-text: oklch(12% 0.02 230);
+  /* Dark Text */
 }
 
 
