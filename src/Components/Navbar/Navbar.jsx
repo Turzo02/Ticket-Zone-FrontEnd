@@ -1,12 +1,12 @@
 import { Link, NavLink } from "react-router";
 import logo from "/favicon.png";
-import { useTheme } from "../../Context/ThemeToggle/useTheme";
+// import { useTheme } from "../../Context/ThemeToggle/useTheme";
 import { LogOut, Moon, Sun, User, Menu, ChevronDown } from "lucide-react";
 import useAuth from "../../Hooks/useAuth";
-import ThemeToggle from "../ThemeToggle";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const Navbar = () => {
-  const [theme, toggleTheme] = useTheme();
+  // const [theme, toggleTheme] = useTheme();
   const { logOut, user } = useAuth();
 
   const handleLogOut = () => {
