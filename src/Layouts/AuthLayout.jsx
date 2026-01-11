@@ -1,12 +1,16 @@
-import React from 'react';
-import { Outlet } from 'react-router';
+import React from "react";
+import { Outlet } from "react-router";
+import { useTheme } from "../Context/ThemeToggle/useTheme";
 
 const AuthLayout = () => {
-    return (
-        <div className='max-w-7xl mx-auto'>
-            <Outlet></Outlet>
-        </div>
-    );
+  const [theme] = useTheme();
+
+  return (
+    <div className=" mx-auto">
+      <Outlet></Outlet>
+    </div>
+  );
 };
 
 export default AuthLayout;
+

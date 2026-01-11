@@ -124,7 +124,7 @@ const VisualHighlight = () => {
                         {item.desc}
                       </p>
                       
-                      <button className="w-fit flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-(--grad-start) hover:text-white transition-all duration-300 shadow-xl shadow-black/20 group/btn">
+                      <button className="w-fit flex items-center justify-center gap-3 px-6 py-3 cursor-pointer rounded-full bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-(--grad-start) hover:text-white transition-all duration-300 shadow-xl shadow-black/20 group/btn">
                         Explore
                         <ArrowRight size={16} className="group-hover/btn:-rotate-45 transition-transform duration-300" />
                       </button>
