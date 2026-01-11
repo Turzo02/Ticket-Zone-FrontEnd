@@ -3,6 +3,7 @@ import logo from "/favicon.png";
 import { useTheme } from "../../Context/ThemeToggle/useTheme";
 import { LogOut, Moon, Sun, User, Menu, ChevronDown } from "lucide-react";
 import useAuth from "../../Hooks/useAuth";
+import ThemeToggle from "../ThemeToggle";
 
 const Navbar = () => {
   const [theme, toggleTheme] = useTheme();
@@ -14,7 +15,7 @@ const Navbar = () => {
         // console.log("logged out succesfully");
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
   };
 
@@ -46,8 +47,7 @@ const Navbar = () => {
         </NavLink>
       </li>
       {/* 
-         Note: Adjust these conditions if 'All Tickets' should be visible to everyone.
-         Currently respecting your logic: user && ...
+
       */}
       {user && (
         <li className="mx-1">
@@ -136,13 +136,14 @@ const Navbar = () => {
         <div className="navbar-end gap-3">
           
           {/* Theme Toggle */}
-          <button
+          {/* <button
             onClick={toggleTheme}
             className="btn btn-ghost btn-circle btn-sm hover:bg-(--bg-soft-accent) text-(--text-muted) hover:text-(--text-main) transition-colors"
             title="Toggle Theme"
           >
             {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-          </button>
+          </button> */}
+          <ThemeToggle></ThemeToggle>
 
 
 

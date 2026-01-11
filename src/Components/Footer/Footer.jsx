@@ -95,7 +95,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={16} className="text-(--grad-start)" />
-                <span>+880 1234-567890</span>
+                <span>+8801730278947</span>
               </li>
               <li>
                 <a
