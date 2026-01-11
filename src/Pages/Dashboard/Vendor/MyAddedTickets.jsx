@@ -73,7 +73,6 @@ const MyAddedTickets = () => {
     );
   }
 
-
   return (
     <div className="sm:p-8 max-w-7xl mx-auto bg-base-200 text-base-content">
       <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">

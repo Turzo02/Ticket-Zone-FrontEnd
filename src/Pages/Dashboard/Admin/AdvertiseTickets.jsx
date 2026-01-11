@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Train, Plane, Bus } from "lucide-react";
+import { Train, Plane, Bus, ArrowBigRightDash } from "lucide-react";
 import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
@@ -119,118 +119,113 @@ const AdvertiseTickets = () => {
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-4xl mx-auto min-h-screen bg-base-200 text-base-content">
-      <h1 className="text-3xl font-bold text-center text-primary sm:text-4xl"></h1>
-
-      <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
-          📢 Advertise Ticket Status
-        </h1>
-      </div>
-      <p className="text-md font-bold text-center text-base-content/50 my-6">
-        You can only advertise a maximum of {maxAdvertisedLimit} tickets
-        globally
-      </p>
-
-      {/* Table/Card Container - Using DaisyUI Card/Base styles */}
-
-      <div className="shadow-xl rounded-2xl border border-base-200 bg-base-200 overflow-hidden">
-        <div className="hidden md:grid grid-cols-4 gap-4 p-4 bg-base-200 text-base-content uppercase text-sm font-bold">
-          <div className="col-span-1">Ticket Title</div>
-
-          <div className="col-span-1">From - To</div>
-
-          <div className="col-span-1">Date & Time</div>
-
-          <div className="col-span-1 text-center">Advertise (Toggle)</div>
+    <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) p-4 sm:p-8 transition-colors duration-300">
+      <div className="max-w-5xl mx-auto space-y-8">
+        
+        {/* 1. Header Section */}
+        <div className="text-center space-y-3">
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+            📢 Advertise Tickets
+          </h1>
+          <div className="inline-block px-4 py-2 rounded-xl bg-(--bg-card) border border-(--border-card) shadow-sm">
+             <p className="text-sm font-bold text-(--text-muted)">
+               Global Limit: <span className="text-(--grad-end)">{maxAdvertisedLimit} Tickets</span>
+             </p>
+          </div>
         </div>
 
-        {/* Ticket List Body */}
+        {/* 2. Main Content Container */}
+        <div className="rounded-4xl border border-(--border-card) bg-(--bg-card) shadow-xl shadow-black/5 overflow-hidden">
+          
+          {/* --- Desktop Grid Header --- */}
+          <div className="hidden md:grid grid-cols-4 gap-4 p-5 bg-(--bg-soft-accent) border-b border-(--border-card) text-xs font-extrabold uppercase text-(--text-muted) tracking-widest">
+            <div className="col-span-1">Ticket Details</div>
+            <div className="col-span-1">Route Info</div>
+            <div className="col-span-1">Schedule</div>
+            <div className="col-span-1 text-center">Action</div>
+          </div>
 
-        <div className="divide-y divide-base-400">
-          {allTickets.map((ticket) => (
-            <div
-              key={ticket._id}
-              className="p-4 
-            grid grid-cols-1 md:grid-cols-4 
-            gap-4 items-center
-            "
-            >
-              {/* Column 1: Title (Always visible) */}
+          {/* --- List Body --- */}
+          <div className="divide-y divide-(--border-card)">
+            {allTickets.map((ticket) => (
+              <div 
+                key={ticket._id} 
+                className="p-5 grid grid-cols-1 md:grid-cols-4 gap-4 items-center group hover:bg-(--bg-soft-accent)/50 transition-colors"
+              >
+                
+                {/* Column 1: Title */}
+                <div className="md:col-span-1">
+                  <span className="md:hidden text-[10px] font-bold text-(--text-muted) uppercase block mb-1">Ticket Title</span>
+                  <p className="font-bold text-(--text-main) line-clamp-2">{ticket.title}</p>
+                </div>
 
-              <div className="font-semibold text-base-content md:col-span-1">
-                <span className="md:hidden font-bold mr-2 uppercase  text-info">
-                  Title :
-                </span>
+                {/* Column 2: Route */}
+                <div className="md:col-span-1">
+                  <span className="md:hidden text-[10px] font-bold text-(--text-muted) uppercase block mb-1">Route</span>
+                  <div className="flex items-center gap-2 text-sm font-medium text-(--text-main)">
+                    <span className="truncate max-w-20">{ticket.from}</span>
+                    <span className="text-(--grad-start) text-4xl"> <ArrowBigRightDash /></span>
+                    <span className="truncate max-w-20">{ticket.to}</span>
+                  </div>
+                </div>
 
-                {ticket.title}
+                {/* Column 3: Date */}
+                <div className="md:col-span-1">
+                  <span className="md:hidden text-[10px] font-bold text-(--text-muted) uppercase block mb-1">Schedule</span>
+                  <div className="flex items-center gap-2 justify-start">
+                     <span className="font-bold text-sm text-(--text-main)">
+                       {ticket.departure ? new Date(ticket.departure).toLocaleDateString() : "N/A"}
+                     </span>
+                     <span className="text-xs text-(--text-muted) font-mono">
+                       {ticket.departure ? new Date(ticket.departure).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : ""}
+                     </span>
+                  </div>
+                </div>
+
+                {/* Column 4: Toggle Button */}
+                <div className="md:col-span-1 flex justify-start md:justify-center mt-3 md:mt-0">
+                  <button
+                    onClick={() => handleAdvertise(ticket)}
+                    className={`
+                      w-full md:w-auto px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wide transition-all duration-300 shadow-lg active:scale-95
+                      ${
+                        ticket.isAdvertised
+                          ? "btn btn-block btn-lg text-white border-none transition  bg-linear-to-r from-red-700 via-red-600 to-rose-600 hover:from-red-800 hover:to-rose-700 shadow-lg shadow-red-700/50 flex items-center gap-2"
+                          : "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--text-inv) shadow-(--grad-start)/30 hover:opacity-90 border border-transparent"
+                      }
+                    `}
+                  >
+                    {ticket.isAdvertised ? "Remove Ad" : "Promote Now"}
+                  </button>
+                </div>
+
               </div>
-
-              {/* Column 2: From-To (Stacks below Title on small screens) */}
-
-              <div className="text-base-content/80 md:col-span-1">
-                <span className="md:hidden  font-bold mr-2 uppercase  text-info">
-                  Route:
-                </span>
-                {ticket.from} <span className="text-primary">➡️</span>{" "}
-                {ticket.to}
-              </div>
-
-              {/* Column 3: Date & Time (Stacks below From-To on small screens) */}
-
-              <div className="text-base-content/80 md:col-span-1">
-                <span className="md:hidden  font-bold mr-2 uppercase  text-info">
-                  When:
-                </span>
-
-                {ticket.departure}
-              </div>
-
-              {/* Column 4: Toggle Button (Stacks last on small screens) */}
-
-              <div className="md:col-span-1 flex justify-start md:justify-center mt-2 md:mt-0 ">
-                <button
-                  onClick={() => handleAdvertise(ticket)}
-                  className={`
-
-                btn btn-sm text-white border-none shadow-md transition-all duration-300 w-full md:w-auto
-
-                ${
-                  ticket.isAdvertised
-                    ? "bg-linear-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 shadow-red-500/40"
-                    : "bg-linear-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 shadow-amber-500/40"
-                }
-
-              `}
-                >
-                  {ticket.isAdvertised ? "Remove Ad" : "Advertise Now"}
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* PAGINATION BAR */}
-
-      <div>
+        {/* 3. Pagination Bar */}
         {totalPages > 1 && (
-          <div className="flex justify-center mt-10 gap-3">
+          <div className="flex justify-center mt-8 gap-2">
             <button
               onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
               disabled={page === 1}
-              className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl text-xs font-bold bg-(--bg-card) border border-(--border-card) text-(--text-main) hover:border-(--grad-start) disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               Prev
             </button>
-
+            
             {[...Array(totalPages)].map((_, i) => (
               <button
                 key={i}
                 onClick={() => setPage(i + 1)}
-                className={`btn btn-sm ${
-                  page === i + 1 ? "btn-primary" : "btn-success"
-                }`}
+                className={`
+                  w-10 h-10 rounded-xl text-xs font-bold transition-all border
+                  ${page === i + 1
+                    ? "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--text-inv) border-transparent shadow-lg shadow-(--grad-start)/30"
+                    : "bg-(--bg-card) border-(--border-card) text-(--text-main) hover:border-(--grad-start)"
+                  }
+                `}
               >
                 {i + 1}
               </button>
@@ -239,7 +234,7 @@ const AdvertiseTickets = () => {
             <button
               onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={page === totalPages}
-              className="btn btn-sm btn-ghost bg-base-200 disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl text-xs font-bold bg-(--bg-card) border border-(--border-card) text-(--text-main) hover:border-(--grad-start) disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               Next
             </button>
@@ -248,6 +243,7 @@ const AdvertiseTickets = () => {
       </div>
     </div>
   );
+
 };
 
 export default AdvertiseTickets;
