@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, MapPin } from "lucide-react";
+import { Link } from "react-router";
 
 const VisualHighlight = () => {
   // Default active card is the first one
@@ -90,7 +91,6 @@ const VisualHighlight = () => {
 
             {/* Content Container */}
             <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
-              
               {/* Vertical Title (Inactive State - Desktop) */}
               {/* Centered vertically to save bottom space and look more artistic */}
               {activeId !== item.id && (
@@ -111,8 +111,6 @@ const VisualHighlight = () => {
                     transition={{ duration: 0.4, delay: 0.1 }}
                     className="relative z-10"
                   >
-           
-
                     {/* Massive Showcase Title - Tightly stacked */}
                     <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] mb-5 drop-shadow-2xl">
                       {item.title}
@@ -123,13 +121,15 @@ const VisualHighlight = () => {
                       <p className="text-white/90 text-sm md:text-base font-medium max-w-xs leading-snug drop-shadow-md">
                         {item.desc}
                       </p>
-                      
-                      <button className="w-fit flex items-center justify-center gap-3 px-6 py-3 cursor-pointer rounded-full bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-(--grad-start) hover:text-white transition-all duration-300 shadow-xl shadow-black/20 group/btn">
-                        Explore
-                        <ArrowRight size={16} className="group-hover/btn:-rotate-45 transition-transform duration-300" />
-                      </button>
-                    </div>
 
+                      <Link to="/all-tickets" className="w-fit flex items-center justify-center gap-3 px-6 py-3 cursor-pointer rounded-full bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-(--grad-start) hover:text-white transition-all duration-300 shadow-xl shadow-black/20 group/btn">
+                        Explore
+                        <ArrowRight
+                          size={16}
+                          className="group-hover/btn:-rotate-45 transition-transform duration-300"
+                        />
+                      </Link>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -142,11 +142,7 @@ const VisualHighlight = () => {
                   </h3>
                 )}
               </div>
-
             </div>
-
-         
-
           </motion.div>
         ))}
       </div>

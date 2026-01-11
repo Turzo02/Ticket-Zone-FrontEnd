@@ -50,11 +50,11 @@ const SingleTicket = ({ ticket, index, formattedPrice }) => {
         
         {/* From -> To Location */}
         <div className="flex justify-between items-center gap-2 p-3 rounded-xl border border-(--border-card)">
-          <h1 className="text-xs font-bold text-(--text-main) truncate max-w-[100px]">
+          <h1 className="text-xs font-bold text-(--text-main) truncate max-w-25">
             {ticket.from}
           </h1>
           <MoveRight className="w-4 h-4 text-(--text-muted) shrink-0" />
-          <h1 className="text-xs font-bold text-(--text-main) truncate max-w-[100px]">
+          <h1 className="text-xs font-bold text-(--text-main) truncate max-w-25">
             {ticket.to}
           </h1>
         </div>

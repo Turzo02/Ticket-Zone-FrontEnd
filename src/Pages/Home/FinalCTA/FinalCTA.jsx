@@ -131,8 +131,8 @@ const FinalCTA = () => {
           </Link>
           
           {/* Secondary Button */}
-          <Link to="/routes">
-            <button className="px-8 py-4 rounded-xl font-bold text-(--text-main) bg-(--bg-card) border border-(--border-card) hover:bg-(--bg-soft-accent) hover:border-(--grad-start)/50 transition-all duration-300 min-w-[180px]">
+          <Link to="/all-tickets">
+            <button className="px-8 py-4 rounded-xl font-bold text-(--text-main) bg-(--bg-card) border border-(--border-card) hover:bg-(--bg-soft-accent) hover:border-(--grad-start)/50 transition-all duration-300 min-w-45">
               Browse Routes
             </button>
           </Link>

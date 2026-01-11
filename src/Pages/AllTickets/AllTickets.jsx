@@ -6,6 +6,7 @@ import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
 import { Filter, ArrowUpDown, Search, ChevronDown, Check } from "lucide-react";
 import SingleTicket from "./SingleTicket/SingleTicket";
+import TicketCardSkeleton from "../../Components/TicketCardSkeleton/TicketCardSkeleton";
 
 // --- Internal Custom Dropdown Component ---
 const CustomDropdown = ({
@@ -32,7 +33,7 @@ const CustomDropdown = ({
   const selectedOption = options.find((opt) => opt.value === value);
 
   return (
-    <div className="relative w-full sm:w-auto min-w-[180px]" ref={dropdownRef}>
+    <div className="relative w-full sm:w-auto min-w-45" ref={dropdownRef}>
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -185,20 +186,20 @@ const AllTickets = () => {
   return (
     <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) transition-colors duration-300 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        
         {/* Header Section */}
         <div className="text-center py-12 mb-10 px-4 space-y-4 bg-(--bg-card) border border-(--border-card) rounded-3xl shadow-sm">
           <h1 className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
             All Tickets
           </h1>
           <p className="text-lg md:text-xl text-(--text-muted) max-w-2xl mx-auto font-medium">
-            Find your perfect journey. Filter by transport, price, or
-            destination.
+            Find your perfect journey. Filter by transport, price, or destination.
           </p>
         </div>
 
         {/* Controls Container */}
         <div className="flex flex-col lg:flex-row justify-between items-center mb-10 gap-4">
-          {/* Filters & Sort using Custom Dropdown */}
+          {/* Filters & Sort */}
           <div className="flex flex-row gap-4 w-full z-30">
             <div className="w-1/2 lg:w-auto">
               <CustomDropdown
@@ -209,7 +210,6 @@ const AllTickets = () => {
                 placeholder="All Transports"
               />
             </div>
-
             <div className="w-1/2 lg:w-auto">
               <CustomDropdown
                 options={sortOptions}
@@ -247,34 +247,32 @@ const AllTickets = () => {
         </div>
 
         {/* Ticket Grid Section */}
-        <div className="relative min-h-[400px] z-10">
-          {/* Loader Overlay */}
-          {isFetching && (
-            <div className="absolute inset-0 z-20 flex justify-center items-start pt-32 bg-(--bg-soft-accent)/60 backdrop-blur-sm rounded-3xl transition-all">
-              <div className="sticky top-1/2">
-                <SwappingDotLoader />
-              </div>
+        <div className="relative min-h-100 z-10">
+          
+          {/* FIX: Use a Single Ternary Logic Chain */}
+          {isFetching ? (
+            // 1. LOADING STATE (Skeletons ONLY)
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[...Array(8)].map((_, index) => (
+                <TicketCardSkeleton key={index} />
+              ))}
             </div>
-          )}
-
-          {allTickets.length === 0 && !isFetching ? (
+          ) : allTickets.length === 0 ? (
+            // 2. EMPTY STATE
             <div className="flex flex-col items-center justify-center py-24 bg-(--bg-card) border border-dashed border-(--border-card) rounded-3xl">
               <h3 className="text-xl font-bold text-(--text-muted)">
                 No tickets found matching your criteria.
               </h3>
             </div>
           ) : (
-            <div
-              className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 transition-opacity duration-300 ${
-                isFetching ? "opacity-40 pointer-events-none" : "opacity-100"
-              }`}
-            >
+            // 3. DATA STATE (Real Tickets)
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-in fade-in duration-500">
               {allTickets.map((ticket, index) => {
                 const formattedPrice = new Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "USD",
                 }).format(ticket.price);
-
+                
                 return (
                   <SingleTicket
                     key={index}
@@ -286,10 +284,12 @@ const AllTickets = () => {
               })}
             </div>
           )}
+          
         </div>
 
         {/* Pagination Bar */}
-        {totalPages > 1 && (
+        {/* Only show pagination if we have data and aren't loading skeletons */}
+        {!isFetching && totalPages > 1 && (
           <div className="flex justify-center mt-16 gap-2">
             <button
               onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
@@ -298,8 +298,8 @@ const AllTickets = () => {
             >
               Prev
             </button>
-
             {[...Array(totalPages)].map((_, i) => {
+              // Simple Pagination Logic
               if (
                 totalPages > 8 &&
                 Math.abs(page - (i + 1)) > 2 &&
@@ -307,7 +307,7 @@ const AllTickets = () => {
                 i !== totalPages - 1
               )
                 return null;
-
+                
               return (
                 <button
                   key={i}
@@ -322,7 +322,6 @@ const AllTickets = () => {
                 </button>
               );
             })}
-
             <button
               onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={page === totalPages}
@@ -335,6 +334,7 @@ const AllTickets = () => {
       </div>
     </div>
   );
+
 };
 
 export default AllTickets;

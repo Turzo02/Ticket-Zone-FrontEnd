@@ -13,10 +13,11 @@ import {
   Sparkles,
   Ticket,
 } from "lucide-react";
+import TicketCardSkeleton from "../../../Components/TicketCardSkeleton/TicketCardSkeleton";
 
 const LatestTickets = () => {
   const axiosSecure = useAxiosSecure();
-  const displayLimit = 6;
+  const displayLimit = 8;
 
   const {
     data: tickets = [],
@@ -26,7 +27,7 @@ const LatestTickets = () => {
     queryKey: ["latestTickets"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(
-        "/ticket?page=1&limit=6&status=accepted"
+        `/ticket?page=1&limit=${displayLimit}&status=accepted`
       );
       const ticketArray = data.tickets;
       const sortedTickets = ticketArray.sort((a, b) => {
@@ -41,11 +42,16 @@ const LatestTickets = () => {
   // Icon Selector Logic (Same as Exclusive Deals)
   const getTransportIcon = (type) => {
     switch (type) {
-      case "Train": return <Train size={18} />;
-      case "Bus": return <Bus size={18} />;
-      case "Flight": return <Plane size={18} />;
-      case "Ship": return <Ship size={18} />;
-      default: return <Car size={18} />;
+      case "Train":
+        return <Train size={18} />;
+      case "Bus":
+        return <Bus size={18} />;
+      case "Flight":
+        return <Plane size={18} />;
+      case "Ship":
+        return <Ship size={18} />;
+      default:
+        return <Car size={18} />;
     }
   };
 
@@ -60,7 +66,6 @@ const LatestTickets = () => {
   return (
     <section className="w-full py-20 bg-(--bg-soft-accent) transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
-        
         {/* Section Header */}
         <div className="text-center mb-16">
           <h1 className="relative text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) via-(--grad-end) to-(--grad-start) animate-gradient-x pb-2">
@@ -72,8 +77,10 @@ const LatestTickets = () => {
         </div>
 
         {isLoading ? (
-          <div className="flex justify-center items-center h-64">
-            <SwappingDotLoader />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[...Array(8)].map((_, index) => (
+              <TicketCardSkeleton key={index} />
+            ))}
           </div>
         ) : (
           <div>
@@ -118,10 +125,10 @@ const LatestTickets = () => {
                           />
                           {/* Gradient Overlay */}
                           <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
-                          
+
                           {/* Title Badge */}
                           <div className="absolute bottom-3 left-4 right-4">
-                             <h2 className="text-lg font-bold text-white leading-tight drop-shadow-md line-clamp-1">
+                            <h2 className="text-lg font-bold text-white leading-tight drop-shadow-md line-clamp-1">
                               {ticket.title}
                             </h2>
                           </div>
@@ -140,10 +147,16 @@ const LatestTickets = () => {
                               </span>
                             </div>
                             <div className="text-right">
-                               <p className="text-[10px] font-bold text-(--text-muted) uppercase tracking-widest mb-0.5">
+                              <p className="text-[10px] font-bold text-(--text-muted) uppercase tracking-widest mb-0.5">
                                 Left
                               </p>
-                              <span className={`text-sm font-bold ${ticket.quantity < 5 ? 'text-red-500' : 'text-emerald-500'}`}>
+                              <span
+                                className={`text-sm font-bold ${
+                                  ticket.quantity < 5
+                                    ? "text-red-500"
+                                    : "text-emerald-500"
+                                }`}
+                              >
                                 {ticket.quantity} Seats
                               </span>
                             </div>
@@ -160,17 +173,20 @@ const LatestTickets = () => {
                                 {ticket.transportType}
                               </span>
                             </div>
-                            
+
                             {/* Date */}
                             <div className=" rounded-lg p-2 flex items-center gap-2 border border-(--border-card) group-hover:border-(--border-hover) transition-colors">
                               <span className="p-1.5 rounded-md bg-(--bg-card) shadow-sm text-(--grad-start)">
                                 <Calendar size={14} />
                               </span>
                               <span className="text-xs font-semibold text-(--text-main)">
-                                {new Date(ticket.departure).toLocaleDateString("en-GB", {
-                                  day: "2-digit",
-                                  month: "short",
-                                })}
+                                {new Date(ticket.departure).toLocaleDateString(
+                                  "en-GB",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                  }
+                                )}
                               </span>
                             </div>
                           </div>
@@ -178,7 +194,10 @@ const LatestTickets = () => {
                           {/* Perks Section */}
                           <div>
                             <div className="flex items-center gap-1.5 mb-2.5">
-                              <Sparkles size={12} className="text-(--grad-end)" />
+                              <Sparkles
+                                size={12}
+                                className="text-(--grad-end)"
+                              />
                               <span className="text-[10px] font-bold text-(--text-muted) uppercase tracking-wider">
                                 Included Perks
                               </span>
@@ -204,12 +223,27 @@ const LatestTickets = () => {
 
                       {/* Action Button */}
                       <div className="p-5 pt-0 mt-auto">
-                        <Link to={`/all-tickets/${ticket._id}`} className="block w-full">
+                        <Link
+                          to={`/all-tickets/${ticket._id}`}
+                          className="block w-full"
+                        >
                           <button className="relative w-full py-3 rounded-xl font-bold text-sm uppercase tracking-wide overflow-hidden group/btn text-(--text-inv) shadow-lg shadow-(--grad-start)/20 transition-all duration-300 hover:shadow-(--grad-start)/40">
                             <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end) group-hover/btn:scale-[1.02] transition-transform duration-300"></span>
                             <span className="relative flex items-center justify-center gap-2">
                               View Details
-                              <svg className="w-3 h-3 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                              <svg
+                                className="w-3 h-3 transition-transform group-hover/btn:translate-x-1"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                ></path>
+                              </svg>
                             </span>
                           </button>
                         </Link>

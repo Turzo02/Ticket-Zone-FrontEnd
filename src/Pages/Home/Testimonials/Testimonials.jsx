@@ -17,7 +17,7 @@ const Testimonials = () => {
       name: "Ali Khan",
       route: "Dhaka → Chittagong",
       quote: "Booking tickets was incredibly fast. The UI is so intuitive, and I got my confirmation instantly.",
-      image: "https://i.pravatar.cc/150?u=ali",
+      image: "https://i.pravatar.cc/150?u=jara",
       rating: 5,
     },
     {
@@ -25,7 +25,7 @@ const Testimonials = () => {
       name: "Fatima Rahman",
       route: "Sylhet → Dhaka",
       quote: "The bus tracking feature was a lifesaver. I knew exactly when to leave home. Highly recommended!",
-      image: "https://i.pravatar.cc/150?u=fatima",
+      image: "https://i.pravatar.cc/150?u=s",
       rating: 5,
     },
     {
@@ -33,7 +33,7 @@ const Testimonials = () => {
       name: "Tanvir Hasan",
       route: "Khulna → Jessore",
       quote: "Great prices and very comfortable seat selection process. This is my go-to travel app now.",
-      image: "https://i.pravatar.cc/150?u=tanvir",
+      image: "https://i.pravatar.cc/150?u=t",
       rating: 4,
     },
   ];

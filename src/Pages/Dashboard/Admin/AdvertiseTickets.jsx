@@ -8,8 +8,8 @@ import Swal from "sweetalert2";
 const AdvertiseTickets = () => {
   const axiosSecure = useAxiosSecure();
   const [page, setPage] = useState(1);
-  const limit = 7;
-  const maxAdvertisedLimit = 6;
+  const limit = 6;
+  const maxAdvertisedLimit = 8;
 
   const { data: countData, refetch: refetchCount } = useQuery({
     queryKey: ["advertisedCount"],

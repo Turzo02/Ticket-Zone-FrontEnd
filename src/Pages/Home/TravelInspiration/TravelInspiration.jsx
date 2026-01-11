@@ -4,6 +4,7 @@ import { MapPin, Compass, Heart, ArrowRight, Sun, Shield } from "lucide-react";
 // GSAP Imports
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Link } from "react-router";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -155,13 +156,13 @@ const TravelInspiration = () => {
 
         {/* CTA Section */}
         <div className="text-center mt-16">
-          <button className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-(--bg-card) border border-(--border-card) text-(--text-main) font-bold overflow-hidden shadow-lg shadow-(--shadow-color)/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <Link to={"/all-tickets"} className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-(--bg-card) border border-(--border-card) text-(--text-main) font-bold overflow-hidden shadow-lg shadow-(--shadow-color)/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <span className="absolute inset-0 bg-linear-to-r from-(--grad-start) to-(--grad-end) opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
             <span>View All Destinations</span>
             <span className="p-1 rounded-full bg-(--bg-soft-accent) group-hover:bg-(--grad-start) group-hover:text-white transition-colors duration-300">
               <ArrowRight size={16} />
             </span>
-          </button>
+          </Link>
         </div>
 
       </div>
