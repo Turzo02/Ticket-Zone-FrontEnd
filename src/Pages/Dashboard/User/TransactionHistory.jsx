@@ -73,7 +73,7 @@ const TransactionHistory = () => {
           </div>
           <div className="relative z-10">
             <p className="text-xs font-bold uppercase tracking-widest text-(--text-muted) mb-1">
-              Total Spent
+              Total Cost
             </p>
             <h2 className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-(--grad-money-start) to-(--grad-money-end)">
               $
