@@ -74,12 +74,13 @@ const MyAddedTickets = () => {
   }
 
   return (
-    <div className="sm:p-8 max-w-7xl mx-auto bg-base-200 text-base-content">
-      <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
-          My Added Tickets
-        </h1>
-      </div>
+    <div className="sm:p-8 max-w-7xl mx-auto bg-(--bg-soft-accent)">
+        {/* Header */}
+        <div className="text-center pb-8">
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+            My Added Tickets
+          </h1>
+        </div>
       {/* Controls Container */}
 
       {/* Ticket Grid */}
@@ -123,7 +124,7 @@ const MyAddedTickets = () => {
                       <div className="flex items-center space-x-1">
                         {/* Start Point */}
                         <span className="w-3 h-3 rounded-full bg-success"></span>
-                        <span className="max-w-[100px] text-base-content font-bold text-md">
+                        <span className="max-w-25 text-base-content font-bold text-md">
                           {ticket.from}
                         </span>
                       </div>

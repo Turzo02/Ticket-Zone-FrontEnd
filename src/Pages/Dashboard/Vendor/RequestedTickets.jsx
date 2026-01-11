@@ -106,12 +106,13 @@ const RequestedTickets = () => {
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-base-200 text-base-content">
-      <div className="text-center py-8 mb-12 md:py-8  bg-base-200 rounded-xl shadow-lg">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
-          Requested Tickets
-        </h1>
-      </div>
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto bg-(--bg-soft-accent)">
+        {/* Header */}
+        <div className="text-center pb-8">
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
+           Requested Tickets
+          </h1>
+        </div>
 
       <div className="hidden md:block overflow-x-auto shadow-xl rounded-lg border border-base-200 bg-base-200">
         <table className="table w-full">

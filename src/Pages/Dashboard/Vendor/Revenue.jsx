@@ -19,7 +19,7 @@ import {
 const Revenue = () => {
   const axiosSecure = useAxiosSecure();
 
-  //  Data Fetching 
+  //  Data Fetching
   const { data: revenueData = [], isLoading: isRevenueLoading } = useQuery({
     queryKey: ["paid-revenue-data"],
     queryFn: async () => {
@@ -38,7 +38,7 @@ const Revenue = () => {
 
   const isCombinedLoading = isRevenueLoading || isTicketLoading;
 
-  // Loading State 
+  // Loading State
   if (isCombinedLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -56,11 +56,13 @@ const Revenue = () => {
   const totalTickets = ticketData.reduce((acc, cur) => acc + cur.quantity, 0);
   const availableTickets = totalTickets - totalSoldTicket;
 
-
   // Ticket Pie Chart Data
   const ticketPieData = [
     { name: "Tickets Sold", value: totalSoldTicket },
-    { name: "Tickets Available", value: availableTickets > 0 ? availableTickets : 0 },
+    {
+      name: "Tickets Available",
+      value: availableTickets > 0 ? availableTickets : 0,
+    },
   ];
 
   // Colors for the Pie Chart
@@ -77,8 +79,8 @@ const Revenue = () => {
   return (
     <div className="p-6 bg-base-200 min-h-screen text-base-content">
       {/* Header */}
-      <div className="text-center py-8 mb-8 bg-base-200 rounded-xl shadow-md">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-primary to-accent">
+      <div className="text-center space-y-2">
+        <h1 className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
           Revenue & Sales Analytics
         </h1>
       </div>
@@ -106,10 +108,11 @@ const Revenue = () => {
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
         {/* Chart 1: Revenue Flow (Bar Chart) */}
         <div className="bg-base-200 p-6 rounded-xl shadow-lg">
-          <h2 className="text-xl font-bold mb-6 text-center">Revenue per Order</h2>
+          <h2 className="text-xl font-bold mb-6 text-center">
+            Revenue per Order
+          </h2>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -117,13 +120,22 @@ const Revenue = () => {
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                <XAxis dataKey="name" hide /> 
+                <XAxis dataKey="name" hide />
                 <YAxis />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1f2937",
+                    borderColor: "#374151",
+                    color: "#fff",
+                  }}
                 />
                 <Legend />
-                <Bar dataKey="amount" fill="#8884d8" name="Revenue Amount ($)" radius={[4, 4, 0, 0]} />
+                <Bar
+                  dataKey="amount"
+                  fill="#8884d8"
+                  name="Revenue Amount ($)"
+                  radius={[4, 4, 0, 0]}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -131,7 +143,9 @@ const Revenue = () => {
 
         {/* Chart 2: Ticket Status (Pie Chart) */}
         <div className="bg-base-200 p-6 rounded-xl shadow-lg">
-          <h2 className="text-xl font-bold mb-6 text-center">Sales vs. Inventory</h2>
+          <h2 className="text-xl font-bold mb-6 text-center">
+            Sales vs. Inventory
+          </h2>
           <div className="h-[300px] w-full flex justify-center items-center">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -140,12 +154,28 @@ const Revenue = () => {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
-                    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-                    const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
-                    const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
+                  label={({
+                    cx,
+                    cy,
+                    midAngle,
+                    innerRadius,
+                    outerRadius,
+                    percent,
+                  }) => {
+                    const radius =
+                      innerRadius + (outerRadius - innerRadius) * 0.5;
+                    const x =
+                      cx + radius * Math.cos(-midAngle * (Math.PI / 180));
+                    const y =
+                      cy + radius * Math.sin(-midAngle * (Math.PI / 180));
                     return (
-                      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                      <text
+                        x={x}
+                        y={y}
+                        fill="white"
+                        textAnchor={x > cx ? "start" : "end"}
+                        dominantBaseline="central"
+                      >
                         {`${(percent * 100).toFixed(0)}%`}
                       </text>
                     );
@@ -155,16 +185,18 @@ const Revenue = () => {
                   dataKey="value"
                 >
                   {ticketPieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
                   ))}
                 </Pie>
                 <Tooltip />
-                <Legend verticalAlign="bottom" height={36}/>
+                <Legend verticalAlign="bottom" height={36} />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
-
       </div>
     </div>
   );

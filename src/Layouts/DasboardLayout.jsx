@@ -94,7 +94,7 @@ const DashboardLayout = () => {
                 group relative flex items-center px-4 py-3.5 rounded-xl text-sm font-bold transition-all duration-200
                 ${
                   isActive
-                    ? "bg-(--nav-active-bg) text-(--nav-active-text) shadow-lg shadow-(--nav-active-bg)/20 translate-x-1"
+                    ? "bg-(--nav-active-bg) text-white shadow-lg shadow-(--nav-active-bg)/20 translate-x-1"
                     : "text-(--text-muted) hover:bg-(--nav-item-hover) hover:text-(--text-main)"
                 }
               `}
