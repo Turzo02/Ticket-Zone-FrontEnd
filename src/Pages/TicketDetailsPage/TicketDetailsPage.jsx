@@ -7,14 +7,14 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
-import { 
-  MapPin, 
-  Calendar, 
-  Sparkles, 
-  X, 
-  MoveRight, 
-  Tag, 
-  Clock 
+import {
+  MapPin,
+  Calendar,
+  Sparkles,
+  X,
+  MoveRight,
+  Tag,
+  Clock,
 } from "lucide-react";
 import TicketDetailsSkeleton from "./TicketDetailsSkeleton";
 
@@ -82,7 +82,7 @@ const TicketDetailsPage = () => {
   };
 
   if (isLoading) {
-    return (<TicketDetailsSkeleton></TicketDetailsSkeleton>);
+    return <TicketDetailsSkeleton></TicketDetailsSkeleton>;
   }
 
   if (isError) {
@@ -97,8 +97,13 @@ const TicketDetailsPage = () => {
 
   return (
     <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) transition-colors duration-300 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 relative">
+        {/* Ambient Background Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-(--grad-start) rounded-full opacity-10 blur-[100px]" />
+          <div className="absolute top-40 right-10 w-96 h-96 bg-(--grad-end) rounded-full opacity-10 blur-[100px]" />
+        </div>
+
         {/* Page Header */}
         <div className="text-left py-6 mb-6 border-b border-(--border-card) space-y-2">
           <h1 className="text-3xl md:text-4xl lg:text-6xl font-extrabold bg-clip-text text-transparent bg-linear-to-r from-(--grad-start) to-(--grad-end) tracking-tight">
@@ -117,35 +122,34 @@ const TicketDetailsPage = () => {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
-          
+
           <div className="absolute bottom-6 left-6 right-6">
-             <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-wider">
-                <Tag size={12} />
-                {ticket.transportType}
-             </div>
-             <h1 className="text-white text-3xl sm:text-5xl font-black drop-shadow-xl leading-tight">
-               {ticket.title}
-             </h1>
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-wider">
+              <Tag size={12} />
+              {ticket.transportType}
+            </div>
+            <h1 className="text-white text-3xl sm:text-5xl font-black drop-shadow-xl leading-tight">
+              {ticket.title}
+            </h1>
           </div>
         </div>
 
         {/* Main Details Card */}
         <div className="bg-(--bg-card) rounded-3xl border border-(--border-card) p-6 sm:p-10 shadow-lg">
-          
           {/* Route Info */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div className="flex items-center  gap-3 text-lg sm:text-xl font-bold text-(--text-main)">
               <div className="flex items-center gap-2 ">
-                 <MapPin className="text-(--grad-start)" size={20} />
-                 <spa className="line-clamp-1">{ticket.from}</spa>
+                <MapPin className="text-(--grad-start)" size={20} />
+                <span className="line-clamp-1">{ticket.from}</span>
               </div>
               <MoveRight className="text-(--text-muted)" size={20} />
               <div className="flex items-center gap-2">
-                 <MapPin className="text-(--grad-end)" size={20} />
-                 <span className="line-clamp-1">{ticket.to}</span>
+                <MapPin className="text-(--grad-end)" size={20} />
+                <span className="line-clamp-1">{ticket.to}</span>
               </div>
             </div>
-            
+
             <div className="px-4 py-2 rounded-xl bg-(--bg-soft-accent) text-(--text-main) font-bold border border-(--border-card)">
               {ticket.transportType}
             </div>
@@ -153,50 +157,57 @@ const TicketDetailsPage = () => {
 
           {/* Pricing & Availability Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 p-6 bg-(--bg-soft-accent) rounded-2xl border border-(--border-card)">
-             
-             {/* Price */}
-             <div className="flex justify-between items-center pb-4 sm:pb-0 sm:border-r border-(--border-card) sm:pr-6 border-b sm:border-b-0">
-                <span className="font-medium text-(--text-muted)">Price per Unit</span>
-                <span className="text-3xl font-black text-(--text-main) tracking-tight">
-                   ${ticket.price}
-                </span>
-             </div>
+            {/* Price */}
+            <div className="flex justify-between items-center pb-4 sm:pb-0 sm:border-r border-(--border-card) sm:pr-6 border-b sm:border-b-0">
+              <span className="font-medium text-(--text-muted)">
+                Price per Unit
+              </span>
+              <span className="text-3xl font-black text-(--text-main) tracking-tight">
+                ${ticket.price}
+              </span>
+            </div>
 
-             {/* Quantity */}
-             <div className="flex justify-between items-center sm:pl-6">
-                <span className="font-medium text-(--text-muted)">Seats Available</span>
-                <span className={`text-2xl font-bold ${ticket.quantity < 5 ? 'text-red-500' : 'text-(--success-text)'}`}>
-                   {ticket.quantity}
-                </span>
-             </div>
+            {/* Quantity */}
+            <div className="flex justify-between items-center sm:pl-6">
+              <span className="font-medium text-(--text-muted)">
+                Seats Available
+              </span>
+              <span
+                className={`text-2xl font-bold ${
+                  ticket.quantity < 5 ? "text-red-500" : "text-(--success-text)"
+                }`}
+              >
+                {ticket.quantity}
+              </span>
+            </div>
           </div>
 
           {/* Timing Section */}
           <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
-             <div className="flex items-center gap-3 px-5 py-3 bg-(--input-bg) border border-(--input-border) rounded-xl font-semibold text-(--text-main) w-full sm:w-auto">
-                <Calendar className="text-(--grad-start)" size={18} />
-                <span>
-                   {new Date(ticket.departure).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                   })}
-                </span>
-             </div>
-             <div className="flex items-center gap-3 px-5 py-3 bg-(--input-bg) border border-(--input-border) rounded-xl font-semibold text-(--text-main) w-full sm:w-auto">
-                <Clock className="text-(--grad-start)" size={18} />
-                <span>
-                   {new Date(ticket.departure).toLocaleTimeString("en-GB", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                   })}
-                </span>
-             </div>
-             
-             {/* Countdown Component Wrapper */}
-             <div className="ml-auto text-(--text-muted) font-medium text-sm">
-                <TicketCountdown departure={ticket.departure} />
-             </div>
+            <div className="flex items-center gap-3 px-5 py-3 bg-(--input-bg) border border-(--input-border) rounded-xl font-semibold text-(--text-main) w-full sm:w-auto">
+              <Calendar className="text-(--grad-start)" size={18} />
+              <span>
+                {new Date(ticket.departure).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+            <div className="flex items-center gap-3 px-5 py-3 bg-(--input-bg) border border-(--input-border) rounded-xl font-semibold text-(--text-main) w-full sm:w-auto">
+              <Clock className="text-(--grad-start)" size={18} />
+              <span>
+                {new Date(ticket.departure).toLocaleTimeString("en-GB", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            </div>
+
+            {/* Countdown Component Wrapper */}
+            <div className="ml-auto text-(--text-muted) font-medium text-sm">
+              <TicketCountdown departure={ticket.departure} />
+            </div>
           </div>
 
           {/* Perks Section */}
@@ -219,7 +230,8 @@ const TicketDetailsPage = () => {
 
           {/* CTA Button Logic */}
           {(() => {
-            const isBookingClosed = ticket.quantity === 0 || new Date(ticket.departure) < new Date();
+            const isBookingClosed =
+              ticket.quantity === 0 || new Date(ticket.departure) < new Date();
             const isLoggedIn = !!user;
             const isDisabled = isBookingClosed || !isLoggedIn;
 
@@ -232,21 +244,18 @@ const TicketDetailsPage = () => {
                   ${
                     isDisabled
                       ? "bg-(--bg-soft-accent) text-(--text-muted) cursor-not-allowed border border-(--border-card)"
-                      : "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-(--text-inv) shadow-(--grad-start)/30 hover:shadow-(--grad-start)/50 hover:scale-[1.01] cursor-pointer"
+                      : "bg-linear-to-r from-(--grad-start) to-(--grad-end) text-white shadow-(--grad-start)/30 hover:shadow-(--grad-start)/50 hover:scale-[1.01] cursor-pointer"
                   }
                 `}
               >
-                {isBookingClosed 
-                  ? "Booking Closed" 
-                  : !isLoggedIn 
-                    ? "Login to Book" 
-                    : "Book Now"
-                }
+                {isBookingClosed
+                  ? "Booking Closed"
+                  : !isLoggedIn
+                  ? "Login to Book"
+                  : "Book Now"}
               </button>
             );
           })()}
-
-
         </div>
       </div>
 
@@ -254,7 +263,6 @@ const TicketDetailsPage = () => {
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="relative w-full max-w-md bg-(--bg-card) rounded-2xl shadow-2xl border border-(--border-card) p-8 animate-in zoom-in-95 duration-200">
-            
             <button
               onClick={() => setModalOpen(false)}
               className="absolute top-4 right-4 p-2 rounded-full hover:bg-(--bg-soft-accent) text-(--text-muted) transition-colors cursor-pointer"
@@ -266,8 +274,10 @@ const TicketDetailsPage = () => {
               Confirm Booking
             </h2>
 
-            <form onSubmit={handleSubmit(handleBookingSubmit)} className="space-y-6">
-              
+            <form
+              onSubmit={handleSubmit(handleBookingSubmit)}
+              className="space-y-6"
+            >
               <div className="space-y-2">
                 <label className="block text-sm font-bold text-(--text-muted) uppercase tracking-wide">
                   Number of Seats
@@ -298,7 +308,7 @@ const TicketDetailsPage = () => {
               {/* Modal Action */}
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl font-bold text-lg text-(--text-inv) bg-linear-to-r from-(--grad-start) to-(--grad-end) shadow-lg shadow-(--grad-start)/20 hover:shadow-(--grad-start)/40 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+                className="w-full py-3.5 rounded-xl font-bold text-lg bg-linear-to-r from-(--grad-start) to-(--grad-end) shadow-lg shadow-(--grad-start)/20 hover:shadow-(--grad-start)/40 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer text-white"
               >
                 Confirm
               </button>

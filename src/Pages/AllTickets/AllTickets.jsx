@@ -185,15 +185,21 @@ const AllTickets = () => {
 
   return (
     <div className="min-h-screen bg-(--bg-soft-accent) text-(--text-main) transition-colors duration-300 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 relative">
+        {/* Ambient Background Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-(--grad-start) rounded-full opacity-10 blur-[100px]" />
+          <div className="absolute top-40 right-10 w-96 h-96 bg-(--grad-end) rounded-full opacity-10 blur-[100px]" />
+        </div>
+
         {/* Header Section */}
         <div className="text-center py-12 mb-10 px-4 space-y-4 bg-(--bg-card) border border-(--border-card) rounded-3xl shadow-sm">
           <h1 className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-(--grad-start) to-(--grad-end)">
             All Tickets
           </h1>
           <p className="text-lg md:text-xl text-(--text-muted) max-w-2xl mx-auto font-medium">
-            Find your perfect journey. Filter by transport, price, or destination.
+            Find your perfect journey. Filter by transport, price, or
+            destination.
           </p>
         </div>
 
@@ -248,7 +254,6 @@ const AllTickets = () => {
 
         {/* Ticket Grid Section */}
         <div className="relative min-h-100 z-10">
-          
           {/* FIX: Use a Single Ternary Logic Chain */}
           {isFetching ? (
             // 1. LOADING STATE (Skeletons ONLY)
@@ -272,7 +277,7 @@ const AllTickets = () => {
                   style: "currency",
                   currency: "USD",
                 }).format(ticket.price);
-                
+
                 return (
                   <SingleTicket
                     key={index}
@@ -284,7 +289,6 @@ const AllTickets = () => {
               })}
             </div>
           )}
-          
         </div>
 
         {/* Pagination Bar */}
@@ -307,7 +311,7 @@ const AllTickets = () => {
                 i !== totalPages - 1
               )
                 return null;
-                
+
               return (
                 <button
                   key={i}
@@ -334,7 +338,6 @@ const AllTickets = () => {
       </div>
     </div>
   );
-
 };
 
 export default AllTickets;

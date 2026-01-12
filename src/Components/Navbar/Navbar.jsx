@@ -23,7 +23,7 @@ const Navbar = () => {
   };
 
   const navLinkClass = ({ isActive }) => `
-    relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 ease-out
+    relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-200 ease-out
     flex items-center gap-2
     ${
       isActive
@@ -53,7 +53,7 @@ const Navbar = () => {
       className={`
         fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out
         ${isScrolled 
-          ? "py-2 bg-(--bg-page)/80 backdrop-blur-xl border-(--border-card) border-b" 
+          ? "py-2 bg-(--bg-soft)/80 backdrop-blur-xl border-(--border-card) border-b" 
           : "py-4 bg-transparent border-transparent"
         }
       `}

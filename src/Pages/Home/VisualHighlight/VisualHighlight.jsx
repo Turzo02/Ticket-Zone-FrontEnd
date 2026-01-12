@@ -1,63 +1,60 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, MapPin } from "lucide-react";
 import { Link } from "react-router";
 
-const VisualHighlight = () => {
-  // Default active card is the first one
-  const [activeId, setActiveId] = useState(1);
+const destinations = [
+  {
+    id: 1,
+    title: "Cox's Bazar",
+    location: "Chittagong Division",
+    desc: "The world's longest natural sea beach awaits your footprints.",
+    img: "/Cox.png",
+  },
+  {
+    id: 2,
+    title: "Sylhet",
+    location: "Tea Gardens",
+    desc: "Lush green carpets of tea and the crystal clear waters of Jaflong.",
+    img: "/Shy.png",
+  },
+  {
+    id: 3,
+    title: "Saint Martin",
+    location: "Coral Island",
+    desc: "Blue waters and coconut groves. Bangladesh's only coral island.",
+    img: "/martin.png",
+  },
+  {
+    id: 4,
+    title: "Sajek Valley",
+    location: "Rangamati",
+    desc: "Touch the clouds and experience the serenity of the hills.",
+    img: "/sajek.png",
+  },
+];
 
-  const destinations = [
-    {
-      id: 1,
-      title: "Cox's Bazar",
-      location: "Chittagong Division",
-      desc: "The world's longest natural sea beach awaits your footprints.",
-      img: "/Cox.png",
-    },
-    {
-      id: 2,
-      title: "Sylhet",
-      location: "Tea Gardens",
-      desc: "Lush green carpets of tea and the crystal clear waters of Jaflong.",
-      img: "/Shy.png",
-    },
-    {
-      id: 3,
-      title: "Saint Martin",
-      location: "Coral Island",
-      desc: "Blue waters and coconut groves. Bangladesh's only coral island.",
-      img: "/martin.png",
-    },
-    {
-      id: 4,
-      title: "Sajek Valley",
-      location: "Rangamati",
-      desc: "Touch the clouds and experience the serenity of the hills.",
-      img: "/sajek.png",
-    },
-  ];
+const VisualHighlight = memo(() => {
+  const [activeId, setActiveId] = useState(1);
 
   return (
     <section className="relative w-full h-[90vh] overflow-hidden flex flex-col transition-colors duration-300">
-      {/* 1. Top Navbar / Brand Area */}
       <div className="absolute top-0 left-0 w-full p-8 z-30 flex justify-between items-center pointer-events-none">
         <div className="hidden md:flex gap-4 pointer-events-auto">
-          {/* Decorative pill */}
           <div className="px-4 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10 text-xs font-bold text-white uppercase tracking-widest shadow-sm">
             Explore The Unseen
           </div>
         </div>
       </div>
 
-      {/* 2. The Main Expandable Slider */}
       <div className="flex flex-col md:flex-row h-full w-full">
         {destinations.map((item) => (
           <motion.div
             key={item.id}
-            layout // Handles smooth width animation automatically
+            layout
             onClick={() => setActiveId(item.id)}
             onHoverStart={() => setActiveId(item.id)}
+            style={{ willChange: "flex" }} 
             className={`
               relative h-full cursor-pointer overflow-hidden 
               border-b md:border-b-0 md:border-r border-white/10 
@@ -71,28 +68,28 @@ const VisualHighlight = () => {
               <motion.img
                 src={item.img}
                 alt={item.title}
+                decoding="async"
+                style={{ willChange: "transform" }}
                 className="w-full h-full object-cover"
-                animate={{ scale: activeId === item.id ? 1.1 : 1 }} // Slow zoom when active
+                animate={{ scale: activeId === item.id ? 1.1 : 1 }}
                 transition={{ duration: 10, ease: "linear" }}
               />
-
+              
               {/* Theme-Aware Overlays */}
               <div
                 className={`
-    absolute inset-0 transition-opacity duration-500
-    bg-black
-    ${activeId === item.id ? "opacity-1" : "opacity-60 group-hover:opacity-50"}
-  `}
+                  absolute inset-0 transition-opacity duration-500
+                  bg-black
+                  ${activeId === item.id ? "opacity-1" : "opacity-60 group-hover:opacity-50"}
+                `}
               />
-
               {/* 2. Gradient Readability Layer: Hardcoded black for universal contrast */}
               <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/10 to-transparent opacity-100" />
             </div>
 
             {/* Content Container */}
             <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
-              {/* Vertical Title (Inactive State - Desktop) */}
-              {/* Centered vertically to save bottom space and look more artistic */}
+              
               {activeId !== item.id && (
                 <div className="hidden md:flex absolute inset-0 items-center justify-center">
                   <h3 className="text-4xl font-black text-white -rotate-90 whitespace-nowrap tracking-[0.15em] uppercase mix-blend-overlay">
@@ -148,6 +145,6 @@ const VisualHighlight = () => {
       </div>
     </section>
   );
-};
+});
 
 export default VisualHighlight;

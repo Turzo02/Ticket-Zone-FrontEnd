@@ -1,15 +1,40 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, MapPin, Compass } from "lucide-react";
 
-// --- Helper Component ---
-const Column = ({ images = [], direction = "up", duration = 20 }) => {
-  if (!images || images.length === 0) return null;
+const imagesCol1 = [
+  "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=600&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1474487548417-781cb714c2f0?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600&auto=format&fit=crop",
+];
+
+const imagesCol2 = [
+  "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600&auto=format&fit=crop",
+];
+
+const imagesCol3 = [
+  "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=600&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1532105956626-9569c03602f6?q=80&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=600&auto=format&fit=crop",
+];
+
+const Column = memo(({ images = [], direction = "up", duration = 20 }) => {
+  
+  const repeatedImages = useMemo(() => {
+    if (!images || images.length === 0) return [];
+    return [...images, ...images, ...images];
+  }, [images]);
+
+  // Now it is safe to return early if the array is empty
+  if (repeatedImages.length === 0) return null;
 
   return (
     <div className="relative w-full h-full">
       <motion.div
         className="flex flex-col gap-6"
+        style={{ willChange: "transform" }}
         animate={{
           y: direction === "up" ? ["0%", "-50%"] : ["-50%", "0%"]
         }}
@@ -19,48 +44,26 @@ const Column = ({ images = [], direction = "up", duration = 20 }) => {
           repeat: Infinity,
         }}
       >
-        {[...images, ...images, ...images].map((src, idx) => (
+        {repeatedImages.map((src, idx) => (
           <div key={idx} className="w-full h-64 md:h-80 rounded-2xl overflow-hidden shrink-0 relative group">
              <img 
                src={src} 
                alt="Travel Destination" 
+               decoding="async"
                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-in-out" 
              />
-             {/* Subtle overlay to blend images with theme */}
              <div className="absolute inset-0 bg-(--bg-page)/10 transition-colors" />
           </div>
         ))}
       </motion.div>
     </div>
   );
-};
+});
 
-// --- Main Component ---
 const HeroInfinite = () => {
-  
-  // Placeholder Data
-  const imagesCol1 = [
-    "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop", 
-    "https://images.unsplash.com/photo-1474487548417-781cb714c2f0?q=80&w=2069&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop",
-  ];
-  
-  const imagesCol2 = [
-    "https://images.unsplash.com/photo-1596895111956-bf1cf0599ce5?q=80&w=2070&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop",
-  ];
-
-  const imagesCol3 = [
-    "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=2071&auto=format&fit=crop", 
-    "https://images.unsplash.com/photo-1532105956626-9569c03602f6?q=80&w=1974&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=2070&auto=format&fit=crop",
-  ];
-
   return (
     <section className="relative w-full h-screen overflow-hidden bg-(--bg-page) flex items-center justify-center transition-colors duration-300">
       
-      {/* --- BACKGROUND: Infinite Moving Columns --- */}
       <div className="absolute inset-0 w-full h-full flex gap-4 md:gap-6 px-4 md:px-0 -skew-y-3 scale-110 opacity-30">
         <div className="flex-1 hidden md:block overflow-hidden relative">
           <Column images={imagesCol1} direction="up" duration={45} />
@@ -77,10 +80,9 @@ const HeroInfinite = () => {
       <div className="absolute inset-0 bg-linear-to-b from-(--bg-soft-accent) via-(--bg-soft-accent)/10 to-(--bg-soft-accent)" />
       <div className="absolute inset-0 bg-radial-gradient from-transparent to-(--bg-soft-accent) opacity-90" />
 
-      {/* --- FOREGROUND: Content --- */}
       <div className="relative z-20 text-center max-w-5xl px-6">
         
-        {/* Badge - Soft Opacity Background */}
+        {/* Badge */}
         <motion.div 
            initial={{ opacity: 0, scale: 0.9 }}
            animate={{ opacity: 1, scale: 1 }}
@@ -106,7 +108,7 @@ const HeroInfinite = () => {
           </span>
         </motion.h1>
 
-        {/* Static CTA Buttons (Replaced Input Field) */}
+        {/* Static CTA Buttons */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -127,7 +129,7 @@ const HeroInfinite = () => {
             </button>
         </motion.div>
 
-        {/* Quick Links (Static Design) */}
+        {/* Quick Links */}
         <motion.div 
            initial={{ opacity: 0 }}
            animate={{ opacity: 1 }}

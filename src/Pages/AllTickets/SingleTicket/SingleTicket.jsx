@@ -89,6 +89,7 @@ const SingleTicket = ({ ticket, index, formattedPrice }) => {
             {ticket.transportType}
           </span>
         </div>
+        
       </div>
 
       {/* Action Button */}
@@ -99,7 +100,7 @@ const SingleTicket = ({ ticket, index, formattedPrice }) => {
             <span className="absolute inset-0 w-full h-full bg-linear-to-r from-(--grad-start) to-(--grad-end) group-hover/btn:scale-[1.02] transition-transform duration-300"></span>
             
             {/* Button Content */}
-            <span className="relative flex items-center justify-center gap-2">
+            <span className="relative flex items-center justify-center gap-2 text-white cursor-pointer">
               See Details
             </span>
           </button>
