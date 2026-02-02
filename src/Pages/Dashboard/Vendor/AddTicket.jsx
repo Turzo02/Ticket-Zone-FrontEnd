@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import useRole from "../../../Hooks/useRole";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
+import LoadingSpinner from "../../../Components/Loading/LoadingSpinner";
 const AddTicket = () => {
   const axiosSecure = useAxiosSecure();
   const [isLoading, setIsLoading] = useState(false);
@@ -97,7 +98,7 @@ const AddTicket = () => {
   };
 
   if (isLoading) {
-    return <SwappingDotLoader></SwappingDotLoader>;
+    return <LoadingSpinner></LoadingSpinner>
   }
 
   return (

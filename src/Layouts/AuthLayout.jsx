@@ -6,7 +6,7 @@ const AuthLayout = () => {
   const [theme] = useTheme();
 
   return (
-    <div className=" mx-auto">
+    <div className="mx-auto">
       <Outlet></Outlet>
     </div>
   );

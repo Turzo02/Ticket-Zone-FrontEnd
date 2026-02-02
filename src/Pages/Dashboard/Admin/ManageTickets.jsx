@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 import { Check, X ,CheckCheck ,Store} from "lucide-react";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../Components/Loading/LoadingSpinner";
 
 const ManageTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -76,7 +77,7 @@ const handleReject = async (id) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-32">
-        <SwappingDotLoader></SwappingDotLoader>
+       <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }

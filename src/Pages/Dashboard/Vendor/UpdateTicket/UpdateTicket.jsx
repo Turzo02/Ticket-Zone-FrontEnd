@@ -7,6 +7,7 @@ import axios from "axios";
 import useRole from "../../../../Hooks/useRole";
 import SwappingDotLoader from "../../../../Components/Loading/SwappingDotLoader";
 import { useParams } from "react-router";
+import LoadingSpinner from "../../../../Components/Loading/LoadingSpinner";
 
 const UpdateTicket = () => {
 
@@ -98,7 +99,7 @@ const UpdateTicket = () => {
   };
 
   if(isLoading){
-    return <SwappingDotLoader></SwappingDotLoader>
+    return <LoadingSpinner></LoadingSpinner>
   }
 
   return (

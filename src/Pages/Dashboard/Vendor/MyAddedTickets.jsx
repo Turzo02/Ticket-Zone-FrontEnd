@@ -6,6 +6,7 @@ import { ArrowUpDown, Filter, MoveRight, Edit, Trash2 } from "lucide-react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
+import LoadingSpinner from "../../../Components/Loading/LoadingSpinner";
 
 const MyAddedTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -62,7 +63,7 @@ const MyAddedTickets = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-32">
-        <SwappingDotLoader />
+        <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }

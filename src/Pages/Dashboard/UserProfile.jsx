@@ -4,6 +4,7 @@ import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import useAuth from "../../Hooks/useAuth";
 import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
 import { Mail, ShieldCheck, UserCheck, CalendarDays } from "lucide-react";
+import LoadingSpinner from "../../Components/Loading/LoadingSpinner";
 
 const UserProfile = () => {
   const axiosSecure = useAxiosSecure();
@@ -25,7 +26,7 @@ const UserProfile = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64 bg-(--bg-card) rounded-3xl border border-(--border-card)">
-        <SwappingDotLoader />
+       <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }

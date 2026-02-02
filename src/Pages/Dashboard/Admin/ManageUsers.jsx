@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 import { Check, X, AlertCircle, BadgeCheck } from "lucide-react";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../Components/Loading/LoadingSpinner";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -105,7 +106,7 @@ const ManageUsers = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-32">
-        <SwappingDotLoader />
+       <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }

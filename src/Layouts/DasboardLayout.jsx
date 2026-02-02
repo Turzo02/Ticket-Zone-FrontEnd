@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router";
 import SwappingDotLoader from "../Components/Loading/SwappingDotLoader";
 import useRole from "../Hooks/useRole";
+import LoadingSpinner from "../Components/Loading/LoadingSpinner";
 
 const menuItems = [
   { label: "Profile", path: "/dashboard/user-profile", roles: ["user", "vendor", "admin"] },
@@ -24,7 +25,7 @@ const DashboardLayout = () => {
   if (roleLoading) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-(--bg-page)">
-        <SwappingDotLoader />
+       <LoadingSpinner />
       </div>
     );
   }

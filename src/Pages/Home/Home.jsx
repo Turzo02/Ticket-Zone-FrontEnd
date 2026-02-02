@@ -12,7 +12,6 @@ import TravelInspiration from "./TravelInspiration/TravelInspiration";
 import VisualHighlight from "./VisualHighlight/VisualHighlight";
 import TrustBadges from "./TrustBadges/TrustBadges";
 import FAQ from "./FAQ/FAQ";
-import ThemeToggle from "../../Components/ThemeToggle/ThemeToggle";
 const Home = () => {
   return (
     <div className="max-w-7xl mx-auto">

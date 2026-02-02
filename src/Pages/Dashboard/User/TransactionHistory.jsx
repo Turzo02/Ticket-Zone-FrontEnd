@@ -12,6 +12,7 @@ import {
   Wallet,
   ArrowUpRight,
 } from "lucide-react";
+import LoadingSpinner from "../../../Components/Loading/LoadingSpinner";
 
 const TransactionHistory = () => {
   const { user } = useAuth();
@@ -39,7 +40,7 @@ const TransactionHistory = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64 w-full bg-(--bg-card) rounded-3xl border border-(--border-card)">
-        <SwappingDotLoader />
+       <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }

@@ -4,10 +4,11 @@ import Navbar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import useAuth from "../Hooks/useAuth";
 import SwappingDotLoader from "../Components/Loading/SwappingDotLoader";
+import LoadingSpinner from "../Components/Loading/LoadingSpinner";
 const RootLayout = () => {
   const { loading } = useAuth();
   if (loading) {
-    return <SwappingDotLoader></SwappingDotLoader>;
+    return <LoadingSpinner></LoadingSpinner>
   }
   return (
     <div className="bg-(--bg-soft-accent)">

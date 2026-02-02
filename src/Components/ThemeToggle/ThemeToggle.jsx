@@ -9,7 +9,6 @@ const ThemeToggle = () => {
   const updateDOM = (isDark) => {
     const theme = isDark ? "dark" : "light";
     document.documentElement.setAttribute("data-theme", theme);
-    document.documentElement.classList.toggle("dark", isDark);
     localStorage.setItem("theme", theme);
   };
 

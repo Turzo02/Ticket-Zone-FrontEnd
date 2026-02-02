@@ -7,6 +7,7 @@ import {
   Users, 
   Zap 
 } from "lucide-react";
+import LoadingSpinner from "../../Components/Loading/LoadingSpinner";
 
 const AboutUs = () => {
   
@@ -37,7 +38,6 @@ const AboutUs = () => {
 
   return (
     <div className="w-full min-h-screen bg-(--bg-soft-accent) text-(--text-main) transition-colors duration-300 overflow-hidden">
-      
       {/* --- Hero Section --- */}
       <section className="relative pt-24 pb-20 px-6">
         {/* Ambient Background Glow */}

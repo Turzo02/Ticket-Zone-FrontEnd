@@ -24,6 +24,7 @@ import {
   Download, 
   Activity 
 } from "lucide-react";
+import LoadingSpinner from "../../../Components/Loading/LoadingSpinner";
 
   const StatCard = ({ title, value, icon: Icon, gradient, trend }) => (
     <div className="relative overflow-hidden p-6 rounded-4xl bg-(--bg-card) border border-(--border-card) shadow-xl shadow-black/5 group">
@@ -79,7 +80,7 @@ const Revenue = () => {
   if (isCombinedLoading) {
     return (
       <div className="flex justify-center items-center h-screen bg-(--bg-soft-accent)">
-        <SwappingDotLoader />
+       <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }

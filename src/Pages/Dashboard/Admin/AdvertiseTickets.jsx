@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
 import SwappingDotLoader from "../../../Components/Loading/SwappingDotLoader";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../Components/Loading/LoadingSpinner";
 
 const AdvertiseTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -107,7 +108,7 @@ const AdvertiseTickets = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-32">
-        <SwappingDotLoader />
+        <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }

@@ -7,6 +7,7 @@ import SwappingDotLoader from "../../Components/Loading/SwappingDotLoader";
 import { Filter, ArrowUpDown, Search, ChevronDown, Check } from "lucide-react";
 import SingleTicket from "./SingleTicket/SingleTicket";
 import TicketCardSkeleton from "../../Components/TicketCardSkeleton/TicketCardSkeleton";
+import LoadingSpinner from "../../Components/Loading/LoadingSpinner";
 
 // --- Internal Custom Dropdown Component ---
 const CustomDropdown = ({
@@ -168,7 +169,7 @@ const AllTickets = () => {
   if (isLoading && !isFetching) {
     return (
       <div className="flex justify-center items-center h-screen bg-(--bg-soft-accent)">
-        <SwappingDotLoader />
+       <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }

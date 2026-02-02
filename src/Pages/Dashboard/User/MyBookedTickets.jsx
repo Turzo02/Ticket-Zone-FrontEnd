@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../Hooks/useAxiousSecure";
 import useAuth from "../../../Hooks/useAuth";
 import TicketCard from "./TicketCard/TicketCard";
 import { Ticket, CheckCircle2, Clock } from "lucide-react";
+import LoadingSpinner from "../../../Components/Loading/LoadingSpinner";
 
 const MyBookedTickets = () => {
   const axiosSecure = useAxiosSecure();
@@ -32,7 +33,7 @@ const MyBookedTickets = () => {
   if (isLoading || loading) {
     return (
       <div className="flex justify-center items-center h-64 w-full bg-(--bg-card) rounded-3xl border border-(--border-card)">
-        <SwappingDotLoader />
+       <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }
